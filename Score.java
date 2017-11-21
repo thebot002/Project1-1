@@ -16,4 +16,7 @@ public class Score implements Serializable {
 		this.score = score;
 		this.name = name;
 	}
+	@Override
+	public String toString() {
+        return name + score;
 }
