@@ -23,7 +23,16 @@ public class PentWindow extends JFrame{
     private final int W = 7*squareSize + squareSize*8;
     private Font font;
 
-    public static void main(String[] args){}
+    public static void main(String[] args){
+        //Use a thread to ensure the ui is updated correctly (internal swing requirement)
+        SwingUtilities.invokeLater(new Runnable() {
+
+            @Override //gets called when the thread is run
+            public void run() {
+                new PentWindow();
+            }
+        });
+    }
 
     public PentWindow() {
         setSize(W, H);

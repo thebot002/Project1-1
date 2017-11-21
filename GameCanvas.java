@@ -111,7 +111,7 @@ class GameCanvas extends PentPanel implements ActionListener {
 
         //create score boxes
         TextBox scoreBox = new TextBox(SQ/2, SQ*4, font, SQ, "Score");
-        TextBox highScoreBox = new TextBox((SQ*23)/2, SQ*4, font, SQ, "High Score");
+        TextBox highScoreBox = new TextBox((SQ*23)/2, SQ*5, font, SQ, "High Score");
         TextBox levelBox = new TextBox(SQ/2, SQ*7, font, SQ, "Level");
         TextBox timeBox = new TextBox(SQ/2, SQ, font, SQ, "Time");
         ShapeBox shapeBox = new ShapeBox((SQ*23)/2, SQ, font, SQ, "Next Shape");

@@ -13,26 +13,11 @@ public class ShapeBox extends ScoreBox {
     private int shape;
 
 	public ShapeBox(int x, int y, Font f, int s, String t) {
-        super(x, y, f, s, t, s*5, 200);
+        super(x, y, f, s, t, s*3, s*3);
         shape = 0;
         drawValue();
         
     }
-
-    // public void drawIntial() {
-    //     Graphics g = image.getGraphics();
-
-    //     g.setColor(Color.white);
-    //     g.fillRect(0,0,w,h);
-
-    //     g.setColor(BACKGROUND);
-    //     g.fillRect(3,3,w-6,h-6);
-
-    //     g.setColor(Color.white);
-
-    //     repaint();
-    //     g.dispose();
-    // }
 
     public void drawValue() {
         Graphics g = image.getGraphics();
