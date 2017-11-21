@@ -12,5 +12,6 @@ public class ScoreTester{
 		hm.addScore("h", 170);
 		hm.addScore("i", 140);
 		hm.addScore("j", 150);
+		System.out.println(hm.toString());
 	}
 }
