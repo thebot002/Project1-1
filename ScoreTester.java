@@ -1,5 +1,4 @@
-//package ScoreTracker;
-
+//There will be an error when compiling, just compile it again.
 public class ScoreTester{
 	public static void main(String[] args){
 		HighScoreManager hm = new HighScoreManager();
