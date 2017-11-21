@@ -3,12 +3,12 @@ package function;
 import java.util.ArrayList;
 
 public class ShapeList {
-	
+
 	private ShapeFactory shapeFactory = new ShapeFactory();
 	private ArrayList<Shape> listOfShapes = new ArrayList<>();
-	
+
 	public ShapeList() {
-		
+
 		Shape shapeI = shapeFactory.buildShapeI();
 		Shape shapeL = shapeFactory.buildShapeL();
 		Shape shapeN = shapeFactory.buildShapeN();
@@ -35,11 +35,16 @@ public class ShapeList {
 		listOfShapes.add(shapeL);
 		listOfShapes.add(shapeI);
 	}
-	
+
 	public ArrayList<Shape> getShapeList(){
 		return listOfShapes;
 	}
-	
-	
-	
+
+	public Shape getShape(int nb){
+		listOfShapes.get(nb);
+	}
+	public int getLength(){
+		return listOfShapes.size();
+	}
+
 }
