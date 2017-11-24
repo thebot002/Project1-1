@@ -46,6 +46,9 @@ class GameCanvas extends PentPanel implements ActionListener {
 	 public int speed = 100;
 	 public Timer runtime;
 
+	 private int x;
+	 private int y;
+
 	public GameCanvas(int W, int H,  Font f, int s) {
         super(W, H, f, s, 0, 0);
         drawGame();
@@ -70,17 +73,18 @@ class GameCanvas extends PentPanel implements ActionListener {
 
 		  class Action implements ActionListener{
 			  public void actionPerformed(ActionEvent e) {
-				  int x=0;
-				  int y=0;
 	           if(board.isPlaced(activeShape,x,y)){
 					  activeShape = nextShape1;
 	              nextShape1 = list.getShape((int)Math.round( Math.random() * (list.getLength()*1.0)));
+					  if(activeShape.getHeight()>activeShape.getWidth()) activeShape.rotateR();
 	              board.addShapeToBoard(activeShape);
-					  //x=0;
+					  x=3;
+					  x-=(int)(activeShape.getWidth() / 2);
+					  y=0;
 	           }
 	           else{
-	              //oneDown();
-					  //x++;                      //to be implemented
+	              //oneDown(activeShape,x,y);
+					  x++;
 	           }
 			  }
         }
@@ -113,10 +117,12 @@ class GameCanvas extends PentPanel implements ActionListener {
     }
 
     public void leftKeyPress() {
-        //moveLeft();
+        board.moveLeft(activeShape,x,y);
+		  x--;
     }
     public void rightKeyPress() {
-        //moveRight();
+        board.moveRight(activeShape,x,y);
+		  x++;
     }
 
     private void drawGame() {
