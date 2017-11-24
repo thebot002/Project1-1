@@ -43,11 +43,11 @@ class GameCanvas extends PentPanel implements ActionListener {
 	 public Shape activeShape;
 	 public Shape nextShape1;
 	 public ShapeList list = new ShapeList();
-	 public int speed = 100;
+	 public int speed = 600;
 	 public Timer runtime;
 
-	 private int x;
-	 private int y;
+	 private int x=0;
+	 private int y=0;
 
 	public GameCanvas(int W, int H,  Font f, int s) {
         super(W, H, f, s, 0, 0);
@@ -66,25 +66,32 @@ class GameCanvas extends PentPanel implements ActionListener {
     }
 
     public void startGame(){
-		  activeShape = list.getShape((int)Math.round(Math.random()*list.getLength()));
-		  board.addShapeToBoard(activeShape);
-		  nextShape1 = list.getShape((int)Math.round(Math.random()*list.getLength()));
+		  activeShape = list.getRandomShape();
+		  if(activeShape.getHeight()>activeShape.getWidth()) activeShape.rotateR();
+		  //x=3;
+		  //x-=(int)(activeShape.getWidth() / 2);
+		  board.addShapeToBoard(activeShape,x,y);
+
+		  nextShape1 = list.getRandomShape();
         drawBoard(board);
 
 		  class Action implements ActionListener{
 			  public void actionPerformed(ActionEvent e) {
 	           if(board.isPlaced(activeShape,x,y)){
 					  activeShape = nextShape1;
-	              nextShape1 = list.getShape((int)Math.round( Math.random() * (list.getLength()*1.0)));
+	              nextShape1 = list.getRandomShape();
 					  if(activeShape.getHeight()>activeShape.getWidth()) activeShape.rotateR();
-	              board.addShapeToBoard(activeShape);
-					  x=3;
-					  x-=(int)(activeShape.getWidth() / 2);
+					  x=0;
 					  y=0;
+	              board.addShapeToBoard(activeShape,x,y);
+					  System.out.println("bite");
+					  drawBoard(board);
+					  //x-=(int)((activeShape.getWidth() / 2));
 	           }
 	           else{
-	              //oneDown(activeShape,x,y);
-					  x++;
+	              board.moveDown(activeShape,x,y);
+					  drawBoard(board);
+					  y++;
 	           }
 			  }
         }
@@ -105,11 +112,15 @@ class GameCanvas extends PentPanel implements ActionListener {
     }
 
     public void upKeyPress() {
-        //rotateShape();
+        board.rotate(activeShape,x,y);
+		  //activeShape.rotateR();
+		  drawBoard(board);
     }
 
     public void downKeyPress() {
-        //speedUp();
+		 board.moveDown(activeShape,x,y);
+		 y++;
+		 drawBoard(board);
     }
 
     public void spaceKeyPress() {
@@ -119,10 +130,14 @@ class GameCanvas extends PentPanel implements ActionListener {
     public void leftKeyPress() {
         board.moveLeft(activeShape,x,y);
 		  x--;
+		  drawBoard(board);
+
     }
     public void rightKeyPress() {
         board.moveRight(activeShape,x,y);
 		  x++;
+		  drawBoard(board);
+
     }
 
     private void drawGame() {

@@ -2,6 +2,8 @@ import java.lang.*;
 
 public class PentrisBoard {
 	private String[][] board;
+	private int counter;
+	private final boolean DEBUG = true;
 	//private ShapeFactory shapeOp = new ShapeFactory();
 
 	public PentrisBoard(){
@@ -21,31 +23,23 @@ public class PentrisBoard {
 
 		String[][] addShape = shape.getShape();
 
-
 //		while (addShape[0][k].equals("-")) {
 //			y = y - 1;
 //			k++;
 //		}
 		for (int i = 0; i < addShape.length; i++) {
 			for (int j = 0; j < addShape[0].length; j++) {
-
 				/* If the element of the shape array is not empty we copy it to the board */
-				if (!addShape[i][j].equals("-") && x+i<board.length && y+j<board[0].length) {
-					board[x + i][y + j] = addShape[i][j];
+				if (!addShape[i][j].equals("-") && y+i<board.length && x+j<board[0].length) {
+					board[y + i][x + j] = addShape[i][j];
 				}
 			}
 		}
 	}
 	public void addShapeToBoard(Shape shape){
-		int x = board[0].length / 2;
-		String[][] s = shape.getShape();
-		if(s.length>s[0].length){
-			shape.rotateL();
-			x -= (int)s.length*1.0 / 2;
-		}
-		else x -= (int)s[0].length*1.0 / 2;
-		int y=3;
-		addShapeToBoard(shape,x,y);
+		if(shape.getHeight()>shape.getWidth()) shape.rotateR();
+		int x = 3 - (int)(shape.getWidth()*1.0/2);
+		addShapeToBoard(shape,x,0);
 	}
 
 	/*
@@ -54,10 +48,10 @@ public class PentrisBoard {
 	 */
 	public void removeShapeFromBoard(Shape shape, int x, int y) {
 		String[][] removeShape = shape.getShape();
-		for (int i = removeShape.length - 1; i >= 0; i--) {
-			for (int j = removeShape[0].length - 1; j >= 0; j--) {
-				if (!removeShape[i][j].equals("-") && x+i<board.length && y+j<board[0].length) {
-					board[x + i][y + j] = "-";
+		for (int i = 0; i <removeShape.length; i++) {
+			for (int j = 0; j <removeShape[0].length; j++) {
+				if (!removeShape[i][j].equals("-") && y+i<board.length && x+j<board[0].length) {
+					board[y + i][x + j] = "-";
 				}
 			}
 		}
@@ -65,19 +59,16 @@ public class PentrisBoard {
 
 
 	public boolean isPlaced(Shape shape, int x, int y) {
-
-		for (int j = 0; j < shape.getShape()[0].length; j++) {
-			int i = shape.getShape().length - 1;
-			while (shape.getShape()[i][j].equals("-")) {
-				i--;
-			}
-			if (i + x + 1< board.length && y+j<board[0].length) {
-				if (!shape.getShape()[i][j].equals("-") && !board[i + x +1][y + j].equals("-")) {
-					return true;
+		for(int i = shape.getHeight()-1; i>=0; i--){
+			for(int j=0; j<shape.getWidth();j++){
+				System.out.print(shape.getElement(i,j));
+				if(!shape.getElement(i,j).equals("-")){
+					if(i>=shape.getHeight()-1 || (i<shape.getHeight()-1 && shape.getElement(i+1,j).equals("-")))
+						if(i+y+1>=board.length || !board[i+y+1][j+x].equals("-")) return true;
 				}
 			}
+			System.out.println();
 		}
-
 		return false;
 	}
 
@@ -156,8 +147,8 @@ public class PentrisBoard {
 						isPossible=false;
 			}
 		}
-			return isPossible;
-		}
+		return isPossible;
+	}
 
 	public boolean isMoveLeftPossible(Shape shape, int x, int y) {
 		for(int i=0; i<shape.getShape().length; i++) {
@@ -179,31 +170,45 @@ public class PentrisBoard {
 
 		}
 		return isPossible;
-
 	}
 
-	/*public static void moveLeft() {
-		 if(collisionLeft(activePentomino, xCoordinateBoard, yCoordinateBoard) == false ) {
-			  removeShapeFromBoard(activePentomino, xCoordinateBoard, yCoordinateBoard);
+	public void moveLeft(Shape shape, int xCoordinateBoard, int yCoordinateBoard) {
+		 //if(collisionLeft(shape, xCoordinateBoard, yCoordinateBoard) == false ) {
+			  removeShapeFromBoard(shape, xCoordinateBoard, yCoordinateBoard);
 			  xCoordinateBoard--;
-			  addShapeToBoard(activePentomino, xCoordinateBoard, yCoordinateBoard);
-		 }
+			  addShapeToBoard(shape, xCoordinateBoard, yCoordinateBoard);
+		 //}
 	}
 
-	public static void moveRight() {
-		 if(collisionLeft(activePentomino, xCoordinateBoard, yCoordinateBoard) == false ) {
-			  removeShapeFromBoard(activePentomino, xCoordinateBoard, yCoordinateBoard);
+	public void moveRight(Shape shape, int xCoordinateBoard, int yCoordinateBoard) {
+		 //if(collisionLeft(shape, xCoordinateBoard, yCoordinateBoard) == false ) {
+			  removeShapeFromBoard(shape, xCoordinateBoard, yCoordinateBoard);
 			  xCoordinateBoard++;
-			  addShapeToBoard(activePentomino, xCoordinateBoard, yCoordinateBoard);
-		 }
+			  addShapeToBoard(shape, xCoordinateBoard, yCoordinateBoard);
+		 //}
 	}
 
-	public Boolean collisionLeft(String[][] pentomino, int x, int y) {
+	// no need for collisition check because already checked is placed in GameCanvas
+	public void moveDown(Shape shape, int xCoordinateBoard, int yCoordinateBoard){
+		removeShapeFromBoard(shape, xCoordinateBoard, yCoordinateBoard);
+		yCoordinateBoard++;
+		addShapeToBoard(shape, xCoordinateBoard, yCoordinateBoard);
+	}
+
+	public void rotate(Shape shape, int xCoordinateBoard, int yCoordinateBoard){
+		//collisiton check
+		removeShapeFromBoard(shape, xCoordinateBoard, yCoordinateBoard);
+		shape.rotateR();
+		addShapeToBoard(shape, xCoordinateBoard, yCoordinateBoard);
+	}
+
+	public Boolean collisionLeft(Shape shape, int x, int y) {
+		String[][] pentomino = shape.getShape();
 		 int i = 0;
 		 int j = 0;
 		 while(i < pentomino.length) {
-			  while(j < pentomin[0].length) {
-					if(pentomino[i][j] != "-"  && x - 1 >= 0 && board[y+i][x+j-1] == "-" ) { // Looks if there is space to the left of the shape
+			  while(j < pentomino[0].length) {
+					if(!pentomino[i][j].equals("-")  && x - 1 >= 0 && board[y+i][x+j-1] == "-" ) { // Looks if there is space to the left of the shape
 						 counter++;
 						 i++;
 						 j = 0;
@@ -222,14 +227,16 @@ public class PentrisBoard {
 		 if(counter == pentomino[0].length) {
 			  return false;
 		 }
+		 return true;
 	}
 
-	public Boolean collisionRight(String[][] pentomino, int x, int y) {
+	public Boolean collisionRight(Shape shape, int x, int y) {
+		 String[][] pentomino = shape.getShape();
 		 int i = 0;
 		 int j = 0;
 		 while(i < pentomino.length) {
-			  while(j < pentomin[0].length) {
-					if(pentomino[i][j] != "-" && x + pentomino.length < board.length - 1 && board[y+i][x+j+1] == "-") { // Looks if there is space to the right of the shape()
+			  while(j < pentomino[0].length) {
+					if(!pentomino[i][j].equals("-") && x + pentomino.length < board.length - 1 && board[y+i][x+j+1] == "-") { // Looks if there is space to the right of the shape()
 						 counter++;
 						 i++;
 						 j = 0;
@@ -248,7 +255,8 @@ public class PentrisBoard {
 		 if(counter == pentomino[0].length) {
 			  return false;
 		 }
-	}*/
+		 return true;
+	}
 
 
 	public void printBoard() {

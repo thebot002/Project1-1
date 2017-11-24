@@ -17,6 +17,17 @@ public class Shape {
 		return "-";
 	}
 
+	public int getWidth(){
+		return shape[0].length;
+	}
+	public int getHeight(){
+		return shape.length;
+	}
+
+	public String getElement(int i,int j){
+		return shape[i][j];
+	}
+
 	public String getString() {
 		String shapeString = "-";
 		for(int i=0; i<shape.length; i++) {
