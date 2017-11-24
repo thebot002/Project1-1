@@ -42,6 +42,19 @@ public class PentPanel extends JPanel {
         g.fillRect(x + gap, y + gap, inner, inner);
     }
 
+    public void drawShape(Graphics g, Shape shape, int x, int y, int s) {
+
+        String[][] stringShape = shape.getShape();
+
+        for (int i=0; i<stringShape.length; i++) {
+            for (int j=0; j<stringShape[0].length; j++) {
+                if(stringShape[i][j] != "-")
+                    drawBlock(g, i*s+x, j*s+y, pentColors[0], s);
+            }
+        }
+    }
+    
+
 	public void upKeyPress() {}
     public void downKeyPress() {}
     public void spaceKeyPress() {}

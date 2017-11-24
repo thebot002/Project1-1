@@ -13,11 +13,13 @@ class GameCanvas extends PentPanel implements ActionListener {
 	public static void main(String[] args) {}
 
     private ShapeBox shapeBox;
+    private TextBox timeBox;
     private ShapeList shapeList;
     private Timer timer;
     private Shape nextShape;
     private ArrayList<ScoreBox> scoreBoxes= new ArrayList<ScoreBox>();
     private Random random = new Random();
+    private int time =0;
 
     public int[][] board = {
         {0,0,0,0,0},
@@ -52,18 +54,17 @@ class GameCanvas extends PentPanel implements ActionListener {
     }
 
     private void tick() {
-        drawScoreBoxes();
-
+        time++;
+        timeBox.setTarget(time);
         int rint = random.nextInt(12);
 
         nextShape = shapeList.get(rint);
         shapeBox.drawValue(nextShape);
+        drawScoreBoxes();
     }
 
     public void startGame() {
-
         drawBoard(board);
-
         timer = new Timer(1000, this);
         timer.start();
     }
@@ -120,7 +121,7 @@ class GameCanvas extends PentPanel implements ActionListener {
         TextBox scoreBox = new TextBox(SQ/2, SQ*4, font, SQ, "Score");
         TextBox highScoreBox = new TextBox((SQ*23)/2, SQ*6, font, SQ, "High Score");
         TextBox levelBox = new TextBox(SQ/2, SQ*7, font, SQ, "Level");
-        TextBox timeBox = new TextBox(SQ/2, SQ, font, SQ, "Time");
+        timeBox = new TextBox(SQ/2, SQ, font, SQ, "Time");
         shapeBox = new ShapeBox((SQ*23)/2, SQ, font, SQ, "Next Shape");
 
         scoreBoxes.add(timeBox);
