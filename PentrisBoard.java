@@ -1,4 +1,6 @@
 public class PentrisBoard {
+
+	public static void main(String[] args){}
 	private String[][] board;
 	private ShapeFactory shapeOp = new ShapeFactory();
 

@@ -1,12 +1,9 @@
-package function;
+//package function;
 
 //In this Class we build the shapes and some methods to rotate or mirroring them
 public class ShapeFactory {
-	
-	
-	public ShapeFactory() {
-		
-	}
+	public static void main(String[] args){}
+	public ShapeFactory() {}
 	
 	public String[][] buildShapes(int length, int width){
 		String[][] shape = new String[length][width];

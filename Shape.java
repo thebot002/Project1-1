@@ -1,4 +1,4 @@
-package function;
+//package function;
 
 public class Shape {
 	private String[][] shape;
@@ -11,6 +11,7 @@ public class Shape {
 		return shape;
 	}
 	
+	public static void main(String[] args){}
 	
 	public String getString() {
 		String shapeString = "-";

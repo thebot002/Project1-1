@@ -16,7 +16,6 @@ public class TextBox extends ScoreBox {
         super(x, y, f, s, t, s*3, s*2);
         target = 0;
         value = 0;
-        setTarget(100);
         drawIntial();
         drawValue();
     }
