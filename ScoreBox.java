@@ -38,30 +38,14 @@ public class ScoreBox extends PentPanel{
         g.setColor(BACKGROUND);
         g.fillRect(3,3,w-6,h-6);
 
-        g.setFont(font.deriveFont(10f));
+        g.setFont(font.deriveFont((float)(SQ/4)));
         g.setColor(Color.white);
 
         int textWidth = g.getFontMetrics().stringWidth(title);
-        g.drawString(title, (w-textWidth)/2, 25);
+        g.drawString(title, (w-textWidth)/2, 10 + SQ/4);
         repaint();
         g.dispose();
     }
-
-    // public void drawValue() {
-    //     Graphics g = image.getGraphics();
-
-    //     g.setColor(BACKGROUND);
-    //     g.fillRect(20,40,w-40,30);
-
-    //     g.setFont(font.deriveFont(14f));
-    //     g.setColor(Color.white);
-
-    //     int textWidth = g.getFontMetrics().stringWidth("" + value);
-    //     g.drawString(("" + value), (w-textWidth)/2, 60);
-
-    //     repaint();
-    //     g.dispose();
-    // }
 
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -81,8 +65,4 @@ public class ScoreBox extends PentPanel{
     }
 
     public void tick() {}
-        
-
-    //     drawValue();
-    // }
 }

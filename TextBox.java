@@ -25,13 +25,13 @@ public class TextBox extends ScoreBox {
         Graphics g = image.getGraphics();
 
         g.setColor(BACKGROUND);
-        g.fillRect(20,40,w-40,30);
+        g.fillRect(20, SQ/2+10 ,w-40, h-40);
 
-        g.setFont(font.deriveFont(14f));
+        g.setFont(font.deriveFont((float)(SQ/2.8)));
         g.setColor(Color.white);
 
         int textWidth = g.getFontMetrics().stringWidth("" + value);
-        g.drawString(("" + value), (w-textWidth)/2, 60);
+        g.drawString(("" + value), (w-textWidth)/2, h/2+10);
 
         repaint();
         g.dispose();
