@@ -1,13 +1,11 @@
-package function;
-
 //In this Class we build the shapes and some methods to rotate or mirroring them
 public class ShapeFactory {
-	
-	
+
+
 	public ShapeFactory() {
-		
+
 	}
-	
+
 	public String[][] buildShapes(int length, int width){
 		String[][] shape = new String[length][width];
 
@@ -203,6 +201,6 @@ public Shape horizontalMirroring(Shape shape){
 
 /* By using the above three methods we can get all the states of any shape */
 
-	
+
 
 }

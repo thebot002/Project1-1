@@ -5,7 +5,7 @@ import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.*;
-
+import java.lang.*;
 
 public class ShapeBox extends ScoreBox {
 	public static void main(String[] args){}
@@ -16,7 +16,7 @@ public class ShapeBox extends ScoreBox {
         super(x, y, f, s, t, s*3, s*3);
         shape = 0;
         drawValue();
-        
+
     }
 
     public void drawValue() {

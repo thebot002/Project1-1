@@ -1,5 +1,3 @@
-package function;
-
 import java.util.ArrayList;
 
 public class ShapeList {
@@ -41,7 +39,8 @@ public class ShapeList {
 	}
 
 	public Shape getShape(int nb){
-		listOfShapes.get(nb);
+		Shape s = listOfShapes.get(nb);
+		return s;
 	}
 	public int getLength(){
 		return listOfShapes.size();
