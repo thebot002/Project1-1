@@ -42,6 +42,9 @@ public class ShapeList {
 		Shape s = listOfShapes.get(nb);
 		return s;
 	}
+	public Shape getRandomShape(){
+		return listOfShapes.get((int)(Math.random()*listOfShapes.size()));
+	}
 	public int getLength(){
 		return listOfShapes.size();
 	}
