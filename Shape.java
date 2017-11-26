@@ -10,6 +10,9 @@ public class Shape {
 	public String[][] getShape(){
 		return shape;
 	}
+  
+	public static void main(String[] args){}
+	
 	public String getShapeID(){
 		for(int i=0;i<shape.length;i++)
 			for(int j=0;j<shape[i].length;j++)
