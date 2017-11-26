@@ -64,7 +64,7 @@ public class Shape {
 	}
 	public void flipH(){ //horizontal
 		 for(int i=0; i<shape.length; i++){
-			  for(int j=0;j<(shape[0].length-1)/2;j++){
+			  for(int j=0;j<shape[0].length/2;j++){
 					String temp = shape[i][j];
 					shape[i][j] = shape[i][shape[0].length-1-j];
 					shape[i][shape[0].length-1-j] = temp;
@@ -72,7 +72,7 @@ public class Shape {
 		 }
 	}
 	public void flipV(){ //Vertical
-		 for(int i=0; i<(shape.length-1)/2; i++){
+		 for(int i=0; i<shape.length/2; i++){
 			  for(int j=0;j<shape[0].length;j++){
 					String temp = shape[i][j];
 					shape[i][j] = shape[shape.length-1-i][j];

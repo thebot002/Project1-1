@@ -43,11 +43,13 @@ class GameCanvas extends PentPanel implements ActionListener {
 	 public Shape activeShape;
 	 public Shape nextShape1;
 	 public ShapeList list = new ShapeList();
-	 public int speed = 600;
 	 public Timer runtime;
 
+	 private int speedDefault = 600;
+	 private int speedUp = 200;
 	 private int x=0;
 	 private int y=0;
+	 private int score = 0;
 
 	public GameCanvas(int W, int H,  Font f, int s) {
         super(W, H, f, s, 0, 0);
@@ -74,31 +76,30 @@ class GameCanvas extends PentPanel implements ActionListener {
 
 		  nextShape1 = list.getRandomShape();
         drawBoard(board);
-
-		  class Action implements ActionListener{
+		  class ActionTick implements ActionListener{
 			  public void actionPerformed(ActionEvent e) {
-	           if(board.isPlaced(activeShape,x,y)){
+				  if(board.isPlaced(activeShape,x,y)){
+					  if(y==0) gameOver();
 					  activeShape = nextShape1;
-	              nextShape1 = list.getRandomShape();
+					  nextShape1 = list.getRandomShape();
 					  if(activeShape.getHeight()>activeShape.getWidth()) activeShape.rotateR();
 					  x=0;
 					  y=0;
-	              board.addShapeToBoard(activeShape,x,y);
-					  System.out.println("bite");
+					  score += board.breakLines();
+					  board.addShapeToBoard(activeShape,x,y);
 					  drawBoard(board);
 					  //x-=(int)((activeShape.getWidth() / 2));
-	           }
-	           else{
-	              board.moveDown(activeShape,x,y);
+				  }
+				  else{
+					  board.moveDown(activeShape,x,y);
 					  drawBoard(board);
 					  y++;
-	           }
+				  }
 			  }
-        }
+		  }
+		  ActionTick gameTick = new ActionTick();
 
-        Action listener = new Action();
-
-		  runtime = new Timer(speed,listener);
+		  runtime = new Timer(speedDefault,gameTick);
 
         timer = new Timer(1000, this);
         timer.start();
@@ -113,31 +114,41 @@ class GameCanvas extends PentPanel implements ActionListener {
 
     public void upKeyPress() {
         board.rotate(activeShape,x,y);
-		  //activeShape.rotateR();
 		  drawBoard(board);
     }
 
     public void downKeyPress() {
-		 board.moveDown(activeShape,x,y);
-		 y++;
-		 drawBoard(board);
+		 runtime.setDelay(speedUp);
     }
+	 public void downKeyRelease(){
+		 runtime.setDelay(speedDefault);
+	 }
 
     public void spaceKeyPress() {
-        //dropDown();
+        board.dropDown(activeShape, x, y);
+		  activeShape = nextShape1;
+		  nextShape1 = list.getRandomShape();
+		  if(activeShape.getHeight()>activeShape.getWidth()) activeShape.rotateR();
+		  x=0;
+		  y=0;
+		  score += board.breakLines();
+		  board.addShapeToBoard(activeShape,x,y);
+		  drawBoard(board);
     }
 
     public void leftKeyPress() {
-        board.moveLeft(activeShape,x,y);
-		  x--;
-		  drawBoard(board);
-
+         if(board.moveLateralPossible(activeShape, x, y,-1)) {
+		  		board.moveLeft(activeShape,x,y);
+		  		x--;
+			}
+		   drawBoard(board);
     }
     public void rightKeyPress() {
-        board.moveRight(activeShape,x,y);
-		  x++;
-		  drawBoard(board);
-
+		 	if(board.moveLateralPossible(activeShape, x, y,1)) {
+        		board.moveRight(activeShape,x,y);
+		  		x++;
+	  		}
+		   drawBoard(board);
     }
 
     private void drawGame() {
@@ -230,4 +241,8 @@ class GameCanvas extends PentPanel implements ActionListener {
         g.setColor(c[1]);
         g.fillRect(x + gap, y + gap, inner, inner);
     }
+	 private void gameOver(){
+		 runtime.stop();
+		 System.out.println("Game over...");
+	 }
 }

@@ -36,12 +36,6 @@ public class PentrisBoard {
 			}
 		}
 	}
-	public void addShapeToBoard(Shape shape){
-		if(shape.getHeight()>shape.getWidth()) shape.rotateR();
-		int x = 3 - (int)(shape.getWidth()*1.0/2);
-		addShapeToBoard(shape,x,0);
-	}
-
 	/*
 	 * This method removes shapes from the board, we dont need it for the specific
 	 * algorithm we used right now but we will probably need it at some point
@@ -57,17 +51,15 @@ public class PentrisBoard {
 		}
 	}
 
-
 	public boolean isPlaced(Shape shape, int x, int y) {
 		for(int i = shape.getHeight()-1; i>=0; i--){
 			for(int j=0; j<shape.getWidth();j++){
-				System.out.print(shape.getElement(i,j));
 				if(!shape.getElement(i,j).equals("-")){
-					if(i>=shape.getHeight()-1 || (i<shape.getHeight()-1 && shape.getElement(i+1,j).equals("-")))
+					if(i>=shape.getHeight()-1 || (i<shape.getHeight()-1 && shape.getElement(i+1,j).equals("-"))){
 						if(i+y+1>=board.length || !board[i+y+1][j+x].equals("-")) return true;
+					}
 				}
 			}
-			System.out.println();
 		}
 		return false;
 	}
@@ -115,10 +107,10 @@ public class PentrisBoard {
 		return true;
 	}
 
-	public void breakLines() {
-
+	public int breakLines() {
+		int counter = 0;
 		String[][] newBoard = board;
-		for (int i = board.length - 1; i > 0; i--) {
+		for (int i = board.length - 1; i >= 0; i--) {
 
 			if(isLineFull(i)) {
 				int j=i;
@@ -129,9 +121,11 @@ public class PentrisBoard {
 					j--;
 				}
 				i++;
+				counter++;
 			}
 		}
 		board=newBoard;
+		return counter;
 	}
 
 	public boolean isRotatePossible(Shape shape, int x, int y) {
@@ -150,42 +144,34 @@ public class PentrisBoard {
 		return isPossible;
 	}
 
-	public boolean isMoveLeftPossible(Shape shape, int x, int y) {
-		for(int i=0; i<shape.getShape().length; i++) {
-
-				if(y>0 && !shape.getShape()[i][0].equals("-") && !board[x+i][y-1].equals("-"))
-
+	public boolean moveLateralPossible(Shape shape, int x, int y, int dir){
+		for(int i=0;i<shape.getHeight();i++){
+			for(int j=0;j<shape.getWidth();j++){
+				if(dir == 1 && (x+shape.getWidth()==board[0].length || j==shape.getWidth()-1 && !shape.getElement(i,j).equals("-") && !board[y+i][x+j+dir].equals("-"))){
 					return false;
-
-
+				}
+				else if(dir == -1 && (x==0 || !shape.getElement(i,0).equals("-") && !board[y+i][x-1].equals("-"))){
+					return false;
+				}
+				else if(j>0&&j<shape.getWidth()-1){
+					if(!shape.getElement(i,j).equals("-") && shape.getElement(i,j+dir).equals("-") && !board[y+i][x+j+dir].equals("-"))
+						return false;
+				}
+			}
 		}
 		return true;
 	}
 
-	public boolean isMoveRightPossible(Shape shape, int x, int y) {
-		boolean isPossible=true;
-		for(int i=0; i<shape.getShape()[0].length; i++) {
-			if(y<shape.getShape()[0].length && !shape.getShape()[i][shape.getShape()[0].length-1].equals("-") && !board[i][y+shape.getShape()[0].length].equals("-"))
-				isPossible=false;
-
-		}
-		return isPossible;
-	}
-
 	public void moveLeft(Shape shape, int xCoordinateBoard, int yCoordinateBoard) {
-		 //if(collisionLeft(shape, xCoordinateBoard, yCoordinateBoard) == false ) {
-			  removeShapeFromBoard(shape, xCoordinateBoard, yCoordinateBoard);
-			  xCoordinateBoard--;
-			  addShapeToBoard(shape, xCoordinateBoard, yCoordinateBoard);
-		 //}
+		removeShapeFromBoard(shape, xCoordinateBoard, yCoordinateBoard);
+		xCoordinateBoard--;
+		addShapeToBoard(shape, xCoordinateBoard, yCoordinateBoard);
 	}
 
 	public void moveRight(Shape shape, int xCoordinateBoard, int yCoordinateBoard) {
-		 //if(collisionLeft(shape, xCoordinateBoard, yCoordinateBoard) == false ) {
-			  removeShapeFromBoard(shape, xCoordinateBoard, yCoordinateBoard);
-			  xCoordinateBoard++;
-			  addShapeToBoard(shape, xCoordinateBoard, yCoordinateBoard);
-		 //}
+		removeShapeFromBoard(shape, xCoordinateBoard, yCoordinateBoard);
+		xCoordinateBoard++;
+		addShapeToBoard(shape, xCoordinateBoard, yCoordinateBoard);
 	}
 
 	// no need for collisition check because already checked is placed in GameCanvas
@@ -202,62 +188,22 @@ public class PentrisBoard {
 		addShapeToBoard(shape, xCoordinateBoard, yCoordinateBoard);
 	}
 
-	public Boolean collisionLeft(Shape shape, int x, int y) {
-		String[][] pentomino = shape.getShape();
-		 int i = 0;
-		 int j = 0;
-		 while(i < pentomino.length) {
-			  while(j < pentomino[0].length) {
-					if(!pentomino[i][j].equals("-")  && x - 1 >= 0 && board[y+i][x+j-1] == "-" ) { // Looks if there is space to the left of the shape
-						 counter++;
-						 i++;
-						 j = 0;
-					}
-					else {
-						 if(j < pentomino[0].length-1) {
-							  j++;
-						 }
-						 else { // So j equal to pentomino[0].length-1
-							  i++;
-							  j = 0;
-						 }
-					}
-			  }
-		 }
-		 if(counter == pentomino[0].length) {
-			  return false;
-		 }
-		 return true;
+	public void dropDown(Shape shape, int xCoordinateBoard, int yCoordinateBoard){
+		removeShapeFromBoard(shape, xCoordinateBoard, yCoordinateBoard);
+		int newY = board.length - (shape.getHeight()-1) -1;
+		for(int j=0; j<shape.getWidth(); j++){
+			int i=shape.getHeight()-1;
+			while(shape.getElement(i,j).equals("-")){
+				i--;
+			}
+			for(int k=newY; k>yCoordinateBoard; k--){
+				if(!board[k][j].equals("-")){
+					newY -= k;
+				}
+			}
+		}
+		addShapeToBoard(shape, xCoordinateBoard, newY);
 	}
-
-	public Boolean collisionRight(Shape shape, int x, int y) {
-		 String[][] pentomino = shape.getShape();
-		 int i = 0;
-		 int j = 0;
-		 while(i < pentomino.length) {
-			  while(j < pentomino[0].length) {
-					if(!pentomino[i][j].equals("-") && x + pentomino.length < board.length - 1 && board[y+i][x+j+1] == "-") { // Looks if there is space to the right of the shape()
-						 counter++;
-						 i++;
-						 j = 0;
-					}
-					else {
-						 if(j < pentomino[0].length-1) {
-							  j++;
-						 }
-						 else { // So j equal to pentomino[0].length-1
-							  i++;
-							  j = 0;
-						 }
-					}
-			  }
-		 }
-		 if(counter == pentomino[0].length) {
-			  return false;
-		 }
-		 return true;
-	}
-
 
 	public void printBoard() {
 		for (int m = 0; m < board.length; m++) {
@@ -268,5 +214,4 @@ public class PentrisBoard {
 			System.out.println("");
 		}
 	}
-
 }
