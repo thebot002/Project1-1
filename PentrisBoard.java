@@ -1,6 +1,8 @@
 import java.lang.*;
 
 public class PentrisBoard {
+
+	public static void main(String[] args){}
 	private String[][] board;
 	private int counter;
 	private final boolean DEBUG = true;

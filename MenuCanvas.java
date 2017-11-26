@@ -91,5 +91,6 @@ class MenuCanvas extends PentPanel {
         g.fillRect(ox + SQ, oy, SQ, SQ);
         g.fillRect(ox + SQ*2, oy, SQ, SQ);
         g.fillRect(ox + SQ*3, oy, SQ, SQ);
+
     }
 }
