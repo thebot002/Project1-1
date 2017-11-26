@@ -10,7 +10,7 @@ public class PentPanel extends JPanel {
 	protected BufferedImage image;
     protected Font font;
     protected int h, w;
-    protected Color BACKGROUND = new Color(39,40,34); 
+    protected Color BACKGROUND = new Color(39,40,34);
     protected int SQ;
     protected Color[] pentColors = {new Color(255,255,0), new Color(255,0,255), new Color(0,255,255)}; 
 
@@ -60,4 +60,5 @@ public class PentPanel extends JPanel {
     public void spaceKeyPress() {}
     public void leftKeyPress() {}
     public void rightKeyPress() {}
+ 	 public void downKeyRelease() {}
 }

@@ -1,15 +1,11 @@
-//package function;
-
 import java.util.ArrayList;
 
 public class ShapeList extends ArrayList<Shape> {
 	
 	public static void main(String[] args){}
 	private ShapeFactory shapeFactory = new ShapeFactory();
-	//private ArrayList<Shape> listOfShapes = new ArrayList<>();
-	
 	public ShapeList() {
-		
+
 		Shape shapeI = shapeFactory.buildShapeI();
 		Shape shapeL = shapeFactory.buildShapeL();
 		Shape shapeN = shapeFactory.buildShapeN();
@@ -36,11 +32,20 @@ public class ShapeList extends ArrayList<Shape> {
 		add(shapeL);
 		add(shapeI);
 	}
-	
+
 	public ArrayList<Shape> getShapeList(){
 		return this;
 	}
-	
-	
-	
+
+	public Shape getShape(int nb){
+		Shape s = listOfShapes.get(nb);
+		return s;
+	}
+	public Shape getRandomShape(){
+		return listOfShapes.get((int)(Math.random()*listOfShapes.size()));
+	}
+	public int getLength(){
+		return listOfShapes.size();
+	}
+
 }
