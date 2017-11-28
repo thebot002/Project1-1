@@ -22,7 +22,6 @@ public class ScoreBox extends PentPanel{
         title = t;
         font = f;
         drawIntial();
-        //drawValue();
     }
 
     public String getTitle() {
@@ -47,22 +46,6 @@ public class ScoreBox extends PentPanel{
         g.dispose();
     }
 
-    // public void drawValue() {
-    //     Graphics g = image.getGraphics();
-
-    //     g.setColor(BACKGROUND);
-    //     g.fillRect(20,40,w-40,30);
-
-    //     g.setFont(font.deriveFont(14f));
-    //     g.setColor(Color.white);
-
-    //     int textWidth = g.getFontMetrics().stringWidth("" + value);
-    //     g.drawString(("" + value), (w-textWidth)/2, 60);
-
-    //     repaint();
-    //     g.dispose();
-    // }
-
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         g.drawImage(image, 0, 0, null);
@@ -81,8 +64,4 @@ public class ScoreBox extends PentPanel{
     }
 
     public void tick() {}
-        
-
-    //     drawValue();
-    // }
 }

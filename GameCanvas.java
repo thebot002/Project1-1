@@ -7,39 +7,56 @@ import java.util.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.Timer;
+import java.util.Random;
 
 class GameCanvas extends PentPanel implements ActionListener {
 	public static void main(String[] args) {}
 
-
+    private ShapeBox shapeBox;
+    private TextBox timeBox;
+	 private TextBox scoreBox;
     private Timer timer;
     private ArrayList<ScoreBox> scoreBoxes= new ArrayList<ScoreBox>();
-    public Color[][] pentColors = {
-        {new Color(255,255,127), new Color(255,255,0), new Color(127,127,0)},   //yellow
-        {new Color(255,127,255), new Color(255,0,255), new Color(127,0,127)},   //purple
-        {new Color(127,255,255), new Color(0,255,255), new Color(0,127,127)}    //cyan
-    }; 
 
-    public int[][] board = {
-        {0,0,0,0,0},
-        {0,0,0,0,0},
-        {0,0,1,1,0},
-        {0,0,1,0,0},
-        {0,0,1,0,0},
-        {0,0,1,0,0},
-        {0,0,0,0,0},
-        {0,0,0,0,0},
-        {0,0,0,0,0},
-        {0,0,0,0,0},
-        {0,0,0,0,0},
-        {0,0,0,0,0},
-        {0,0,0,0,0},
-        {0,0,0,0,0},
-        {0,0,0,0,0},
+    private Random random = new Random();
+    private int time =0;
+
+	 String[][] b = {
+        {"-","-","-","-","-"},
+        {"-","-","-","-","-"},
+        {"-","-","-","-","-"},
+        {"-","-","-","-","-"},
+        {"-","-","-","-","-"},
+        {"-","-","-","-","-"},
+        {"-","-","-","-","-"},
+        {"-","-","-","-","-"},
+        {"-","-","-","-","-"},
+        {"-","-","-","-","-"},
+        {"-","-","-","-","-"},
+        {"-","-","-","-","-"},
+        {"-","-","-","-","-"},
+        {"-","-","-","-","-"},
+        {"-","-","-","-","-"},
     };
+
+    public PentrisBoard board = new PentrisBoard(b);
+
+	 public Shape activeShape;
+	 public Shape nextShape;
+	 public ShapeList shapeList;
+	 public Timer runtime;
+
+	 private int speedDefault = 600;
+	 private int speedUp = 200;
+	 private int x=0;
+	 private int y=0;
+	 private int score = 0;
 
 	public GameCanvas(int W, int H,  Font f, int s) {
         super(W, H, f, s, 0, 0);
+        shapeList = new ShapeList();
+		  activeShape = shapeList.getRandomShape();
+        nextShape = shapeList.getRandomShape();
         drawGame();
         startGame();
     }
@@ -51,16 +68,48 @@ class GameCanvas extends PentPanel implements ActionListener {
     }
 
     private void tick() {
+        time++;
+        timeBox.setTarget(time);
         drawScoreBoxes();
     }
 
-    public void startGame() {
-        drawBoard(board);
+    public void startGame(){
+		  if(activeShape.getHeight()>activeShape.getWidth()) activeShape.rotateR();
+		  if(!board.addShapeToBoard(activeShape)) gameOver();
 
-        timer = new Timer(1000, this);
-        timer.start();
+        drawBoard(board);
+		  class ActionTick implements ActionListener{
+			  public void actionPerformed(ActionEvent e) {
+				  if(board.isPlaced(activeShape,x,y)){
+					  if(y==0) gameOver();
+					  activeShape = nextShape;
+					  nextShape = shapeList.getRandomShape();
+					  shapeBox.drawValue(nextShape);
+					  if(activeShape.getHeight()>activeShape.getWidth()) activeShape.rotateR();
+					  x=0;
+					  y=0;
+					  score += board.breakLines();
+					  scoreBox.setTarget(score);
+					  if(!board.addShapeToBoard(activeShape)) gameOver();
+					  drawBoard(board);
+					  //x-=(int)((activeShape.getWidth() / 2));
+				  }
+				  else{
+					  board.moveDown(activeShape,x,y);
+					  drawBoard(board);
+					  y++;
+				  }
+			  }
+		  }
+		  ActionTick gameTick = new ActionTick();
+
+		  runtime = new Timer(speedDefault,gameTick);
+
+      timer = new Timer(1000, this);
+      timer.start();
+		runtime.start();
     }
-    
+
     @Override
     public void actionPerformed(ActionEvent e) {
         tick();
@@ -68,22 +117,42 @@ class GameCanvas extends PentPanel implements ActionListener {
     }
 
     public void upKeyPress() {
-        //rotateShape();
+		  if(board.isRotatePossible(activeShape,x,y))board.rotate(activeShape,x,y);
+		  drawBoard(board);
     }
 
     public void downKeyPress() {
-        //speedUp();
+		 runtime.setDelay(speedUp);
     }
+	 public void downKeyRelease(){
+		 runtime.setDelay(speedDefault);
+	 }
 
     public void spaceKeyPress() {
-        //dropDown();
+        board.dropDown(activeShape, x, y);
+		  activeShape = nextShape;
+		  nextShape = shapeList.getRandomShape();
+		  if(activeShape.getHeight()>activeShape.getWidth()) activeShape.rotateR();
+		  x=0;
+		  y=0;
+		  score += board.breakLines();
+		  board.addShapeToBoard(activeShape,x,y);
+		  drawBoard(board);
     }
 
     public void leftKeyPress() {
-        //moveLeft();
+         if(board.moveLateralPossible(activeShape, x, y,-1)) {
+		  		board.moveLeft(activeShape,x,y);
+		  		x--;
+			}
+		   drawBoard(board);
     }
     public void rightKeyPress() {
-        //moveRight();
+		 	if(board.moveLateralPossible(activeShape, x, y,1)) {
+        		board.moveRight(activeShape,x,y);
+		  		x++;
+	  		}
+		   drawBoard(board);
     }
 
     private void drawGame() {
@@ -95,32 +164,34 @@ class GameCanvas extends PentPanel implements ActionListener {
         //'origin' x and y positions to draw the board from.
         int ox = (w-SQ*5)/2;
         int oy = SQ;
-    
+
 
         //draw border
         for(int y=-1; y<16; y++) {
-            drawBlock(g, ox - SQ, oy + SQ * y, pentColors[0]);
-            drawBlock(g, ox + 5 * SQ, oy + SQ * y, pentColors[0]);
+            drawBlock(g, ox - SQ, oy + SQ * y, pentColors[0], SQ);
+            drawBlock(g, ox + 5 * SQ, oy + SQ * y, pentColors[0], SQ);
         }
 
         for(int x=0; x<5; x++) {
-            drawBlock(g, ox + SQ * x, oy - SQ, pentColors[0]);
-            drawBlock(g, ox + SQ * x, oy + 15 * SQ, pentColors[0]);
+            drawBlock(g, ox + SQ * x, oy - SQ, pentColors[0], SQ);
+            drawBlock(g, ox + SQ * x, oy + 15 * SQ, pentColors[0], SQ);
         }
 
 
         //create score boxes
-        TextBox scoreBox = new TextBox(SQ/2, SQ*4, font, SQ, "Score");
-        TextBox highScoreBox = new TextBox((SQ*23)/2, SQ*5, font, SQ, "High Score");
+        TextBox highScoreBox = new TextBox((SQ*23)/2, SQ*6, font, SQ, "High Score");
         TextBox levelBox = new TextBox(SQ/2, SQ*7, font, SQ, "Level");
-        TextBox timeBox = new TextBox(SQ/2, SQ, font, SQ, "Time");
-        ShapeBox shapeBox = new ShapeBox((SQ*23)/2, SQ, font, SQ, "Next Shape");
+		  scoreBox = new TextBox(SQ/2, SQ*4, font, SQ, "Score");
+        timeBox = new TextBox(SQ/2, SQ, font, SQ, "Time");
+        shapeBox = new ShapeBox((SQ*23)/2, SQ, font, SQ, "Next Shape",nextShape);
 
         scoreBoxes.add(timeBox);
-        scoreBoxes.add(shapeBox);
+        scoreBoxes.add(scoreBox);
         scoreBoxes.add(levelBox);
         scoreBoxes.add(highScoreBox);
-        scoreBoxes.add(scoreBox);
+        //scoreBoxes.add(shapeBox);
+
+        add(shapeBox);
 
         for(ScoreBox box : scoreBoxes) {
             add(box);
@@ -133,9 +204,9 @@ class GameCanvas extends PentPanel implements ActionListener {
         for(ScoreBox box : scoreBoxes) {
             box.tick();
         }
-    } 
+    }
 
-    private void drawBoard(int[][] board) {
+    private void drawBoard(PentrisBoard pBoard) {
 
         int ox = (w-SQ*5)/2;
         int oy = SQ;
@@ -144,35 +215,21 @@ class GameCanvas extends PentPanel implements ActionListener {
         g.setColor(BACKGROUND);
         g.fillRect(ox,oy,SQ*5,SQ*15);
 
+		  String[][] board = pBoard.getBoard();
 
         for(int x=0; x<board[0].length; x++) {
             for(int y=0; y<board.length; y++) {
-                if(board[y][x] != 0)
-                    drawBlock(g, ox + x * SQ, oy + y * SQ, pentColors[board[y][x]]);
+                if(!board[y][x].equals("-"))
+                    drawBlock(g, ox + x * SQ, oy + y * SQ, pentColors[1], SQ);
+
             }
         }
 
         repaint();
     }
 
-    private void drawBlock(Graphics g, int x, int y, Color[] c) {
-        int[] xp = {x, x, x + SQ};
-        int[] yp = {y, y + SQ, y};
-
-        g.setColor(c[0]);
-        g.fillPolygon(new Polygon(xp, yp, 3));
-
-
-        xp[0] = x + SQ;
-        yp[0] = y + SQ;
-
-        g.setColor(c[2]);
-        g.fillPolygon(new Polygon(xp, yp, 3));
-
-        int inner = (int)(SQ * 7)/10;
-        int gap = (int)(SQ-inner)/2;
-
-        g.setColor(c[1]);
-        g.fillRect(x + gap, y + gap, inner, inner);
-    }
+	 private void gameOver(){
+		 runtime.stop();
+		 System.out.println("Game over...");
+	 }
 }

@@ -19,7 +19,7 @@ public class PentWindow extends JFrame{
     private Thread gameThread;
     private PentPanel activePanel;
     private int squareSize = 40;
-    private final int H = 17*squareSize; 
+    private final int H = 17*squareSize;
     private final int W = 7*squareSize + squareSize*8;
     private Font font;
 
@@ -47,7 +47,7 @@ public class PentWindow extends JFrame{
         MenuCanvas menuCanvas = new MenuCanvas(W, H, font, squareSize);
         setActivePanel(menuCanvas);
         setVisible(true);
-    }        
+    }
 
     public void createGame() {
         GameCanvas gameCanvas = new GameCanvas(W, H, font, squareSize);
@@ -82,11 +82,17 @@ public class PentWindow extends JFrame{
 
                 if(k == 10) {
                     if(getActivePanel() instanceof MenuCanvas)
-                        if(((MenuCanvas)getActivePanel()).getPos() == 0) 
+                        if(((MenuCanvas)getActivePanel()).getPos() == 0)
                             createGame();
                 }
             }
-        }); 
+            public void keyReleased(KeyEvent e){
+               int k = e.getKeyCode();
+               if(k == 83 || k == 40) {
+                  getActivePanel().downKeyRelease();
+               }
+            }
+        });
     }
 
     private void setActivePanel(PentPanel panel) {
@@ -102,4 +108,3 @@ public class PentWindow extends JFrame{
         return activePanel;
     }
 }
-    
