@@ -45,7 +45,10 @@ public class PentWindow extends JFrame{
         try { font = Font.createFont(Font.TRUETYPE_FONT, new File("PixelFont.ttf")).deriveFont(16f); } catch (IOException e) {e.printStackTrace();} catch(FontFormatException e) {e.printStackTrace();}
 
         MenuCanvas menuCanvas = new MenuCanvas(W, H, font, squareSize);
-        setActivePanel(menuCanvas);
+        
+
+        ScoreCanvas scoreCanvas = new ScoreCanvas(W, H, font, squareSize);
+        setActivePanel(scoreCanvas);
         setVisible(true);
     }
 
