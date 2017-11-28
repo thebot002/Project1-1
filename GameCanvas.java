@@ -47,7 +47,7 @@ class GameCanvas extends PentPanel implements ActionListener {
 	 public Timer runtime;
 
 	 private int speedDefault = 600;
-	 private int speedUp = 200;
+	 private int speedUp = 100;
 	 private int x=0;
 	 private int y=0;
 	 private int score = 0;
@@ -88,7 +88,18 @@ class GameCanvas extends PentPanel implements ActionListener {
 					  if(activeShape.getHeight()>activeShape.getWidth()) activeShape.rotateR();
 					  x=0;
 					  y=0;
-					  score += board.breakLines();
+					  switch(board.breakLines()){
+						  case 1: score += 10;
+						  break;
+						  case 2: score += 30;
+						  break;
+						  case 3: score += 50;
+						  break;
+						  case 4: score += 70;
+						  break;
+						  case 5: score += 90;
+						  break;
+				  	  }
 					  scoreBox.setTarget(score);
 					  if(!board.addShapeToBoard(activeShape)) gameOver();
 					  drawBoard(board);
@@ -141,14 +152,14 @@ class GameCanvas extends PentPanel implements ActionListener {
     }
 
     public void leftKeyPress() {
-         if(board.moveLateralPossible(activeShape, x, y,-1)) {
+         if(board.moveLeftPossible(activeShape, x, y)) {
 		  		board.moveLeft(activeShape,x,y);
 		  		x--;
 			}
 		   drawBoard(board);
     }
     public void rightKeyPress() {
-		 	if(board.moveLateralPossible(activeShape, x, y,1)) {
+		 	if(board.moveRightPossible(activeShape, x, y)) {
         		board.moveRight(activeShape,x,y);
 		  		x++;
 	  		}
@@ -228,8 +239,14 @@ class GameCanvas extends PentPanel implements ActionListener {
         repaint();
     }
 
+	 public int getScore(){
+		 return score;
+	 }
+
 	 private void gameOver(){
 		 runtime.stop();
+		 activeShape = null;
+		 timer.stop();
 		 System.out.println("Game over...");
 	 }
 }

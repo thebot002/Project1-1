@@ -123,21 +123,23 @@ public class PentrisBoard {
 		return true;
 	}
 
-	public boolean moveLateralPossible(Shape shape, int x, int y, int dir){
+	public boolean moveLeftPossible(Shape shape, int x, int y){
+		if(x==0) return false;
 		for(int i=0;i<shape.getHeight();i++){
 			for(int j=0;j<shape.getWidth();j++){
-				if(dir == 1 && (x+shape.getWidth()==board[0].length || !shape.getElement(i,j).equals("-") && !board[y+i][x+j+dir].equals("-"))){
-					if(j<shape.getWidth()-1 && shape.getElement(i,j+1).equals("-"))
-						return false;
-				}
-				else if(dir == -1 && (x==0 || !shape.getElement(i,j).equals("-") && !board[y+i][x+j-1].equals("-"))){
-					if(j>0 && shape.getElement(i,j-1).equals("-"))
-						return false;
-				}
-				else if(j>0&&j<shape.getWidth()-1){
-					if(!shape.getElement(i,j).equals("-") && shape.getElement(i,j+dir).equals("-") && !board[y+i][x+j+dir].equals("-"))
-						return false;
-				}
+				if(j==0 && !shape.getElement(i,j).equals("-") && !board[y+i][x+j-1].equals("-")) return false;
+				if(j>0 && !shape.getElement(i,j).equals("-") && shape.getElement(i,j-1).equals("-") && !board[y+i][x+j-1].equals("-")) return false;
+			}
+		}
+		return true;
+	}
+
+	public boolean moveRightPossible(Shape shape,int x, int y){
+		if(x+shape.getWidth()-1==board[0].length-1) return false;
+		for(int i=0;i<shape.getHeight();i++){
+			for(int j=0;j<shape.getWidth();j++){
+				if(j==shape.getWidth()-1 && !shape.getElement(i,j).equals("-") && !board[y+i][x+j+1].equals("-")) return false;
+				if(j<shape.getWidth()-1 && !shape.getElement(i,j).equals("-") && shape.getElement(i,j+1).equals("-") && !board[y+i][x+j+1].equals("-")) return false;
 			}
 		}
 		return true;
