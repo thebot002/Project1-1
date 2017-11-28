@@ -48,7 +48,7 @@ public class PentWindow extends JFrame{
         
 
         ScoreCanvas scoreCanvas = new ScoreCanvas(W, H, font, squareSize);
-        setActivePanel(scoreCanvas);
+        setActivePanel(menuCanvas);
         setVisible(true);
     }
 
