@@ -29,7 +29,12 @@ public class ShapeBox extends ScoreBox {
 
         //smaller square sizes
         int ss = SQ/2;
-        String[][] shape = s.getShape();
+        String[][] shape = new String[s.getHeight()][s.getWidth()];
+		  for(int i=0; i<shape.length; i++){
+			  for(int j=0; j<shape[0].length; j++){
+				  shape[i][j] = s.getElement(s.getHeight()-1-i,j);
+			  }
+		  }
 
         //so the shape gets placed in the center of the box.
         int ix = (int)(SQ*1.5) - (ss*shape.length)/2;
