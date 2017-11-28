@@ -167,14 +167,15 @@ class GameCanvas extends PentPanel implements ActionListener {
 
 
 		//draw border
+		Color border = new Color(48, 48, 48);
 		for(int y=-1; y<16; y++) {
-			drawBlock(g, ox - SQ, oy + SQ * y, Color.BLACK, SQ);
-			drawBlock(g, ox + 5 * SQ, oy + SQ * y, Color.BLACK, SQ);
+			drawBlock(g, ox - SQ, oy + SQ * y, border, SQ);
+			drawBlock(g, ox + 5 * SQ, oy + SQ * y, border, SQ);
 		}
 
 		for(int x=0; x<5; x++) {
-			drawBlock(g, ox + SQ * x, oy - SQ, Color.BLACK, SQ);
-			drawBlock(g, ox + SQ * x, oy + 15 * SQ, Color.BLACK, SQ);
+			drawBlock(g, ox + SQ * x, oy - SQ, border, SQ);
+			drawBlock(g, ox + SQ * x, oy + 15 * SQ, border, SQ);
 		}
 
 
