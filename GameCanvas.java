@@ -7,7 +7,6 @@ import java.util.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.Timer;
-import java.util.Random;
 
 class GameCanvas extends PentPanel implements ActionListener {
 	public static void main(String[] args) {}
@@ -19,7 +18,7 @@ class GameCanvas extends PentPanel implements ActionListener {
 	private ArrayList<ScoreBox> scoreBoxes= new ArrayList<ScoreBox>();
 
 	private Random random = new Random();
-	private int time =0;
+	private int time = 0;
 
 	 String[][] b = {
 		{"-","-","-","-","-"},
@@ -41,10 +40,10 @@ class GameCanvas extends PentPanel implements ActionListener {
 
 	public PentrisBoard board = new PentrisBoard(b);
 
-	 public Shape activeShape;
-	 public Shape nextShape;
-	 public ShapeList shapeList;
-	 public Timer runtime;
+	public Shape activeShape;
+	public Shape nextShape;
+	public ShapeList shapeList;
+	public Timer runtime;
 
 	 private int speedDefault = 600;
 	 private int speedUp = 100;
@@ -55,7 +54,6 @@ class GameCanvas extends PentPanel implements ActionListener {
 
 	public GameCanvas(int W, int H,  Font f, int s) {
 		super(W, H, f, s, 0, 0);
-		colorList = new PentColors();
 		shapeList = new ShapeList();
 		activeShape = shapeList.getRandomShape();
 		nextShape = shapeList.getRandomShape();
@@ -181,13 +179,13 @@ class GameCanvas extends PentPanel implements ActionListener {
 
 		//draw border
 		for(int y=-1; y<16; y++) {
-			drawBlock(g, ox - SQ, oy + SQ * y, pentColors[0], SQ);
-			drawBlock(g, ox + 5 * SQ, oy + SQ * y, pentColors[0], SQ);
+			drawBlock(g, ox - SQ, oy + SQ * y, Color.BLACK, SQ);
+			drawBlock(g, ox + 5 * SQ, oy + SQ * y, Color.BLACK, SQ);
 		}
 
 		for(int x=0; x<5; x++) {
-			drawBlock(g, ox + SQ * x, oy - SQ, pentColors[0], SQ);
-			drawBlock(g, ox + SQ * x, oy + 15 * SQ, pentColors[0], SQ);
+			drawBlock(g, ox + SQ * x, oy - SQ, Color.BLACK, SQ);
+			drawBlock(g, ox + SQ * x, oy + 15 * SQ, Color.BLACK, SQ);
 		}
 
 

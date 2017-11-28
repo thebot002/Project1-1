@@ -3,6 +3,8 @@ import javax.swing.*;
 import javax.swing.border.*;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
+import java.util.*;
+
 
 public class PentPanel extends JPanel {
 	public static void main(String[] args){}
@@ -12,10 +14,11 @@ public class PentPanel extends JPanel {
     protected int h, w;
     protected Color BACKGROUND = new Color(39,40,34);
     protected int SQ;
-    protected Color[] pentColors = {new Color(255,255,0), new Color(255,0,255), new Color(0,255,255)}; 
+    protected HashMap<String, Color> colorList;
 
 	public PentPanel(int W, int H, Font f, int s, int X, int Y) {
         SQ = s; w = W; h = H; font = f;
+        colorList = new PentColors();
         setBackground(BACKGROUND);
         setPreferredSize(new Dimension(W,H));
         image = new BufferedImage(W, H, BufferedImage.TYPE_INT_ARGB);
@@ -49,16 +52,15 @@ public class PentPanel extends JPanel {
         for (int i=0; i<stringShape.length; i++) {
             for (int j=0; j<stringShape[0].length; j++) {
                 if(stringShape[i][j] != "-")
-                    drawBlock(g, i*s+x, j*s+y, pentColors[0], s);
+                    drawBlock(g, i*s+x, j*s+y, colorList.get(stringShape[i][j]), s);
             }
         }
     }
     
-
 	public void upKeyPress() {}
     public void downKeyPress() {}
     public void spaceKeyPress() {}
     public void leftKeyPress() {}
     public void rightKeyPress() {}
- 	 public void downKeyRelease() {}
+ 	public void downKeyRelease() {}
 }
