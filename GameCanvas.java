@@ -57,6 +57,7 @@ class GameCanvas extends PentPanel implements ActionListener {
 		shapeList = new ShapeList();
 		activeShape = shapeList.getRandomShape();
 		nextShape = shapeList.getRandomShape();
+		colorList = new PentColors();
 		drawGame();
 		startGame();
 	}
@@ -193,7 +194,7 @@ class GameCanvas extends PentPanel implements ActionListener {
 		//create score boxes
 		TextBox highScoreBox = new TextBox((SQ*23)/2, SQ*6, font, SQ, "High Score");
 		TextBox levelBox = new TextBox(SQ/2, SQ*7, font, SQ, "Level");
-		  scoreBox = new TextBox(SQ/2, SQ*4, font, SQ, "Score");
+		scoreBox = new TextBox(SQ/2, SQ*4, font, SQ, "Score");
 		timeBox = new TextBox(SQ/2, SQ, font, SQ, "Time");
 		shapeBox = new ShapeBox((SQ*23)/2, SQ, font, SQ, "Next Shape",nextShape);
 
@@ -228,6 +229,7 @@ class GameCanvas extends PentPanel implements ActionListener {
 		g.fillRect(ox,oy,SQ*5,SQ*15);
 
 		String[][] board = pBoard.getBoard();
+
 
 		for(int x=0; x<board[0].length; x++) {
 			for(int y=0; y<board.length; y++) {
