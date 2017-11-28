@@ -11,7 +11,7 @@ public class PentrisBoard {
 	//private ShapeFactory shapeOp = new ShapeFactory();
 
 	public PentrisBoard(){
-		this. board = new String[15][5];
+		this.board = new String[15][5];
 	}
 	public PentrisBoard(String[][] board) {
 		this.board = board;
