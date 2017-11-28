@@ -83,15 +83,16 @@ class GameCanvas extends PentPanel implements ActionListener {
 			public void actionPerformed(ActionEvent e) {
 				//shape is touching another shape
 				if(board.isPlaced(activeShape,x,y)) {
-					if(y==0) 
+					if(y==0) {
 						gameOver();
-					else
+					} else {
 						activeShape = nextShape;
 						nextShape = shapeList.getRandomShape();
 						shapeBox.drawValue(nextShape);
 						if(activeShape.getHeight()> activeShape.getWidth()) activeShape.rotateR();
 						x=0;
 						y=0;
+					}
           	switch(board.breakLines()){
 						  case 1: score += 10;
 						  break;
@@ -250,6 +251,7 @@ class GameCanvas extends PentPanel implements ActionListener {
 		 runtime.stop();
 		 activeShape = null;
 		 timer.stop();
-		 System.out.println("Game over...");
+		 PentWindow p = (PentWindow)SwingUtilities.getRoot(this);
+		 p.endGame();
 	 }
 }
