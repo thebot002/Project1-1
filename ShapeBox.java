@@ -16,10 +16,9 @@ public class ShapeBox extends ScoreBox {
                 new PentWindow();
             }});}
 
-	public ShapeBox(int x, int y, Font f, int s, String t) {
+	public ShapeBox(int x, int y, Font f, int s, String t,Shape shape) {
         super(x, y, f, s, t, s*3, s*4);
-        shape = 0;
-        drawValue();
+        drawValue(shape);
     }
 
     public void drawValue(Shape s) {
@@ -34,7 +33,7 @@ public class ShapeBox extends ScoreBox {
 
         //so the shape gets placed in the center of the box.
         int ix = (int)(SQ*1.5) - (ss*shape.length)/2;
-        int iy = (int)(SQ*1.5) - (ss*shape[0].length)/2 + ss; 
+        int iy = (int)(SQ*1.5) - (ss*shape[0].length)/2 + ss;
 
         drawShape(g, s, ix, iy, ss);
 

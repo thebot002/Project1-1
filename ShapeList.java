@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 
 public class ShapeList extends ArrayList<Shape> {
-	
+
 	public static void main(String[] args){}
 	private ShapeFactory shapeFactory = new ShapeFactory();
 	public ShapeList() {
@@ -38,14 +38,13 @@ public class ShapeList extends ArrayList<Shape> {
 	}
 
 	public Shape getShape(int nb){
-		Shape s = listOfShapes.get(nb);
-		return s;
+		return get(nb);
 	}
 	public Shape getRandomShape(){
-		return listOfShapes.get((int)(Math.random()*listOfShapes.size()));
+		return get((int)(Math.random()*size()));
 	}
 	public int getLength(){
-		return listOfShapes.size();
+		return size();
 	}
 
 }

@@ -6,6 +6,8 @@ public class PentrisBoard {
 	private String[][] board;
 	private int counter;
 	private final boolean DEBUG = true;
+	private int startX=0;
+	private int startY=0;
 	//private ShapeFactory shapeOp = new ShapeFactory();
 
 	public PentrisBoard(){
@@ -21,32 +23,39 @@ public class PentrisBoard {
 
 	// We use this method to add shapes to board
 	public void addShapeToBoard(Shape shape, int x, int y) {
-		int k = 0;
-
-		String[][] addShape = shape.getShape();
-
-//		while (addShape[0][k].equals("-")) {
-//			y = y - 1;
-//			k++;
-//		}
-		for (int i = 0; i < addShape.length; i++) {
-			for (int j = 0; j < addShape[0].length; j++) {
+		for (int i = 0; i < shape.getHeight(); i++) {
+			for (int j = 0; j < shape.getWidth(); j++) {
 				/* If the element of the shape array is not empty we copy it to the board */
-				if (!addShape[i][j].equals("-") && y+i<board.length && x+j<board[0].length) {
-					board[y + i][x + j] = addShape[i][j];
+				if (!shape.getElement(i,j).equals("-") && y+i<board.length && x+j<board[0].length) {
+					board[y + i][x + j] = shape.getElement(i,j);
 				}
 			}
 		}
 	}
-	/*
-	 * This method removes shapes from the board, we dont need it for the specific
-	 * algorithm we used right now but we will probably need it at some point
-	 */
+	public boolean addShapeToBoard(Shape shape){
+		int y = startY;
+		do{
+			if(insertionPossible(shape,startX,y)){
+				addShapeToBoard(shape,startX,y);
+				return true;
+			}
+			y--;
+		}while(y>=0);
+		return false;
+	}
+	private boolean insertionPossible(Shape shape,int x, int y){
+		for(int i=0; i<shape.getHeight(); i++){
+			for(int j=0; j<shape.getWidth(); j++){
+				if(!shape.getElement(i,j).equals("-") && !board[y+i][x+j].equals("-")) return false;
+			}
+		}
+		return true;
+	}
+
 	public void removeShapeFromBoard(Shape shape, int x, int y) {
-		String[][] removeShape = shape.getShape();
-		for (int i = 0; i <removeShape.length; i++) {
-			for (int j = 0; j <removeShape[0].length; j++) {
-				if (!removeShape[i][j].equals("-") && y+i<board.length && x+j<board[0].length) {
+		for (int i = 0; i < shape.getHeight(); i++) {
+			for (int j = 0; j < shape.getWidth(); j++) {
+				if (!shape.getElement(i,j).equals("-") && y+i<board.length && x+j<board[0].length) {
 					board[y + i][x + j] = "-";
 				}
 			}
@@ -65,27 +74,6 @@ public class PentrisBoard {
 		}
 		return false;
 	}
-
-//	public void avoidColisions(Shape newShape, int x, int y) {
-//
-//		String[][] shape = newShape.getShape();
-//
-//		for (int i = 0; i < shape.length; i++) {
-//
-//			if (!shape[i][shape[0].length - 1].equals("-")
-//					&& (shape[0].length - 1 + y > board[0].length - 1 || board[i][shape[0].length - 1] != "-")) {
-//				y--;
-//
-//				avoidColisions(newShape, x, y);
-//
-//			} else if (shape[i][0] != "-" && (y < 0 || board[x + i][y] != "-")) {
-//
-//				y++;
-//
-//				avoidColisions(newShape, x, y);
-//			}
-//		}
-//	}
 
 	public boolean isLineFull(int line) {
 		for (int j = 0; j < board[line].length; j++) {
@@ -131,29 +119,20 @@ public class PentrisBoard {
 	}
 
 	public boolean isRotatePossible(Shape shape, int x, int y) {
-
-		boolean isPossible=true;
-
-		shape.rotateR();
-
-		for(int i=0; i<shape.getShape().length; i++) {
-			for(int j=0; j<shape.getShape()[0].length; j++) {
-
-					if(!shape.getShape()[i][j].equals("-") && !board[x+i][y+j].equals("-") )
-						isPossible=false;
-			}
-		}
-		return isPossible;
+		if(shape.getHeight()>shape.getWidth() && x+shape.getWidth()-1 == board[0].length-1) return false;
+		return true;
 	}
 
 	public boolean moveLateralPossible(Shape shape, int x, int y, int dir){
 		for(int i=0;i<shape.getHeight();i++){
 			for(int j=0;j<shape.getWidth();j++){
-				if(dir == 1 && (x+shape.getWidth()==board[0].length || j==shape.getWidth()-1 && !shape.getElement(i,j).equals("-") && !board[y+i][x+j+dir].equals("-"))){
-					return false;
+				if(dir == 1 && (x+shape.getWidth()==board[0].length || !shape.getElement(i,j).equals("-") && !board[y+i][x+j+dir].equals("-"))){
+					if(j<shape.getWidth()-1 && shape.getElement(i,j+1).equals("-"))
+						return false;
 				}
-				else if(dir == -1 && (x==0 || !shape.getElement(i,0).equals("-") && !board[y+i][x-1].equals("-"))){
-					return false;
+				else if(dir == -1 && (x==0 || !shape.getElement(i,j).equals("-") && !board[y+i][x+j-1].equals("-"))){
+					if(j>0 && shape.getElement(i,j-1).equals("-"))
+						return false;
 				}
 				else if(j>0&&j<shape.getWidth()-1){
 					if(!shape.getElement(i,j).equals("-") && shape.getElement(i,j+dir).equals("-") && !board[y+i][x+j+dir].equals("-"))
