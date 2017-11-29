@@ -97,7 +97,8 @@ class GameCanvas extends PentPanel implements ActionListener {
 					x=0;
 					y=0;
 				}
-				score += ((board.breakLines()-1)*20)+10;
+				int lines = board.breakLines();
+				score += lines * lines * 10;
 
 				scoreBox.setTarget(score);
 				//the line below sometines throws an error in PentrisBoard.class after the game ends.
