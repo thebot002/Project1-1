@@ -5,27 +5,26 @@ import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.Timer;
 
 
-public class ScoreBox extends PentPanel{
+public class ScoreBox extends PentPanel implements ActionListener{
 	public static void main(String[] args){}
 
     protected String title, text;
-    protected int X, Y;
     protected BufferedImage image;
-    protected Font font;
 
-	public ScoreBox(int x, int y, Font f, int s, String t, int w, int h) {
-        super(w, h, f, s, x, y);
-        X = x; Y = y;
+	public ScoreBox(int x, int y, Font f, int s, String t, int w, int h, int time) {
+        super(x, y, w, h, f, s);
         image = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
         title = t;
-        font = f;
         drawIntial();
-    }
-
-    public String getTitle() {
-    	return title;
+        if(time != 0) {
+            Timer timer = new Timer(time, this);
+            timer.start();
+        }
     }
 
     public void drawIntial() {
@@ -51,17 +50,10 @@ public class ScoreBox extends PentPanel{
         g.drawImage(image, 0, 0, null);
     }
 
-    public int getX() {
-        return X;
-    }
-
-    public int getY() {
-        return Y;
-    }
-
-    public BufferedImage getimage() {
-        return image;
-    }
-
     public void tick() {}
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        tick();
+    }
 }

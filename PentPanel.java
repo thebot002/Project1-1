@@ -3,25 +3,26 @@ import javax.swing.*;
 import javax.swing.border.*;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
-import java.util.*;
-
+import java.util.HashMap;
+import java.awt.BorderLayout;
 
 public class PentPanel extends JPanel {
 	public static void main(String[] args){}
 
 	protected BufferedImage image;
     protected Font font;
-    protected int h, w;
+    protected int h, w, x, y;
     protected Color BACKGROUND = new Color(39,40,34);
     protected int SQ;
     protected HashMap<String, Color> colorList;
 
-	public PentPanel(int W, int H, Font f, int s, int X, int Y) {
-        SQ = s; w = W; h = H; font = f;
+	public PentPanel(int x, int y, int w, int h, Font f, int s) {
+        super(null, true);
+        SQ = s; this.w = w; this.h = h; font = f; this.x = x; this.y = y;
         colorList = new PentColors();
         setBackground(BACKGROUND);
-        setPreferredSize(new Dimension(W,H));
-        image = new BufferedImage(W, H, BufferedImage.TYPE_INT_ARGB);
+        setBounds(x,y,w,h);
+        image = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
     }
 
     public void drawBlock(Graphics g, int x, int y, Color c, int s) {
@@ -56,7 +57,8 @@ public class PentPanel extends JPanel {
             }
         }
     }
-    
+
+    public void activate() {}
 	public void upKeyPress() {}
     public void downKeyPress() {}
     public void spaceKeyPress() {}

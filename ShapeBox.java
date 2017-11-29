@@ -8,16 +8,10 @@ import java.util.*;
 import java.lang.*;
 
 public class ShapeBox extends ScoreBox {
-	public static void main(String[] args){//Use a thread to ensure the ui is updated correctly (internal swing requirement)
-        SwingUtilities.invokeLater(new Runnable() {
+	public static void main(String[] args){}//Use a thread to ensure the ui is updated correctly (internal swing requirement)
 
-            @Override //gets called when the thread is run
-            public void run() {
-                new PentWindow();
-            }});}
-
-	public ShapeBox(int x, int y, Font f, int s, String t,Shape shape) {
-        super(x, y, f, s, t, s*3, s*4);
+	public ShapeBox(int x, int y, Font f, int s, String t, Shape shape) {
+        super(x, y, f, s, t, s*3, s*4, 0);
         drawValue(shape);
     }
 
@@ -41,14 +35,6 @@ public class ShapeBox extends ScoreBox {
         int iy = (int)(SQ*1.5) - (ss*shape[0].length)/2 + ss;
 
         drawShape(g, s, ix, iy, ss);
-
-        // for (int i=0; i<shape.length; i++) {
-        //     for (int j=0; j<shape[0].length; j++) {
-        //         if(shape[i][j] != "-")
-        //             drawBlock(g, i*ss+ix, j*ss+iy, pentColors[0], ss);
-        //     }
-        // }
-
         repaint();
         g.dispose();
     }

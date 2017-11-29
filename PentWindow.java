@@ -19,9 +19,10 @@ public class PentWindow extends JFrame{
     private Thread gameThread;
     private PentPanel activePanel;
     private int squareSize = 40;
-    private final int H = 17*squareSize;
-    private final int W = 7*squareSize + squareSize*8;
+    private final int H = 17*squareSize + 30;
+    private final int W = 15*squareSize;
     private Font font;
+    private MenuCanvas menuCanvas;
 
     public static void main(String[] args){
         //Use a thread to ensure the ui is updated correctly (internal swing requirement)
@@ -43,16 +44,9 @@ public class PentWindow extends JFrame{
         createKeyInput();
 
         try { font = Font.createFont(Font.TRUETYPE_FONT, new File("PixelFont.ttf")).deriveFont(16f); } catch (IOException e) {e.printStackTrace();} catch(FontFormatException e) {e.printStackTrace();}
-
-        MenuCanvas menuCanvas = new MenuCanvas(W, H, font, squareSize);
-        
+        menuCanvas = new MenuCanvas(W, H, font, squareSize);
         setActivePanel(menuCanvas);
         setVisible(true);
-    }
-
-    public void createGame() {
-        GameCanvas gameCanvas = new GameCanvas(W, H, font, squareSize);
-        setActivePanel(gameCanvas);
     }
 
     public void createKeyInput() {
@@ -82,9 +76,18 @@ public class PentWindow extends JFrame{
                 }
 
                 if(k == 10) {
-                    if(getActivePanel() instanceof MenuCanvas)
-                        if(((MenuCanvas)getActivePanel()).getPos() == 0)
-                            createGame();
+                    if(getActivePanel() instanceof MenuCanvas) {
+                        int pos = ((MenuCanvas)getActivePanel()).getPos();
+                        if( pos == 0) {
+                            GameCanvas gameCanvas = new GameCanvas(W, H, font, squareSize);
+                            setActivePanel(gameCanvas);
+                        } else if(pos == 1) {
+                            ScoreCanvas scoreCanvas = new ScoreCanvas(W, H, font, squareSize);
+                            setActivePanel(scoreCanvas);
+                        }
+                    } else if (getActivePanel() instanceof ScoreCanvas) {
+                        setActivePanel(menuCanvas);
+                    }
                 }
             }
             public void keyReleased(KeyEvent e){
@@ -103,14 +106,15 @@ public class PentWindow extends JFrame{
         activePanel = panel;
         getContentPane().add(panel);
         pack();
+        repaint();
     }
 
     public PentPanel getActivePanel() {
         return activePanel;
     }
 
-    public void endGame() {
-        ScoreCanvas scoreCanvas = new ScoreCanvas(W, H, font, squareSize);
+    public void endGame(String name, int score) {
+        ScoreCanvas scoreCanvas = new ScoreCanvas(W, H, font, squareSize, name, score);
         setActivePanel(scoreCanvas);
     }
 }

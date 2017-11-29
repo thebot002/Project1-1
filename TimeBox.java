@@ -7,14 +7,13 @@ import java.io.*;
 import java.util.*;
 
 
-public class TextBox extends ScoreBox {
+public class TimeBox extends ScoreBox {
 	public static void main(String[] args){}
 
-    private int value, target;
+    private int value;
 
-	public TextBox(int x, int y, Font f, int s, String t) {
-        super(x, y, f, s, t, s*3, s*2, 100);
-        target = 0;
+	public TimeBox(int x, int y, Font f, int s, String t) {
+        super(x, y, f, s, t, s*3, s*2, 1000);
         value = 0;
         drawIntial();
         drawValue();
@@ -35,25 +34,13 @@ public class TextBox extends ScoreBox {
         repaint();
     }
 
-    public void addToTarget(int a) {
-        target += a;
-    }
-
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         g.drawImage(image, 0, 0, null);
     }
 
-    public void setTarget(int t) {
-        target = t;
-    }
-
     public void tick() {
-        if(value < target)
-            value++;
-        if(value > target)
-            value--;
-
+        value++;
         drawValue();
     }
 }

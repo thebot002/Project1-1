@@ -14,7 +14,7 @@ class MenuCanvas extends PentPanel {
 
 	public MenuCanvas(int W, int H, Font f, int s) {
         
-        super(W, H, f, s, 0, 0);
+        super(0, 0, W, H, f, s);
 
         drawMainMenu();
         drawBlinker();
