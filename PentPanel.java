@@ -15,6 +15,7 @@ public class PentPanel extends JPanel {
     protected Color BACKGROUND = new Color(39,40,34);
     protected int SQ;
     protected HashMap<String, Color> colorList;
+    protected HighScoreManager scoreManager;
 
 	public PentPanel(int x, int y, int w, int h, Font f, int s) {
         super(null, true);
@@ -23,6 +24,7 @@ public class PentPanel extends JPanel {
         setBackground(BACKGROUND);
         setBounds(x,y,w,h);
         image = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
+        scoreManager = new HighScoreManager();
     }
 
     public void drawBlock(Graphics g, int x, int y, Color c, int s) {

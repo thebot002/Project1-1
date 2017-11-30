@@ -39,6 +39,11 @@ public class TextBox extends ScoreBox {
         target += a;
     }
 
+    public void setValue(int v) {
+        target = v;
+        value = v;
+    }
+
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         g.drawImage(image, 0, 0, null);

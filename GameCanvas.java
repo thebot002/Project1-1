@@ -35,6 +35,7 @@ class GameCanvas extends PentPanel implements ActionListener {
 	private int score = 0;
 	private boolean gameRunning = false;
 
+
 	public GameCanvas(int W, int H,  Font f, int s) {
 		super(0, 0, W, H, f, s);
 
@@ -175,6 +176,8 @@ class GameCanvas extends PentPanel implements ActionListener {
 		add(scoreBox);
 		add(timeBox);
 		add(shapeBox);
+
+		highScoreBox.setValue(scoreManager.getMaxScore().getScore());
 
 		repaint();
 	}

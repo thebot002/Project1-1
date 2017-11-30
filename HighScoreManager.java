@@ -4,6 +4,7 @@ import java.util.*;
 import java.io.*;
 
 public class HighScoreManager{
+	public static void main(String[] args){}
 	//Arraylist with scores from Score class
 	private ArrayList<Score> scores;
 	
@@ -24,6 +25,13 @@ public class HighScoreManager{
 		sort();
 		return scores;
 	}
+
+	public Score getMaxScore(){
+		loadScoreFile();
+		sort();
+		return scores.get(0);
+	}
+
 	//Creates a new object "comparator" from CompareScores class, and sorts the arraylist 
 	private void sort(){
 		CompareScores comparator = new CompareScores();
