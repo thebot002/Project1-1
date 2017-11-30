@@ -18,7 +18,7 @@ public class PentWindow extends JFrame{
 
     private Thread gameThread;
     private PentPanel activePanel;
-    private int squareSize = 40;
+    private int squareSize = 90;
     private final int H = 17*squareSize + 30;
     private final int W = 15*squareSize;
     private Font font;

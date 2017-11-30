@@ -20,25 +20,7 @@ class GameCanvas extends PentPanel implements ActionListener {
 	private Random random = new Random();
 	private int time = 0;
 
-	 String[][] b = {
-		{"-","-","-","-","-"},
-		{"-","-","-","-","-"},
-		{"-","-","-","-","-"},
-		{"-","-","-","-","-"},
-		{"-","-","-","-","-"},
-		{"-","-","-","-","-"},
-		{"-","-","-","-","-"},
-		{"-","-","-","-","-"},
-		{"-","-","-","-","-"},
-		{"-","-","-","-","-"},
-		{"-","-","-","-","-"},
-		{"-","-","-","-","-"},
-		{"-","-","-","-","-"},
-		{"-","-","-","-","-"},
-		{"-","-","-","-","-"},
-	};
-
-	public PentrisBoard board = new PentrisBoard(b);
+	public PentrisBoard board = new PentrisBoard();
 
 	private Shape activeShape;
 	private Shape nextShape;
@@ -102,7 +84,7 @@ class GameCanvas extends PentPanel implements ActionListener {
 
 				scoreBox.setTarget(score);
 				//the line below sometines throws an error in PentrisBoard.class after the game ends.
-				if(!board.addShapeToBoard(activeShape)) 
+				if(!board.addShapeToBoard(activeShape))
 					gameOver();
 
 			} else {
@@ -115,14 +97,14 @@ class GameCanvas extends PentPanel implements ActionListener {
 	}
 
 	public void upKeyPress() {
-		  if(board.isRotatePossible(activeShape,x,y))board.rotate(activeShape,x,y);
+		  if(gameRunning && board.rotatePossible(activeShape,x,y))board.rotate(activeShape,x,y);
 		  drawBoard(board);
 	}
 
 	public void downKeyPress() {
 		timer.setDelay(speedUp);
 	}
-	 
+
 	public void downKeyRelease() {
 		timer.setDelay(speedDefault);
 	}
@@ -140,7 +122,7 @@ class GameCanvas extends PentPanel implements ActionListener {
 	}
 
     public void leftKeyPress() {
-         if(board.moveLeftPossible(activeShape, x, y)) {
+         if(gameRunning && board.moveLeftPossible(activeShape, x, y)) {
 		  		board.moveLeft(activeShape,x,y);
 		  		x--;
 			}
@@ -148,7 +130,7 @@ class GameCanvas extends PentPanel implements ActionListener {
     }
 
     public void rightKeyPress() {
-		 	if(board.moveRightPossible(activeShape, x, y)) {
+		 	if(gameRunning && board.moveRightPossible(activeShape, x, y)) {
         		board.moveRight(activeShape,x,y);
 		  		x++;
 	  		}

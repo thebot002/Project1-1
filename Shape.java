@@ -10,9 +10,9 @@ public class Shape {
 	public String[][] getShape(){
 		return shape;
 	}
-  
+
 	public static void main(String[] args){}
-	
+
 	public String getShapeID(){
 		for(int i=0;i<shape.length;i++)
 			for(int j=0;j<shape[i].length;j++)
@@ -55,6 +55,17 @@ public class Shape {
 		 shape = Arrays.copyOf(temp, temp.length);
 		 flipH();
 	}
+	public String[][] sRotateR(){
+ 		String[][] sShape = shape;
+ 		String[][] temp = new String[sShape[0].length][sShape.length];
+ 		for(int i=0; i<sShape.length;i++){
+ 			 for(int j=0;j<sShape[0].length;j++){
+ 				   temp[j][i] = sShape[i][j];
+ 			 }
+ 		}
+ 		sShape = Arrays.copyOf(temp, temp.length);
+ 		return sFlipH(sShape);
+ 	}
 	public void rotateL(){ //counter clockwise
 		 String[][] temp = new String[shape[0].length][shape.length];
 		 for(int i=0; i<shape.length;i++){
@@ -74,6 +85,17 @@ public class Shape {
 			  }
 		 }
 	}
+	public String[][] sFlipH(String[][] sShape1){
+ 		String[][] sShape = sShape1;
+ 		for(int i=0; i<sShape.length; i++){
+ 			 for(int j=0;j<sShape[0].length/2;j++){
+ 				   String tempS = sShape[i][j];
+ 				   sShape[i][j] = sShape[i][sShape[0].length-1-j];
+ 				   sShape[i][sShape[0].length-1-j] = tempS;
+ 			 }
+ 		}
+ 		return sShape;
+ 	}
 	public void flipV(){ //Vertical
 		 for(int i=0; i<shape.length/2; i++){
 			  for(int j=0;j<shape[0].length;j++){
