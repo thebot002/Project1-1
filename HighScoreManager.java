@@ -116,4 +116,11 @@ public class HighScoreManager{
 		}
 		return highscoreString;
 	}
+
+	public Boolean doesHighScoresExist() {
+		loadScoreFile();
+		if(scores.size() == 0)
+			return false;
+		return true;
+	}
 }
