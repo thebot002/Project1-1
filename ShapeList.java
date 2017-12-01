@@ -18,6 +18,12 @@ public class ShapeList extends ArrayList<Shape> {
 		Shape shapeX = shapeFactory.buildShapeX();
 		Shape shapeY = shapeFactory.buildShapeY();
 		Shape shapeZ = shapeFactory.buildShapeZ();
+		Shape shapeJ = shapeFactory.buildShapeJ();
+		Shape shapeH = shapeFactory.buildShapeH();
+		Shape shapeQ = shapeFactory.buildShapeQ();
+		Shape shapeM = shapeFactory.buildShapeM();
+		Shape shapeS = shapeFactory.buildShapeS();
+		Shape shapeE = shapeFactory.buildShapeE();
 
 		add(shapeZ);
 		add(shapeY);
@@ -31,6 +37,13 @@ public class ShapeList extends ArrayList<Shape> {
 		add(shapeN);
 		add(shapeL);
 		add(shapeI);
+		add(shapeZ);
+		add(shapeJ);
+		add(shapeH);
+		add(shapeQ);
+		add(shapeM);
+		add(shapeS);
+		add(shapeE);
 	}
 
 	public ArrayList<Shape> getShapeList(){
