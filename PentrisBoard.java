@@ -1,4 +1,5 @@
 import java.lang.*;
+import java.util.*;
 
 public class PentrisBoard {
 
@@ -12,6 +13,9 @@ public class PentrisBoard {
 
 	public PentrisBoard(){
 		this.board = new String[15][5];
+		for(int i=0; i<board.length; i++)
+			for(int j=0; j<board[0].length; j++)
+				board[i][j] = "-";
 	}
 	public PentrisBoard(String[][] board) {
 		this.board = board;
@@ -67,7 +71,9 @@ public class PentrisBoard {
 			for(int j=0; j<shape.getWidth();j++){
 				if(!shape.getElement(i,j).equals("-")){
 					if(i>=shape.getHeight()-1 || (i<shape.getHeight()-1 && shape.getElement(i+1,j).equals("-"))){
-						if(i+y+1>=board.length || !board[i+y+1][j+x].equals("-")) return true;
+						if(i+y+1>=board.length || !board[i+y+1][j+x].equals("-")){
+						 	return true;
+						}
 					}
 				}
 			}
@@ -118,10 +124,31 @@ public class PentrisBoard {
 		return counter;
 	}
 
-	public boolean isRotatePossible(Shape shape, int x, int y) {
-		if(shape.getHeight()>shape.getWidth() && x+shape.getWidth()-1 == board[0].length-1) return false;
+	public boolean rotatePossible(Shape shape, int x, int y){
+ 		if(shape.getHeight()>shape.getWidth() && x+(shape.getHeight()-shape.getWidth())+shape.getWidth()-1 > board[0].length-1){
+ 			return false;
+ 		}
+ 		String[][] sShape = shape.sRotateR();
+ 		for(int i=0;i<sShape.length;i++){
+ 			for(int j=0;j<sShape[0].length;j++){
+ 				if(i<shape.getHeight() && j<shape.getWidth()){
+ 					if(!sShape[i][j].equals("-") && shape.getElement(i,j).equals("-") && !board[y+i][x+j].equals("-")){
+ 						return false;
+ 					}
+ 				}
+ 				else if(!sShape[i][j].equals("-") && !board[y+i][x+j].equals("-")){
+ 					return false;
+ 				}
+ 			}
+ 		}
 		return true;
 	}
+
+	public void rotate(Shape shape, int x, int y) {
+ 		removeShapeFromBoard(shape,x,y);
+ 		shape.rotateR();
+ 		addShapeToBoard(shape,x,y);
+ 	}
 
 	public boolean moveLeftPossible(Shape shape, int x, int y){
 		if(x==0) return false;
@@ -161,13 +188,6 @@ public class PentrisBoard {
 	public void moveDown(Shape shape, int xCoordinateBoard, int yCoordinateBoard){
 		removeShapeFromBoard(shape, xCoordinateBoard, yCoordinateBoard);
 		yCoordinateBoard++;
-		addShapeToBoard(shape, xCoordinateBoard, yCoordinateBoard);
-	}
-
-	public void rotate(Shape shape, int xCoordinateBoard, int yCoordinateBoard){
-		//collisiton check
-		removeShapeFromBoard(shape, xCoordinateBoard, yCoordinateBoard);
-		shape.rotateR();
 		addShapeToBoard(shape, xCoordinateBoard, yCoordinateBoard);
 	}
 

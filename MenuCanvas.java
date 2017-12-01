@@ -14,7 +14,7 @@ class MenuCanvas extends PentPanel {
 
 	public MenuCanvas(int W, int H, Font f, int s) {
         
-        super(W, H, f, s, 0, 0);
+        super(0, 0, W, H, f, s);
 
         drawMainMenu();
         drawBlinker();
@@ -83,14 +83,11 @@ class MenuCanvas extends PentPanel {
         g.drawString("Options",      (w-textWidth)/2, 2*h/3 + 100);
 
         //draw a pent on the main menu
-        g.setColor(Color.yellow);
         int ox = (w-4*SQ)/2;
         int oy = SQ*5;
-        g.fillRect(ox, oy, SQ, SQ);
-        g.fillRect(ox, oy + SQ, SQ, SQ);
-        g.fillRect(ox + SQ, oy, SQ, SQ);
-        g.fillRect(ox + SQ*2, oy, SQ, SQ);
-        g.fillRect(ox + SQ*3, oy, SQ, SQ);
 
+        ShapeList sl = new ShapeList();
+
+        drawShape(g, sl.getRandomShape(), ox, oy, SQ);
     }
 }

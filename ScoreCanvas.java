@@ -9,9 +9,18 @@ import java.util.*;
 
 class ScoreCanvas extends PentPanel {
 	public static void main(String[] args){}
+    private ArrayList<Score> scoreList;
+
 
 	public ScoreCanvas(int W, int H, Font f, int s) {
-        super(W, H, f, s, 0, 0);
+        super(0, 0, W, H, f, s);
+        drawHighScore();
+    }
+
+    public ScoreCanvas(int W, int H, Font f, int s, String name, int score) {
+        super(0, 0, W, H, f, s);
+        scoreManager = new HighScoreManager();
+        scoreManager.addScore(name, score);
         drawHighScore();
     }
 
@@ -30,7 +39,22 @@ class ScoreCanvas extends PentPanel {
         g.setFont(font.deriveFont(40f));
         g.setColor(Color.white);
 
-        int textWidth = g.getFontMetrics().stringWidth("Game Over");
-        g.drawString("Game Over", (w-textWidth)/2, h/5);
+        int textWidth = g.getFontMetrics().stringWidth("High Score");
+        g.drawString("High Score", (w-textWidth)/2, 100);
+        g.fillRect((w-textWidth)/2, 100, textWidth, 4);
+
+        scoreList = scoreManager.getScores();
+        g.setFont(font.deriveFont(18f));
+        g.drawString("Name", 250, 200);
+        g.drawString("Score", 400, 200);
+
+        for(int i=0; i<Math.min(10,scoreList.size()); i++) {
+            g.drawString("" + (i+1) + ".", 130, 240 + i*40);
+            g.drawString("" + scoreList.get(i).getName(), 250, 240 + i*40);
+            g.drawString("" + scoreList.get(i).getScore(), 400, 240 + i*40);
+        }
+
+        int tw = g.getFontMetrics().stringWidth("< Press Enter to return >");
+        g.drawString("< Press Enter to return >", (w-tw)/2, 650);
     }  
 }
