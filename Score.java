@@ -5,7 +5,7 @@ import java.io.Serializable;
 public class Score implements Serializable {
 	private int score;
 	private String name;
-	
+
 	public int getScore() {
 		return score;
 	}
@@ -19,4 +19,5 @@ public class Score implements Serializable {
 	@Override
 	public String toString() {
         return name + score;
+			}
 }
