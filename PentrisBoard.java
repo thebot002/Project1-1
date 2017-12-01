@@ -193,7 +193,7 @@ public class PentrisBoard {
 
 	public void dropDown(Shape shape, int xCoordinateBoard, int yCoordinateBoard){
 		removeShapeFromBoard(shape, xCoordinateBoard, yCoordinateBoard);
-		int newY = board.length - (shape.getHeight()-1) -1;
+	/*	int newY = board.length - (shape.getHeight()-1) -1;
 		for(int j=0; j<shape.getWidth(); j++){
 			int i=shape.getHeight()-1;
 			while(shape.getElement(i,j).equals("-")){
@@ -205,8 +205,20 @@ public class PentrisBoard {
 				}
 			}
 		}
+		*/
+		int newY= 0;
+		for(int j = xCoordinateBoard; j < shape.getWidth() + xCoordinateBoard; j++) {
+			for(int i = 0; i < board.length(); i++) {
+				if(!board[i][j].equals("-")) {
+					if(newY > i) {
+						newY = i;
+					}	
+				}
+			}
+		}
 		addShapeToBoard(shape, xCoordinateBoard, newY);
 	}
+
 
 	public void printBoard() {
 		for (int m = 0; m < board.length; m++) {
