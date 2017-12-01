@@ -98,7 +98,7 @@ public class HighScoreManager{
 		}
 	}
 	//How we display out highscores
-	public String getHighscoreString(){
+	public String getHighscoreString() {
 		String highscoreString = "";
 		int max = 10;
 		
@@ -115,5 +115,12 @@ public class HighScoreManager{
 			i++;
 		}
 		return highscoreString;
+	}
+
+	public Boolean highScoreEmpty() {
+		loadScoreFile();
+		if(scores.size() == 0)
+			return false;
+		return true;
 	}
 }

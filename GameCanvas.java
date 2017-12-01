@@ -177,7 +177,8 @@ class GameCanvas extends PentPanel implements ActionListener {
 		add(timeBox);
 		add(shapeBox);
 
-		highScoreBox.setValue(scoreManager.getMaxScore().getScore());
+		if(scoreManager.highScoreEmpty())
+			highScoreBox.setValue(scoreManager.getMaxScore().getScore());
 
 		repaint();
 	}
