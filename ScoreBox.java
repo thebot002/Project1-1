@@ -54,6 +54,7 @@ public class ScoreBox extends PentPanel implements ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        tick();
+        if(!((PentWindow)SwingUtilities.getRoot(this)).getActivePanel().isPaused())
+            tick();
     }
 }

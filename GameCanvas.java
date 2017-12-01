@@ -67,7 +67,7 @@ class GameCanvas extends PentPanel implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		//stops tick events that were created before the game ended trying to do things after the game ends.
-		if(gameRunning) {
+		if(gameRunning && !paused) {
 			//shape is touching another shape
 			if(board.isPlaced(activeShape,x,y)) {
 				if(y==0) {
@@ -98,32 +98,37 @@ class GameCanvas extends PentPanel implements ActionListener {
 	}
 
 	public void upKeyPress() {
-		  if(gameRunning && board.rotatePossible(activeShape,x,y))board.rotate(activeShape,x,y);
+		  if(gameRunning && !paused && board.rotatePossible(activeShape,x,y))
+		  	board.rotate(activeShape,x,y);
 		  drawBoard(board);
 	}
 
 	public void downKeyPress() {
-		timer.setDelay(speedUp);
+		if(!paused)
+			timer.setDelay(speedUp);
 	}
 
 	public void downKeyRelease() {
-		timer.setDelay(speedDefault);
+		if(!paused)
+			timer.setDelay(speedDefault);
 	}
 
 	public void spaceKeyPress() {
-		board.dropDown(activeShape, x, y);
-		  activeShape = nextShape;
-		  nextShape = shapeList.getRandomShape();
-		  if(activeShape.getHeight()>activeShape.getWidth()) activeShape.rotateR();
-		  x=0;
-		  y=0;
-		  score += board.breakLines();
-		  board.addShapeToBoard(activeShape,x,y);
-		  drawBoard(board);
+		if(!paused)	{
+			board.dropDown(activeShape, x, y);
+		  	activeShape = nextShape;
+		  	nextShape = shapeList.getRandomShape();
+		  	if(activeShape.getHeight()>activeShape.getWidth()) activeShape.rotateR();
+		  	x=0;
+		  	y=0;
+		  	score += board.breakLines();
+		  	board.addShapeToBoard(activeShape,x,y);
+		  	drawBoard(board);
+		}
 	}
 
     public void leftKeyPress() {
-         if(gameRunning && board.moveLeftPossible(activeShape, x, y)) {
+         if(gameRunning && !paused && board.moveLeftPossible(activeShape, x, y)) {
 		  		board.moveLeft(activeShape,x,y);
 		  		x--;
 			}
@@ -131,11 +136,15 @@ class GameCanvas extends PentPanel implements ActionListener {
     }
 
     public void rightKeyPress() {
-		 	if(gameRunning && board.moveRightPossible(activeShape, x, y)) {
+		 	if(gameRunning && !paused && board.moveRightPossible(activeShape, x, y)) {
         		board.moveRight(activeShape,x,y);
 		  		x++;
 	  		}
 		   drawBoard(board);
+	}
+
+	public void pKeyPress() {
+		paused = !paused;
 	}
 
 	private void drawGame() {

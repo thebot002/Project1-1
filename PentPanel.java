@@ -16,6 +16,7 @@ public class PentPanel extends JPanel {
     protected int SQ;
     protected HashMap<String, Color> colorList;
     protected HighScoreManager scoreManager;
+    protected boolean paused = false;
 
 	public PentPanel(int x, int y, int w, int h, Font f, int s) {
         super(null, true);
@@ -60,6 +61,10 @@ public class PentPanel extends JPanel {
         }
     }
 
+    public Boolean isPaused() {
+        return paused;
+    }
+
     public void activate() {}
 	public void upKeyPress() {}
     public void downKeyPress() {}
@@ -67,4 +72,5 @@ public class PentPanel extends JPanel {
     public void leftKeyPress() {}
     public void rightKeyPress() {}
  	public void downKeyRelease() {}
+    public void pKeyPress() {}
 }

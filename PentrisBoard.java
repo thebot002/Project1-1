@@ -208,7 +208,7 @@ public class PentrisBoard {
 		*/
 		int newY= 0;
 		for(int j = xCoordinateBoard; j < shape.getWidth() + xCoordinateBoard; j++) {
-			for(int i = 0; i < board.length(); i++) {
+			for(int i = 0; i < board.length; i++) {
 				if(!board[i][j].equals("-")) {
 					if(newY > i) {
 						newY = i;

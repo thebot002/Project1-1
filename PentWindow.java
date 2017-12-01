@@ -75,6 +75,10 @@ public class PentWindow extends JFrame{
                     getActivePanel().spaceKeyPress();
                 }
 
+                if(k == 80) {
+                    getActivePanel().pKeyPress();
+                }
+
                 if(k == 10) {
                     if(getActivePanel() instanceof MenuCanvas) {
                         int pos = ((MenuCanvas)getActivePanel()).getPos();
@@ -116,8 +120,10 @@ public class PentWindow extends JFrame{
     public void endGame(String name, int score) {
         ScoreCanvas scoreCanvas;
         if(name.equals("")) {
+            scoreCanvas = new ScoreCanvas(W, H, font, squareSize);
         }
         else {
+            scoreCanvas = new ScoreCanvas(W, H, font, squareSize, name, score);
         }
         setActivePanel(scoreCanvas);
     }
