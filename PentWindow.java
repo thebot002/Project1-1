@@ -39,7 +39,7 @@ public class PentWindow extends JFrame{
         setSize(W, H);
         setTitle("Pentris");
         setMinimumSize(new Dimension(W,H));
-        setResizable(false);
+        //setResizable(false);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         createKeyInput();
 
@@ -114,7 +114,13 @@ public class PentWindow extends JFrame{
     }
 
     public void endGame(String name, int score) {
-        ScoreCanvas scoreCanvas = new ScoreCanvas(W, H, font, squareSize, name, score);
+        ScoreCanvas scoreCanvas;
+        if(name != null) {
+            scoreCanvas = new ScoreCanvas(W, H, font, squareSize, name, score);
+        }
+        else {
+            scoreCanvas = new ScoreCanvas(W, H, font, squareSize);
+        }
         setActivePanel(scoreCanvas);
     }
 }
