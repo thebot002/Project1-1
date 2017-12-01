@@ -9,13 +9,11 @@ import java.util.*;
 
 class ScoreCanvas extends PentPanel {
 	public static void main(String[] args){}
-    private HighScoreManager scoreManager;
     private ArrayList<Score> scoreList;
 
 
 	public ScoreCanvas(int W, int H, Font f, int s) {
         super(0, 0, W, H, f, s);
-        scoreManager = new HighScoreManager();
         drawHighScore();
     }
 
