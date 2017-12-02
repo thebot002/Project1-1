@@ -83,8 +83,8 @@ class MenuCanvas extends PentPanel {
         g.drawString("Options",      (w-textWidth)/2, 2*h/3 + 100);
 
         //draw a pent on the main menu
-        int ox = (w-4*SQ)/2;
-        int oy = SQ*5;
+        int ox = w/2;
+        int oy = h/3 + 50;
 
         ShapeList sl = new ShapeList();
 

@@ -49,14 +49,18 @@ public class PentPanel extends JPanel {
         g.fillRect(x + gap, y + gap, inner, inner);
     }
 
+    //draws a shape with a center (x,y)
     public void drawShape(Graphics g, Shape shape, int x, int y, int s) {
 
         String[][] stringShape = shape.getShape();
 
-        for (int i=0; i<stringShape.length; i++) {
-            for (int j=0; j<stringShape[0].length; j++) {
-                if(stringShape[i][j] != "-")
-                    drawBlock(g, j*s+x, i*s+y, colorList.get(stringShape[i][j]), s);
+        x -= (shape.getWidth()*s)/2;
+        y -= (shape.getHeight()*s)/2;
+
+        for (int j=0; j<shape.getHeight(); j++) {
+            for (int i=0; i<shape.getWidth(); i++) {
+                if(stringShape[j][i] != "-")
+                    drawBlock(g, x+(i*s), y+(j*s), colorList.get(stringShape[j][i]), s);
             }
         }
     }

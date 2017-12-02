@@ -31,8 +31,10 @@ public class ShapeBox extends ScoreBox {
 		  }
 
         //so the shape gets placed in the center of the box.
-        int ix = (int)(SQ*1.5) - (ss*shape.length)/2;
-        int iy = (int)(SQ*1.5) - (ss*shape[0].length)/2 + ss;
+        //int ix = (int)(SQ*1.5) - (ss*shape.length)/2;
+        int ix = (int)(SQ*1.5);
+        //int iy = (int)(SQ*1.5) - (ss*shape[0].length)/2 + ss;
+        int iy = SQ*2;
 
         drawShape(g, s, ix, iy, ss);
         repaint();
