@@ -1,4 +1,4 @@
 @echo off        
-javac PentWindow.java   
+javac *.java   
 java PentWindow         
 pause             
