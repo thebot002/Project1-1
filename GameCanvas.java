@@ -35,7 +35,6 @@ class GameCanvas extends PentPanel implements ActionListener {
 	private int score = 0;
 	private boolean gameRunning = false;
 
-
 	public GameCanvas(int W, int H,  Font f, int s) {
 		super(0, 0, W, H, f, s);
 
@@ -95,6 +94,10 @@ class GameCanvas extends PentPanel implements ActionListener {
 			drawBoard(board);
 			repaint();
 		}
+	}
+
+	public Boolean isRunning() {
+		return gameRunning;
 	}
 
 	public void upKeyPress() {
@@ -170,11 +173,11 @@ class GameCanvas extends PentPanel implements ActionListener {
 
 
 		//create score boxes
-		TextBox highScoreBox = new TextBox((SQ*23)/2, SQ*6, font, SQ, "High Score");
-		TextBox levelBox = new TextBox(SQ/2, SQ*7, font, SQ, "Level");
-		scoreBox = new TextBox(SQ/2, SQ*4, font, SQ, "Score");
-		timeBox = new TimeBox(SQ/2, SQ, font, SQ, "Time");
-		shapeBox = new ShapeBox((SQ*23)/2, SQ, font, SQ, "Next Shape", nextShape);
+		TextBox highScoreBox = new TextBox((SQ*23)/2, SQ*6, font, SQ, "High Score", this);
+		TextBox levelBox = new TextBox(SQ/2, SQ*7, font, SQ, "Level", this);
+		scoreBox = new TextBox(SQ/2, SQ*4, font, SQ, "Score", this);
+		timeBox = new TimeBox(SQ/2, SQ, font, SQ, "Time", this);
+		shapeBox = new ShapeBox((SQ*23)/2, SQ, font, SQ, "Next Shape", nextShape, this);
 
 		scoreBoxes.add(scoreBox);
 		scoreBoxes.add(levelBox);

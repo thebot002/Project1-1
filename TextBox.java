@@ -12,8 +12,8 @@ public class TextBox extends ScoreBox {
 
     private int value, target;
 
-	public TextBox(int x, int y, Font f, int s, String t) {
-        super(x, y, f, s, t, s*3, s*2, 100);
+	public TextBox(int x, int y, Font f, int s, String t, GameCanvas g) {
+        super(x, y, f, s, t, s*3, s*2, 100, g);
         target = 0;
         value = 0;
         drawIntial();

@@ -12,8 +12,8 @@ public class TimeBox extends ScoreBox {
 
     private int value;
 
-	public TimeBox(int x, int y, Font f, int s, String t) {
-        super(x, y, f, s, t, s*3, s*2, 1000);
+	public TimeBox(int x, int y, Font f, int s, String t, GameCanvas g) {
+        super(x, y, f, s, t, s*3, s*2, 1000, g);
         value = 0;
         drawIntial();
         drawValue();

@@ -119,7 +119,7 @@ public class PentWindow extends JFrame{
 
     public void endGame(String name, int score) {
         ScoreCanvas scoreCanvas;
-        if(name.equals("")) {
+        if(name == null || name.equals("")) {
             scoreCanvas = new ScoreCanvas(W, H, font, squareSize);
         }
         else {
