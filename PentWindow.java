@@ -16,13 +16,19 @@ import java.io.*;
 
 public class PentWindow extends JFrame{
 
+
+    private int squareSize = 30;
+    private int[] grid = {5,17};
+    private int[] defaultGrid = {5,15};
+
     private Thread gameThread;
     private PentPanel activePanel;
-    private int squareSize = 40;
-    private final int H = 17*squareSize + 40;
-    private final int W = 15*squareSize;
+    private final int H = (grid[1]+2)*squareSize + 30;
+    private final int W = (grid[0]+10)*squareSize;
     private Font font;
     private MenuCanvas menuCanvas;
+    private Boolean addHighScore = false;
+    
 
     public static void main(String[] args){
         //Use a thread to ensure the ui is updated correctly (internal swing requirement)
@@ -36,17 +42,19 @@ public class PentWindow extends JFrame{
     }
 
     public PentWindow() {
-        setSize(W, H);
+        setPreferredSize(new Dimension(W,H));
         setTitle("Pentris");
-        setMinimumSize(new Dimension(W,H));
-        //setResizable(false);
+        //setMinimumSize(new Dimension(W,H));
+        setResizable(false);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         createKeyInput();
-
+        if(grid[0] == 5 && grid[1] == 15)
+            addHighScore = true;
         try { font = Font.createFont(Font.TRUETYPE_FONT, new File("PixelFont.ttf")).deriveFont(16f); } catch (IOException e) {e.printStackTrace();} catch(FontFormatException e) {e.printStackTrace();}
         menuCanvas = new MenuCanvas(W, H, font, squareSize);
         setActivePanel(menuCanvas);
         setVisible(true);
+        pack();
     }
 
     public void createKeyInput() {
@@ -83,7 +91,7 @@ public class PentWindow extends JFrame{
                     if(getActivePanel() instanceof MenuCanvas) {
                         int pos = ((MenuCanvas)getActivePanel()).getPos();
                         if( pos == 0) {
-                            GameCanvas gameCanvas = new GameCanvas(W, H, font, squareSize);
+                            GameCanvas gameCanvas = new GameCanvas(W, H, font, squareSize, grid);
                             setActivePanel(gameCanvas);
                         } else if(pos == 1) {
                             ScoreCanvas scoreCanvas = new ScoreCanvas(W, H, font, squareSize);
@@ -117,13 +125,17 @@ public class PentWindow extends JFrame{
         return activePanel;
     }
 
-    public void endGame(String name, int score) {
+    public void endGame(int score) {
         ScoreCanvas scoreCanvas;
-        if(name == null || name.equals("")) {
+        if(addHighScore) {
+            String name = JOptionPane.showInputDialog(this,"Enter Your Name: ");
+            if(name == null || name.equals("")) {
+                scoreCanvas = new ScoreCanvas(W, H, font, squareSize);
+            } else {
+                scoreCanvas = new ScoreCanvas(W, H, font, squareSize, name, score);
+            }
+        } else {
             scoreCanvas = new ScoreCanvas(W, H, font, squareSize);
-        }
-        else {
-            scoreCanvas = new ScoreCanvas(W, H, font, squareSize, name, score);
         }
         setActivePanel(scoreCanvas);
     }
