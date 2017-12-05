@@ -83,9 +83,6 @@ class GameCanvas extends PentPanel implements ActionListener {
 				score += lines * lines * 10;
 
 				scoreBox.setTarget(score);
-				//the line below sometines throws an error in PentrisBoard.class after the game ends.
-				if(!board.addShapeToBoard(activeShape))
-					gameOver();
 
 			} else {
 				board.moveDown(activeShape,x,y);
@@ -174,17 +171,17 @@ class GameCanvas extends PentPanel implements ActionListener {
 
 		//create score boxes
 		TextBox highScoreBox = new TextBox((SQ*23)/2, SQ*6, font, SQ, "High Score", this);
-		TextBox levelBox = new TextBox(SQ/2, SQ*7, font, SQ, "Level", this);
+		//TextBox levelBox = new TextBox(SQ/2, SQ*7, font, SQ, "Level", this);
 		scoreBox = new TextBox(SQ/2, SQ*4, font, SQ, "Score", this);
 		timeBox = new TimeBox(SQ/2, SQ, font, SQ, "Time", this);
 		shapeBox = new ShapeBox((SQ*23)/2, SQ, font, SQ, "Next Shape", nextShape, this);
 
 		scoreBoxes.add(scoreBox);
-		scoreBoxes.add(levelBox);
+		//scoreBoxes.add(levelBox);
 		scoreBoxes.add(highScoreBox);
 
 		add(highScoreBox);
-		add(levelBox);
+		//add(levelBox);
 		add(scoreBox);
 		add(timeBox);
 		add(shapeBox);
