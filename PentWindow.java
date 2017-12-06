@@ -56,6 +56,11 @@ public class PentWindow extends JFrame{
         setVisible(true);
         pack();
     }
+    public PentWindow(boolean bot){
+        this();
+        GameCanvas gameCanvas = new GameCanvas(W, H, font, squareSize);
+        setActivePanel(gameCanvas);
+    }
 
     public void createKeyInput() {
         this.addKeyListener( new KeyAdapter() {    //Key listener
