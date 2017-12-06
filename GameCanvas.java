@@ -25,7 +25,6 @@ class GameCanvas extends PentPanel implements ActionListener {
 	private Shape activeShape;
 	private Shape nextShape;
 	private ShapeList shapeList;
-	private Timer runtime;
 
 	private int speedDefault = 600;
 	private int speedUp = 100;
@@ -84,10 +83,6 @@ class GameCanvas extends PentPanel implements ActionListener {
 				score += lines * lines * 10;
 
 				scoreBox.setTarget(score);
-				//the line below sometines throws an error in PentrisBoard.class after the game ends.
-				if(!board.addShapeToBoard(activeShape))
-					gameOver();
-
 			} else {
 				board.moveDown(activeShape,x,y);
 				y++;
@@ -217,6 +212,15 @@ class GameCanvas extends PentPanel implements ActionListener {
 
 	public int getScore() {
 		return score;
+	}
+	public int getSpeed(){
+		return timer.getDelay();
+	}
+	public boolean getGameState(){
+		return gameRunning;
+	}
+	public Timer getTimer(){
+		return timer;
 	}
 
 	private void gameOver() {

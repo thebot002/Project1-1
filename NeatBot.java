@@ -3,8 +3,8 @@ import java.awt.event.*;
 import javax.swing.*;
 
 public class NeatBot{
-    private PentWindow window;
-    private GameCanvas pannel;
+    private static PentWindow window;
+    private static GameCanvas pannel;
     private String[][] boardS;
     private double[] inputs;
 
@@ -12,20 +12,26 @@ public class NeatBot{
     private final int FITNESS_GOAL = 40; //to be adjusted
 
     public static void main(String[] args){
-        //Use a thread to ensure the ui is updated correctly (internal swing requirement)
-        SwingUtilities.invokeLater(new Runnable() {
-
-            @Override //gets called when the thread is run
-            public void run() {
-                NeatBot bot = new NeatBot();
-                bot.train();
+        new NeatBot();
+    }
+    public void initializeGame(){
+        window = new PentWindow(true);
+        try{
+            Robot b = new Robot();
+            if(window.getActivePanel() instanceof GameCanvas){
+                pannel = (GameCanvas)window.getActivePanel();
             }
-        });
+            Timer t = pannel.getTimer();
+            t.addActionListener(new BoardListener());
+        }
+        catch(AWTException e){
+            e.printStackTrace();
+        }
     }
     public NeatBot(){
-
+        initializeGame();
     }
-
+    //next towo classes, create separate files...
     private class Genome{
         private double[][] connections; //[in node (0-76) , out node(hidden: >76; output: -1 - -6), weight of connection]
         private int fitness;
@@ -102,71 +108,15 @@ public class NeatBot{
 
     public void train(){
         Population pop = new Population();
-        do{
-            for(int i=0; i<SIZE_POPULATION; i++){
-                Genome g = pop.getGenome(i);
-                PlayGame game = new PlayGame();
-                window = new PentWindow();
-                try{
-                    pannel = new GameCanvas(100,100,new Font(" TimesRoman ",Font.PLAIN,100),40); //random initialize
-                    Robot b = new Robot();
-                    b.keyPress(10);
-                    if(window.getActivePanel() instanceof GameCanvas) pannel = (GameCanvas) window.getActivePanel();
-                    PentrisBoard board = pannel.getBoard();
-                    boardS = board.getBoard();
-                    inputs = new double[(boardS.length * boardS[0].length)+1];
-                    getInputs();
-                }
-                catch(AWTException e){
-                    e.printStackTrace();
-                }
-                class BoardListener implements ActionListener {
-                    public void actionPerformed(ActionEvent e){
-                        System.out.println("yey");
-                    }
-                }
-                Timer t = pannel.getTimer();
-                Timer t2 = new Timer(t.getDelay(),new BoardListener());
-                //game.run();
-                //playGame(g);
-                window.dispose();
-            }
-        }while(pop.getGeneralFitness() < FITNESS_GOAL);
     }
-    private class PlayGame extends Thread{
-        public void run(){
-            /*t.addActionListener(new BoardListener());
-            t.start();
-            while(t.isRunning()){
-            }*/
-        }
-    }
-    /*public void playGame(Genome player){
-        class BoardListener implements ActionListener {
-            public void actionPerformed(ActionEvent e){
+    private class BoardListener implements ActionListener {
+        public void actionPerformed(ActionEvent e){
+            if(pannel.getGameState()){
                 System.out.println("yey");
             }
-        }
-        Timer t = pannel.getTimer();
-        t.addActionListener(new BoardListener());
-        while(t.isRunning()){
-        }
-        /*while(pannel.getGameState()){
-            getInputs();
-            //System.out.println("hey");
-            /*double[] buttons = player.getOutput();
-            try{
-                Robot bot = new Robot();
-                if(button[0]>0.5) bot.keyPress(37);
-                if(button[1]>0.5) bot.keyPress(38);
-                if(button[2]>0.5) bot.keyPress(39);
-                if(button[3]>0.5) bot.keyPress(40);
-                if(button[4]>0.5) bot.keyRelease(40);
-            }
-            catch(AWTException e){
-                e.printStackTrace();
+            else{
+                System.out.println("test");
             }
         }
-        //player.setFitness(pannel.getScore(),pannel.getTime());
-    }*/
+    }
 }
