@@ -14,9 +14,9 @@ public class FindBestFit {
 		this.shapeList=shapeList;
 		this.xList=xList;
 		for(int i=0; i<shapeList.size(); i++) {
-			System.out.println("The number of shape: "+i);
-			shapeList.get(i).printShape();
-			System.out.println("");
+//			System.out.println("The number of shape: "+i);
+//			shapeList.get(i).printShape();
+//			System.out.println("");
 		}
 	}
 
@@ -35,7 +35,7 @@ public class FindBestFit {
 
 		for(int i=0; i<boardList.size(); i++) {
 
-			System.out.println("");
+//			System.out.println("");
 			newEnergy=evalFunction(boardList.get(i));
 
 			if(newEnergy > energy /*|| (newEnergy == energy && Math.random() > 0.5))*/) {
@@ -47,10 +47,10 @@ public class FindBestFit {
 				optimalX=xList.get(i);
 //				System.out.println("New Energy: "+newEnergy);
 //				System.out.println("Optimal X: "+optimalX);
-				System.out.println("*****BestBoard: ");
-				boardList.get(i).printBoard();
-				System.out.println("******BestShape: ");
-				shapeList.get(i).printShape();
+//				System.out.println("*****BestBoard: ");
+//				boardList.get(i).printBoard();
+//				System.out.println("******BestShape: ");
+//				shapeList.get(i).printShape();
 			}
 		}
 //		System.out.println("*****BestBoard: ");
@@ -71,39 +71,29 @@ public class FindBestFit {
 		return height;
 	}
 
-	public int findGaps(PentrisBoard board) {
-		int counter=0;
-		for(int j=0; j<board.getBoard()[0].length; j++) {
-			for(int i=1; i<board.getBoard().length; i++) {
-				if(board.getBoard()[i][j].equals("-") && j>0 &&j<board.getBoard()[0].length-1) {
-					if(!board.getBoard()[i-1][j].equals("-")) {
-						int k=1;
-						while(board.getBoard()[i+k-1][j].equals("-") && i+k<board.getBoard().length) {
-							k++;
-							counter++;
-						}
-					}
-				} else if (board.getBoard()[i][j].equals("-") && j == 0) {
-					if (!board.getBoard()[i - 1][j].equals("-")) {
-						int k = 0;
 
-						while (i+k < board.getBoard().length && board.getBoard()[i+k][j].equals("-")) {
-							k++;
-							counter++;
-						}
-					}
-				} else if (board.getBoard()[i][j].equals("-") && j == board.getBoard()[0].length - 1) {
-					if (!board.getBoard()[i - 1][j].equals("-") ) {
-						int k = 1;
-						while (board.getBoard()[i + k-1][j].equals("-") && i + k < board.getBoard().length) {
-							k++;
-							counter++;
-						}
-					}
+		
+
+	public int findGaps(PentrisBoard board) {
+		int gaps=0;
+		int checkY=1;
+		for(int i=1; i<board.getBoard().length-1; i++) {
+			for(int j=0; j<board.getBoard()[0].length; j++) {
+				checkY=i;
+				while(board.getBoard()[checkY][j].equals("-")&& !board.getBoard()[checkY-1][j].equals("-") && checkY<board.getBoard().length) {
+					gaps++;
+					checkY++;
+
+//					System.out.println("checkY = "+checkY+" i = "+i);
 				}
 			}
 		}
-		return counter;
+		for(int j=0; j<board.getBoard()[0].length; j++) {
+			if(board.getBoard()[board.getBoard().length-1][j].equals("-") &&
+					!board.getBoard()[board.getBoard().length-2][j].equals("-"))
+				gaps++;
+		}
+		return gaps;
 	}
 
 	public int evalFunction(PentrisBoard board) {
@@ -114,8 +104,8 @@ public class FindBestFit {
 				count++;
 			}
 		}
-		energy+=count*500;
-		energy-=80*height(board);
+		energy+=count*count*150;
+		energy-=70*height(board);
 		energy-=50*findGaps(board);
 		return energy;
 	}
