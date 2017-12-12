@@ -23,13 +23,13 @@ public class TimeBox extends ScoreBox {
         Graphics g = image.getGraphics();
 
         g.setColor(BACKGROUND);
-        g.fillRect(20,40,w-40,30);
-
-        g.setFont(font.deriveFont(14f));
+        g.fillRect(20,h/2-5,w-40,20);
+        float fontSize = SQ/4;
+        g.setFont(font.deriveFont(fontSize));
         g.setColor(Color.white);
 
         int textWidth = g.getFontMetrics().stringWidth("" + value);
-        g.drawString(("" + value), (w-textWidth)/2, 60);
+        g.drawString(("" + value), (w-textWidth)/2, (h/2) + g.getFontMetrics().getHeight());
 
         repaint();
     }

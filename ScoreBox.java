@@ -37,12 +37,12 @@ public class ScoreBox extends PentPanel implements ActionListener{
 
         g.setColor(BACKGROUND);
         g.fillRect(3,3,w-6,h-6);
-
-        g.setFont(font.deriveFont(10f));
+        float fontSize = SQ/4;
+        g.setFont(font.deriveFont(fontSize));
         g.setColor(Color.white);
 
         int textWidth = g.getFontMetrics().stringWidth(title);
-        g.drawString(title, (w-textWidth)/2, 25);
+        g.drawString(title, (w-textWidth)/2, 10 + g.getFontMetrics().getHeight());
         repaint();
         g.dispose();
     }

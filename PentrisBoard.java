@@ -9,10 +9,11 @@ public class PentrisBoard {
 	private final boolean DEBUG = true;
 	private int startX=0;
 	private int startY=0;
+	private int[] grid;
 	//private ShapeFactory shapeOp = new ShapeFactory();
 
-	public PentrisBoard(){
-		this.board = new String[15][5];
+	public PentrisBoard(int[] grid){
+		this.board = new String[grid[1]][grid[0]];
 		for(int i=0; i<board.length; i++)
 			for(int j=0; j<board[0].length; j++)
 				board[i][j] = "-";
