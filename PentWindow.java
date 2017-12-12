@@ -14,15 +14,28 @@ import java.awt.Toolkit;
 import javax.swing.JPanel;
 import java.io.*;
 
+/**
+This class defines the frame of the game. It is filled with different JPannels to serve different purposes.
+@see JFrame
+*/
 public class PentWindow extends JFrame{
+
+
+    private int squareSize = 30;
+    private int[] grid = {5,17};
+    private int[] defaultGrid = {5,15};
 
     private Thread gameThread;
     private PentPanel activePanel;
-    private int squareSize = 40;
-    private final int H = 17*squareSize; 
-    private final int W = 7*squareSize + squareSize*8;
+    private final int H = (grid[1]+2)*squareSize + 30;
+    private final int W = (grid[0]+10)*squareSize;
     private Font font;
+    private MenuCanvas menuCanvas;
+    private Boolean addHighScore = false;
 
+    /**
+    Main method of the class. Used to run the PentWindow from the class itself.
+    */
     public static void main(String[] args){
         //Use a thread to ensure the ui is updated correctly (internal swing requirement)
         SwingUtilities.invokeLater(new Runnable() {
@@ -34,28 +47,31 @@ public class PentWindow extends JFrame{
         });
     }
 
+    /**
+    Constructor of the PentWindow. Build the different components and possile opperations.
+    */
     public PentWindow() {
-        setSize(W, H);
+        setPreferredSize(new Dimension(W,H));
         setTitle("Pentris");
-        setMinimumSize(new Dimension(W,H));
+        //setMinimumSize(new Dimension(W,H));
         setResizable(false);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         createKeyInput();
-
+        if(grid[0] == 5 && grid[1] == 15)
+            addHighScore = true;
         try { font = Font.createFont(Font.TRUETYPE_FONT, new File("PixelFont.ttf")).deriveFont(16f); } catch (IOException e) {e.printStackTrace();} catch(FontFormatException e) {e.printStackTrace();}
-
-        MenuCanvas menuCanvas = new MenuCanvas(W, H, font, squareSize);
+        menuCanvas = new MenuCanvas(W, H, font, squareSize);
         setActivePanel(menuCanvas);
         setVisible(true);
-    }        
-
-    public void createGame() {
-        GameCanvas gameCanvas = new GameCanvas(W, H, font, squareSize);
-        setActivePanel(gameCanvas);
+        pack();
     }
 
+    /**
+    Creates and adds the key input listener on the window. Each key press is linked to a method of the active pannel.
+    @see KeyAdapter
+    */
     public void createKeyInput() {
-        this.addKeyListener( new KeyAdapter() {    //Key listener
+        this.addKeyListener( new KeyAdapter() {
             public void keyPressed(KeyEvent e) {
                 int k = e.getKeyCode();
                 //System.out.println("" + k);
@@ -80,15 +96,39 @@ public class PentWindow extends JFrame{
                     getActivePanel().spaceKeyPress();
                 }
 
+                if(k == 80) {
+                    getActivePanel().pKeyPress();
+                }
+
                 if(k == 10) {
-                    if(getActivePanel() instanceof MenuCanvas)
-                        if(((MenuCanvas)getActivePanel()).getPos() == 0) 
-                            createGame();
+                    if(getActivePanel() instanceof MenuCanvas) {
+                        int pos = ((MenuCanvas)getActivePanel()).getPos();
+                        if( pos == 0) {
+                            GameCanvas gameCanvas = new GameCanvas(W, H, font, squareSize, grid);
+                            setActivePanel(gameCanvas);
+                        } else if(pos == 1) {
+                            ScoreCanvas scoreCanvas = new ScoreCanvas(W, H, font, squareSize);
+                            setActivePanel(scoreCanvas);
+                        }
+                    } else if (getActivePanel() instanceof ScoreCanvas) {
+                        setActivePanel(menuCanvas);
+                    }
                 }
             }
-        }); 
+            public void keyReleased(KeyEvent e){
+               int k = e.getKeyCode();
+               if(k == 83 || k == 40) {
+                  getActivePanel().downKeyRelease();
+               }
+            }
+        });
     }
 
+    /**
+    Changes the active pannel to a new specified PentPannel.
+    @param panel Pannel extending PentPanel.
+    @see PentPanel
+    */
     private void setActivePanel(PentPanel panel) {
         if(activePanel != null) {
             getContentPane().remove(activePanel);
@@ -96,10 +136,35 @@ public class PentWindow extends JFrame{
         activePanel = panel;
         getContentPane().add(panel);
         pack();
+        repaint();
     }
 
+    /**
+    Returns a reference to the active PentPanel
+    @return The active PentPanel in the frame.
+    @see PentPanel
+    */
     public PentPanel getActivePanel() {
         return activePanel;
     }
+
+    /**
+    Method getting called from a PentPanel when the game ends to ask for the name and add the highscore to the list and changes the active PentPanel
+    @param score The score when the game ends.
+    @see ScoreCanvas
+    */
+    public void endGame(int score) {
+        ScoreCanvas scoreCanvas;
+        if(addHighScore) {
+            String name = JOptionPane.showInputDialog(this,"Enter Your Name: ");
+            if(name == null || name.equals("")) {
+                scoreCanvas = new ScoreCanvas(W, H, font, squareSize);
+            } else {
+                scoreCanvas = new ScoreCanvas(W, H, font, squareSize, name, score);
+            }
+        } else {
+            scoreCanvas = new ScoreCanvas(W, H, font, squareSize);
+        }
+        setActivePanel(scoreCanvas);
+    }
 }
-    

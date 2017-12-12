@@ -5,28 +5,28 @@ import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.Timer;
 
 
-public class ScoreBox extends PentPanel{
+public class ScoreBox extends PentPanel implements ActionListener{
 	public static void main(String[] args){}
 
     protected String title, text;
-    protected int X, Y;
     protected BufferedImage image;
-    protected Font font;
+    protected GameCanvas parent;
 
-	public ScoreBox(int x, int y, Font f, int s, String t, int w, int h) {
-        super(w, h, f, s, x, y);
-        X = x; Y = y;
+	public ScoreBox(int x, int y, Font f, int s, String t, int w, int h, int time, GameCanvas g) {
+        super(x, y, w, h, f, s);
         image = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
         title = t;
-        font = f;
         drawIntial();
-        //drawValue();
-    }
-
-    public String getTitle() {
-    	return title;
+        parent = g;
+        if(time != 0) {
+            Timer timer = new Timer(time, this);
+            timer.start();
+        }
     }
 
     public void drawIntial() {
@@ -37,12 +37,12 @@ public class ScoreBox extends PentPanel{
 
         g.setColor(BACKGROUND);
         g.fillRect(3,3,w-6,h-6);
-
-        g.setFont(font.deriveFont((float)(SQ/4)));
+        float fontSize = SQ/4;
+        g.setFont(font.deriveFont(fontSize));
         g.setColor(Color.white);
 
         int textWidth = g.getFontMetrics().stringWidth(title);
-        g.drawString(title, (w-textWidth)/2, 10 + SQ/4);
+        g.drawString(title, (w-textWidth)/2, 10 + g.getFontMetrics().getHeight());
         repaint();
         g.dispose();
     }
@@ -52,17 +52,11 @@ public class ScoreBox extends PentPanel{
         g.drawImage(image, 0, 0, null);
     }
 
-    public int getX() {
-        return X;
-    }
-
-    public int getY() {
-        return Y;
-    }
-
-    public BufferedImage getimage() {
-        return image;
-    }
-
     public void tick() {}
+  
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if(!parent.isPaused() && parent.isRunning())
+            tick();
+    }
 }
