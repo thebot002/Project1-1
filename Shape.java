@@ -1,18 +1,31 @@
 import java.util.*;
 
+/**
+This class defines the pentominoe shapes objects used for the game of pentris.
+*/
 public class Shape {
 	private String[][] shape;
 
+	/**
+	Constructor of a shape object
+	@param shape Array of strings defining the shape. Filled with "-" when empty space and the letter ID in filled spaces.
+	*/
 	public Shape(String[][] shape) {
 		this.shape = shape;
 	}
 
+	/**
+	Returns the string array version of the shape
+	@return An 2-D array representing the shape.
+	*/
 	public String[][] getShape(){
 		return shape;
 	}
 
-	public static void main(String[] args){}
-
+	/**
+	Returns the ID of the shape, i.e. the letter it represents.
+	@return A letter representing the shape.
+	*/
 	public String getShapeID(){
 		for(int i=0;i<shape.length;i++)
 			for(int j=0;j<shape[i].length;j++)
@@ -20,32 +33,34 @@ public class Shape {
 		return "-";
 	}
 
+	/**
+	Returns the width of the shape.
+	@return An integer value of the width of the shape.
+	*/
 	public int getWidth(){
 		return shape[0].length;
 	}
+
+	/**
+	Returns the height of the shape.
+	@return An integer value of the height of the shape.
+	*/
 	public int getHeight(){
 		return shape.length;
 	}
 
-	public String getElement(int i,int j){
+	/**
+	Returns the string contained at that position of the shape array.
+	@return A string containing either "-" or the shape ID.
+	*/
+	public String getElement(int i, int j){
 		return shape[i][j];
 	}
 
-	public String getString() {
-		String shapeString = "-";
-		for(int i=0; i<shape.length; i++) {
-			for(int j=0; j<shape[0].length; j++) {
-				if(!shape[i][j].equals("-"))
-					shapeString = shape[i][j];
-					break;
-			}
-			if(!shapeString.equals("-"))
-				break;
-		}
-		return shapeString;
-	}
-
-	public void rotateR(){ //clockwise
+	/**
+	Clockwise rotation of the shape array.
+	*/
+	public void rotateR(){
 		 String[][] temp = new String[shape[0].length][shape.length];
 		 for(int i=0; i<shape.length;i++){
 			  for(int j=0;j<shape[0].length;j++){
@@ -55,6 +70,10 @@ public class Shape {
 		 shape = Arrays.copyOf(temp, temp.length);
 		 flipH();
 	}
+	/**
+	Returns a clockwise rotated string array representing the shape.
+	@return A 2-D array representing a clockwise rotation of the shape.
+	*/
 	public String[][] sRotateR(){
  		String[][] sShape = shape;
  		String[][] temp = new String[sShape[0].length][sShape.length];
@@ -66,6 +85,10 @@ public class Shape {
  		sShape = Arrays.copyOf(temp, temp.length);
  		return sFlipH(sShape);
  	}
+
+	/**
+	Counter-clockwise rotation of the shape array.
+	*/
 	public void rotateL(){ //counter clockwise
 		 String[][] temp = new String[shape[0].length][shape.length];
 		 for(int i=0; i<shape.length;i++){
@@ -76,6 +99,10 @@ public class Shape {
 		 shape = Arrays.copyOf(temp, temp.length);
 		 flipV();
 	}
+
+	/**
+	Horizontal mirroring of the shape array.
+	*/
 	public void flipH(){ //horizontal
 		 for(int i=0; i<shape.length; i++){
 			  for(int j=0;j<shape[0].length/2;j++){
@@ -85,6 +112,10 @@ public class Shape {
 			  }
 		 }
 	}
+	/**
+	Returns a horizontal mirrored string array representing the shape.
+	@return A 2-D array representing a horizontal mirror of the shape.
+	*/
 	public String[][] sFlipH(String[][] sShape1){
  		String[][] sShape = sShape1;
  		for(int i=0; i<sShape.length; i++){
@@ -96,7 +127,11 @@ public class Shape {
  		}
  		return sShape;
  	}
-	public void flipV(){ //Vertical
+
+	/**
+	Vertical mirroring of the shape array.
+	*/
+	public void flipV(){
 		 for(int i=0; i<shape.length/2; i++){
 			  for(int j=0;j<shape[0].length;j++){
 					String temp = shape[i][j];
@@ -105,6 +140,10 @@ public class Shape {
 			  }
 		 }
 	}
+
+	/**
+	Prints the shape representation in the console.
+	*/
 	public void printShape() {
 		for (int i=0; i<shape.length; i++) {
 			for (int j=0; j<shape[0].length; j++) {
