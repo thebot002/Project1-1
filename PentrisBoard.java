@@ -24,6 +24,13 @@ public class PentrisBoard {
 	}
 
 	/**
+	Constructor to create a PentrisBoard from an 2-D array
+	@param board
+	*/
+	public PentrisBoard(String[][] board){
+		this.board = board;
+	}
+	/**
 	Return a 2-D representing the PentrisBoard.
 	@return A 2-D array filled with "-" and shape ID's.
 	@see Shape
@@ -329,5 +336,12 @@ public class PentrisBoard {
 			}
 			System.out.println("");
 		}
+	}
+
+	/**
+	Method to create a new identitical board
+	@return the new board1*/
+	public PentrisBoard copyBoard(){
+		return new PentrisBoard(board);
 	}
 }

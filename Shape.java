@@ -155,4 +155,12 @@ public class Shape {
 			}
 		}
 	}
+
+	/**
+	Method to create a new identitical Shape object.
+	@return A new Shape object.
+	*/
+	public Shape copyShape(){
+		return new Shape(shape);
+	}
 }

@@ -26,6 +26,10 @@ class GameCanvas extends PentPanel implements ActionListener {
 	private Shape nextShape;
 	private ShapeList shapeList;
 
+	private PentrisBoard checkBoard;
+	private Shape checkShape;
+	private Shape checkShape2;
+
 	private int speedDefault = 600;
 	private int speedUp = 100;
 	//shape x and y:
@@ -56,9 +60,9 @@ class GameCanvas extends PentPanel implements ActionListener {
 	public void startGame() {
 		gameRunning = true;
 
-		checkBoard = new PentrisBoard(board.copyBoard());
-		checkShape = new Shape(activeShape.copyShape());
-		checkShape2= new Shape(nextShape.copyShape());
+		checkBoard = board.copyBoard();
+		checkShape = activeShape.copyShape();
+		checkShape2= nextShape.copyShape();
 		if(activeShape.getHeight()>activeShape.getWidth()) activeShape.rotateR();
 		if(!board.addShapeToBoard(activeShape)) gameOver();
 		drawBoard(board);
@@ -82,13 +86,8 @@ class GameCanvas extends PentPanel implements ActionListener {
 			checkBoardList.add(psblMoves.getBoardList().get(i));
 			checkShapeList.add(psblMoves.getShapeList().get(i));
 		}
-
-
-
-
 		FindBestFit bestFit = new FindBestFit(checkBoardList, checkShapeList, checkXList);
 		bestFit.findOptimalState();
-
 
 			playingBot(bestFit.getBestShape(), bestFit.getOptimalX());
 
@@ -100,12 +99,12 @@ class GameCanvas extends PentPanel implements ActionListener {
 					gameOver();
 					psblMoves.emptyArrayList();
 				} else {
-					checkBoard=new PentrisBoard(board.copyBoard());
+					checkBoard=board.copyBoard();
 					psblMoves.emptyArrayList();
 					activeShape = nextShape;
-					checkShape = new Shape(activeShape.copyShape());
+					checkShape = activeShape.copyShape();
 					nextShape = shapeList.getRandomShape();
-					checkShape2 = new Shape(nextShape.copyShape());
+					checkShape2 = nextShape.copyShape();
 					shapeBox.drawValue(nextShape);
 					if(activeShape.getHeight() > activeShape.getWidth()) activeShape.rotateR();
 					x=0;
@@ -173,7 +172,7 @@ class GameCanvas extends PentPanel implements ActionListener {
 			board.dropDown(activeShape, x, y);
 			timer.start();
 			activeShape = nextShape;
-      checkShape = new Shape(activeShape.copyShape());
+      checkShape=activeShape.copyShape();
 			nextShape = shapeList.getRandomShape();
 			shapeBox.drawValue(nextShape);
 			if(activeShape.getHeight() > activeShape.getWidth()) activeShape.rotateR();
@@ -182,7 +181,7 @@ class GameCanvas extends PentPanel implements ActionListener {
 			int lines = board.breakLines();
 			score += lines * lines * 10;
 			scoreBox.setTarget(score);
-      checkBoard=new PentrisBoard(board.copyBoard());
+      checkBoard=board.copyBoard();
 			drawBoard(board);
 			repaint();
 		}
