@@ -28,7 +28,7 @@ public class PentWindow extends JFrame{
     private Font font;
     private MenuCanvas menuCanvas;
     private Boolean addHighScore = false;
-    
+
 
     public static void main(String[] args){
         //Use a thread to ensure the ui is updated correctly (internal swing requirement)
@@ -55,11 +55,6 @@ public class PentWindow extends JFrame{
         setActivePanel(menuCanvas);
         setVisible(true);
         pack();
-    }
-    public PentWindow(boolean bot){
-        this();
-        GameCanvas gameCanvas = new GameCanvas(W, H, font, squareSize);
-        setActivePanel(gameCanvas);
     }
 
     public void createKeyInput() {
