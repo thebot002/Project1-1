@@ -114,16 +114,21 @@ class GameCanvas extends PentPanel implements ActionListener {
 	}
 
 	public void spaceKeyPress() {
-		if(!paused)	{
+		if(gameRunning && !paused)	{
 			board.dropDown(activeShape, x, y);
-		  	activeShape = nextShape;
-		  	nextShape = shapeList.getRandomShape();
-		  	if(activeShape.getHeight()>activeShape.getWidth()) activeShape.rotateR();
-		  	x=0;
-		  	y=0;
-		  	score += board.breakLines();
-		  	board.addShapeToBoard(activeShape,x,y);
-		  	drawBoard(board);
+			timer.start();
+			activeShape = nextShape;
+			nextShape = shapeList.getRandomShape();
+			shapeBox.drawValue(nextShape);
+			if(activeShape.getHeight() > activeShape.getWidth()) activeShape.rotateR();
+			x=0;
+			y=0;
+			int lines = board.breakLines();
+			score += lines * lines * 10;
+			scoreBox.setTarget(score);
+			drawBoard(board);
+			repaint();
+
 		}
 	}
 

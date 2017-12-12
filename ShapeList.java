@@ -1,29 +1,35 @@
 import java.util.ArrayList;
 
+/**
+This class is an ArraList of Shape objects.
+@see ArraList
+@see Shape
+*/
 public class ShapeList extends ArrayList<Shape> {
-
-	public static void main(String[] args){}
-	private ShapeFactory shapeFactory = new ShapeFactory();
+	/**
+	Constructor of the ShapeList object. Also fills it with all the Shape objects and their mirror using the ShapeFactory class.
+	@see Shape
+	@see ShapeFactory
+	*/
 	public ShapeList() {
-
-		Shape shapeI = shapeFactory.buildShapeI();
-		Shape shapeL = shapeFactory.buildShapeL();
-		Shape shapeN = shapeFactory.buildShapeN();
-		Shape shapeF = shapeFactory.buildShapeF();
-		Shape shapeP = shapeFactory.buildShapeP();
-		Shape shapeT = shapeFactory.buildShapeT();
-		Shape shapeU = shapeFactory.buildShapeU();
-		Shape shapeV = shapeFactory.buildShapeV();
-		Shape shapeW = shapeFactory.buildShapeW();
-		Shape shapeX = shapeFactory.buildShapeX();
-		Shape shapeY = shapeFactory.buildShapeY();
-		Shape shapeZ = shapeFactory.buildShapeZ();
-		Shape shapeJ = shapeFactory.buildShapeJ();
-		Shape shapeH = shapeFactory.buildShapeH();
-		Shape shapeQ = shapeFactory.buildShapeQ();
-		Shape shapeM = shapeFactory.buildShapeM();
-		Shape shapeS = shapeFactory.buildShapeS();
-		Shape shapeE = shapeFactory.buildShapeE();
+		Shape shapeI = ShapeFactory.buildShapeI();
+		Shape shapeL = ShapeFactory.buildShapeL();
+		Shape shapeN = ShapeFactory.buildShapeN();
+		Shape shapeF = ShapeFactory.buildShapeF();
+		Shape shapeP = ShapeFactory.buildShapeP();
+		Shape shapeT = ShapeFactory.buildShapeT();
+		Shape shapeU = ShapeFactory.buildShapeU();
+		Shape shapeV = ShapeFactory.buildShapeV();
+		Shape shapeW = ShapeFactory.buildShapeW();
+		Shape shapeX = ShapeFactory.buildShapeX();
+		Shape shapeY = ShapeFactory.buildShapeY();
+		Shape shapeZ = ShapeFactory.buildShapeZ();
+		Shape shapeJ = ShapeFactory.buildShapeJ();
+		Shape shapeH = ShapeFactory.buildShapeH();
+		Shape shapeQ = ShapeFactory.buildShapeQ();
+		Shape shapeM = ShapeFactory.buildShapeM();
+		Shape shapeS = ShapeFactory.buildShapeS();
+		Shape shapeE = ShapeFactory.buildShapeE();
 
 		add(shapeZ);
 		add(shapeY);
@@ -46,18 +52,12 @@ public class ShapeList extends ArrayList<Shape> {
 		add(shapeE);
 	}
 
-	public ArrayList<Shape> getShapeList(){
-		return this;
-	}
-
-	public Shape getShape(int nb){
-		return get(nb);
-	}
+	/**
+	Returns a random Shape object from the list.
+	@return A Shape object randomly picked.
+	@see shape
+	*/
 	public Shape getRandomShape(){
 		return get((int)(Math.random()*size()));
 	}
-	public int getLength(){
-		return size();
-	}
-
 }

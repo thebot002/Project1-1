@@ -1,21 +1,15 @@
-//In this Class we build the shapes and some methods to rotate or mirroring them
+/**
+This class contains the methods to build the Shape objects and their mirror.
+@see Shape
+*/
 public class ShapeFactory {
-	public static void main(String[] args){}
-	public ShapeFactory() {}
-
-		public String[][] buildShapes(int length, int width){
-	String[][] shape = new String[length][width];
-
-	for(int i=0;i<length;i++){
-		for(int j=0;j<width;j++){
-			shape[i][j]="-";
-		}
-	}
-	return shape;
-}
-
-	public Shape buildShapeI(){
-		String[][] shapeI= new String[][]{
+	/**
+	Builds a Shape object representing an I.
+	@return A new Shape object.
+	@see Shape
+	*/
+	public static Shape buildShapeI(){
+		String[][] shapeI= {
 			{"I"},
 			{"I"},
 			{"I"},
@@ -25,8 +19,13 @@ public class ShapeFactory {
 		return new Shape(shapeI);
 	}
 
-	public Shape buildShapeL(){
-		String[][] shapeL= new String[][]{
+	/**
+	Builds a Shape object representing an L.
+	@return A new Shape object.
+	@see Shape
+	*/
+	public static Shape buildShapeL(){
+		String[][] shapeL= {
 			{"L", "-"},
 			{"L", "-"},
 			{"L", "-"},
@@ -35,8 +34,13 @@ public class ShapeFactory {
 		return new Shape(shapeL);
 	}
 
-	public Shape buildShapeJ(){
-		String[][] shapeJ= new String[][]{
+	/**
+	Builds a Shape object representing an J (mirrored L).
+	@return A new Shape object.
+	@see Shape
+	*/
+	public static Shape buildShapeJ(){
+		String[][] shapeJ= {
 			{"-", "J"},
 			{"-", "J"},
 			{"-", "J"},
@@ -45,8 +49,13 @@ public class ShapeFactory {
 		return new Shape(shapeJ);
 	}
 
-	public Shape buildShapeY(){
-		String[][] shapeY= new String[][]{
+	/**
+	Builds a Shape object representing an Y.
+	@return A new Shape object.
+	@see Shape
+	*/
+	public static Shape buildShapeY(){
+		String[][] shapeY= {
 			{"-", "Y"},
 			{"Y", "Y"},
 			{"-", "Y"},
@@ -55,8 +64,13 @@ public class ShapeFactory {
 		return new Shape(shapeY);
 	}
 
-	public Shape buildShapeH(){
-		String[][] shapeH= new String[][]{
+	/**
+	Builds a Shape object representing an H (mirrored Y).
+	@return A new Shape object.
+	@see Shape
+	*/
+	public static Shape buildShapeH(){
+		String[][] shapeH= {
 			{"H", "-"},
 			{"H", "H"},
 			{"H", "-"},
@@ -65,8 +79,13 @@ public class ShapeFactory {
 		return new Shape(shapeH);
 	}
 
-	public Shape buildShapeP(){
-		String[][] shapeP= new String[][]{
+	/**
+	Builds a Shape object representing an P.
+	@return A new Shape object.
+	@see Shape
+	*/
+	public static Shape buildShapeP(){
+		String[][] shapeP= {
 			{"P", "P"},
 			{"P", "P"},
 			{"P", "-"}
@@ -74,8 +93,13 @@ public class ShapeFactory {
 		return new Shape(shapeP);
 	}
 
-	public Shape buildShapeQ(){
-		String[][] shapeQ= new String[][]{
+	/**
+	Builds a Shape object representing an Q (mirrored P).
+	@return A new Shape object.
+	@see Shape
+	*/
+	public static Shape buildShapeQ(){
+		String[][] shapeQ= {
 			{"Q", "Q"},
 			{"Q", "Q"},
 			{"-", "Q"}
@@ -83,8 +107,13 @@ public class ShapeFactory {
 		return new Shape(shapeQ);
 	}
 
-	public Shape buildShapeN(){
-		String[][] shapeN= new String[][]{
+	/**
+	Builds a Shape object representing an N.
+	@return A new Shape object.
+	@see Shape
+	*/
+	public static Shape buildShapeN(){
+		String[][] shapeN= {
 			{"-", "N"},
 			{"-", "N"},
 			{"N", "N"},
@@ -93,126 +122,143 @@ public class ShapeFactory {
 		return new Shape(shapeN);
 	}
 
-public Shape buildShapeM(){
-	String[][] shapeM= new String[][]{
-		{"M", "-"},
-		{"M", "-"},
-		{"M", "M"},
-		{"-", "M"}
-	};
-	return new Shape(shapeM);
-}
-
-public Shape buildShapeU(){
-	String[][] shapeU= new String[][]{
-		{"U", "-", "U"},
-		{"U", "U", "U"}
-	};
-	return new Shape(shapeU);
-}
-
-public Shape buildShapeV(){
-	String[][] shapeV= new String[][]{
-		{"V", "-", "-"},
-		{"V", "-", "-"},
-		{"V", "V", "V"}
-	};
-	return new Shape(shapeV);
-}
-
-public Shape buildShapeT(){
-	String[][] shapeT= new String[][]{
-		{"T", "T", "T"},
-		{"-", "T", "-"},
-		{"-", "T", "-"}
-	};
-	return new Shape(shapeT);
-}
-
-public Shape buildShapeX(){
-	String[][] shapeX= new String[][]{
-		{"-", "X", "-"},
-		{"X", "X", "X"},
-		{"-", "X", "-"}
-	};
-	return new Shape(shapeX);
-}
-
-public Shape buildShapeZ(){
-	String[][] shapeZ= new String[][]{
-		{"Z", "Z", "-"},
-		{"-", "Z", "-"},
-		{"-", "Z", "Z"}
-	};
-	return new Shape(shapeZ);
-}
-
-public Shape buildShapeS(){
-	String[][] shapeS= new String[][]{
-		{"-", "S", "S"},
-		{"-", "S", "-"},
-		{"S", "S", "-"}
-	};
-	return new Shape(shapeS);
-}
-
-public Shape buildShapeF(){
-	String[][] shapeF= new String[][]{
-		{"-", "F", "F"},
-		{"F", "F", "-"},
-		{"-", "F", "-"}
-	};
-	return new Shape(shapeF);
-}
-
-public Shape buildShapeE(){
-	String[][] shapeE= new String[][]{
-		{"E", "E", "-"},
-		{"-", "E", "E"},
-		{"-", "E", "-"}
-	};
-	return new Shape(shapeE);
-}
-
-public Shape buildShapeW(){
-	String[][] shapeW= new String[][]{
-		{"-", "-", "W"},
-		{"-", "W", "W"},
-		{"W", "W", "-"}
-	};
-	return new Shape(shapeW);
-}
-
-
-/* With this method we just interchange the rows and the collumns of the shape */
-public Shape rotate90(Shape shape){
-	String [][] crShape = shape.getShape();
-	String [][] rcShape=new String[crShape[0].length][crShape.length];
-	for (int i=0; i<rcShape.length;i++){
-		for (int j=0; j<rcShape[0].length; j++){
-			rcShape[i][j]=crShape[j][i];
-		}
+	/**
+	Builds a Shape object representing an M (mirrored N).
+	@return A new Shape object.
+	@see Shape
+	*/
+	public static Shape buildShapeM(){
+		String[][] shapeM= {
+			{"M", "-"},
+			{"M", "-"},
+			{"M", "M"},
+			{"-", "M"}
+		};
+		return new Shape(shapeM);
 	}
-	Shape rotateShape = horizontalMirroring(new Shape(rcShape));
-	return new Shape(rotateShape.getShape());
-}
 
-
-//With this method we get the horizontal mirror image of the shape
-
-public Shape horizontalMirroring(Shape shape){
-	String[][] nShape = shape.getShape();
-	String[][] mirroringShape = new String[nShape.length][nShape[0].length];
-	for (int i=0; i<mirroringShape.length; i++){
-		for(int j=0; j<mirroringShape[0].length; j++){
-			mirroringShape[i][j]=nShape[i][nShape[0].length-j-1];
-		}
+	/**
+	Builds a Shape object representing an U.
+	@return A new Shape object.
+	@see Shape
+	*/
+	public static Shape buildShapeU(){
+		String[][] shapeU= {
+			{"U", "-", "U"},
+			{"U", "U", "U"}
+		};
+		return new Shape(shapeU);
 	}
-	return new Shape(mirroringShape);
-}
 
-/* By using the above three methods we can get all the states of any shape */
+	/**
+	Builds a Shape object representing an V.
+	@return A new Shape object.
+	@see Shape
+	*/
+	public static Shape buildShapeV(){
+		String[][] shapeV= {
+			{"V", "-", "-"},
+			{"V", "-", "-"},
+			{"V", "V", "V"}
+		};
+		return new Shape(shapeV);
+	}
 
+	/**
+	Builds a Shape object representing an T.
+	@return A new Shape object.
+	@see Shape
+	*/
+	public static Shape buildShapeT(){
+		String[][] shapeT= {
+			{"T", "T", "T"},
+			{"-", "T", "-"},
+			{"-", "T", "-"}
+		};
+		return new Shape(shapeT);
+	}
 
+	/**
+	Builds a Shape object representing an X.
+	@return A new Shape object.
+	@see Shape
+	*/
+	public static Shape buildShapeX(){
+		String[][] shapeX= {
+			{"-", "X", "-"},
+			{"X", "X", "X"},
+			{"-", "X", "-"}
+		};
+		return new Shape(shapeX);
+	}
 
+	/**
+	Builds a Shape object representing an Z.
+	@return A new Shape object.
+	@see Shape
+	*/
+	public static Shape buildShapeZ(){
+		String[][] shapeZ= {
+			{"Z", "Z", "-"},
+			{"-", "Z", "-"},
+			{"-", "Z", "Z"}
+		};
+		return new Shape(shapeZ);
+	}
+
+	/**
+	Builds a Shape object representing an S (mirrored Z).
+	@return A new Shape object.
+	@see Shape
+	*/
+	public static Shape buildShapeS(){
+		String[][] shapeS= {
+			{"-", "S", "S"},
+			{"-", "S", "-"},
+			{"S", "S", "-"}
+		};
+		return new Shape(shapeS);
+	}
+
+	/**
+	Builds a Shape object representing an F.
+	@return A new Shape object.
+	@see Shape
+	*/
+	public static Shape buildShapeF(){
+		String[][] shapeF= {
+			{"-", "F", "F"},
+			{"F", "F", "-"},
+			{"-", "F", "-"}
+		};
+		return new Shape(shapeF);
+	}
+
+	/**
+	Builds a Shape object representing an E (mirrored F).
+	@return A new Shape object.
+	@see Shape
+	*/
+	public static Shape buildShapeE(){
+		String[][] shapeE= {
+			{"E", "E", "-"},
+			{"-", "E", "E"},
+			{"-", "E", "-"}
+		};
+		return new Shape(shapeE);
+	}
+
+	/**
+	Builds a Shape object representing an W.
+	@return A new Shape object.
+	@see Shape
+	*/
+	public static Shape buildShapeW(){
+		String[][] shapeW= {
+			{"-", "-", "W"},
+			{"-", "W", "W"},
+			{"W", "W", "-"}
+		};
+		return new Shape(shapeW);
+	}
 }

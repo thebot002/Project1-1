@@ -1,6 +1,10 @@
 import java.awt.*;
 import java.util.HashMap;
 
+/**
+HashMap containing all the colors of the different shapes correspoding with their ID.
+@see Shape
+*/
 public class PentColors extends HashMap<String, Color> {
 	public static void main(String[] args){}
 	public PentColors() {
@@ -21,7 +25,6 @@ public class PentColors extends HashMap<String, Color> {
 		put("Y", Color.YELLOW);
 		put("H", new Color(255, 255, 153));
 		put("Z", Color.WHITE);
-		put("S", new Color(128, 128, 128)); 
+		put("S", new Color(128, 128, 128));
 	}
 }
-	
