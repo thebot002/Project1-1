@@ -1,4 +1,4 @@
-package logic;
+
 // This class construct our board, and also have some methods to operate on this board
 public class PentominosBoard {
 	private String[][] board;
