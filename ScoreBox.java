@@ -53,7 +53,7 @@ public class ScoreBox extends PentPanel implements ActionListener{
     }
 
     public void tick() {}
-
+  
     @Override
     public void actionPerformed(ActionEvent e) {
         if(!parent.isPaused() && parent.isRunning())
