@@ -36,27 +36,27 @@ public class BotStats {
 			gameRunning=true;
 			x=0;
 			y=0;
-			checkBoard = new PentrisBoard(board.copyBoard());
-			checkShape = new Shape(shape.copyShape());
-			checkShape2 = new Shape(shape2.copyShape());
+			checkBoard = board.copyBoard();
+			checkShape = shape.copyShape();
+			checkShape2 = shape2.copyShape();
 
 			while (gameRunning) {
 //				System.out.println("BEGIN OF WHILE LOOP");
-				testBoard = new PentrisBoard(checkBoard.copyBoard());
-				testShape = new Shape(checkShape.copyShape());
-				testShape2 = new Shape(checkShape2.copyShape());
+				testBoard = checkBoard.copyBoard();
+				testShape = checkShape.copyShape();
+				testShape2 = checkShape2.copyShape();
 
-//				checkBoard = new PentrisBoard(board.copyBoard());
-//				checkShape = new Shape(shape.copyShape());
-//				checkShape2 = new Shape(shape2.copyShape());
+//				checkBoard = board.copyBoard();
+//				checkShape = shape.copyShape();
+//				checkShape2 = shape2.copyShape();
 //				if(!board.addShapeToBoard(shape)) gameRunning=false;
-//				checkBoard = new PentrisBoard(board.copyBoard());
-//				checkBoard = new PentrisBoard(board.copyBoard());
+//				checkBoard = board.copyBoard();
+//				checkBoard = board.copyBoard();
 
 //
 //
-//				checkShape = new Shape(shape.copyShape());
-//				checkShape2 = new Shape(shape2.copyShape());
+//				checkShape = shape.copyShape();
+//				checkShape2 = shape2.copyShape();
 
 				CheckMoves possibleMoves = new CheckMoves(testBoard, testShape, testShape2);
 				possibleMoves.findPossibleMoves();
@@ -118,15 +118,15 @@ public class BotStats {
 					} else {
 						checkBoard.addShapeToBoard(checkShape, x, y);
 //						System.out.println("SHAPE ADDED");
-						testBoard = new PentrisBoard(checkBoard.copyBoard());
+						testBoard = checkBoard.copyBoard();
 						int lines = checkBoard.breakLines();
 						score += lines * lines * 10;
 //						System.out.println("END OF LOOP");
 						possibleMoves.emptyArrayList();
 						checkShape = checkShape2;
-						testShape = new Shape(checkShape.copyShape());
+						testShape = checkShape.copyShape();
 						checkShape2 = shapeList.getRandomShape();
-						testShape2 = new Shape(checkShape2.copyShape());
+						testShape2 = checkShape2.copyShape();
 
 
 
