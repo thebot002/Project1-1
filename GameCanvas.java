@@ -79,8 +79,6 @@ class GameCanvas extends PentPanel implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		//makes the timer wait for the shape to appear before moving it down
-		System.out.println(y);
 		CheckMoves psblMoves = null;
 		if(bot){
 			psblMoves = new CheckMoves(checkBoard,checkShape,checkShape2);
@@ -96,7 +94,7 @@ class GameCanvas extends PentPanel implements ActionListener {
 				checkShapeList.add(psblMoves.getShapeList().get(i));
 			}
 			FindBestFit bestFit = new FindBestFit(checkBoardList, checkShapeList, checkXList);
-			bestFit.findOptimalState();
+			bestFit.findOptimalState(200,210,100);
 
 			playingBot(bestFit.getBestShape(), bestFit.getOptimalX());
 		}
