@@ -52,8 +52,8 @@ public class CheckMoves {
 					y++;
 				}
 				board.addShapeToBoard(shape,i,y);
-				PentrisBoard checkingBoard = new PentrisBoard(board.copyBoard());
-				Shape checkingShape = new Shape(shape.copyShape());
+				PentrisBoard checkingBoard = board.copyBoard();
+				Shape checkingShape = shape.copyShape();
 				int x=i;
 				findPossibleMoves2(checkingBoard,checkingShape,x);
 
@@ -88,8 +88,8 @@ public void findPossibleMoves2(PentrisBoard checkingBoard, Shape checkingShape, 
 					y++;
 				}
 				checkingBoard.addShapeToBoard(shape2,i,y);
-				PentrisBoard checkingBoard2 = new PentrisBoard(checkingBoard.copyBoard());
-				Shape checkingShape2 = new Shape(checkingShape.copyShape());
+				PentrisBoard checkingBoard2 = checkingBoard.copyBoard();
+				Shape checkingShape2 = checkingShape.copyShape();
 				if (checkingBoard.isPlaced(shape2, i, y)) {
 
 					boardList.add(checkingBoard2);
