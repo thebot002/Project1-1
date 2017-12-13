@@ -230,14 +230,14 @@ class GameCanvas extends PentPanel implements ActionListener {
 		int oy = SQ;
 
 		//draw border of board
-		for(int y=-1; y<(grid[1]+1); y++) {
+		for(int y=-1; y<(grid[1]-4); y++) {
 			drawBlock(g, ox - SQ, oy + SQ * y, BACKGROUND, SQ);
 			drawBlock(g, ox + grid[0] * SQ, oy + SQ * y, BACKGROUND, SQ);
 		}
 
 		for(int x=0; x<(grid[0]); x++) {
 			drawBlock(g, ox + SQ * x, oy - SQ, BACKGROUND, SQ);
-			drawBlock(g, ox + SQ * x, oy + grid[1] * SQ, BACKGROUND, SQ);
+			drawBlock(g, ox + SQ * x, oy + (grid[1]-5) * SQ, BACKGROUND, SQ);
 		}
 
 
@@ -268,17 +268,17 @@ class GameCanvas extends PentPanel implements ActionListener {
 	private void drawBoard(PentrisBoard pBoard) {
 
 		int ox = (w-SQ*grid[0])/2;
-		int oy = SQ;
+		int oy = -4*SQ;
 
 		Graphics g = image.getGraphics();
 		g.setColor(BACKGROUND);
-		g.fillRect(ox,oy,SQ*grid[0],SQ*grid[1]);
+		g.fillRect(ox,oy+5*SQ,SQ*grid[0],SQ*(grid[1]-5));
 
 		String[][] board = pBoard.getBoard();
 
 
 		for(int x=0; x<board[0].length; x++) {
-			for(int y=0; y<board.length; y++) {
+			for(int y=5; y<board.length; y++) {
 				if(!board[y][x].equals("-")) {
 					drawBlock(g, ox + x * SQ, oy + y * SQ, colorList.get(board[y][x]), SQ);
 				}

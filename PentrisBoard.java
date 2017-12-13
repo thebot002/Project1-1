@@ -182,11 +182,12 @@ public class PentrisBoard {
 					}
 					j--;
 				}
-				i--;
+				System.out.println("test");
+				board=newBoard;
+				i++;
 				counter++;
 			}
 		}
-		board=newBoard;
 		return counter;
 	}
 
