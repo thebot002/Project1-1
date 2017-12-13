@@ -179,7 +179,7 @@ public class PentrisBoard {
 
 			if(isLineFull(i)) {
 				int j=i;
-				while(!isLineEmpty(j)) {
+				while(!isLineEmpty(j) && j>0) {
 					for(int k=0; k<board[0].length; k++) {
 						newBoard[j][k]=newBoard[j-1][k];
 					}
