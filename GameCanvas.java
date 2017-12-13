@@ -103,7 +103,7 @@ class GameCanvas extends PentPanel implements ActionListener {
 		if(gameRunning && !paused) {
 			//shape is touching another shape
 			if(board.isPlaced(activeShape,x,y)) {
-				if(y<5) {
+				if(y==0) {
 					gameOver();
 					if(bot) psblMoves.emptyArrayList();
 				} else {
