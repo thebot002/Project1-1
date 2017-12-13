@@ -121,10 +121,10 @@ class GameCanvas extends PentPanel implements ActionListener {
 					if(activeShape.getHeight() > activeShape.getWidth()) activeShape.rotateR();
 					x=(int)((board.getWidth()-activeShape.getWidth())*1.0)/2;
 					y=0;
-					board.addShapeToBoard(activeShape);
 				}
 				int lines = board.breakLines();
 				score += lines * lines * 10;
+				board.addShapeToBoard(activeShape);
 
 				scoreBox.setTarget(score);
 			} else {
