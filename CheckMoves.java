@@ -2,7 +2,7 @@
 import java.util.ArrayList;
 
 public class CheckMoves {
-	
+
 	private PentrisBoard board;
 	private Shape shape;
 	private Shape shape2;

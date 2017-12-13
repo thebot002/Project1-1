@@ -90,7 +90,7 @@ class GameCanvas extends PentPanel implements ActionListener {
 
 
 		FindBestFit bestFit = new FindBestFit(checkBoardList, checkShapeList, checkXList);
-		bestFit.findOptimalState();
+		bestFit.findOptimalState(200,210,100);
 
 
 			playingBot(bestFit.getBestShape(), bestFit.getOptimalX());

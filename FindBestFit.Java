@@ -28,7 +28,7 @@ public class FindBestFit {
 		return bestShape;
 	}
 
-	public void findOptimalState() {
+	public void findOptimalState(int lines, int h, int gaps) {
 
 		int newEnergy;
 
@@ -36,7 +36,7 @@ public class FindBestFit {
 		for(int i=0; i<boardList.size(); i++) {
 
 //			System.out.println("");
-			newEnergy=evalFunction(boardList.get(i));
+			newEnergy=evalFunction(boardList.get(i),lines,h,gaps);
 
 			if(newEnergy > energy /*|| (newEnergy == energy && Math.random() > 0.5))*/) {
 //				System.out.println("Energy Before: "+energy);
@@ -72,7 +72,7 @@ public class FindBestFit {
 	}
 
 
-		
+
 
 	public int findGaps(PentrisBoard board) {
 		int gaps=0;
@@ -96,7 +96,7 @@ public class FindBestFit {
 		return gaps;
 	}
 
-	public int evalFunction(PentrisBoard board) {
+	public int evalFunction(PentrisBoard board, int lines, int h, int gaps) {
 		int energy=0;
 		int count=0;
 		for(int i=1; i<board.getBoard().length; i++) {
@@ -104,9 +104,9 @@ public class FindBestFit {
 				count++;
 			}
 		}
-		energy+=count*count*150;
-		energy-=70*height(board);
-		energy-=50*findGaps(board);
+		energy+=count*count*lines;
+		energy-=h*height(board);
+		energy-=gaps*findGaps(board);
 		return energy;
 	}
 }
