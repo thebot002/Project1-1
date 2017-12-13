@@ -21,8 +21,8 @@ This class defines the frame of the game. It is filled with different JPannels t
 public class PentWindow extends JFrame{
 
 
-    private int squareSize = 30;
-    private int[] grid = {5,17};
+    private int squareSize = 40;
+    private int[] grid = {5,20};
     private int[] defaultGrid = {5,15};
 
     private Thread gameThread;
