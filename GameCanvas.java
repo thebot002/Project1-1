@@ -34,9 +34,6 @@ class GameCanvas extends PentPanel implements ActionListener {
 
 	private int speedDefault = 600;
 	private int speedUp = 100;
-	//shape x and y:
-	private int x=0;
-	private int y=0;
 	private int score = 0;
 	private int[] grid;
 	private boolean gameRunning = false;
@@ -69,7 +66,7 @@ class GameCanvas extends PentPanel implements ActionListener {
 		gameRunning = true;
 
 		if(activeShape.getHeight()>activeShape.getWidth()) activeShape.rotateR();
-		if(!board.addShapeToBoard(activeShape)) gameOver();
+		if(!board.insertShapeToBoard(activeShape)) gameOver();
 		x=(int)((board.getWidth()-activeShape.getWidth())*1.0)/2;
 		drawBoard(board);
 
@@ -102,34 +99,25 @@ class GameCanvas extends PentPanel implements ActionListener {
 		//stops tick events that were created before the game ended trying to do things after the game ends.
 		if(gameRunning && !paused) {
 			//shape is touching another shape
-			if(board.isPlaced(activeShape,x,y)) {
-				if(y==0) {
-					gameOver();
-					if(bot) psblMoves.emptyArrayList();
-				} else {
+			if(board.isPlaced()) {
+				activeShape = nextShape.copyShape();
+				nextShape = shapeList.getRandomShape();
+				if(bot){
 					checkBoard=board.copyBoard();
-					activeShape = nextShape;
-					nextShape = shapeList.getRandomShape();
-
-					if(bot){
-						psblMoves.emptyArrayList();
-						checkShape = activeShape.copyShape();
-						checkShape2 = nextShape.copyShape();
-					}
-
-					shapeBox.drawValue(nextShape);
-					if(activeShape.getHeight() > activeShape.getWidth()) activeShape.rotateR();
-					x=(int)((board.getWidth()-activeShape.getWidth())*1.0)/2;
-					y=0;
+					psblMoves.emptyArrayList();
+					checkShape = activeShape.copyShape();
+					checkShape2 = nextShape.copyShape();
 				}
+
+				shapeBox.drawValue(nextShape);
+				if(activeShape.getHeight() > activeShape.getWidth()) activeShape.rotateR();
 				int lines = board.breakLines();
 				score += lines * lines * 10;
-				board.addShapeToBoard(activeShape);
+				if(!board.insertShapeToBoard(activeShape)) gameOver();
 
 				scoreBox.setTarget(score);
 			} else {
-				board.moveDown(activeShape,x,y);
-				y++;
+				board.moveDown();
 			}
 			drawBoard(board);
 			repaint();
@@ -162,8 +150,8 @@ class GameCanvas extends PentPanel implements ActionListener {
 	}
 
 	public void upKeyPress() {
-		  if(gameRunning && !paused && board.rotatePossible(activeShape,x,y))
-		  	board.rotate(activeShape,x,y);
+		  if(gameRunning && !paused && board.rotatePossible())
+		  	board.rotate();
 		  drawBoard(board);
 	}
 
@@ -179,13 +167,13 @@ class GameCanvas extends PentPanel implements ActionListener {
 
 	public void spaceKeyPress() {
 		if(gameRunning && !paused)	{
-			board.dropDown(activeShape, x, y);
+			board.dropDown();
 			activeShape = nextShape;
 			nextShape = shapeList.getRandomShape();
 			shapeBox.drawValue(nextShape);
 			if(activeShape.getHeight() > activeShape.getWidth()) activeShape.rotateR();
-			x=(int)((board.getWidth()-activeShape.getWidth())*1.0)/2;
-			y=0;
+			//x=(int)((board.getWidth()-activeShape.getWidth())*1.0)/2;
+			//y=0;
 			int lines = board.breakLines();
 			score += lines * lines * 10;
 			scoreBox.setTarget(score);
@@ -193,24 +181,22 @@ class GameCanvas extends PentPanel implements ActionListener {
 				checkShape=activeShape.copyShape();
 				checkBoard=board.copyBoard();
 			}
-			board.addShapeToBoard(activeShape);
+			if(!board.insertShapeToBoard(activeShape)) gameOver();
 			drawBoard(board);
 			repaint();
 		}
 	}
 
     public void leftKeyPress() {
-         if(gameRunning && !paused && board.moveLeftPossible(activeShape, x, y)) {
-		  		board.moveLeft(activeShape,x,y);
-		  		x--;
+         if(gameRunning && !paused && board.moveLeftPossible()) {
+		  		board.moveLeft();
 			}
 		   drawBoard(board);
     }
 
     public void rightKeyPress() {
-		 	if(gameRunning && !paused && board.moveRightPossible(activeShape, x, y)) {
-        		board.moveRight(activeShape,x,y);
-		  		x++;
+		 	if(gameRunning && !paused && board.moveRightPossible()) {
+        		board.moveRight();
 	  		}
 		   drawBoard(board);
 	}

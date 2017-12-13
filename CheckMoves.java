@@ -47,11 +47,12 @@ public class CheckMoves {
 
 			for (int i = 0; i <= board.getBoard()[0].length - shape.getWidth(); i++) {
 				int y=0;
-				while(!board.isPlaced(shape, i, y)) {
+				board.moveDown();
+				while(!board.isPlaced()) {
 
 					y++;
 				}
-				board.addShapeToBoard(shape,i,y);
+				board.insertShapeToBoard(shape);
 				PentrisBoard checkingBoard = board.copyBoard();
 				Shape checkingShape = shape.copyShape();
 				int x=i;
@@ -62,7 +63,7 @@ public class CheckMoves {
 //					boardList.add(checkingBoard);
 //					shapeList.add(checkingShape);
 //					xList.add(i);
-					board.removeShapeFromBoard(shape, i, y);
+					board.removeShapeFromBoard();
 //				}
 				y=0;
 			}
@@ -84,20 +85,21 @@ public void findPossibleMoves2(PentrisBoard checkingBoard, Shape checkingShape, 
 			for (int i = 0; i <= checkingBoard.getBoard()[0].length - shape2.getWidth(); i++) {
 
 				int y=0;
-				while(!checkingBoard.isPlaced(shape2, i, y)) {
+				while(!checkingBoard.isPlaced()) {
+					checkingBoard.moveDown();
 					y++;
 				}
-				checkingBoard.addShapeToBoard(shape2,i,y);
+				checkingBoard.insertShapeToBoard(shape2);
 				PentrisBoard checkingBoard2 = checkingBoard.copyBoard();
 				Shape checkingShape2 = checkingShape.copyShape();
-				if (checkingBoard.isPlaced(shape2, i, y)) {
+				if (checkingBoard.isPlaced()) {
 
 					boardList.add(checkingBoard2);
 					shapeList.add(checkingShape);
 					xList.add(x);
 
 				}
-				checkingBoard.removeShapeFromBoard(shape2, i, y);
+				checkingBoard.removeShapeFromBoard();
 				y=0;
 			}
 

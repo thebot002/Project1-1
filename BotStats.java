@@ -49,7 +49,7 @@ public class BotStats {
 //				checkBoard = board.copyBoard();
 //				checkShape = shape.copyShape();
 //				checkShape2 = shape2.copyShape();
-//				if(!board.addShapeToBoard(shape)) gameRunning=false;
+//				if(!board.insertShapeToBoard(shape)) gameRunning=false;
 //				checkBoard = board.copyBoard();
 //				checkBoard = board.copyBoard();
 
@@ -88,21 +88,21 @@ public class BotStats {
 				}
 				if(!checkShape.equals(bestFit.getBestShape())){
 					while (!checkShape.equals(bestFit.getBestShape())) {
-						 if (checkBoard.rotatePossible(checkShape, x, y))
+						 if (checkBoard.rotatePossible())
 						checkShape.rotateR();
 						 else
 							 break;
 					}
 				}
 
-				if (!checkBoard.isPlaced(checkShape, x, y)) {
+				if (!checkBoard.isPlaced()) {
 //					System.out.println("NOT PLACED YET");
-					while (!checkBoard.isPlaced(checkShape, x, y)) {
+					while (!checkBoard.isPlaced()) {
 //						System.out.println("TEST 5");
 						y++;
 					}
 				}
-			    if (checkBoard.isPlaced(checkShape, x, y)) {
+			    if (checkBoard.isPlaced()) {
 //					System.out.println("SHAPE IS PLACED");
 					if (y < 5) {
 //						System.out.println("GAME OVER");
@@ -116,7 +116,7 @@ public class BotStats {
 //						checkShape2 = new Shape(shape2.copyShape());
 						possibleMoves.emptyArrayList();
 					} else {
-						checkBoard.addShapeToBoard(checkShape, x, y);
+						checkBoard.insertShapeToBoard(checkShape);
 //						System.out.println("SHAPE ADDED");
 						testBoard = checkBoard.copyBoard();
 						int lines = checkBoard.breakLines();
