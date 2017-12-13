@@ -200,6 +200,9 @@ public class PentrisBoard {
 	@see Shape
 	*/
 	public boolean rotatePossible(Shape shape, int x, int y){
+		if(shape.getWidth()>shape.getHeight() && (2*shape.getWidth())-shape.getHeight()+y>=board.length+2){
+			return false;
+		}
  		if(shape.getHeight()>shape.getWidth() && x+(shape.getHeight()-shape.getWidth())+shape.getWidth()-1 > board[0].length-1){
  			return false;
  		}
