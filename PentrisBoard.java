@@ -57,15 +57,17 @@ public class PentrisBoard {
 	}
 
 	/**
-	This method adds Shape objects to the board at position determined by startX and startY values.
+	This method adds Shape objects to the board at position determined by startY and at the middle of the board values.
 	@param shape The shape to be added.
 	@see Shape
 	*/
 	public boolean addShapeToBoard(Shape shape){
+		int boardW = board[0].length;
+		int x = (int)((boardW-shape.getWidth())*1.0)/2;
 		int y = startY;
 		do{
-			if(insertionPossible(shape,startX,y)){
-				addShapeToBoard(shape,startX,y);
+			if(insertionPossible(shape,x,y)){
+				addShapeToBoard(shape,x,y);
 				return true;
 			}
 			y--;
@@ -343,5 +345,13 @@ public class PentrisBoard {
 	@return the new board1*/
 	public PentrisBoard copyBoard(){
 		return new PentrisBoard(board);
+	}
+
+	/**
+	Method to get the width of the PentrisBoard object.
+	@return The width of the board.
+	*/
+	public int getWidth(){
+		return board[0].length;
 	}
 }
