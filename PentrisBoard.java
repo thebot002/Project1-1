@@ -65,13 +65,10 @@ public class PentrisBoard {
 		int boardW = board[0].length;
 		int x = (int)((boardW-shape.getWidth())*1.0)/2;
 		int y = startY;
-		do{
-			if(insertionPossible(shape,x,y)){
-				addShapeToBoard(shape,x,y);
-				return true;
-			}
-			y--;
-		}while(y>=0);
+		if(insertionPossible(shape,x,y)){
+			addShapeToBoard(shape,x,y);
+			return true;
+		}
 		return false;
 	}
 
@@ -185,7 +182,7 @@ public class PentrisBoard {
 					}
 					j--;
 				}
-				i++;
+				i--;
 				counter++;
 			}
 		}
