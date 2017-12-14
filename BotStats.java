@@ -88,10 +88,7 @@ public class BotStats {
 				}
 				if(!checkShape.equals(bestFit.getBestShape())){
 					while (!checkShape.equals(bestFit.getBestShape())) {
-						 if (checkBoard.rotatePossible())
 						checkShape.rotateR();
-						 else
-							 break;
 					}
 				}
 

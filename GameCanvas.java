@@ -150,7 +150,7 @@ class GameCanvas extends PentPanel implements ActionListener {
 	}
 
 	public void upKeyPress() {
-		  if(gameRunning && !paused && board.rotatePossible())
+		  if(gameRunning && !paused)
 		  	board.rotate();
 		  drawBoard(board);
 	}
