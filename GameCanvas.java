@@ -11,7 +11,7 @@ import javax.swing.Timer;
 class GameCanvas extends PentPanel implements ActionListener {
 	public static void main(String[] args) {}
 
-	private boolean bot = true;
+	private boolean bot = false;
 
 	private ShapeBox shapeBox;
 	private TimeBox timeBox;

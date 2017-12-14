@@ -22,11 +22,7 @@ public class PentWindow extends JFrame{
 
 
     private int squareSize = 40;
-<<<<<<< HEAD
-    private int[] grid = {5,15};
-=======
     private int[] grid = {5,20};
->>>>>>> Fixes
     private int[] defaultGrid = {5,15};
 
     private Thread gameThread;
