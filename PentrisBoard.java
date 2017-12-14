@@ -8,8 +8,10 @@ Class defining the board containing Shape objects.
 public class PentrisBoard {
 
 	private String[][] board;
-	private int startX=0;
-	private int startY=0;
+	private int x = 0;
+	private int y = 0;
+	private Shape shape;
+	private final int START_Y = 5;
 	private int[] grid;
 
 	/**
@@ -24,6 +26,16 @@ public class PentrisBoard {
 	}
 
 	/**
+	Constructor to create a PentrisBoard from an 2-D array
+	@param board
+	*/
+	public PentrisBoard(String[][] board, Shape shape, int x, int y){
+		this.board = board;
+		this.shape = shape;
+		this.x = x;
+		this.y = y;
+	}
+	/**
 	Return a 2-D representing the PentrisBoard.
 	@return A 2-D array filled with "-" and shape ID's.
 	@see Shape
@@ -33,13 +45,10 @@ public class PentrisBoard {
 	}
 
 	/**
-	This method adds Shape objects to the PentrisBoard 2-D array at given x and y coordinates.
-	@param shape The shape to be added to the board.
-	@param x The x position of the shape in the board (top row).
-	@param y The y position of the shape in the board (left columns).
+	This method adds Shape objects to the PentrisBoard 2-D array.
 	@see Shape
 	*/
-	public void addShapeToBoard(Shape shape, int x, int y) {
+	public void addShapeToBoard() {
 		for (int i = 0; i < shape.getHeight(); i++) {
 			for (int j = 0; j < shape.getWidth(); j++) {
 				if (!shape.getElement(i,j).equals("-") && y+i<board.length && x+j<board[0].length) {
@@ -50,33 +59,41 @@ public class PentrisBoard {
 	}
 
 	/**
-	This method adds Shape objects to the board at position determined by startX and startY values.
+	This method adds Shape objects to the board at position determined by START_Y and at the middle of the board values.
 	@param shape The shape to be added.
 	@see Shape
 	*/
-	public boolean addShapeToBoard(Shape shape){
-		int y = startY;
+	public boolean insertShapeToBoard(Shape shape){
+		this.shape = shape;
+		int boardW = board[0].length;
+		x = (int)((boardW-shape.getWidth())*1.0)/2;
+		y = START_Y;
 		do{
-			if(insertionPossible(shape,startX,y)){
-				addShapeToBoard(shape,startX,y);
+			if(insertionPossible()){
+				for (int i = 0; i < shape.getHeight(); i++) {
+					for (int j = 0; j < shape.getWidth(); j++) {
+						if (!shape.getElement(i,j).equals("-") && y+i<board.length && x+j<board[0].length) {
+							board[y + i][x + j] = shape.getElement(i,j);
+						}
+					}
+				}
 				return true;
 			}
 			y--;
+			if(shape.getHeight()+y < START_Y) return false;
 		}while(y>=0);
 		return false;
 	}
 
 	/**
-	Method to check wether the placement of the Shape object is possible at the specified x and y coordinates.
-	@param shape The Shape object to check.
-	@param x The x coordinate where the shape wants to be placed.
-	@param y The y coordinate where the shape wants to be placed.
+	Method to check wether the placement of the Shape object is possible.
 	@return True is the insertion is possible. False if the insertion is not possible.
 	@see Shape
 	*/
-	private boolean insertionPossible(Shape shape,int x, int y){
+	private boolean insertionPossible(){
 		for(int i=0; i<shape.getHeight(); i++){
 			for(int j=0; j<shape.getWidth(); j++){
+				if(y+i>=board.length || x+j>=board[0].length || x<0 || y<0) return false;
 				if(!shape.getElement(i,j).equals("-") && !board[y+i][x+j].equals("-")) return false;
 			}
 		}
@@ -84,13 +101,10 @@ public class PentrisBoard {
 	}
 
 	/**
-	Method to remove a shape from the board. The x and y coordinates are specified to avoid removing other shapes of the same ID.
-	@param shape The Shape object to remove.
-	@param x The x coordinate where the shape wants to be removed.
-	@param y The y coordinate where the shape wants to be removed.
+	Method to remove a shape from the board.
 	@see Shape
 	*/
-	public void removeShapeFromBoard(Shape shape, int x, int y) {
+	public void removeShapeFromBoard() {
 		for (int i = 0; i < shape.getHeight(); i++) {
 			for (int j = 0; j < shape.getWidth(); j++) {
 				if (!shape.getElement(i,j).equals("-") && y+i<board.length && x+j<board[0].length) {
@@ -102,13 +116,10 @@ public class PentrisBoard {
 
 	/**
 	Method checking whether the Shape object is placed by checking if next going one tile down is possible.
-	@param shape The Shape object to check.
-	@param x The x coordinate where the shape wants to be placed.
-	@param y The y coordinate where the shape wants to be placed.
 	@return True if the Shape object is placed. False if the Shape object is not placed.
 	@see Shape
 	*/
-	public boolean isPlaced(Shape shape, int x, int y) {
+	public boolean isPlaced() {
 		for(int i = shape.getHeight()-1; i>=0; i--){
 			for(int j=0; j<shape.getWidth();j++){
 				if(!shape.getElement(i,j).equals("-")){
@@ -170,7 +181,7 @@ public class PentrisBoard {
 
 			if(isLineFull(i)) {
 				int j=i;
-				while(!isLineEmpty(j)) {
+				while(!isLineEmpty(j) && j>=0) {
 					for(int k=0; k<board[0].length; k++) {
 						newBoard[j][k]=newBoard[j-1][k];
 					}
@@ -185,55 +196,11 @@ public class PentrisBoard {
 	}
 
 	/**
-	Checks if the rotation of a given Shape object is possible at the given x, y positon.
-	@param shape The Shape object to check.
-	@param x The x coordinate where the shape wants to be rotated.
-	@param y The y coordinate where the shape wants to be rotated.
-	@return True if the rotation of the Shape object is possible. False if the rotation of the Shape object is not possible.
-	@see Shape
-	*/
-	public boolean rotatePossible(Shape shape, int x, int y){
- 		if(shape.getHeight()>shape.getWidth() && x+(shape.getHeight()-shape.getWidth())+shape.getWidth()-1 > board[0].length-1){
- 			return false;
- 		}
- 		String[][] sShape = shape.sRotateR();
- 		for(int i=0;i<sShape.length;i++){
- 			for(int j=0;j<sShape[0].length;j++){
- 				if(i<shape.getHeight() && j<shape.getWidth()){
- 					if(!sShape[i][j].equals("-") && shape.getElement(i,j).equals("-") && !board[y+i][x+j].equals("-")){
- 						return false;
- 					}
- 				}
- 				else if(!sShape[i][j].equals("-") && !board[y+i][x+j].equals("-")){
- 					return false;
- 				}
- 			}
- 		}
-		return true;
-	}
-
-	/**
-	Rotates a given Shape object in the board at an x, y positon.
-	@param shape The Shape object to rotate.
-	@param x The x coordinate where the shape wants to be rotated.
-	@param y The y coordinate where the shape wants to be rotated.
-	@see Shape
-	*/
-	public void rotate(Shape shape, int x, int y) {
- 		removeShapeFromBoard(shape,x,y);
- 		shape.rotateR();
- 		addShapeToBoard(shape,x,y);
- 	}
-
-	/**
-	Checks if the left movement of a given Shape object is possible at the given x, y positon.
-	@param shape The Shape object to check.
-	@param x The x coordinate where the shape wants to be moved.
-	@param y The y coordinate where the shape wants to be moved.
+	Checks if the left movement of a given Shape object is possible.
 	@return True if the movement of the Shape object is possible. False if the movement of the Shape object is not possible.
 	@see Shape
 	*/
-	public boolean moveLeftPossible(Shape shape, int x, int y){
+	public boolean moveLeftPossible(){
 		if(x==0) return false;
 		for(int i=0;i<shape.getHeight();i++){
 			for(int j=0;j<shape.getWidth();j++){
@@ -245,14 +212,11 @@ public class PentrisBoard {
 	}
 
 	/**
-	Checks if the right movement of a given Shape object is possible at the given x, y positon.
-	@param shape The Shape object to check.
-	@param x The x coordinate where the shape wants to be moved.
-	@param y The y coordinate where the shape wants to be moved.
+	Checks if the right movement of a given Shape object is possible.
 	@return True if the movement of the Shape object is possible. False if the movement of the Shape object is not possible.
 	@see Shape
 	*/
-	public boolean moveRightPossible(Shape shape,int x, int y){
+	public boolean moveRightPossible(){
 		if(x+shape.getWidth()-1==board[0].length-1) return false;
 		for(int i=0;i<shape.getHeight();i++){
 			for(int j=0;j<shape.getWidth();j++){
@@ -264,58 +228,77 @@ public class PentrisBoard {
 	}
 
 	/**
-	Method to move a given Shape object one tile left.
-	@param shape The Shape object to move.
-	@param xCoordinateBoard The x coordinate where the shape wants to be moved.
-	@param yCoordinateBoard The y coordinate where the shape wants to be moved.
+	Rotates a given Shape object in the board.
 	@see Shape
 	*/
-	public void moveLeft(Shape shape, int xCoordinateBoard, int yCoordinateBoard) {
-		removeShapeFromBoard(shape, xCoordinateBoard, yCoordinateBoard);
-		xCoordinateBoard--;
-		addShapeToBoard(shape, xCoordinateBoard, yCoordinateBoard);
+	public void rotate() {
+		int delta = (int)(shape.getWidth()-shape.getHeight())/2;
+		removeShapeFromBoard();
+		x+=delta;
+		y-=delta;
+		shape.rotateR();
+		do{
+			if(shape.getHeight()>shape.getWidth() && (2*shape.getHeight())-shape.getWidth()+y>=board.length+2){
+				y--;
+			}
+			if(shape.getWidth()>shape.getHeight() && x+shape.getWidth() > board[0].length){
+				x--;
+			}
+			if(x<0){
+				x=0;
+			}
+			for(int i=0; i<shape.getHeight(); i++){
+				for(int j=0; j<shape.getWidth(); j++){
+					if(x+j<board[0].length && y+i<board.length && y>=0 && x>=0 && !shape.getElement(i,j).equals("-") && !board[y+i][x+j].equals("-")){
+						y--;
+					}
+				}
+			}
+		}while(!insertionPossible());
+		addShapeToBoard();
+	}
+
+	/**
+	Method to move a given Shape object one tile left.
+	@see Shape
+	*/
+	public void moveLeft() {
+		removeShapeFromBoard();
+		x--;
+		addShapeToBoard();
 	}
 
 	/**
 	Method to move a given Shape object one tile right.
-	@param shape The Shape object to move.
-	@param xCoordinateBoard The x coordinate where the shape wants to be moved.
-	@param yCoordinateBoard The y coordinate where the shape wants to be moved.
 	@see Shape
 	*/
-	public void moveRight(Shape shape, int xCoordinateBoard, int yCoordinateBoard) {
-		removeShapeFromBoard(shape, xCoordinateBoard, yCoordinateBoard);
-		xCoordinateBoard++;
-		addShapeToBoard(shape, xCoordinateBoard, yCoordinateBoard);
+	public void moveRight() {
+		removeShapeFromBoard();
+		x++;
+		addShapeToBoard();
 	}
 
 	/**
 	Method to move a given Shape object one tile down.
-	@param shape The Shape object to move.
-	@param xCoordinateBoard The x coordinate where the shape wants to be moved.
-	@param yCoordinateBoard The y coordinate where the shape wants to be moved.
 	@see Shape
 	*/
-	public void moveDown(Shape shape, int xCoordinateBoard, int yCoordinateBoard){
-		removeShapeFromBoard(shape, xCoordinateBoard, yCoordinateBoard);
-		yCoordinateBoard++;
-		addShapeToBoard(shape, xCoordinateBoard, yCoordinateBoard);
+	public void moveDown(){
+		removeShapeFromBoard();
+		y++;
+		addShapeToBoard();
 	}
 
 	/**
 	Method to drop a given Shape object at the lowest possible position in the board.
-	@param shape The Shape object to move.
-	@param xCoordinateBoard The initial x coordinate of the Shape object.
-	@param yCoordinateBoard The initial y coordinate of the Shape object.
 	@see Shape
 	*/
-	public void dropDown(Shape shape, int xCoordinateBoard, int yCoordinateBoard){
-		removeShapeFromBoard(shape, xCoordinateBoard, yCoordinateBoard);
-		yCoordinateBoard=0;
-		while(!isPlaced(shape, xCoordinateBoard, yCoordinateBoard)){
-			yCoordinateBoard++;
+	public void dropDown(){
+		removeShapeFromBoard();
+		y=0;
+		while(!isPlaced()){
+			y++;
 		}
-		addShapeToBoard(shape, xCoordinateBoard, yCoordinateBoard);
+		addShapeToBoard();
 	}
 
 	/**
@@ -325,9 +308,52 @@ public class PentrisBoard {
 		for (int m = 0; m < board.length; m++) {
 			for (int n = 0; n < board[m].length; n++) {
 				System.out.print(board[m][n] + " ");
-
 			}
 			System.out.println("");
 		}
+	}
+
+	/**
+	Method to create a new identitical board
+	@return the new board1*/
+	public PentrisBoard copyBoard(){
+		Shape s = shape.copyShape();
+		String[][] nBoard = new String[board.length][board[0].length];
+		for(int i=0;i<board.length;i++)
+			for(int j=0;j<board[0].length;j++)
+				nBoard[i][j] = board[i][j];
+		return new PentrisBoard(nBoard,s,x,y);
+	}
+
+	/**
+	Method to get the width of the PentrisBoard object.
+	@return The width of the board.
+	*/
+	public int getWidth(){
+		return board[0].length;
+	}
+
+	/**
+	Method to get the x coordinate of the active shape.
+	@return The x coordinate
+	*/
+	public int getX(){
+		return x;
+	}
+
+	/**
+	Method to get the y coordinate of the active shape.
+	@return The y coordinate
+	*/
+	public int getY(){
+		return y;
+	}
+
+	public void setY(int y){
+		this.y=y;
+	}
+
+	public Shape getShape(){
+		return shape;
 	}
 }
