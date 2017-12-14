@@ -155,7 +155,8 @@ public class BotStats {
 				grid[i][j]="-";
 			}
 		}
-		PentrisBoard newBoard = new PentrisBoard(grid);
+		int[] gridSize = {5,20};
+		PentrisBoard newBoard = new PentrisBoard(gridSize);
 		BotStats bot = new BotStats(newBoard);
 //		ArrayList<int[]> weights = new ArrayList<int[]>();
 		int i=0;

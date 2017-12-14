@@ -15,8 +15,8 @@ public class CheckMoves {
 	private ArrayList<Integer> xList2 = new ArrayList<Integer>();
 
 	public CheckMoves(PentrisBoard board, Shape shape, Shape shape2) {
-		this.shape=shape;
 		this.board=board;
+		this.shape=board.getShape();
 		this.shape2=shape2;
 	}
 
@@ -42,36 +42,35 @@ public class CheckMoves {
 
 		int rot1 = 0;
 
-
 		while (rot1 < 4) {
 
 			for (int i = 0; i <= board.getBoard()[0].length - shape.getWidth(); i++) {
-				int y=0;
-				board.moveDown();
-				while(!board.isPlaced()) {
 
-					y++;
+				while(board.getX() != i){
+					if(i<board.getX()) {
+						board.moveLeft();
+					}
+					else if(i>board.getX()) {
+						board.moveRight();
+					}
 				}
-				board.insertShapeToBoard(shape);
+
+				while(!board.isPlaced()) {
+					board.moveDown();
+				}
 				PentrisBoard checkingBoard = board.copyBoard();
 				Shape checkingShape = shape.copyShape();
 				int x=i;
 				findPossibleMoves2(checkingBoard,checkingShape,x);
 
-//				if (board.isPlaced(shape, i, y)) {
-//
-//					boardList.add(checkingBoard);
-//					shapeList.add(checkingShape);
-//					xList.add(i);
-					board.removeShapeFromBoard();
-//				}
-				y=0;
+				board.removeShapeFromBoard();
+				board.setY(2);
+				board.addShapeToBoard();
 			}
-
-			shape.rotateR();
+			board.rotate();
 			rot1++;
 		}
-
+		board.removeShapeFromBoard();
 
 	}
 
@@ -79,34 +78,34 @@ public class CheckMoves {
 public void findPossibleMoves2(PentrisBoard checkingBoard, Shape checkingShape, int x) {
 
 		int rot2 = 0;
+		checkingBoard.insertShapeToBoard(shape2);
 
 		while (rot2 < 4) {
 
 			for (int i = 0; i <= checkingBoard.getBoard()[0].length - shape2.getWidth(); i++) {
-
-				int y=0;
+				checkingBoard.addShapeToBoard();
+				while(checkingBoard.getX() != i){
+					if(i<checkingBoard.getX()) checkingBoard.moveLeft();
+					else if(i>checkingBoard.getX()) checkingBoard.moveRight();
+				}
 				while(!checkingBoard.isPlaced()) {
 					checkingBoard.moveDown();
-					y++;
 				}
-				checkingBoard.insertShapeToBoard(shape2);
 				PentrisBoard checkingBoard2 = checkingBoard.copyBoard();
-				Shape checkingShape2 = checkingShape.copyShape();
 				if (checkingBoard.isPlaced()) {
-
-					boardList.add(checkingBoard2);
-					shapeList.add(checkingShape);
-					xList.add(x);
+					boardList.add(checkingBoard2.copyBoard());
+					shapeList.add(checkingShape.copyShape());
+					xList.add(i);
 
 				}
 				checkingBoard.removeShapeFromBoard();
-				y=0;
+				checkingBoard.setY(2);
 			}
-
-			shape2.rotateR();
+			checkingBoard.addShapeToBoard();
+			checkingBoard.rotate();
 			rot2++;
 		}
-
+		checkingBoard.removeShapeFromBoard();
 //
 	}
 

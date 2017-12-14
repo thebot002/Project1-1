@@ -9,6 +9,8 @@ public class FindBestFit {
 	private int optimalX;
 	private int energy=Integer.MIN_VALUE;
 
+	private final boolean DEBUG = false;
+
 	public FindBestFit (ArrayList<PentrisBoard> boardList,  ArrayList<Shape> shapeList,  ArrayList<Integer> xList) {
 		this.boardList=boardList;
 		this.shapeList=shapeList;
@@ -17,6 +19,11 @@ public class FindBestFit {
 //			System.out.println("The number of shape: "+i);
 //			shapeList.get(i).printShape();
 //			System.out.println("");
+		}
+		for(int i=0; i<boardList.size(); i++){
+			if(DEBUG)System.out.println("The number of board: "+i);
+			if(DEBUG)boardList.get(i).printBoard();
+			if(DEBUG)System.out.println("");
 		}
 	}
 

@@ -29,8 +29,11 @@ public class PentrisBoard {
 	Constructor to create a PentrisBoard from an 2-D array
 	@param board
 	*/
-	public PentrisBoard(String[][] board){
+	public PentrisBoard(String[][] board, Shape shape, int x, int y){
 		this.board = board;
+		this.shape = shape;
+		this.x = x;
+		this.y = y;
 	}
 	/**
 	Return a 2-D representing the PentrisBoard.
@@ -231,11 +234,8 @@ public class PentrisBoard {
 	public void rotate() {
 		int delta = (int)(shape.getWidth()-shape.getHeight())/2;
 		removeShapeFromBoard();
-		int initX = x;
-		int initY = y;
 		x+=delta;
 		y-=delta;
-		int count = 0;
 		shape.rotateR();
 		do{
 			if(shape.getHeight()>shape.getWidth() && (2*shape.getHeight())-shape.getWidth()+y>=board.length+2){
@@ -254,8 +254,7 @@ public class PentrisBoard {
 					}
 				}
 			}
-			count++;
-		}while(!insertionPossible() && count < 10);
+		}while(!insertionPossible());
 		addShapeToBoard();
 	}
 
@@ -318,7 +317,12 @@ public class PentrisBoard {
 	Method to create a new identitical board
 	@return the new board1*/
 	public PentrisBoard copyBoard(){
-		return new PentrisBoard(board);
+		Shape s = shape.copyShape();
+		String[][] nBoard = new String[board.length][board[0].length];
+		for(int i=0;i<board.length;i++)
+			for(int j=0;j<board[0].length;j++)
+				nBoard[i][j] = board[i][j];
+		return new PentrisBoard(nBoard,s,x,y);
 	}
 
 	/**
@@ -327,5 +331,29 @@ public class PentrisBoard {
 	*/
 	public int getWidth(){
 		return board[0].length;
+	}
+
+	/**
+	Method to get the x coordinate of the active shape.
+	@return The x coordinate
+	*/
+	public int getX(){
+		return x;
+	}
+
+	/**
+	Method to get the y coordinate of the active shape.
+	@return The y coordinate
+	*/
+	public int getY(){
+		return y;
+	}
+
+	public void setY(int y){
+		this.y=y;
+	}
+
+	public Shape getShape(){
+		return shape;
 	}
 }

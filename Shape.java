@@ -161,6 +161,25 @@ public class Shape {
 	@return A new Shape object.
 	*/
 	public Shape copyShape(){
-		return new Shape(shape);
+		String[][] nShape = new String[shape.length][shape[0].length];
+		for (int i=0; i<shape.length; i++)
+			for (int j=0; j<shape[0].length; j++)
+				nShape[i][j] = shape[i][j];
+		return new Shape(nShape);
+	}
+
+	/**
+	Method that checks if a given shape is the same as this one.
+	@param shape The shape to compare.
+	@return Wether the 2 shapes are equal or not.
+	*/
+	public boolean equals(Shape shape2){
+		if(shape2.getWidth() != getWidth() || shape2.getHeight() != getHeight()) return false;
+		for(int i=0; i<shape2.getHeight(); i++){
+			for(int j=0; j<shape2.getWidth(); j++){
+				if(!shape2.getElement(i,j).equals(shape[i][j])) return false;
+			}
+		}
+		return true;
 	}
 }
