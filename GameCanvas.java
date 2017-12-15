@@ -11,7 +11,7 @@ import javax.swing.Timer;
 class GameCanvas extends PentPanel implements ActionListener {
 	public static void main(String[] args) {}
 
-	private boolean bot = false;
+	private boolean bot = true;
 
 	private ShapeBox shapeBox;
 	private TimeBox timeBox;
@@ -94,7 +94,7 @@ class GameCanvas extends PentPanel implements ActionListener {
 				checkShapeList.add(psblMoves.getShapeList().get(i));
 			}
 			FindBestFit bestFit = new FindBestFit(checkBoardList, checkShapeList, checkXList);
-			bestFit.findOptimalState(200,210,100);
+			bestFit.findOptimalState(178,128,101);
 
 			playingBot(bestFit.getBestShape(), bestFit.getOptimalX());
 		}

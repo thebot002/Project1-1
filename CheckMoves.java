@@ -95,7 +95,7 @@ public void findPossibleMoves2(PentrisBoard checkingBoard, Shape checkingShape, 
 				if (checkingBoard.isPlaced()) {
 					boardList.add(checkingBoard2.copyBoard());
 					shapeList.add(checkingShape.copyShape());
-					xList.add(i);
+					xList.add(x);
 
 				}
 				checkingBoard.removeShapeFromBoard();
