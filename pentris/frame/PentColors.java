@@ -1,9 +1,11 @@
+package pentris.frame;
+
 import java.awt.*;
 import java.util.HashMap;
 
 /**
 HashMap containing all the colors of the different shapes correspoding with their ID.
-@see Shape
+@see Shape.Shape
 */
 public class PentColors extends HashMap<String, Color> {
 	public static void main(String[] args){}

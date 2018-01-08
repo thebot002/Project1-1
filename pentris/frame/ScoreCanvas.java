@@ -1,10 +1,10 @@
+package pentris.frame;
+
+import pentris.score_management.*;
+
 import java.awt.*;
+import java.util.ArrayList;
 import javax.swing.*;
-import javax.swing.border.*;
-import java.awt.Image;
-import java.awt.image.BufferedImage;
-import java.io.*;
-import java.util.*;
 
 
 class ScoreCanvas extends PentPanel {
@@ -44,8 +44,8 @@ class ScoreCanvas extends PentPanel {
         g.setFont(font.deriveFont(40f));
         g.setColor(Color.white);
 
-        int textWidth = g.getFontMetrics().stringWidth("High Score");
-        g.drawString("High Score", (w-textWidth)/2, 100);
+        int textWidth = g.getFontMetrics().stringWidth("High score");
+        g.drawString("High score", (w-textWidth)/2, 100);
         g.fillRect((w-textWidth)/2, 100, textWidth, 4);
 
         scoreList = scoreManager.getScores();

@@ -1,13 +1,15 @@
+package pentominoe;
+
 import java.util.ArrayList;
 
 /**
-This class is an ArraList of Shape objects.
+This class is an ArraList of pentominoe.pentominoe objects.
 @see ArraList
 @see Shape
 */
 public class ShapeList extends ArrayList<Shape> {
 	/**
-	Constructor of the ShapeList object. Also fills it with all the Shape objects and their mirror using the ShapeFactory class.
+	Constructor of the pentominoe.ShapeList object. Also fills it with all the pentominoe.pentominoe objects and their mirror using the pentominoe.ShapeFactory class.
 	@see Shape
 	@see ShapeFactory
 	*/
@@ -53,8 +55,8 @@ public class ShapeList extends ArrayList<Shape> {
 	}
 
 	/**
-	Returns a random Shape object from the list.
-	@return A Shape object randomly picked.
+	Returns a random pentominoe.pentominoe object from the list.
+	@return A pentominoe.pentominoe object randomly picked.
 	@see shape
 	*/
 	public Shape getRandomShape(){

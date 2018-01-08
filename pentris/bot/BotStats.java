@@ -1,3 +1,8 @@
+package pentris.bot;
+
+import pentominoe.*;
+import pentominoe.Shape;
+
 import java.util.ArrayList;
 
 
@@ -7,8 +12,8 @@ public class BotStats {
 	private Shape shape2;
 	private int score=0;
 	private ShapeList shapeList;
-//	CheckMoves possibleMoves;
-//	FindBestFit bestFit;
+//	pentris.bot.CheckMoves possibleMoves;
+//	pentris.bot.FindBestFit bestFit;
 	private PentrisBoard checkBoard;
 	private Shape checkShape;
 	private Shape checkShape2;
@@ -108,9 +113,9 @@ public class BotStats {
 						y = 0;
 						gameRunning = false;
 //						this.shape = shapeList.getRandomShape();
-//						checkShape = new Shape(shape.copyShape());
+//						checkShape = new pentominoe.pentominoe(shape.copyShape());
 //						this.shape2 = shapeList.getRandomShape();
-//						checkShape2 = new Shape(shape2.copyShape());
+//						checkShape2 = new pentominoe.pentominoe(shape2.copyShape());
 						possibleMoves.emptyArrayList();
 					} else {
 						checkBoard.insertShapeToBoard(checkShape);
@@ -181,7 +186,7 @@ public class BotStats {
 				}
 			}
 		}
-		System.out.println("Average Score:   Line Weight:   Height Weight:   Gap Weight:");
+		System.out.println("Average pentris.score_management.Score:   Line Weight:   Height Weight:   Gap Weight:");
 		System.out.println("");
 		for(int j=0; j<stats.length; j++) {
 

@@ -1,12 +1,16 @@
+package pentris.frame;
+
 import java.awt.*;
 import javax.swing.*;
-import javax.swing.border.*;
-import java.awt.Image;
-import java.awt.image.BufferedImage;
 import java.util.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.Timer;
+
+import pentominoe.*;
+import pentominoe.Shape;
+import pentris.bot.CheckMoves;
+import pentris.bot.FindBestFit;
 
 class GameCanvas extends PentPanel implements ActionListener {
 	public static void main(String[] args) {}
@@ -86,7 +90,7 @@ class GameCanvas extends PentPanel implements ActionListener {
 			//		for(int i=0; i<psblMoves.getXList().size(); i++) {System.out.println(psblMoves.getXList());}
 			ArrayList<Integer> checkXList = new ArrayList<Integer>();
 			ArrayList<PentrisBoard> checkBoardList = new ArrayList<PentrisBoard>();
-			ArrayList<Shape> checkShapeList = new ArrayList<Shape>();
+			ArrayList<pentominoe.Shape> checkShapeList = new ArrayList<pentominoe.Shape>();
 			//System.out.println(psblMoves.getXList().size());
 			for(int i=0; i<psblMoves.getXList().size(); i++) {
 				checkXList.add(psblMoves.getXList().get(i));
@@ -130,7 +134,7 @@ class GameCanvas extends PentPanel implements ActionListener {
 		}
 	}
 
-	public void playingBot(Shape bestShape, int optimalX) {
+	private void playingBot(pentominoe.Shape bestShape, int optimalX) {
 		int br1 = 0;
 		int br2 = 0;
 		int br3 = 0;
@@ -147,8 +151,6 @@ class GameCanvas extends PentPanel implements ActionListener {
 			rightKeyPress();
 			br3++;
 		}
-//		if(optimalX==x && activeShape.equals(bestShape))
-//		downKeyPress();
 	}
 
 	public Boolean isRunning() {
@@ -178,16 +180,12 @@ class GameCanvas extends PentPanel implements ActionListener {
 			nextShape = shapeList.getRandomShape();
 			shapeBox.drawValue(nextShape);
 			if(activeShape.getHeight() > activeShape.getWidth()) activeShape.rotateR();
-			//x=(int)((board.getWidth()-activeShape.getWidth())*1.0)/2;
-			//y=0;
 			int lines = board.breakLines();
 			score += lines * lines * 10;
 			scoreBox.setTarget(score);
 			if(bot){
 				checkShape=activeShape.copyShape();
-				//board.removeShapeFromBoard();
 				checkBoard=board.copyBoard();
-				//board.addShapeToBoard();
 			}
 			if(!board.insertShapeToBoard(activeShape)) gameOver();
 			drawBoard(board);
@@ -198,8 +196,8 @@ class GameCanvas extends PentPanel implements ActionListener {
     public void leftKeyPress() {
          if(gameRunning && !paused && board.moveLeftPossible()) {
 		  		board.moveLeft();
-			}
-		   drawBoard(board);
+         }
+		 drawBoard(board);
     }
 
     public void rightKeyPress() {
@@ -235,9 +233,9 @@ class GameCanvas extends PentPanel implements ActionListener {
 		}
 
 
-		//create score boxes
-		TextBox highScoreBox = new TextBox(w - ((int) (SQ*3.5)), SQ*6, font, SQ, "High Score", this);
-		shapeBox = new ShapeBox(w - ((int) (SQ*3.5)), SQ, font, SQ, "Next Shape", nextShape, this);
+		//create score_management boxes
+		TextBox highScoreBox = new TextBox(w - ((int) (SQ*3.5)), SQ*6, font, SQ, "High score", this);
+		shapeBox = new ShapeBox(w - ((int) (SQ*3.5)), SQ, font, SQ, "Next pentominoe", nextShape, this);
 
 		scoreBox = new TextBox(SQ/2, SQ*4, font, SQ, "Score", this);
 		timeBox = new TimeBox(SQ/2, SQ, font, SQ, "Time", this);
@@ -284,15 +282,6 @@ class GameCanvas extends PentPanel implements ActionListener {
 
 	public int getScore() {
 		return score;
-	}
-	public int getSpeed(){
-		return timer.getDelay();
-	}
-	public boolean getGameState(){
-		return gameRunning;
-	}
-	public Timer getTimer(){
-		return timer;
 	}
 
 	private void gameOver() {

@@ -1,3 +1,5 @@
+package pentominoe;
+
 import java.util.*;
 
 /**
@@ -157,8 +159,8 @@ public class Shape {
 	}
 
 	/**
-	Method to create a new identitical Shape object.
-	@return A new Shape object.
+	Method to create a new identitical pentominoe.pentominoe object.
+	@return A new pentominoe.pentominoe object.
 	*/
 	public Shape copyShape(){
 		String[][] nShape = new String[shape.length][shape[0].length];

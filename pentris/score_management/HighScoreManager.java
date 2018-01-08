@@ -1,15 +1,15 @@
-//package ScoreTracker;
+package pentris.score_management;//package ScoreTracker;
 
 import java.util.*;
 import java.io.*;
 
 public class HighScoreManager{
 	public static void main(String[] args){}
-	//Arraylist with scores from Score class
+	//Arraylist with scores from pentris.score_management.Score class
 	private ArrayList<Score> scores;
 	
 	//Where the highscores are saved
-	private static final String SCORE_FILE = "scores.dat";
+	private static final String SCORE_FILE = "pentris/score_management/scores.dat";
 	
 	//In and output stream for working with the file
 	ObjectOutputStream outputStream = null;
@@ -32,7 +32,7 @@ public class HighScoreManager{
 		return scores.get(0);
 	}
 
-	//Creates a new object "comparator" from CompareScores class, and sorts the arraylist 
+	//Creates a new object "comparator" from pentris.score_management.CompareScores class, and sorts the arraylist
 	private void sort(){
 		CompareScores comparator = new CompareScores();
 		Collections.sort(scores, comparator);
