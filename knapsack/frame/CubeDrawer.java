@@ -1,12 +1,12 @@
 package knapsack.frame;
 
-import knapsack.frame.*;
 import java.awt.*;
 import javax.swing.*;
 import java.util.*;
-import java.awt.Image;
 import java.awt.image.BufferedImage;
 import javafx.geometry.Point3D;
+import knapsack.pentominoe3D.Parcel;
+
 import java.awt.Point;
 
 public class CubeDrawer extends JPanel {

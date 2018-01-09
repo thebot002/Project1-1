@@ -1,4 +1,4 @@
-package knapsack.frame;
+package knapsack.pentominoe3D;
 
 import javafx.geometry.Point3D; 
 import java.util.*;
