@@ -40,8 +40,27 @@ public class Truck {
 	    int x = (int) (pos.getX()/0.5);
         int y = (int) (pos.getY()/0.5);
         int z = (int) (pos.getZ()/0.5);
-        for(int i=0; i<p.getArea(); i++){
-            truck[x][y][z] = p.getID();
+        for(int i=0; i<p.getWidth(); i++){
+            for(int j=0; j<p.getHeight(); j++){
+                for(int k=0; k<p.getLength();k++){
+                    truck[x+i][y+j][z+k] = p.getID();
+                }
+            }
         }
 	}
+
+	public void removeParcel(Parcel p){
+	    parcelList.remove(p);
+        Point3D pos = p.getPos();
+        int x = (int) (pos.getX()/0.5);
+        int y = (int) (pos.getY()/0.5);
+        int z = (int) (pos.getZ()/0.5);
+        for(int i=0; i<p.getWidth(); i++){
+            for(int j=0; j<p.getHeight(); j++){
+                for(int k=0; k<p.getLength();k++){
+                    truck[x+i][y+j][z+k] = "-";
+                }
+            }
+        }
+    }
 }

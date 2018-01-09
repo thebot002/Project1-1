@@ -59,7 +59,6 @@ public class Parcel {
 	public int getLength() { return length; }
 	public int getHeight() { return height; }
 	public int getWidth()  { return width;  }
-	public int getArea()   { return length*width*height; }
 	public Point3D getPos() {return pos;}
 
 	//Return a vertex of the Parcel relative to its position
