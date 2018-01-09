@@ -17,7 +17,7 @@ import java.util.*;
 		height = h;
 		width = w;
 		value = val;
-		
+
 		pos = new Point3D(0,0,0);
 
 		points = new ArrayList<Point3D>();

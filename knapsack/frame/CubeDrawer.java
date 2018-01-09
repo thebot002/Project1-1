@@ -31,7 +31,7 @@ public class CubeDrawer extends JPanel {
 
 		//drawGrid();
 
-		Parcel bottom = new Parcel(length, 0, width);
+		Parcel bottom = new Parcel(length, 0, width); //bounds of truck represented by "parcels"
 		Parcel front = new Parcel(0, height, width);
 
 		Parcel A = new Parcel(1.0, 1.0, 2.0);
@@ -54,7 +54,7 @@ public class CubeDrawer extends JPanel {
 		drawParcel(B, Color.BLUE);
 		drawParcel(C, Color.YELLOW);
 
-		
+
 	}
 
 	private void drawPoint(Graphics g, Point3D point) {
