@@ -10,26 +10,40 @@ public class Parcel {
 	private double width;
 	private Point3D pos;
 	private int value = 1;
+	private String id;
 
 	//Create a parcel with a default position set to the origin and set its 8 vertices.
 	public Parcel(double l, double h, double w) {
 		length = l;
 		height = h;
 		width = w;
-
-		pos = new Point3D(0,0,0);
-
-		points = new ArrayList<Point3D>();
-		points.add(new Point3D(0, 0, 0));
-		points.add(new Point3D(0, h, 0));
-		points.add(new Point3D(l, h, 0)); 
-		points.add(new Point3D(l, 0, 0));
-
-		points.add(new Point3D(0, 0, w));
-		points.add(new Point3D(0, h, w));
-		points.add(new Point3D(l, h, w));
-		points.add(new Point3D(l, 0, w));
+		setPoints();
 	}
+	public Parcel(String id){
+	    switch (id){
+            case "A": length = 2.0; width = 1.0; height = 1.0; break;
+            case "B": length = 2.0; width = 1.0; height = 1.5; break;
+            case "C": length = 1.5; width = 1.5; height = 1.5; break;
+        }
+        this.id = id;
+	    setPoints();
+    }
+
+    private void setPoints(){
+        pos = new Point3D(0,0,0);
+
+        points = new ArrayList<Point3D>();
+        points.add(new Point3D(0, 0, 0));
+        points.add(new Point3D(0, height, 0));
+        points.add(new Point3D(length, height, 0));
+        points.add(new Point3D(length, 0, 0));
+
+        points.add(new Point3D(0, 0, width));
+        points.add(new Point3D(0, height, width));
+        points.add(new Point3D(length, height, width));
+        points.add(new Point3D(length, 0, width));
+
+    }
 
 	public void setValue(int value) { this.value = value; }
 

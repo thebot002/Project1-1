@@ -172,7 +172,7 @@ public class Shape {
 
 	/**
 	Method that checks if a given shape is the same as this one.
-	@param shape The shape to compare.
+	@param shape2 The shape to compare.
 	@return Wether the 2 shapes are equal or not.
 	*/
 	public boolean equals(Shape shape2){
