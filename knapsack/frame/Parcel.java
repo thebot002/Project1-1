@@ -1,7 +1,7 @@
 package knapsack.frame;
 
 import knapsack.*;
-import javafx.geometry.Point3D; 
+import javafx.geometry.Point3D;
 import java.util.*;
 
 public class Parcel {
@@ -12,6 +12,7 @@ public class Parcel {
 	private double height;
 	private double width;
 	private Point3D pos;
+	private int[][][] parcelArr;
 
 	//Create a parcel with a default position set to the origin and set its 8 vertices.
 	public Parcel(double l, double h, double w) {
@@ -24,13 +25,17 @@ public class Parcel {
 		points = new ArrayList<Point3D>();
 		points.add(new Point3D(0, 0, 0));
 		points.add(new Point3D(0, h, 0));
-		points.add(new Point3D(l, h, 0)); 
+		points.add(new Point3D(l, h, 0));
 		points.add(new Point3D(l, 0, 0));
 
 		points.add(new Point3D(0, 0, w));
 		points.add(new Point3D(0, h, w));
 		points.add(new Point3D(l, h, w));
 		points.add(new Point3D(l, 0, w));
+	}
+
+	public Parcel(int[][][] parcelArr ){
+		this.parcelArr=parcelArr;
 	}
 
 	public void setPos(Point3D pos) { this.pos = pos; }
