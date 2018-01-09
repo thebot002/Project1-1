@@ -32,7 +32,7 @@ public class TruckViewer extends JFrame {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                new TruckViewer();
+                create();
             }
         });
     }        
