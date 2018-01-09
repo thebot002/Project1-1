@@ -1,3 +1,8 @@
+package pentris.bot;
+
+import pentominoe.Shape;
+import pentominoe.*;
+
 import java.util.ArrayList;
 
 public class FindBestFit {
@@ -11,7 +16,7 @@ public class FindBestFit {
 
 	private final boolean DEBUG = false;
 
-	public FindBestFit (ArrayList<PentrisBoard> boardList,  ArrayList<Shape> shapeList,  ArrayList<Integer> xList) {
+	public FindBestFit (ArrayList<PentrisBoard> boardList, ArrayList<Shape> shapeList, ArrayList<Integer> xList) {
 		this.boardList=boardList;
 		this.shapeList=shapeList;
 		this.xList=xList;

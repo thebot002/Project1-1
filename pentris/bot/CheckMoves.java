@@ -1,3 +1,7 @@
+package pentris.bot;
+
+import pentominoe.Shape;
+import pentominoe.*;
 
 import java.util.ArrayList;
 
@@ -6,11 +10,8 @@ public class CheckMoves {
 	private PentrisBoard board;
 	private Shape shape;
 	private Shape shape2;
-	private Shape testShape;
-	private Shape testShape2;
 	private ArrayList<PentrisBoard> boardList = new ArrayList<PentrisBoard>();
 	private ArrayList<Shape> shapeList = new ArrayList<Shape>();
-	private ArrayList<Shape> shapeList2 = new ArrayList<Shape>();
 	private ArrayList<Integer> xList = new ArrayList<Integer>();
 	private ArrayList<Integer> xList2 = new ArrayList<Integer>();
 

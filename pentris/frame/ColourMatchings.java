@@ -1,3 +1,5 @@
+package pentris.frame;
+
 import java.awt.Color;
 import java.util.HashMap;
 

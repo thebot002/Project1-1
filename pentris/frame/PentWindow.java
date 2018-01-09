@@ -1,17 +1,10 @@
+package pentris.frame;
+
 import java.awt.*;
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import javax.swing.border.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Image;
-import java.awt.Toolkit;
-import javax.swing.JPanel;
 import java.io.*;
 
 /**
@@ -34,7 +27,7 @@ public class PentWindow extends JFrame{
     private Boolean addHighScore = false;
 
     /**
-    Main method of the class. Used to run the PentWindow from the class itself.
+    Main method of the class. Used to run the pentris.frame.PentWindow from the class itself.
     */
     public static void main(String[] args){
         //Use a thread to ensure the ui is updated correctly (internal swing requirement)
@@ -48,18 +41,18 @@ public class PentWindow extends JFrame{
     }
 
     /**
-    Constructor of the PentWindow. Build the different components and possile opperations.
+    Constructor of the pentris.frame.PentWindow. Build the different components and possile opperations.
     */
     public PentWindow() {
         setPreferredSize(new Dimension(W,H));
-        setTitle("Pentris");
+        setTitle("pentris");
         //setMinimumSize(new Dimension(W,H));
         setResizable(false);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         createKeyInput();
         if(grid[0] == 5 && grid[1] == 15)
             addHighScore = true;
-        try { font = Font.createFont(Font.TRUETYPE_FONT, new File("PixelFont.ttf")).deriveFont(16f); } catch (IOException e) {e.printStackTrace();} catch(FontFormatException e) {e.printStackTrace();}
+        try { font = Font.createFont(Font.TRUETYPE_FONT, new File("pentris/frame/PixelFont.ttf")).deriveFont(16f); } catch (IOException e) {e.printStackTrace();} catch(FontFormatException e) {e.printStackTrace();}
         menuCanvas = new MenuCanvas(W, H, font, squareSize);
         setActivePanel(menuCanvas);
         setVisible(true);
@@ -126,7 +119,7 @@ public class PentWindow extends JFrame{
 
     /**
     Changes the active pannel to a new specified PentPannel.
-    @param panel Pannel extending PentPanel.
+    @param panel Pannel extending pentris.frame.PentPanel.
     @see PentPanel
     */
     private void setActivePanel(PentPanel panel) {
@@ -140,8 +133,8 @@ public class PentWindow extends JFrame{
     }
 
     /**
-    Returns a reference to the active PentPanel
-    @return The active PentPanel in the frame.
+    Returns a reference to the active pentris.frame.PentPanel
+    @return The active pentris.frame.PentPanel in the frame.
     @see PentPanel
     */
     public PentPanel getActivePanel() {
@@ -149,8 +142,8 @@ public class PentWindow extends JFrame{
     }
 
     /**
-    Method getting called from a PentPanel when the game ends to ask for the name and add the highscore to the list and changes the active PentPanel
-    @param score The score when the game ends.
+    Method getting called from a pentris.frame.PentPanel when the game ends to ask for the name and add the highscore to the list and changes the active pentris.frame.PentPanel
+    @param score The score_management when the game ends.
     @see ScoreCanvas
     */
     public void endGame(int score) {

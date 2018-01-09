@@ -1,11 +1,15 @@
+package pentominoe;
+
+import pentominoe.Shape;
+
 /**
-This class contains the methods to build the Shape objects and their mirror.
+This class contains the methods to build the pentominoe.pentominoe objects and their mirror.
 @see Shape
 */
 public class ShapeFactory {
 	/**
-	Builds a Shape object representing an I.
-	@return A new Shape object.
+	Builds a pentominoe.pentominoe object representing an I.
+	@return A new pentominoe.pentominoe object.
 	@see Shape
 	*/
 	public static Shape buildShapeI(){
@@ -20,8 +24,8 @@ public class ShapeFactory {
 	}
 
 	/**
-	Builds a Shape object representing an L.
-	@return A new Shape object.
+	Builds a pentominoe.pentominoe object representing an L.
+	@return A new pentominoe.pentominoe object.
 	@see Shape
 	*/
 	public static Shape buildShapeL(){
@@ -35,8 +39,8 @@ public class ShapeFactory {
 	}
 
 	/**
-	Builds a Shape object representing an J (mirrored L).
-	@return A new Shape object.
+	Builds a pentominoe.pentominoe object representing an J (mirrored L).
+	@return A new pentominoe.pentominoe object.
 	@see Shape
 	*/
 	public static Shape buildShapeJ(){
@@ -50,8 +54,8 @@ public class ShapeFactory {
 	}
 
 	/**
-	Builds a Shape object representing an Y.
-	@return A new Shape object.
+	Builds a pentominoe.pentominoe object representing an Y.
+	@return A new pentominoe.pentominoe object.
 	@see Shape
 	*/
 	public static Shape buildShapeY(){
@@ -65,8 +69,8 @@ public class ShapeFactory {
 	}
 
 	/**
-	Builds a Shape object representing an H (mirrored Y).
-	@return A new Shape object.
+	Builds a pentominoe.pentominoe object representing an H (mirrored Y).
+	@return A new pentominoe.pentominoe object.
 	@see Shape
 	*/
 	public static Shape buildShapeH(){
@@ -80,8 +84,8 @@ public class ShapeFactory {
 	}
 
 	/**
-	Builds a Shape object representing an P.
-	@return A new Shape object.
+	Builds a pentominoe.pentominoe object representing an P.
+	@return A new pentominoe.pentominoe object.
 	@see Shape
 	*/
 	public static Shape buildShapeP(){
@@ -94,8 +98,8 @@ public class ShapeFactory {
 	}
 
 	/**
-	Builds a Shape object representing an Q (mirrored P).
-	@return A new Shape object.
+	Builds a pentominoe.pentominoe object representing an Q (mirrored P).
+	@return A new pentominoe.pentominoe object.
 	@see Shape
 	*/
 	public static Shape buildShapeQ(){
@@ -108,8 +112,8 @@ public class ShapeFactory {
 	}
 
 	/**
-	Builds a Shape object representing an N.
-	@return A new Shape object.
+	Builds a pentominoe.pentominoe object representing an N.
+	@return A new pentominoe.pentominoe object.
 	@see Shape
 	*/
 	public static Shape buildShapeN(){
@@ -123,8 +127,8 @@ public class ShapeFactory {
 	}
 
 	/**
-	Builds a Shape object representing an M (mirrored N).
-	@return A new Shape object.
+	Builds a pentominoe.pentominoe object representing an M (mirrored N).
+	@return A new pentominoe.pentominoe object.
 	@see Shape
 	*/
 	public static Shape buildShapeM(){
@@ -138,8 +142,8 @@ public class ShapeFactory {
 	}
 
 	/**
-	Builds a Shape object representing an U.
-	@return A new Shape object.
+	Builds a pentominoe.pentominoe object representing an U.
+	@return A new pentominoe.pentominoe object.
 	@see Shape
 	*/
 	public static Shape buildShapeU(){
@@ -151,8 +155,8 @@ public class ShapeFactory {
 	}
 
 	/**
-	Builds a Shape object representing an V.
-	@return A new Shape object.
+	Builds a pentominoe.pentominoe object representing an V.
+	@return A new pentominoe.pentominoe object.
 	@see Shape
 	*/
 	public static Shape buildShapeV(){
@@ -165,8 +169,8 @@ public class ShapeFactory {
 	}
 
 	/**
-	Builds a Shape object representing an T.
-	@return A new Shape object.
+	Builds a pentominoe.pentominoe object representing an T.
+	@return A new pentominoe.pentominoe object.
 	@see Shape
 	*/
 	public static Shape buildShapeT(){
@@ -179,8 +183,8 @@ public class ShapeFactory {
 	}
 
 	/**
-	Builds a Shape object representing an X.
-	@return A new Shape object.
+	Builds a pentominoe.pentominoe object representing an X.
+	@return A new pentominoe.pentominoe object.
 	@see Shape
 	*/
 	public static Shape buildShapeX(){
@@ -193,8 +197,8 @@ public class ShapeFactory {
 	}
 
 	/**
-	Builds a Shape object representing an Z.
-	@return A new Shape object.
+	Builds a pentominoe.pentominoe object representing an Z.
+	@return A new pentominoe.pentominoe object.
 	@see Shape
 	*/
 	public static Shape buildShapeZ(){
@@ -207,8 +211,8 @@ public class ShapeFactory {
 	}
 
 	/**
-	Builds a Shape object representing an S (mirrored Z).
-	@return A new Shape object.
+	Builds a pentominoe.pentominoe object representing an S (mirrored Z).
+	@return A new pentominoe.pentominoe object.
 	@see Shape
 	*/
 	public static Shape buildShapeS(){
@@ -221,8 +225,8 @@ public class ShapeFactory {
 	}
 
 	/**
-	Builds a Shape object representing an F.
-	@return A new Shape object.
+	Builds a pentominoe.pentominoe object representing an F.
+	@return A new pentominoe.pentominoe object.
 	@see Shape
 	*/
 	public static Shape buildShapeF(){
@@ -235,8 +239,8 @@ public class ShapeFactory {
 	}
 
 	/**
-	Builds a Shape object representing an E (mirrored F).
-	@return A new Shape object.
+	Builds a pentominoe.pentominoe object representing an E (mirrored F).
+	@return A new pentominoe.pentominoe object.
 	@see Shape
 	*/
 	public static Shape buildShapeE(){
@@ -249,8 +253,8 @@ public class ShapeFactory {
 	}
 
 	/**
-	Builds a Shape object representing an W.
-	@return A new Shape object.
+	Builds a pentominoe.pentominoe object representing an W.
+	@return A new pentominoe.pentominoe object.
 	@see Shape
 	*/
 	public static Shape buildShapeW(){

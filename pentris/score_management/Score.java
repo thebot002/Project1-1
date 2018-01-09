@@ -1,4 +1,4 @@
-//package ScoreTracker;
+package pentris.score_management;//package ScoreTracker;
 
 import java.io.Serializable;
 

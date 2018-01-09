@@ -1,8 +1,9 @@
+package pentominoe;
+
 import java.lang.*;
-import java.util.*;
 
 /**
-Class defining the board containing Shape objects.
+Class defining the board containing pentominoe.pentominoe objects.
 @see Shape
 */
 public class PentrisBoard {
@@ -15,7 +16,7 @@ public class PentrisBoard {
 	private int[] grid;
 
 	/**
-	Constructor of the object PentrisBoard. Fill a 2-D array (board) with "-".
+	Constructor of the object pentominoe.PentrisBoard. Fill a 2-D array (board) with "-".
 	@param grid defining the size of the board. (Default: 5x15)
 	*/
 	public PentrisBoard(int[] grid){
@@ -26,7 +27,7 @@ public class PentrisBoard {
 	}
 
 	/**
-	Constructor to create a PentrisBoard from an 2-D array
+	Constructor to create a pentominoe.PentrisBoard from an 2-D array
 	@param board
 	*/
 	public PentrisBoard(String[][] board, Shape shape, int x, int y){
@@ -36,7 +37,7 @@ public class PentrisBoard {
 		this.y = y;
 	}
 	/**
-	Return a 2-D representing the PentrisBoard.
+	Return a 2-D representing the pentominoe.PentrisBoard.
 	@return A 2-D array filled with "-" and shape ID's.
 	@see Shape
 	*/
@@ -45,7 +46,7 @@ public class PentrisBoard {
 	}
 
 	/**
-	This method adds Shape objects to the PentrisBoard 2-D array.
+	This method adds pentominoe.pentominoe objects to the pentominoe.PentrisBoard 2-D array.
 	@see Shape
 	*/
 	public void addShapeToBoard() {
@@ -59,7 +60,7 @@ public class PentrisBoard {
 	}
 
 	/**
-	This method adds Shape objects to the board at position determined by START_Y and at the middle of the board values.
+	This method adds pentominoe.pentominoe objects to the board at position determined by START_Y and at the middle of the board values.
 	@param shape The shape to be added.
 	@see Shape
 	*/
@@ -86,7 +87,7 @@ public class PentrisBoard {
 	}
 
 	/**
-	Method to check wether the placement of the Shape object is possible.
+	Method to check wether the placement of the pentominoe.pentominoe object is possible.
 	@return True is the insertion is possible. False if the insertion is not possible.
 	@see Shape
 	*/
@@ -115,8 +116,8 @@ public class PentrisBoard {
 	}
 
 	/**
-	Method checking whether the Shape object is placed by checking if next going one tile down is possible.
-	@return True if the Shape object is placed. False if the Shape object is not placed.
+	Method checking whether the pentominoe.pentominoe object is placed by checking if next going one tile down is possible.
+	@return True if the pentominoe.pentominoe object is placed. False if the pentominoe.pentominoe object is not placed.
 	@see Shape
 	*/
 	public boolean isPlaced() {
@@ -196,8 +197,8 @@ public class PentrisBoard {
 	}
 
 	/**
-	Checks if the left movement of a given Shape object is possible.
-	@return True if the movement of the Shape object is possible. False if the movement of the Shape object is not possible.
+	Checks if the left movement of a given pentominoe.pentominoe object is possible.
+	@return True if the movement of the pentominoe.pentominoe object is possible. False if the movement of the pentominoe.pentominoe object is not possible.
 	@see Shape
 	*/
 	public boolean moveLeftPossible(){
@@ -212,8 +213,8 @@ public class PentrisBoard {
 	}
 
 	/**
-	Checks if the right movement of a given Shape object is possible.
-	@return True if the movement of the Shape object is possible. False if the movement of the Shape object is not possible.
+	Checks if the right movement of a given pentominoe.pentominoe object is possible.
+	@return True if the movement of the pentominoe.pentominoe object is possible. False if the movement of the pentominoe.pentominoe object is not possible.
 	@see Shape
 	*/
 	public boolean moveRightPossible(){
@@ -228,7 +229,7 @@ public class PentrisBoard {
 	}
 
 	/**
-	Rotates a given Shape object in the board.
+	Rotates a given pentominoe.pentominoe object in the board.
 	@see Shape
 	*/
 	public void rotate() {
@@ -259,7 +260,7 @@ public class PentrisBoard {
 	}
 
 	/**
-	Method to move a given Shape object one tile left.
+	Method to move a given pentominoe.pentominoe object one tile left.
 	@see Shape
 	*/
 	public void moveLeft() {
@@ -269,7 +270,7 @@ public class PentrisBoard {
 	}
 
 	/**
-	Method to move a given Shape object one tile right.
+	Method to move a given pentominoe.pentominoe object one tile right.
 	@see Shape
 	*/
 	public void moveRight() {
@@ -279,7 +280,7 @@ public class PentrisBoard {
 	}
 
 	/**
-	Method to move a given Shape object one tile down.
+	Method to move a given pentominoe.pentominoe object one tile down.
 	@see Shape
 	*/
 	public void moveDown(){
@@ -289,7 +290,7 @@ public class PentrisBoard {
 	}
 
 	/**
-	Method to drop a given Shape object at the lowest possible position in the board.
+	Method to drop a given pentominoe.pentominoe object at the lowest possible position in the board.
 	@see Shape
 	*/
 	public void dropDown(){
@@ -326,7 +327,7 @@ public class PentrisBoard {
 	}
 
 	/**
-	Method to get the width of the PentrisBoard object.
+	Method to get the width of the pentominoe.PentrisBoard object.
 	@return The width of the board.
 	*/
 	public int getWidth(){
