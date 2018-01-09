@@ -5,13 +5,12 @@ import javafx.geometry.Point3D;
 import java.util.*;
 
 public class Parcel {
-	public static void main(String[] args) {}
-
 	public ArrayList<Point3D> points;
 	private double length;
 	private double height;
 	private double width;
 	private Point3D pos;
+	private int value = 1;
 
 	//Create a parcel with a default position set to the origin and set its 8 vertices.
 	public Parcel(double l, double h, double w) {
@@ -32,6 +31,8 @@ public class Parcel {
 		points.add(new Point3D(l, h, w));
 		points.add(new Point3D(l, 0, w));
 	}
+	
+	public void setValue(int value) { this.value = value; }
 
 	public void setPos(Point3D pos) { this.pos = pos; }
 

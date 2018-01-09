@@ -10,14 +10,6 @@ import javafx.geometry.Point3D;
 import java.awt.Point;
 
 public class CubeDrawer extends JPanel {
-	public static void main(String[] args){
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                new TruckViewer();
-            }
-        });
-    }
 
 	private BufferedImage image;
 	private Point origin = new Point(100, 350);

@@ -28,17 +28,16 @@ public class TruckViewer extends JFrame {
 
     private CubeDrawer c;
 
-    public static void main(String[] args){
+    public TruckViewer() {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
                 new TruckViewer();
             }
         });
-    }
+    }        
 
-
-    public TruckViewer() {
+    private void create() {
         setSize(W, H);
         setTitle("Truck");
         setResizable(false);
@@ -55,6 +54,6 @@ public class TruckViewer extends JFrame {
         //add(p);
         pack();
         setVisible(true);
-    }        
+    }
 }
     
