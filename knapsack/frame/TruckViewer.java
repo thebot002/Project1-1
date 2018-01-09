@@ -1,6 +1,6 @@
 package knapsack.frame;
 
-//import knapsack.*;
+import knapsack.frame.*;
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.ActionEvent;

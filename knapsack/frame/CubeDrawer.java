@@ -1,6 +1,6 @@
 package knapsack.frame;
 
-import knapsack.*;
+import knapsack.frame.*;
 import java.awt.*;
 import javax.swing.*;
 import java.util.*;
@@ -10,7 +10,6 @@ import javafx.geometry.Point3D;
 import java.awt.Point;
 
 public class CubeDrawer extends JPanel {
-
 	private BufferedImage image;
 	private Point origin = new Point(100, 350);
 	private int unit = 50;
@@ -46,14 +45,14 @@ public class CubeDrawer extends JPanel {
 		B.setPos(new Point3D(5,2,0));
 		C.setPos(new Point3D(8,2,0));
 
-		drawParcel(front);
-		drawParcel(bottom);
+		drawParcel(front, Color.WHITE);
+		drawParcel(bottom, Color.WHITE);
 
 		drawGrid();
 
-		drawParcel(A);
-		drawParcel(B);
-		drawParcel(C);
+		drawParcel(A, Color.RED);
+		drawParcel(B, Color.BLUE);
+		drawParcel(C, Color.YELLOW);
 
 		
 	}
@@ -96,6 +95,10 @@ public class CubeDrawer extends JPanel {
 
 	//draws a parcel at its location
 	private void drawParcel(Parcel p) {
+		drawParcel(p, colors.getRand());
+	}
+
+	private void drawParcel(Parcel p, Color color) {
 		Graphics2D g = (Graphics2D)image.getGraphics();
 		ArrayList<Point> f = new ArrayList<Point>(8);
 
@@ -105,7 +108,6 @@ public class CubeDrawer extends JPanel {
 		}
 
 		//draw 3 visable faces of Parcel
-		Color color = colors.getRand();
 		g.setColor(color.darker().darker());
 		fillPoly(g, f.get(0), f.get(1), f.get(2), f.get(3));
 		g.setColor(color.darker());

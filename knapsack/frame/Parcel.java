@@ -1,6 +1,5 @@
 package knapsack.frame;
 
-import knapsack.*;
 import javafx.geometry.Point3D; 
 import java.util.*;
 
@@ -31,7 +30,7 @@ public class Parcel {
 		points.add(new Point3D(l, h, w));
 		points.add(new Point3D(l, 0, w));
 	}
-	
+
 	public void setValue(int value) { this.value = value; }
 
 	public void setPos(Point3D pos) { this.pos = pos; }
