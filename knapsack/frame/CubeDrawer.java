@@ -34,9 +34,9 @@ public class CubeDrawer extends JPanel {
 		Parcel bottom = new Parcel(length, 0, width);
 		Parcel front = new Parcel(0, height, width);
 
-		Parcel A = new Parcel(1.0, 1.0, 2.0);
-		Parcel B = new Parcel(1.0, 1.5, 2.0);
-		Parcel C = new Parcel(1.5, 1.5, 1.5);
+		Parcel A = new Parcel("A");
+		Parcel B = new Parcel("B");
+		Parcel C = new Parcel("C");
 
 		bottom.setPos(new Point3D(0,0,0));
 		front.setPos(new Point3D(0,0,0));
