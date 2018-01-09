@@ -13,9 +13,12 @@ public class CubeDrawer extends JPanel {
 	private BufferedImage image;
 	private Point origin = new Point(100, 350);
 	private int unit = 50;
+	private ShapeColors colors;
+
+	//Will be obsolete with new drawing method:
 	private double xr = 0.5;
 	private double yr = 0.5;
-	private ShapeColors colors;
+	//
 
 	private double height = 4; //4
 	private double width = 2.5; //2.5
@@ -93,7 +96,16 @@ public class CubeDrawer extends JPanel {
 		g.fillPolygon(xPoints, yPoints, 4);
 	}
 
-	//draws a parcel at its location
+	// private void drawParcelFromPoint(Parcel parcel, Point3D point) {
+	// 	Graphics2D g = (Graphics2D)image.getGraphics();
+
+	// 	ArrayList<P
+
+	// 	for()
+	// 	double ox = x - (b/d) * z 
+	// }
+
+	//draws a parcel at its location 
 	private void drawParcel(Parcel p) {
 		drawParcel(p, colors.getRand());
 	}
