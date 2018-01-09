@@ -5,7 +5,7 @@ import javax.swing.*;
 import java.util.*;
 import java.awt.image.BufferedImage;
 import javafx.geometry.Point3D;
-import knapsack.pentominoe3D.Parcel;
+import knapsack.components.Parcel;
 
 import java.awt.Point;
 
