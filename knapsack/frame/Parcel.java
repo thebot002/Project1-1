@@ -33,7 +33,7 @@ import java.util.*;
 	}
 
 	public Parcel(double l, double h, double w) {
-		this(double l, double h, double w, 1)
+		this(l, h, w, 1);
 	}
 
 	public void setValue(double value) { this.value = value; }
