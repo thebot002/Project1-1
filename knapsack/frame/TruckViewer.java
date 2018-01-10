@@ -17,6 +17,7 @@ public class TruckViewer extends JFrame {
     private Font font;
 
     private CubeDrawer c;
+    private Menu m;
 
     public TruckViewer() {
         SwingUtilities.invokeLater(new Runnable() {
@@ -25,7 +26,7 @@ public class TruckViewer extends JFrame {
                 create();
             }
         });
-    }        
+    }
 
     private void create() {
         setSize(W, H);
@@ -76,4 +77,3 @@ public class TruckViewer extends JFrame {
         });
     }
 }
-    
