@@ -64,33 +64,26 @@ public class TruckViewer extends JFrame {
 
             @Override
             public boolean dispatchKeyEvent(KeyEvent e) {
-                if(e.getID()==KeyEvent.KEY_PRESSED ){
+                if(e.getID()==KeyEvent.KEY_PRESSED ) {
                     int key = e.getKeyCode();
-                    System.out.println(key);
 
-                    if (key == 40) { //down arrow
-                        c.rollDown();
-                    }
+                    if (key == 40)  //down arrow
+                        c.roll(-3);
 
-                    if (key == 38) { //up arrow
-                        c.rollUp();
-                    }
+                    if (key == 38)  //up arrow
+                        c.roll(3);
 
-                    if (key == 39) { //right arrow
-                        c.rotateRight();
-                    }
+                    if (key == 39)  //right arrow
+                        c.rotate(3);
 
-                    if (key == 37) { //left arrow
-                        c.rotateLeft();
-                    }
+                    if (key == 37)  //left arrow
+                        c.rotate(-3);
 
-                    if (key == 45) { //minus
-                        c.zoomOut();
-                    }
+                    if (key == 45)  //minus
+                        c.zoom(-1);
 
-                    if (key == 61) { //plus
-                        c.zoomIn();
-                    }
+                    if (key == 61)  //plus
+                        c.zoom(1);
                 }
                 return false;
             }

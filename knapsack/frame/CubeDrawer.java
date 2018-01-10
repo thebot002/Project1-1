@@ -28,6 +28,7 @@ public class CubeDrawer extends JPanel {
     private Truck truck;
     private Point3D deltaO = new Point3D(0, 0, 0);
 
+
     public CubeDrawer(int w, int h) {
         W = w;
         H = h;
@@ -85,9 +86,6 @@ public class CubeDrawer extends JPanel {
         float cosP = (float) Math.cos(phi), sinP = (float) Math.sin(phi);
         float cosTcosP = cosT * cosP, cosTsinP = cosT * sinP, sinTcosP = sinT * cosP, sinTsinP = sinT * sinP;
 
-        float near = 20f;  // distance from eye to near plane
-        float nearToObj = 30f;
-
         double x0 = point.getX();
         double y0 = point.getY();
         double z0 = point.getZ();
@@ -96,43 +94,28 @@ public class CubeDrawer extends JPanel {
         double y1 = -sinTsinP * x0 + cosP * y0 + cosTsinP * z0;
 
         double z1 = cosTcosP * z0 - sinTcosP * x0 - sinP * y0;
-        x1 = x1 * near / (z1 + near + nearToObj);
-        y1 = y1 * near / (z1 + near + nearToObj);
+        x1 = x1 * 20f / (z1 + 50f);
+        y1 = y1 * 20f / (z1 + 50f);
 
         int ox = (int) (x1 * unit * 2 + 0.5);
         int oy = (int) (y1 * unit * 2 + 0.5);
         return new Point(W / 2 + ox, H / 2 - oy);
     }
 
-    public void rotateLeft() {
-        angle += 3;
+    public void rotate(int i) {
+        angle += i;
         drawTruck();
     }
 
-    public void rotateRight() {
-        angle -= 3;
+    public void roll(int i) {
+        elevation += i;
         drawTruck();
     }
 
-    public void rollUp() {
-        elevation += 3;
+    public void zoom(int i) {
+        unit += i;
         drawTruck();
     }
-
-    public void rollDown() {
-        elevation -= 3;
-        drawTruck();
-    }
-
-    public void zoomIn() {
-        unit++;
-        drawTruck();
-    }
-    public void zoomOut() {
-        unit--;
-        drawTruck();
-    }
-
 
     private void drawParcelPro(Parcel p) {
         drawParcelPro(p, Color.WHITE);
