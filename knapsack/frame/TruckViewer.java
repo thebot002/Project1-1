@@ -1,6 +1,6 @@
 package knapsack.frame;
 
-//import knapsack.*;
+import knapsack.frame.*;
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -28,17 +28,16 @@ public class TruckViewer extends JFrame {
 
     private CubeDrawer c;
 
-    public static void main(String[] args){
+    public TruckViewer() {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                new TruckViewer();
+                create();
             }
         });
-    }
+    }        
 
-
-    public TruckViewer() {
+    private void create() {
         setSize(W, H);
         setTitle("Truck");
         setResizable(false);
@@ -55,6 +54,6 @@ public class TruckViewer extends JFrame {
         //add(p);
         pack();
         setVisible(true);
-    }        
+    }
 }
     

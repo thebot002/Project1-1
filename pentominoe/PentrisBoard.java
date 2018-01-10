@@ -16,7 +16,7 @@ public class PentrisBoard {
 	private int[] grid;
 
 	/**
-	Constructor of the object pentominoe.PentrisBoard. Fill a 2-D array (board) with "-".
+	Constructor of the object PentrisBoard. Fill a 2-D array (board) with "-".
 	@param grid defining the size of the board. (Default: 5x15)
 	*/
 	public PentrisBoard(int[] grid){
@@ -27,8 +27,11 @@ public class PentrisBoard {
 	}
 
 	/**
-	Constructor to create a pentominoe.PentrisBoard from an 2-D array
-	@param board
+	Constructor to create a PentrisBoard from an 2-D array with a Shape already in it
+	@param board the board to copy
+    @param shape the active shape
+    @param x the x coordinate of the shape
+    @param y the y coordinate of the shape
 	*/
 	public PentrisBoard(String[][] board, Shape shape, int x, int y){
 		this.board = board;
@@ -46,7 +49,7 @@ public class PentrisBoard {
 	}
 
 	/**
-	This method adds pentominoe.pentominoe objects to the pentominoe.PentrisBoard 2-D array.
+	This method adds pentominoe objects to the pentominoe.PentrisBoard 2-D array.
 	@see Shape
 	*/
 	public void addShapeToBoard() {

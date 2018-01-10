@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class ShapeColors extends ArrayList<Color> {
-	public static void main(String[] args){}
 	public ShapeColors() {
 		add(new Color(255, 102, 255));
 		add(new Color(0  , 255, 255));

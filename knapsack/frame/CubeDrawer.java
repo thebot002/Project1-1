@@ -1,24 +1,15 @@
 package knapsack.frame;
 
-import knapsack.*;
 import java.awt.*;
 import javax.swing.*;
 import java.util.*;
-import java.awt.Image;
 import java.awt.image.BufferedImage;
 import javafx.geometry.Point3D;
+import knapsack.components.Parcel;
+
 import java.awt.Point;
 
 public class CubeDrawer extends JPanel {
-	public static void main(String[] args){
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                new TruckViewer();
-            }
-        });
-    }
-
 	private BufferedImage image;
 	private Point origin = new Point(100, 350);
 	private int unit = 50;
@@ -43,9 +34,9 @@ public class CubeDrawer extends JPanel {
 		Parcel bottom = new Parcel(length, 0, width);
 		Parcel front = new Parcel(0, height, width);
 
-		Parcel A = new Parcel(1.0, 1.0, 2.0);
-		Parcel B = new Parcel(1.0, 1.5, 2.0);
-		Parcel C = new Parcel(1.5, 1.5, 1.5);
+		Parcel A = new Parcel("A");
+		Parcel B = new Parcel("B");
+		Parcel C = new Parcel("C");
 
 		bottom.setPos(new Point3D(0,0,0));
 		front.setPos(new Point3D(0,0,0));
@@ -54,14 +45,14 @@ public class CubeDrawer extends JPanel {
 		B.setPos(new Point3D(5,2,0));
 		C.setPos(new Point3D(8,2,0));
 
-		drawParcel(front);
-		drawParcel(bottom);
+		drawParcel(front, Color.WHITE);
+		drawParcel(bottom, Color.WHITE);
 
 		drawGrid();
 
-		drawParcel(A);
-		drawParcel(B);
-		drawParcel(C);
+		drawParcel(A, Color.RED);
+		drawParcel(B, Color.BLUE);
+		drawParcel(C, Color.YELLOW);
 
 		
 	}
@@ -104,6 +95,10 @@ public class CubeDrawer extends JPanel {
 
 	//draws a parcel at its location
 	private void drawParcel(Parcel p) {
+		drawParcel(p, colors.getRand());
+	}
+
+	private void drawParcel(Parcel p, Color color) {
 		Graphics2D g = (Graphics2D)image.getGraphics();
 		ArrayList<Point> f = new ArrayList<Point>(8);
 
@@ -113,7 +108,6 @@ public class CubeDrawer extends JPanel {
 		}
 
 		//draw 3 visable faces of Parcel
-		Color color = colors.getRand();
 		g.setColor(color.darker().darker());
 		fillPoly(g, f.get(0), f.get(1), f.get(2), f.get(3));
 		g.setColor(color.darker());
