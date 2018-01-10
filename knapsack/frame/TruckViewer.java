@@ -38,46 +38,61 @@ public class TruckViewer extends JFrame {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
 
-
         m = new Menu();
-        m.setPreferredSize(new Dimension(W/4*1, H));
+        m.setPreferredSize(new Dimension(W/4, H));
         m.setVisible(true);
 
-        c = new CubeDrawer(W, H);
+        c = new CubeDrawer(W/4*3, H);
         c.setPreferredSize(new Dimension(W/4*3, H));
         c.setVisible(true);
 
-        container = new JPanel();
-        container.setLayout(new BoxLayout(container, BoxLayout.X_AXIS));
-        container.add(c);
-        container.add(m);
-        add(container);
+        add(m, BorderLayout.EAST);
+        add(c, BorderLayout.CENTER);
         pack();
         addKeyInput();
+        m.setFocusable(true);
+        m.requestFocus();
         setVisible(true);
     }
 
     private void addKeyInput() {
-        m.addKeyListener( new KeyAdapter() {    //Key listener
-            public void keyPressed (KeyEvent e){
-                int key = e.getKeyCode();
-                System.out.println(key);
 
-                if (key == 40) { //down arrow
-                    c.rollDown();
-                }
+        KeyboardFocusManager keyManager;
 
-                if (key == 38) { //up arrow
-                    c.rollUp();
-                }
+        keyManager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
+        keyManager.addKeyEventDispatcher(new KeyEventDispatcher() {
 
-                if (key == 39) { //right arrow
-                    c.rotateRight();
-                }
+            @Override
+            public boolean dispatchKeyEvent(KeyEvent e) {
+                if(e.getID()==KeyEvent.KEY_PRESSED ){
+                    int key = e.getKeyCode();
+                    System.out.println(key);
 
-                if (key == 37) { //left arrow
-                    c.rotateLeft();
+                    if (key == 40) { //down arrow
+                        c.rollDown();
+                    }
+
+                    if (key == 38) { //up arrow
+                        c.rollUp();
+                    }
+
+                    if (key == 39) { //right arrow
+                        c.rotateRight();
+                    }
+
+                    if (key == 37) { //left arrow
+                        c.rotateLeft();
+                    }
+
+                    if (key == 45) { //minus
+                        c.zoomOut();
+                    }
+
+                    if (key == 61) { //plus
+                        c.zoomIn();
+                    }
                 }
+                return false;
             }
         });
     }
