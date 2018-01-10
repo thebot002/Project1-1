@@ -1,6 +1,7 @@
 package knapsack.components;
 
-import javafx.geometry.Point3D; 
+import javafx.geometry.Point3D;
+
 import java.util.*;
 
 /**
@@ -135,4 +136,33 @@ public class Parcel {
 	public String getID(){
 	    return id;
     }
+    /**
+     * Method to get the value of the parcel.
+     * @return The value of this parcel.
+     */
+    public int getValue(){
+        return value;
+    }
+
+    public void rotateAroundX(){
+        int temp = length;
+        length = height;
+        height = temp;
+        setPoints();
+    }
+
+    public void rotateAroundY(){
+        int temp = length;
+        length = width;
+        width = temp;
+        setPoints();
+    }
+
+    public void rotateAroundZ(){
+        int temp = width;
+        width = height;
+        height = temp;
+        setPoints();
+    }
+
 }
