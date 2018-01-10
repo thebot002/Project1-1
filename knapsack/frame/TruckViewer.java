@@ -1,5 +1,6 @@
 package knapsack.frame;
 
+import javafx.geometry.Point3D;
 import knapsack.frame.*;
 import java.awt.*;
 import javax.swing.*;
@@ -20,7 +21,9 @@ import java.awt.FlowLayout;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class TruckViewer extends JFrame {
-
+    public static void main(String[] args) {
+        new TruckViewer();
+    }
     private Thread gameThread;
     private final int H = 700;
     private final int W = 1200;
@@ -46,14 +49,40 @@ public class TruckViewer extends JFrame {
         JPanel p = new JPanel();
         p.setPreferredSize(new Dimension(W, 300));
 
-        c = new CubeDrawer(W, 400);
-        c.setPreferredSize(new Dimension(W, 400));
+        c = new CubeDrawer(W, H);
+        c.setPreferredSize(new Dimension(W, H));
         c.setVisible(true);
 
         add(c);
         //add(p);
         pack();
         setVisible(true);
+        addKeyInput();
+    }
+
+    public void addKeyInput() {
+        this.addKeyListener( new KeyAdapter() {    //Key listener
+            public void keyPressed (KeyEvent e){
+                int key = e.getKeyCode();
+                //System.out.println(key);
+
+                if (key == 40) { //down arrow
+                    c.rollDown();
+                }
+
+                if (key == 38) { //up arrow
+                   c.rollUp();
+                }
+
+                if (key == 39) { //right arrow
+                   c.rotateRight();
+                }
+
+                if (key == 37) { //left arrow
+                    c.rotateLeft();
+                }
+            }
+        });
     }
 }
     
