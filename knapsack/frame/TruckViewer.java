@@ -10,13 +10,17 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 public class TruckViewer extends JFrame {
-
+    public static void main(String[] args) {
+        new TruckViewer();
+    }
     private Thread gameThread;
     private final int H = 700;
     private final int W = 1200;
     private Font font;
 
     private CubeDrawer c;
+    private Menu m;
+    private JPanel container;
 
     public TruckViewer() {
         SwingUtilities.invokeLater(new Runnable() {
@@ -25,7 +29,7 @@ public class TruckViewer extends JFrame {
                 create();
             }
         });
-    }        
+    }
 
     private void create() {
         setSize(W, H);
@@ -33,24 +37,31 @@ public class TruckViewer extends JFrame {
         setResizable(false);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-        JPanel p = new JPanel();
-        p.setPreferredSize(new Dimension(W, H));
+
+
+        m = new Menu();
+        m.setPreferredSize(new Dimension(W/4*1, H));
+        m.setVisible(true);
 
         c = new CubeDrawer(W, H);
-        c.setPreferredSize(new Dimension(W, H));
+        c.setPreferredSize(new Dimension(W/4*3, H));
         c.setVisible(true);
 
-        add(c);
+        container = new JPanel();
+        container.setLayout(new BoxLayout(container, BoxLayout.X_AXIS));
+        container.add(c);
+        container.add(m);
+        add(container);
         pack();
-        setVisible(true);
         addKeyInput();
+        setVisible(true);
     }
 
     private void addKeyInput() {
-        this.addKeyListener( new KeyAdapter() {    //Key listener
+        m.addKeyListener( new KeyAdapter() {    //Key listener
             public void keyPressed (KeyEvent e){
                 int key = e.getKeyCode();
-                //System.out.println(key);
+                System.out.println(key);
 
                 if (key == 40) { //down arrow
                     c.rollDown();
@@ -71,4 +82,3 @@ public class TruckViewer extends JFrame {
         });
     }
 }
-    
