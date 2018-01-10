@@ -7,8 +7,8 @@ public class ParcelFactory{
 
 	public ParcelFactory() {
 		int[][][] shapeAr1 = { { {1,1,1},{1,1,1},{1,1,1} } ,
-							  { {1,1,1},{1,1,1},{1,1,1} } ,
-							  { {1,1,1},{1,1,1},{1,1,1} } };
+							             { {1,1,1},{1,1,1},{1,1,1} } ,
+							             { {1,1,1},{1,1,1},{1,1,1} } };
 
 		this.shape1 = new Parcel(shapeAr1);
 
@@ -20,7 +20,6 @@ public class ParcelFactory{
 
 		int[][][] shapeAr3 = { { {2,2} , {2,2} } ,
 							             { {2,2} , {2,2} } ,
-                           
 							             { {2,2} , {2,2} } ,
                            { {2,2} , {2,2} }};
 
@@ -51,4 +50,18 @@ public class ParcelFactory{
 		return listOfShapes;
 	}
 
+  public static void main(String[] args){
+
+    int[][][] shapeAr2 = { { {2,2} , {2,2}, {2,2} } ,
+                           { {2,2} , {2,2}, {2,2} } ,
+                           { {2,2} , {2,2}, {2,2} } ,
+                           { {2,2} , {2,2}, {2,2}}};
+                           
+    Parcel shape2 = new Parcel(shapeAr2);
+    shape2.printParcel();
+
+    shape2.xRot();
+
+    shape2.printParcel();
+  }
 }

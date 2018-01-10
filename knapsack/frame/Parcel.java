@@ -38,15 +38,28 @@ public class Parcel {
 		this.parcelArr=parcelArr;
 	}
 
+	public void printParcel(){
+		for(int i=0; i<parcelArr.length; i++){
+			for(int j=0; j<parcelArr[0].length; j++){
+				for(int k=0; k<parcelArr[0][0].length; k++){
+					System.out.print(parcelArr[i][j][k]+" ");
+				}
+				System.out.println("");
+			}
+			System.out.println("");
+		}
+	}
+
 	public void xRot(){
 		int[][][] newParcelArr = new int[parcelArr.length][parcelArr[0][0].length][parcelArr[0].length];
 		for(int i=0; i<parcelArr.length; i++){
 			for(int j=0; j<parcelArr[0].length; j++){
 				for(int k=0; k<parcelArr[0][0].length; k++){
-					newParcelArr[i][newParcelArr[0].length-k][j]=parcelArr[i][j][k];
+					newParcelArr[i][newParcelArr[0].length-k-1][j]=parcelArr[i][j][k];
 				}
 			}
 		}
+		parcelArr=newParcelArr;
 	}
 
 	public void yRot(){
@@ -54,10 +67,11 @@ public class Parcel {
 		for(int i=0; i<parcelArr.length; i++){
 			for(int j=0; j<parcelArr[0].length; j++){
 				for(int k=0; k<parcelArr[0][0].length; k++){
-					newParcelArr[k][j][newParcelArr[0][0].length-i]=parcelArr[i][j][k];
+					newParcelArr[k][j][newParcelArr[0][0].length-i-1]=parcelArr[i][j][k];
 				}
 			}
 		}
+		parcelArr=newParcelArr;
 	}
 
 
@@ -66,10 +80,11 @@ public class Parcel {
 		for(int i=0; i<parcelArr.length; i++){
 			for(int j=0; j<parcelArr[0].length; j++){
 				for(int k=0; k<parcelArr[0][0].length; k++){
-					newParcelArr[newParcelArr.length-j][i][k]=parcelArr[i][j][k];
+					newParcelArr[newParcelArr.length-j-1][i][k]=parcelArr[i][j][k];
 				}
 			}
 		}
+		parcelArr=newParcelArr;
 	}
 
 	public void setPos(Point3D pos) { this.pos = pos; }
