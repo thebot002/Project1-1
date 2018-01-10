@@ -2,4 +2,7 @@
 scores.dat
 *.dat
 *.bat
-Knapsack.iml
+.idea/
+out/
+*.tree
+.metadata/
