@@ -30,6 +30,7 @@ public class TruckViewer extends JFrame {
     private Font font;
 
     private CubeDrawer c;
+    private Menu m;
 
     public TruckViewer() {
         SwingUtilities.invokeLater(new Runnable() {
@@ -38,7 +39,7 @@ public class TruckViewer extends JFrame {
                 create();
             }
         });
-    }        
+    }
 
     private void create() {
         setSize(W, H);
@@ -46,15 +47,19 @@ public class TruckViewer extends JFrame {
         setResizable(false);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-        JPanel p = new JPanel();
-        p.setPreferredSize(new Dimension(W, 300));
+        m = new Menu();
+        m.setPreferredSize(new Dimension(W/4*1, H));
+        m.setVisible(true);
 
         c = new CubeDrawer(W, H);
-        c.setPreferredSize(new Dimension(W, H));
+        c.setPreferredSize(new Dimension(W/4*3, H));
         c.setVisible(true);
 
-        add(c);
-        //add(p);
+        JPanel container = new JPanel();
+        container.setLayout(new BoxLayout(container, BoxLayout.X_AXIS));
+        container.add(c);
+        container.add(m);
+        add(container);
         pack();
         setVisible(true);
         addKeyInput();
@@ -85,4 +90,3 @@ public class TruckViewer extends JFrame {
         });
     }
 }
-    
