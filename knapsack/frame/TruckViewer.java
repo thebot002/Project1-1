@@ -41,13 +41,12 @@ public class TruckViewer extends JFrame {
         c.setVisible(true);
 
         add(c);
-        //add(p);
         pack();
         setVisible(true);
         addKeyInput();
     }
 
-    public void addKeyInput() {
+    private void addKeyInput() {
         this.addKeyListener( new KeyAdapter() {    //Key listener
             public void keyPressed (KeyEvent e){
                 int key = e.getKeyCode();

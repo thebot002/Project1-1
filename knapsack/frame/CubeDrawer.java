@@ -14,25 +14,17 @@ public class CubeDrawer extends JPanel {
 	public static void main(String[] args) {
 		new TruckViewer();
 	}
+
+	//swing
+    private int H;
+    private int W;
 	private BufferedImage image;
-	private Point origin = new Point(100, 350);
-	private int unit = 40;
-	private ShapeColors colors;
+	private int unit = 15; //scaling factor
 
-	//Will be obsolete with new drawing method:
-	private double xr = 0.5;
-	private double yr = 0.5;
-	//
-	private int H;
-	private int W;
-
-	private final Point3D i = new Point3D(1, 0, 0);
-	private final Point3D j = new Point3D(0, 1, 0);
-	private final Point3D k = new Point3D(0, 0, 1);
-
+    //
+    private Parcel truckParcel;
 	private int angle = 90;
 	private int elevation = 35;
-
 	private Truck truck;
 	private Point3D deltaO = new Point3D(0,0,0);
 
@@ -40,45 +32,51 @@ public class CubeDrawer extends JPanel {
 		W = w;
 		H = h;
 		image = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
-		colors = new ShapeColors();
 
 		drawShapes();
 	}
 
-	public void drawShapes() {
-		Graphics2D g = (Graphics2D)image.getGraphics();
-		g.setColor(Color.WHITE);
-		g.clearRect(0,0,W,H);
-		repaint();
-
-
-		Parcel A = new Parcel(0.5, 0.5, 0.5);
-		A.setPos(new Point3D(0,0,0));
-
+	private void drawShapes() {
+		Parcel A = new Parcel("A");
 		truck = new Truck();
+		truckParcel = new Parcel(truck.getWidth(), truck.getHeight(), truck.getLength());
 		truck.addParcel(A, A.getPos());
 		drawTruck();
-
-		//origin points
-		Parcel I = new Parcel(5, 0, 0);
-		Parcel J = new Parcel(0, 5, 0);
-		Parcel K = new Parcel(0, 0, 5);
-		drawParcelPro(I, Color.YELLOW);
-		drawParcelPro(J, Color.YELLOW);
-		drawParcelPro(K, Color.YELLOW);
 	}
 
-	public void drawTruck() {
-		Parcel t = new Parcel(truck.getWidth()/2, truck.getHeight()/2, truck.getLength()/2);
-		deltaO = (t.get(0).midpoint(t.get(6))).multiply(-1);
-		drawParcelPro(t);
+	private void drawTruck() {
+        Graphics2D g = (Graphics2D)image.getGraphics();
+        g.setColor(Color.WHITE);
+        g.clearRect(0,0,W,H);
+
+		deltaO = (truckParcel.get(0).midpoint(truckParcel.get(6))).multiply(-1);
+		drawParcelPro(truckParcel);
 
 		for(Parcel parcel : truck.parcelList) {
 			drawParcelPro(parcel);
 		}
+
+		//Origin and Rotation point, Indication/Axis Lines
+		drawDebug();
+		repaint();
 	}
 
-	public Point convertPointPro(Point3D point) {
+	private void drawDebug() {
+        Parcel I = new Parcel(3, 0, 0);
+        Parcel J = new Parcel(0, 3, 0);
+        Parcel K = new Parcel(0, 0, 3);
+        I.setPos(deltaO.multiply(-1));
+        J.setPos(deltaO.multiply(-1));
+        K.setPos(deltaO.multiply(-1));
+        drawParcelPro(I, Color.RED);
+        drawParcelPro(J, Color.RED);
+        drawParcelPro(K, Color.RED);
+        drawParcelPro(new Parcel(5, 0, 0), Color.YELLOW);
+        drawParcelPro(new Parcel(0, 5, 0), Color.YELLOW);
+        drawParcelPro(new Parcel(0, 0, 5), Color.YELLOW);
+    }
+
+	private Point convertPointPro(Point3D point) {
 		point = point.add(deltaO);
 
 		double theta = Math.PI * angle / 180.0;
@@ -87,8 +85,8 @@ public class CubeDrawer extends JPanel {
 		float cosP = (float)Math.cos( phi ), sinP = (float)Math.sin( phi );
 		float cosTcosP = cosT*cosP, cosTsinP = cosT*sinP, sinTcosP = sinT*cosP, sinTsinP = sinT*sinP;
 
-		float near = 10f;  // distance from eye to near plane
-		float nearToObj = 20f;
+		float near = 20f;  // distance from eye to near plane
+		float nearToObj = 30f;
 
 		double x0 = point.getX();
 		double y0 = point.getY();
@@ -108,24 +106,24 @@ public class CubeDrawer extends JPanel {
 
 	public void rotateLeft() {
 		angle++;
-		drawShapes();
+		drawTruck();
 	}
 	public void rotateRight() {
 		angle--;
-		drawShapes();
+		drawTruck();
 	}
 	public void rollUp() {
 		elevation++;
-		drawShapes();
+		drawTruck();
 	}
 	public void rollDown() {
 		elevation--;
-		drawShapes();
+		drawTruck();
 	}
 
 
-	public void drawParcelPro(Parcel p) { drawParcelPro(p, Color.WHITE); }
-	public void drawParcelPro(Parcel p, Color c) {
+	private void drawParcelPro(Parcel p) { drawParcelPro(p, Color.WHITE); }
+	private void drawParcelPro(Parcel p, Color c) {
 		Graphics2D g = (Graphics2D)image.getGraphics();
 		Point3D pos = p.getPos();
 		ArrayList<Point3D> points = p.getPoints();
@@ -137,7 +135,7 @@ public class CubeDrawer extends JPanel {
 		drawWireFrame(pp, c);
 	}
 
-	public void drawWireFrame(ArrayList<Point> p, Color c) {
+	private void drawWireFrame(ArrayList<Point> p, Color c) {
 		Graphics2D g = (Graphics2D)image.getGraphics();
 		g.setColor(c);
 		drawLine(g, p.get(0), p.get(1));
@@ -164,24 +162,6 @@ public class CubeDrawer extends JPanel {
 		g.fillOval((int)p.getX()-3, (int)p.getY()-3, 6, 6);
 	}
 
-	private Point convertPointOrt(Point3D p) {
-		/*	Flat perspective
-			converts a Point3D to a 2d Point by adding to its x and y positions to force perspective.
-			also inverts sign of y value to draw as if in the top-right quadrant
-			also moves point so its relative to an origin point */
-
-		double x = p.getX();
-		double y = p.getY();
-		double z = p.getZ();
-
-		x = (x * unit) + (z * unit/2);
-		y = (y * unit) + (z * unit/2);
-		int ax = origin.x + (int)x;
-		int ay = origin.y - (int)y;
-
-		return new Point(ax, ay);
-	}
-
 	private void drawLine(Graphics g, Point a, Point b) {
 		g.drawLine((int)a.getX(), (int)a.getY(), (int)b.getX(), (int)b.getY());
 	}
@@ -192,28 +172,6 @@ public class CubeDrawer extends JPanel {
 		int[] yPoints = {(int)a.getY(), (int)b.getY(), (int)c.getY(), (int)d.getY()};
 
 		g.fillPolygon(xPoints, yPoints, 4);
-	}
-
-	private void drawParcelOrt(Parcel p) { drawParcelOrt(p, colors.getRand()); }
-	private void drawParcelOrt(Parcel p, Color color) {
-		Graphics2D g = (Graphics2D)image.getGraphics();
-		ArrayList<Point> f = new ArrayList<Point>(8);
-
-		//convert 3D points to 2D points
-		for(int inc = 0; inc < 8; inc++) {
-			f.add(convertPointOrt(p.get(inc)));
-		}
-
-		//draw 3 visable faces of Parcel
-		g.setColor(color.darker().darker());
-		fillPoly(g, f.get(0), f.get(1), f.get(2), f.get(3));
-		g.setColor(color.darker());
-		fillPoly(g, f.get(2), f.get(3), f.get(7), f.get(6));
-		g.setColor(color);
-		fillPoly(g, f.get(1), f.get(5), f.get(6), f.get(2));
-
-		repaint();
-		g.dispose();
 	}
 
 	@Override

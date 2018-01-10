@@ -4,3 +4,4 @@ scores.dat
 *.bat
 .idea/
 out/
+*.iml
