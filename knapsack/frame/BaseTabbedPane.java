@@ -1,24 +1,13 @@
-package knapsack.frame;
-
-import knapsack.frame.*;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.JSpinner;
 
 public class BaseTabbedPane extends JPanel {
-
-	private JTextField amountFirstRow; // refers to amount textfields for A & L
-	private JTextField amountSecondRow; // refers to amount textfields for B & P
-	private JTextField amountThirdRow; // refers to amount textfields for C & T
-	private JTextField valueFirstRow; // refers to value textfields for A & L
-	private JTextField valueSecondRow; // refers to value textfields for B & P/
-	private JTextField valueThirdRow; // refers to value textfields for C & T
-	private JLabel lblDimFirstRow; //refers to dimensions JLabel for A
-	private JLabel lblDimSecondRow; //refers to dimensions JLabel for B
-	private JLabel lblDimThirdRow; //refers to dimensions JLabel for C
 
 	public BaseTabbedPane(String firstRow, String secondRow, String thirdRow, String dim, String dimFirstRow, String dimSecondRow, String dimThirdRow ) {
 		GridBagLayout gridBagLayout = new GridBagLayout();
@@ -56,23 +45,21 @@ public class BaseTabbedPane extends JPanel {
 		gbc_lblFirstRow.gridy = 2;
 		add(lblFirstRow, gbc_lblFirstRow);
 
-		amountFirstRow = new JTextField();
-		GridBagConstraints gbc_amountFirstRow = new GridBagConstraints();
-		gbc_amountFirstRow.fill = GridBagConstraints.HORIZONTAL;
-		gbc_amountFirstRow.insets = new Insets(0, 0, 5, 5);
-		gbc_amountFirstRow.gridx = 2;
-		gbc_amountFirstRow.gridy = 2;
-		add(amountFirstRow, gbc_amountFirstRow);
-		amountFirstRow.setColumns(10);
+		JSpinner amount1 = new JSpinner();
+		GridBagConstraints gbc_amount1 = new GridBagConstraints();
+		gbc_amount1.fill = GridBagConstraints.HORIZONTAL;
+		gbc_amount1.insets = new Insets(0, 0, 5, 5);
+		gbc_amount1.gridx = 2;
+		gbc_amount1.gridy = 2;
+		add(amount1, gbc_amount1);
 
-		valueFirstRow = new JTextField();
-		GridBagConstraints gbc_valueFirstRow = new GridBagConstraints();
-		gbc_valueFirstRow.insets = new Insets(0, 0, 5, 5);
-		gbc_valueFirstRow.fill = GridBagConstraints.HORIZONTAL;
-		gbc_valueFirstRow.gridx = 4;
-		gbc_valueFirstRow.gridy = 2;
-		add(valueFirstRow, gbc_valueFirstRow);
-		valueFirstRow.setColumns(10);
+		JSpinner value1 = new JSpinner();
+		GridBagConstraints gbc_value1 = new GridBagConstraints();
+		gbc_value1.fill = GridBagConstraints.HORIZONTAL;
+		gbc_value1.insets = new Insets(0, 0, 5, 5);
+		gbc_value1.gridx = 4;
+		gbc_value1.gridy = 2;
+		add(value1, gbc_value1);
 
 		JLabel lblDimFirstRow = new JLabel(dimFirstRow);
 		GridBagConstraints gbc_lblDimFirstRow = new GridBagConstraints();
@@ -88,23 +75,21 @@ public class BaseTabbedPane extends JPanel {
 		gbc_lblSecondRow.gridy = 4;
 		add(lblSecondRow, gbc_lblSecondRow);
 
-		amountSecondRow = new JTextField();
-		GridBagConstraints gbc_amountSecondRow = new GridBagConstraints();
-		gbc_amountSecondRow.fill = GridBagConstraints.HORIZONTAL;
-		gbc_amountSecondRow.insets = new Insets(0, 0, 5, 5);
-		gbc_amountSecondRow.gridx = 2;
-		gbc_amountSecondRow.gridy = 4;
-		add(amountSecondRow, gbc_amountSecondRow);
-		amountSecondRow.setColumns(10);
+		JSpinner amount2 = new JSpinner();
+		GridBagConstraints gbc_amount2 = new GridBagConstraints();
+		gbc_amount2.fill = GridBagConstraints.HORIZONTAL;
+		gbc_amount2.insets = new Insets(0, 0, 5, 5);
+		gbc_amount2.gridx = 2;
+		gbc_amount2.gridy = 4;
+		add(amount2, gbc_amount2);
 
-		valueSecondRow = new JTextField();
-		GridBagConstraints gbc_valueSecondRow = new GridBagConstraints();
-		gbc_valueSecondRow.insets = new Insets(0, 0, 5, 5);
-		gbc_valueSecondRow.fill = GridBagConstraints.HORIZONTAL;
-		gbc_valueSecondRow.gridx = 4;
-		gbc_valueSecondRow.gridy = 4;
-		add(valueSecondRow, gbc_valueSecondRow);
-		valueSecondRow.setColumns(10);
+		JSpinner value2 = new JSpinner();
+		GridBagConstraints gbc_value2 = new GridBagConstraints();
+		gbc_value2.fill = GridBagConstraints.HORIZONTAL;
+		gbc_value2.insets = new Insets(0, 0, 5, 5);
+		gbc_value2.gridx = 4;
+		gbc_value2.gridy = 4;
+		add(value2, gbc_value2);
 
 		JLabel lblDimSecondRow = new JLabel(dimSecondRow);
 		GridBagConstraints gbc_lblDimSecondRow = new GridBagConstraints();
@@ -120,23 +105,21 @@ public class BaseTabbedPane extends JPanel {
 		gbc_lblThirdRow.gridy = 6;
 		add(lblThirdRow, gbc_lblThirdRow);
 
-		amountThirdRow = new JTextField();
-		GridBagConstraints gbc_amountThirdRow = new GridBagConstraints();
-		gbc_amountThirdRow.fill = GridBagConstraints.HORIZONTAL;
-		gbc_amountThirdRow.insets = new Insets(0, 0, 5, 5);
-		gbc_amountThirdRow.gridx = 2;
-		gbc_amountThirdRow.gridy = 6;
-		add(amountThirdRow, gbc_amountThirdRow);
-		amountThirdRow.setColumns(10);
+		JSpinner amount3 = new JSpinner();
+		GridBagConstraints gbc_amount3 = new GridBagConstraints();
+		gbc_amount3.fill = GridBagConstraints.HORIZONTAL;
+		gbc_amount3.insets = new Insets(0, 0, 5, 5);
+		gbc_amount3.gridx = 2;
+		gbc_amount3.gridy = 6;
+		add(amount3, gbc_amount3);
 
-		valueThirdRow = new JTextField();
-		GridBagConstraints gbc_valueThirdRow = new GridBagConstraints();
-		gbc_valueThirdRow.insets = new Insets(0, 0, 5, 5);
-		gbc_valueThirdRow.fill = GridBagConstraints.HORIZONTAL;
-		gbc_valueThirdRow.gridx = 4;
-		gbc_valueThirdRow.gridy = 6;
-		add(valueThirdRow, gbc_valueThirdRow);
-		valueThirdRow.setColumns(10);
+		JSpinner value3 = new JSpinner();
+		GridBagConstraints gbc_value3 = new GridBagConstraints();
+		gbc_value3.fill = GridBagConstraints.HORIZONTAL;
+		gbc_value3.insets = new Insets(0, 0, 5, 5);
+		gbc_value3.gridx = 4;
+		gbc_value3.gridy = 6;
+		add(value3, gbc_value3);
 
 		JLabel lblDimThirdRow = new JLabel(dimThirdRow);
 		GridBagConstraints gbc_lblDimThirdRow = new GridBagConstraints();
