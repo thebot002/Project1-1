@@ -4,3 +4,5 @@ scores.dat
 *.bat
 .idea/
 out/
+*.tree
+.metadata/
