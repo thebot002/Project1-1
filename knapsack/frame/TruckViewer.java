@@ -34,21 +34,19 @@ public class TruckViewer extends JFrame {
         setResizable(false);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-
         m = new Menu();
-        m.setPreferredSize(new Dimension(W/3, H));
+        //m.setPreferredSize(new Dimension(W/3, H));
         m.setVisible(true);
 
         c = new CubeDrawer(W/3*2, H);
         c.setPreferredSize(new Dimension(W/3*2, H));
-        c.setVisible(true);
+
 
         add(m, BorderLayout.EAST);
         add(c, BorderLayout.CENTER);
+        c.setVisible(true);
         pack();
         addKeyInput();
-        m.setFocusable(true);
-        m.requestFocus();
         setVisible(true);
     }
 

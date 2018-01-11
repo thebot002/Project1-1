@@ -10,7 +10,7 @@ import java.awt.Point;
 import java.lang.Math;
 
 /**
- *
+ *Will Create a scene to draw a truck, a Truck Object can be passed on creation to be drawn.
  */
 public class CubeDrawer extends JPanel {
     public static void main(String[] args) {
@@ -33,10 +33,7 @@ public class CubeDrawer extends JPanel {
 
 
     public CubeDrawer(int w, int h) {
-        W = w;
-        H = h;
-        image = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
-        createTruck();
+        this(w, h, new Truck());
     }
 
     public CubeDrawer(int w, int h, Truck truck) {
@@ -44,23 +41,17 @@ public class CubeDrawer extends JPanel {
         W = w;
         H = h;
         image = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
-        createTruck();
+        truckParcel = new Parcel(truck.getWidth(), truck.getHeight(), truck.getLength());
+        populateTruck();
+        renderScene();
     }
 
-
-    /**
-     * Creates and Populates a Truck, then calls for it to be drawn.
-     * Example/ Test Method.
-     */
-    private void createTruck() {
+    private void populateTruck() {
         Parcel A = new Parcel("A");
         Parcel B = new Parcel("B");
         B.setPos(new Point3D(5,0,0));
-        truck = new Truck();
-        truckParcel = new Parcel(truck.getWidth(), truck.getHeight(), truck.getLength());
         truck.addParcel(A);
         truck.addParcel(B);
-        renderScene();
     }
     
     /**
