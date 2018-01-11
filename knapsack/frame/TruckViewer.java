@@ -2,12 +2,9 @@ package knapsack.frame;
 
 import java.awt.*;
 import javax.swing.*;
-import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.Dimension;
 import javax.swing.JPanel;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 
 public class TruckViewer extends JFrame {
     public static void main(String[] args) {
@@ -66,6 +63,7 @@ public class TruckViewer extends JFrame {
             public boolean dispatchKeyEvent(KeyEvent e) {
                 if(e.getID()==KeyEvent.KEY_PRESSED ) {
                     int key = e.getKeyCode();
+                    //System.out.println(key);
 
                     if (key == 40)  //down arrow
                         c.roll(-3);
@@ -84,6 +82,9 @@ public class TruckViewer extends JFrame {
 
                     if (key == 61)  //plus
                         c.zoom(1);
+
+                    if (key == 68)  // d
+                        c.toggleDebug();
                 }
                 return false;
             }

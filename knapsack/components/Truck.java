@@ -64,10 +64,10 @@ public class Truck {
     /**
      * Method to add a parcel object to the truck.
      * @param p The parcel to be added to the truck.
-     * @param pos The position where the parcel will be added.
      */
-    public void addParcel(Parcel p, Point3D pos){
+    public void addParcel(Parcel p){
 	    parcelList.add(p);
+	    Point3D pos = p.getPos();
 	    int x = (int) (pos.getX()/0.5);
         int y = (int) (pos.getY()/0.5);
         int z = (int) (pos.getZ()/0.5);

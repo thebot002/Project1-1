@@ -6,3 +6,4 @@ scores.dat
 out/
 *.tree
 .metadata/
+doc/
