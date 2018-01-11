@@ -114,4 +114,12 @@ public class Truck {
             }
         }
     }
+
+    public int getValue(){
+	    int total = 0;
+        for (Parcel p: parcelList) {
+            total += p.getValue();
+        }
+        return total;
+    }
 }
