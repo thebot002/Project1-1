@@ -15,7 +15,7 @@ public class TruckViewer extends JFrame {
     }
     private Thread gameThread;
     private final int H = 700;
-    private final int W = 1200;
+    private final int W = 1400;
     private Font font;
 
     private CubeDrawer c;
@@ -39,11 +39,11 @@ public class TruckViewer extends JFrame {
 
 
         m = new Menu();
-        m.setPreferredSize(new Dimension(W/4, H));
+        m.setPreferredSize(new Dimension(W/3, H));
         m.setVisible(true);
 
-        c = new CubeDrawer(W/4*3, H);
-        c.setPreferredSize(new Dimension(W/4*3, H));
+        c = new CubeDrawer(W/3*2, H);
+        c.setPreferredSize(new Dimension(W/3*2, H));
         c.setVisible(true);
 
         add(m, BorderLayout.EAST);
