@@ -2,12 +2,9 @@ package knapsack.frame;
 
 import java.awt.*;
 import javax.swing.*;
-import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.Dimension;
 import javax.swing.JPanel;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 
 public class TruckViewer extends JFrame {
     public static void main(String[] args) {
@@ -37,21 +34,19 @@ public class TruckViewer extends JFrame {
         setResizable(false);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-
         m = new Menu();
-        m.setPreferredSize(new Dimension(W/3, H));
+        //m.setPreferredSize(new Dimension(W/3, H));
         m.setVisible(true);
 
         c = new CubeDrawer(W/3*2, H);
         c.setPreferredSize(new Dimension(W/3*2, H));
-        c.setVisible(true);
+
 
         add(m, BorderLayout.EAST);
         add(c, BorderLayout.CENTER);
+        c.setVisible(true);
         pack();
         addKeyInput();
-        m.setFocusable(true);
-        m.requestFocus();
         setVisible(true);
     }
 
@@ -66,6 +61,7 @@ public class TruckViewer extends JFrame {
             public boolean dispatchKeyEvent(KeyEvent e) {
                 if(e.getID()==KeyEvent.KEY_PRESSED ) {
                     int key = e.getKeyCode();
+                    //System.out.println(key);
 
                     if (key == 40)  //down arrow
                         c.roll(-3);
@@ -84,6 +80,9 @@ public class TruckViewer extends JFrame {
 
                     if (key == 61)  //plus
                         c.zoom(1);
+
+                    if (key == 68)  // d
+                        c.toggleDebug();
                 }
                 return false;
             }

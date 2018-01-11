@@ -9,7 +9,9 @@ import javafx.geometry.Point3D;
 import java.awt.Point;
 import java.lang.Math;
 
-
+/**
+ *Will Create a scene to draw a truck, a Truck Object can be passed on creation to be drawn.
+ */
 public class CubeDrawer extends JPanel {
     public static void main(String[] args) {
         new TruckViewer();
@@ -21,47 +23,67 @@ public class CubeDrawer extends JPanel {
     private BufferedImage image;
     private int unit = 13; //scaling factor
 
-    //
+
     private Parcel truckParcel;
     private int angle = 90;
     private int elevation = 35;
     private Truck truck;
     private Point3D deltaO = new Point3D(0, 0, 0);
+    private Boolean debug = true;
 
 
     public CubeDrawer(int w, int h) {
+        this(w, h, new Truck());
+    }
+
+    public CubeDrawer(int w, int h, Truck truck) {
+        this.truck = truck;
         W = w;
         H = h;
         image = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
-
-        drawShapes();
-    }
-
-    private void drawShapes() {
-        Parcel A = new Parcel("A");
-        truck = new Truck();
         truckParcel = new Parcel(truck.getWidth(), truck.getHeight(), truck.getLength());
-        truck.addParcel(A, A.getPos());
-        drawTruck();
+        populateTruck();
+        renderScene();
     }
 
-    private void drawTruck() {
+    private void populateTruck() {
+        Parcel A = new Parcel("A");
+        Parcel B = new Parcel("B");
+        B.setPos(new Point3D(5,0,0));
+        truck.addParcel(A);
+        truck.addParcel(B);
+    }
+    
+    /**
+     *  Draws the 'Truck' and all of the Parcels it holds.<br>
+     *  The Truck is drawn at the Center of the Screen and Scene.
+     */
+    private void renderScene() {
         Graphics2D g = (Graphics2D) image.getGraphics();
         g.setColor(Color.WHITE);
         g.clearRect(0, 0, W, H);
 
+        //Get the center of the Truck so it can be used to draw all objects with it as a fake origin.
+        //This means the trick will be at the center of the Scene and when rotating the Scene its rotated around the
+        //center of the truck.
         deltaO = (truckParcel.get(0).midpoint(truckParcel.get(6))).multiply(-1);
-        drawParcelPro(truckParcel);
+
+        //draw a parcel to represent the truck
+        drawParcelPro(truckParcel, Color.CYAN, false);
 
         for (Parcel parcel : truck.parcelList) {
-            drawParcelPro(parcel);
+            drawParcelPro(parcel, Color.WHITE, true);
         }
 
         //Origin and Rotation point, Indication/Axis Lines
-        drawDebug();
+        if(debug)
+            drawDebug();
         repaint();
     }
 
+    /**
+     * Will draw Origin and Rotation Axis.
+     */
     private void drawDebug() {
         Parcel I = new Parcel(3, 0, 0);
         Parcel J = new Parcel(0, 3, 0);
@@ -69,14 +91,24 @@ public class CubeDrawer extends JPanel {
         I.setPos(deltaO.multiply(-1));
         J.setPos(deltaO.multiply(-1));
         K.setPos(deltaO.multiply(-1));
-        drawParcelPro(I, Color.RED);
-        drawParcelPro(J, Color.RED);
-        drawParcelPro(K, Color.RED);
-        drawParcelPro(new Parcel(5, 0, 0), Color.YELLOW);
-        drawParcelPro(new Parcel(0, 5, 0), Color.YELLOW);
-        drawParcelPro(new Parcel(0, 0, 5), Color.YELLOW);
+        drawParcelPro(I, Color.RED, false);
+        drawParcelPro(J, Color.RED, false);
+        drawParcelPro(K, Color.RED, false);
+        drawParcelPro(new Parcel(5, 0, 0), Color.YELLOW, false);
+        drawParcelPro(new Parcel(0, 5, 0), Color.YELLOW, false);
+        drawParcelPro(new Parcel(0, 0, 5), Color.YELLOW, false);
     }
 
+
+    /**
+     * Takes a Point3D and produces a 2D Point of its Projection from 3D to the 2D Plane.<br>
+     * This is done in relation to a Viewpoint at a fixed distance but a variable elevation and angle.<br>
+     * The 2D point is in relation to a shifted origin <code>deltaO</code> the center of the Truck.<br>
+     * The 2D point is also scaled using the zoom/ unit variable.<br>
+     * <a href="http://www.dgp.toronto.edu/~mjmcguff/learn/java/11-3d/">Projection Code Used</a>
+     * @param point Point3D object representing a Vertex of a Parcel to be converted.
+     * @return 2D Point Object of where the 3D Point should be drawn to emulate depth
+     */
     private Point convertPointPro(Point3D point) {
         point = point.add(deltaO);
 
@@ -102,73 +134,152 @@ public class CubeDrawer extends JPanel {
         return new Point(W / 2 + ox, H / 2 - oy);
     }
 
+
+    //Methods Used to adjust the Camera And Debug Options
+
+    /**
+     * Rotate the Truck.<br>
+     * @param i int amount to rotate - Default range: -3 ~ 3.
+     */
     public void rotate(int i) {
         angle += i;
-        drawTruck();
+        renderScene();
     }
 
+    /**
+     * Roll the Truck.<br>
+     * @param i int amount to roll - Default range -3 ~ 3.
+     */
     public void roll(int i) {
         elevation += i;
-        drawTruck();
+        renderScene();
     }
 
+    /**
+     * Change the scale of the Truck (Zoom). <br>
+     * @param i int amount to change the scale - Default range -1 ~ 1.
+     */
     public void zoom(int i) {
         unit += i;
-        drawTruck();
+        renderScene();
     }
 
-    private void drawParcelPro(Parcel p) {
-        drawParcelPro(p, Color.WHITE);
+    /**
+     * Toggle if Debug Graphics should be drawn.
+     */
+    public void toggleDebug() {
+        debug = !debug;
+        renderScene();
     }
 
-    private void drawParcelPro(Parcel p, Color c) {
-        Graphics2D g = (Graphics2D) image.getGraphics();
+    /* Drawing Methods for different parts of the 'Truck' Display */
+
+    /**
+     * Draws a <code>Parcel</code> in Projected Perspective at the Parcel's Position with a given Color.<br>
+     * The Parcel can Either be drawn with just a wire frame or with a wire frame and filled, by passing true to the 'fill' param.<br>
+     * @param p The Parcel to draw.
+     * @param c The Color to use for the wire frame.
+     * @param fill Sets if the Parcel Should also be filled with a transparent fill.
+     */
+    private void drawParcelPro(Parcel p, Color c, Boolean fill) {
         Point3D pos = p.getPos();
         ArrayList<Point3D> points = p.getPoints();
         ArrayList<Point> pp = new ArrayList<>();
 
+        //Convert all 3D points to Projected 2D points relative to the Parcels position.
         for (Point3D point : points) {
             pp.add(convertPointPro(point.add(pos)));
         }
         drawWireFrame(pp, c);
+        if(fill)
+            fillCube(pp, new Color(1,0,0,0.3f));
     }
 
+    /**
+     * Draws a Wire Frame of a Cube represented as an <code>ArrayList</code> of (2d) <code>Point</code> Objects and a <code>Color</code>.<br>
+     * The set of Points can be generated using the <code>convertPointPro()</code> method.
+     *
+     * @param p The ArrayList of the 2D points of the Cube to draw.
+     * @param c A Color to draw the Wire Frame from.
+     */
     private void drawWireFrame(ArrayList<Point> p, Color c) {
         Graphics2D g = (Graphics2D) image.getGraphics();
         g.setColor(c);
-        drawLine(g, p.get(0), p.get(1));
-        drawLine(g, p.get(0), p.get(3));
-        drawLine(g, p.get(0), p.get(4));
+        drawLine(p.get(0), p.get(1), c);
+        drawLine(p.get(0), p.get(3), c);
+        drawLine(p.get(0), p.get(4), c);
 
-        drawLine(g, p.get(1), p.get(2));
-        drawLine(g, p.get(1), p.get(5));
+        drawLine(p.get(1), p.get(2), c);
+        drawLine(p.get(1), p.get(5), c);
 
-        drawLine(g, p.get(2), p.get(3));
-        drawLine(g, p.get(2), p.get(6));
+        drawLine(p.get(2), p.get(3), c);
+        drawLine(p.get(2), p.get(6), c);
 
-        drawLine(g, p.get(3), p.get(7));
+        drawLine(p.get(3), p.get(7), c);
 
-        drawLine(g, p.get(4), p.get(5));
-        drawLine(g, p.get(4), p.get(7));
+        drawLine(p.get(4), p.get(5), c);
+        drawLine(p.get(4), p.get(7), c);
 
-        drawLine(g, p.get(6), p.get(5));
-        drawLine(g, p.get(6), p.get(7));
+        drawLine(p.get(6), p.get(5), c);
+        drawLine(p.get(6), p.get(7), c);
     }
 
-    private void drawPoint(Graphics g, Point p) {
-        g.setColor(Color.YELLOW);
+    /**
+     * Draws a transparent Cube represented as an <code>ArrayList</code> of (2d) <code>Point</code> Objects and a <code>Color</code>.<br>
+     * The set of Points can be generated using the <code>convertPointPro()</code> method.
+     *
+     * @param p An ArrayList of the 2D points of a Cube.
+     * @param c A Color to draw the Cube from.
+     */
+    private void fillCube(ArrayList<Point> p, Color c) {
+        fillPoly(p.get(0),p.get(3),p.get(2),p.get(1), c);
+        fillPoly(p.get(1),p.get(2),p.get(6),p.get(5), c);
+        fillPoly(p.get(2),p.get(3),p.get(7),p.get(6), c);
+        fillPoly(p.get(0),p.get(3),p.get(7),p.get(4), c);
+        fillPoly(p.get(1),p.get(0),p.get(4),p.get(5), c);
+        fillPoly(p.get(4),p.get(7),p.get(6),p.get(5), c);
+    }
+
+    /**
+     * Draws a Point/Oval at a (2d) <code>Point</code> with a given <code>Color</code>.
+     *
+     * @param p A 2D point to draw at
+     * @param c A Color to draw the Oval from.
+     */
+    private void drawPoint(Point p, Color c) {
+        Graphics2D g = (Graphics2D) image.getGraphics();
+        g.setColor(c);
         g.fillOval((int) p.getX() - 3, (int) p.getY() - 3, 6, 6);
     }
 
-    private void drawLine(Graphics g, Point a, Point b) {
-        g.drawLine((int) a.getX(), (int) a.getY(), (int) b.getX(), (int) b.getY());
+    /**
+     * Draws a Line Between two (2d) Points with a given <code>Color</code>.
+     *
+     * @param p1 2D Point to draw Line From.
+     * @param p2 2D Point to draw Line To.
+     * @param c The Color to use.
+     */
+    private void drawLine(Point p1, Point p2, Color c) {
+        Graphics2D g = (Graphics2D) image.getGraphics();
+        g.setColor(c);
+        g.drawLine((int) p1.getX(), (int) p1.getY(), (int) p2.getX(), (int) p2.getY());
     }
 
-    private void fillPoly(Graphics g, Point a, Point b, Point c, Point d) {
-        //Fills a poly using 4 Point Objects
-        int[] xPoints = {(int) a.getX(), (int) b.getX(), (int) c.getX(), (int) d.getX()};
-        int[] yPoints = {(int) a.getY(), (int) b.getY(), (int) c.getY(), (int) d.getY()};
-
+    /**
+     * Draws a filled Polygon from 4 corner Points, Points need to be in 'Order' To transverse to Polygon Correctly.<br>
+     * Also Takes a <code>Color</code> to Draw the Polygon From.
+     *
+     * @param p1 2D Point 1
+     * @param p2 2D Point 2
+     * @param p3 2D Point 3
+     * @param p4 2D Point 4
+     * @param c <code>Color To fill with</code>
+     */
+    private void fillPoly(Point p1, Point p2, Point p3, Point p4, Color c) {
+        Graphics2D g = (Graphics2D) image.getGraphics();
+        g.setColor(c);
+        int[] xPoints = {(int) p1.getX(), (int) p2.getX(), (int) p3.getX(), (int) p4.getX()};
+        int[] yPoints = {(int) p1.getY(), (int) p2.getY(), (int) p3.getY(), (int) p4.getY()};
         g.fillPolygon(xPoints, yPoints, 4);
     }
 
