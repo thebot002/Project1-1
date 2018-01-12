@@ -15,7 +15,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class Menu extends JPanel implements ActionListener {
-	
+
 	private JButton btnFillTruck;
 	private JButton btnClearTruck;
 	private JButton btnResetCamera;
@@ -93,7 +93,7 @@ public class Menu extends JPanel implements ActionListener {
 		gbc_lblCurrentValueDisp.gridx = 4;
 		gbc_lblCurrentValueDisp.gridy = 12;
 		add(lblCurrentValueDisp, gbc_lblCurrentValueDisp);
-		
+
 		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		GridBagConstraints gbc_tabbedPane = new GridBagConstraints();
 		gbc_tabbedPane.gridheight = 7;
@@ -109,14 +109,14 @@ public class Menu extends JPanel implements ActionListener {
 		tabbedPane.addTab("Rectangle", rectangleTab);
 		tabbedPane.addTab("Pentomino", pentominoTab);
 	}
-	
+
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == btnFillTruck) {
 			if(tabbedPane.getSelectedComponent() == rectangleTab) {
 	        	try {
 					rectangleTab.collectParcels();
 					int[][] parcelsRectangle = rectangleTab.collectParcels();
-					
+
 				} catch (ParseException e1) {
 					System.out.println("The currently edited value couldn't be commited.");
 					JOptionPane.showMessageDialog(tabbedPane, "The currently edited value couldn't be commited.");
@@ -125,28 +125,28 @@ public class Menu extends JPanel implements ActionListener {
 	        else if(tabbedPane.getSelectedComponent() == pentominoTab) {
 	        	try {
 					int[][] parcelsPentomino = pentominoTab.collectParcels();
-					
+
 				} catch (ParseException e1) {
 					System.out.println("The currently edited value couldn't be commited.");
 					JOptionPane.showMessageDialog(tabbedPane, "The currently edited value couldn't be commited.");
 				}
 	        }
 	        else {
-	        	JOptionPane.showMessageDialog(tabbedPane, "Please switch to the tab that corresponds to the type of parcel you would want to fill the truck with (Rectangle or Pentomino).");     	
+	        	JOptionPane.showMessageDialog(tabbedPane, "Please switch to the tab that corresponds to the type of parcel you would want to fill the truck with (Rectangle or Pentomino).");
 	        }
 		}
 		else if(e.getSource() == btnClearTruck) {
-			
+
 		}
 		else if(e.getSource() == btnResetCamera) {
-			
+
 		}
 	}
 	
 	public void setGapsFound(int found) {
 		lblGapsFoundDisp.setText(String.valueOf(found));
 	}
-	
+
 	public void setCurrentValue(int value) {
 		lblGapsFoundDisp.setText(String.valueOf(value));
 	}
