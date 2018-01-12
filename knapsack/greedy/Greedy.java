@@ -57,7 +57,6 @@ public class Greedy {
 			totVol+=parcelList.get(i).getVolume();
 		}
 
-
 		if(totVol>truck.getVolume()) {
 
 //			System.out.println("HERE!!");
@@ -82,22 +81,14 @@ public class Greedy {
 				parcelList.add(parcelAr[index]);
 				return backTracking(newTruck, parcelAr, parcelList, index);
 
-
 			}else {
-
 					index++;
 					if(index==9)
 						index=0;
 
 					return backTracking(truck, parcelAr,parcelList, index);
 
-
 			}
-
-
-
-
-
 		}
 	}
 }

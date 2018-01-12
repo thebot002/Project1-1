@@ -36,9 +36,7 @@ public class Truck {
             }
         }
 	}
-<<<<<<< HEAD
-=======
-	
+
 	public String[][][] getTruck(){
 		return truck;
 	}
@@ -72,7 +70,6 @@ public class Truck {
 		return position;
 		
 	}
->>>>>>> remotes/origin/initialGui
 
     /**
      * Default constructor for this project. Truck with size: 16.5 x 4.0 x 2.5 .
@@ -169,10 +166,6 @@ public class Truck {
             total += p.getValue();
         }
         return total;
-    }
-
-    public int getVolume(){
-	    return height*width*length;
     }
 
     public void fill(ArrayList<Parcel> list){
