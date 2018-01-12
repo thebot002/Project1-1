@@ -166,5 +166,4 @@ public class SwitchTabbedPane extends JPanel {
 		int[][] parcels = {{amountFR, amountSR, amountTR}, {valFR, valSR, valTR}};
 		return parcels;
 	}
-
 }

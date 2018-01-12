@@ -13,6 +13,7 @@ import java.awt.SystemColor;
 import java.text.ParseException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.Font;
 
 public class Menu extends JPanel implements ActionListener {
 
@@ -26,13 +27,15 @@ public class Menu extends JPanel implements ActionListener {
 	private JTabbedPane tabbedPane;
 	private SwitchTabbedPane rectangleTab;
 	private SwitchTabbedPane pentominoTab;
+	private JLabel lblTimeTook;
+	private JLabel lblTimeTookDisp;
 
 	public Menu() {
 		setBackground(SystemColor.menu);
 		setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{0, 0, 0, 0, 0, 0, 0, 0};
-		gridBagLayout.rowHeights = new int[]{0, 0, 0, 29, 0, 0, 0, 0, 0, 0, 17, 0, 0, 0, 0};
+		gridBagLayout.rowHeights = new int[]{0, 0, 0, 30, 0, 0, 0, 0, 0, 0, 20, 0, 0, 0, 0};
 		gridBagLayout.columnWeights = new double[]{0.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 0.0};
 		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
@@ -47,6 +50,7 @@ public class Menu extends JPanel implements ActionListener {
 		add(btnFillTruck, gbc_btnFillTruck);
 
 		btnClearTruck = new JButton("Clear Truck");
+		btnClearTruck.addActionListener(this);
 		GridBagConstraints gbc_btnClearTruck = new GridBagConstraints();
 		gbc_btnClearTruck.gridwidth = 2;
 		gbc_btnClearTruck.insets = new Insets(0, 0, 5, 5);
@@ -55,18 +59,19 @@ public class Menu extends JPanel implements ActionListener {
 		add(btnClearTruck, gbc_btnClearTruck);
 
 		btnResetCamera = new JButton("Reset Camera");
+		btnResetCamera.addActionListener(this);
 		GridBagConstraints gbc_btnResetCamera = new GridBagConstraints();
 		gbc_btnResetCamera.gridwidth = 2;
 		gbc_btnResetCamera.insets = new Insets(0, 0, 5, 5);
 		gbc_btnResetCamera.gridx = 5;
 		gbc_btnResetCamera.gridy = 1;
 		add(btnResetCamera, gbc_btnResetCamera);
-
+		
 		lblGapsFound = new JLabel("Gaps Found");
 		GridBagConstraints gbc_lblGapsFound = new GridBagConstraints();
 		gbc_lblGapsFound.gridwidth = 2;
 		gbc_lblGapsFound.insets = new Insets(0, 0, 5, 5);
-		gbc_lblGapsFound.gridx = 2;
+		gbc_lblGapsFound.gridx = 1;
 		gbc_lblGapsFound.gridy = 11;
 		add(lblGapsFound, gbc_lblGapsFound);
 
@@ -74,25 +79,26 @@ public class Menu extends JPanel implements ActionListener {
 		GridBagConstraints gbc_lblCurrentValue = new GridBagConstraints();
 		gbc_lblCurrentValue.gridwidth = 2;
 		gbc_lblCurrentValue.insets = new Insets(0, 0, 5, 5);
-		gbc_lblCurrentValue.gridx = 4;
+		gbc_lblCurrentValue.gridx = 3;
 		gbc_lblCurrentValue.gridy = 11;
 		add(lblCurrentValue, gbc_lblCurrentValue);
+		
+		lblTimeTook = new JLabel("Time Took (in s)");
+		GridBagConstraints gbc_lblTimeTook = new GridBagConstraints();
+		gbc_lblTimeTook.gridwidth = 2;
+		gbc_lblTimeTook.insets = new Insets(0, 0, 5, 5);
+		gbc_lblTimeTook.gridx = 5;
+		gbc_lblTimeTook.gridy = 11;
+		add(lblTimeTook, gbc_lblTimeTook);
 
 		lblGapsFoundDisp = new JLabel("---");
+		lblGapsFoundDisp.setFont(new Font("Tahoma", Font.ITALIC, 13));
 		GridBagConstraints gbc_lblGapsFoundDisp = new GridBagConstraints();
 		gbc_lblGapsFoundDisp.gridwidth = 2;
 		gbc_lblGapsFoundDisp.insets = new Insets(0, 0, 5, 5);
-		gbc_lblGapsFoundDisp.gridx = 2;
+		gbc_lblGapsFoundDisp.gridx = 1;
 		gbc_lblGapsFoundDisp.gridy = 12;
 		add(lblGapsFoundDisp, gbc_lblGapsFoundDisp);
-
-		lblCurrentValueDisp = new JLabel("---");
-		GridBagConstraints gbc_lblCurrentValueDisp = new GridBagConstraints();
-		gbc_lblCurrentValueDisp.gridwidth = 2;
-		gbc_lblCurrentValueDisp.insets = new Insets(0, 0, 5, 5);
-		gbc_lblCurrentValueDisp.gridx = 4;
-		gbc_lblCurrentValueDisp.gridy = 12;
-		add(lblCurrentValueDisp, gbc_lblCurrentValueDisp);
 
 		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		GridBagConstraints gbc_tabbedPane = new GridBagConstraints();
@@ -110,23 +116,47 @@ public class Menu extends JPanel implements ActionListener {
 		tabbedPane.addTab("Rectangle", rectangleTab);
 		tabbedPane.addTab("Pentomino", pentominoTab);
 		tabbedPane.addTab("Info", infoTab);
-	}
 
+		lblCurrentValueDisp = new JLabel("---");
+		lblCurrentValueDisp.setFont(new Font("Tahoma", Font.ITALIC, 13));
+		GridBagConstraints gbc_lblCurrentValueDisp = new GridBagConstraints();
+		gbc_lblCurrentValueDisp.gridwidth = 2;
+		gbc_lblCurrentValueDisp.insets = new Insets(0, 0, 5, 5);
+		gbc_lblCurrentValueDisp.gridx = 3;
+		gbc_lblCurrentValueDisp.gridy = 12;
+		add(lblCurrentValueDisp, gbc_lblCurrentValueDisp);
+		
+		lblTimeTookDisp = new JLabel("---");
+		lblTimeTookDisp.setFont(new Font("Tahoma", Font.ITALIC, 13));
+		GridBagConstraints gbc_lblTimeTookDisp = new GridBagConstraints();
+		gbc_lblTimeTookDisp.gridwidth = 2;
+		gbc_lblTimeTookDisp.insets = new Insets(0, 0, 5, 5);
+		gbc_lblTimeTookDisp.gridx = 5;
+		gbc_lblTimeTookDisp.gridy = 12;
+		add(lblTimeTookDisp, gbc_lblTimeTookDisp);
+	}
+	
+	 /**
+     * Implementation of action listeners of buttons
+     * If "Fill Truck" is clicked the values of the JSpinners are put into an arraylist
+     * If "Clear Truck" is clicked -- has to be defined --
+     * If "Reset  Camera" is clicked -- has to be defined --
+     */
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == btnFillTruck) {
-			if(tabbedPane.getSelectedComponent() == rectangleTab) {
+			if(tabbedPane.getSelectedComponent() == rectangleTab) { // Used to be able to differentiate between the type of  parcels (ABC vs LPT)
 	        	try {
 					rectangleTab.collectParcels();
-					int[][] parcelsRectangle = rectangleTab.collectParcels();
+					int[][] parcelsRectangle = rectangleTab.collectParcels(); //output of tabs need to be converted to input of algorithms
 
 				} catch (ParseException e1) {
 					System.out.println("The currently edited value couldn't be commited.");
 					JOptionPane.showMessageDialog(tabbedPane, "The currently edited value couldn't be commited.");
 				}
 	        }
-	        else if(tabbedPane.getSelectedComponent() == pentominoTab) {
+	        else if(tabbedPane.getSelectedComponent() == pentominoTab) {// Used to be able to differentiate between the type of  parcels (ABC vs LPT)
 	        	try {
-					int[][] parcelsPentomino = pentominoTab.collectParcels();
+					int[][] parcelsPentomino = pentominoTab.collectParcels(); //output of tabs need to be converted to input of algorithms
 
 				} catch (ParseException e1) {
 					System.out.println("The currently edited value couldn't be commited.");
@@ -145,11 +175,27 @@ public class Menu extends JPanel implements ActionListener {
 		}
 	}
 	
+	 /**
+     * Used to update label referring to how many gaps are found
+     * @param Amount of gaps found
+     */
 	public void setGapsFound(int found) {
 		lblGapsFoundDisp.setText(String.valueOf(found));
 	}
-
+	
+	 /**
+     * Used to update label referring to current value of truck
+     * @param Current value
+     */
 	public void setCurrentValue(int value) {
 		lblGapsFoundDisp.setText(String.valueOf(value));
+	}
+	
+	/**
+     * Used to update label referring to the time it took to fill the truck
+     * @param Amount of time took to find curent solution
+     */
+	public void setTimeTook(double time) {
+		lblTimeTookDisp.setText(String.valueOf(time));
 	}
 }

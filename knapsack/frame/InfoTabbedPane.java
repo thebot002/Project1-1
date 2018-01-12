@@ -218,14 +218,26 @@ public class InfoTabbedPane extends JPanel {
 		add(lblD, gbc_lblD);
 	}
 	
+	/**
+     * Used to update label referring to current angle of camera
+     * @param Current angle of camera
+     */
 	public void setAngle(int angle) {
 		lblAngleDisp.setText(String.valueOf(angle));
 	}
 	
+	/**
+     * Used to update label referring current elevation of camera
+     * @param Current elevation of camera
+     */
 	public void setElevation(int elevation) {
 		lblElevationDisp.setText(String.valueOf(elevation));
 	}
 	
+	/**
+     * Used to update label referring current zoom of camera
+     * @param Current zoom of camera
+     */
 	public void setZoom(int zoom) {
 		lblZoomDisp.setText(String.valueOf(zoom));
 	}
