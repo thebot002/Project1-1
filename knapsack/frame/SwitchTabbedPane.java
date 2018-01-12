@@ -145,7 +145,7 @@ public class SwitchTabbedPane extends JPanel {
 		gbc_lblDimTR.gridy = 6;
 		add(lblDimTR, gbc_lblDimTR);
 	}
-	
+
 	 /**
      * Method to get parcels. First column represents amount (of A, B, C or L, P, T) and second column represents the given value of the previous parcels respectively.
      * @return 2D integer array containing Parcel data.
@@ -166,5 +166,4 @@ public class SwitchTabbedPane extends JPanel {
 		int[][] parcels = {{amountFR, amountSR, amountTR}, {valFR, valSR, valTR}};
 		return parcels;
 	}
-	
 }
