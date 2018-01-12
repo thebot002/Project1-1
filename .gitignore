@@ -2,3 +2,8 @@
 scores.dat
 *.dat
 *.bat
+.idea/
+out/
+*.tree
+.metadata/
+doc/

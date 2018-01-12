@@ -1,32 +1,23 @@
 package knapsack.frame;
 
-import knapsack.frame.*;
 import java.awt.*;
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import javax.swing.border.*;
-import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Image;
-import java.awt.Toolkit;
 import javax.swing.JPanel;
-import java.io.*;
-import java.awt.FlowLayout;
-import java.util.concurrent.ThreadLocalRandom;
 
 public class TruckViewer extends JFrame {
-
+    public static void main(String[] args) {
+        new TruckViewer();
+    }
     private Thread gameThread;
     private final int H = 700;
-    private final int W = 1200;
+    private final int W = 1400;
     private Font font;
 
     private CubeDrawer c;
+    private Menu m;
+    private JPanel container;
 
     public TruckViewer() {
         SwingUtilities.invokeLater(new Runnable() {
@@ -35,7 +26,7 @@ public class TruckViewer extends JFrame {
                 create();
             }
         });
-    }        
+    }
 
     private void create() {
         setSize(W, H);
@@ -43,17 +34,58 @@ public class TruckViewer extends JFrame {
         setResizable(false);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-        JPanel p = new JPanel();
-        p.setPreferredSize(new Dimension(W, 300));
+        m = new Menu();
+        //m.setPreferredSize(new Dimension(W/3, H));
+        m.setVisible(true);
 
-        c = new CubeDrawer(W, 400);
-        c.setPreferredSize(new Dimension(W, 400));
+        c = new CubeDrawer(W/3*2, H);
+        c.setPreferredSize(new Dimension(W/3*2, H));
+
+
+        add(m, BorderLayout.EAST);
+        add(c, BorderLayout.CENTER);
         c.setVisible(true);
-
-        add(c);
-        //add(p);
         pack();
+        addKeyInput();
         setVisible(true);
     }
+
+    private void addKeyInput() {
+
+        KeyboardFocusManager keyManager;
+
+        keyManager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
+        keyManager.addKeyEventDispatcher(new KeyEventDispatcher() {
+
+            @Override
+            public boolean dispatchKeyEvent(KeyEvent e) {
+                if(e.getID()==KeyEvent.KEY_PRESSED ) {
+                    int key = e.getKeyCode();
+                    //System.out.println(key);
+
+                    if (key == 40)  //down arrow
+                        c.roll(-3);
+
+                    if (key == 38)  //up arrow
+                        c.roll(3);
+
+                    if (key == 39)  //right arrow
+                        c.rotate(3);
+
+                    if (key == 37)  //left arrow
+                        c.rotate(-3);
+
+                    if (key == 45)  //minus
+                        c.zoom(-1);
+
+                    if (key == 61)  //plus
+                        c.zoom(1);
+
+                    if (key == 68)  // d
+                        c.toggleDebug();
+                }
+                return false;
+            }
+        });
+    }
 }
-    
