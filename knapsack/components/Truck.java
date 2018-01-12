@@ -37,6 +37,40 @@ public class Truck {
         }
 	}
 
+	public String[][][] getTruck(){
+		return truck;
+	}
+	
+	public void setTruck(String[][][] newTruck) {
+		for(int i=0; i<truck.length; i++) {
+			for(int j=0; j<truck[0].length; j++) {
+				for(int k=0; k<truck[0][0].length; k++) {
+					truck[i][j][k]=newTruck[i][j][k];
+				}
+			}
+		}
+	}
+	
+	public int[] positionToAdd() {
+		int[] position = new int[3];
+		
+		for(int i=0; i<truck[0].length; i++) {
+			for(int j=0; j<truck.length; j++) {
+				for(int k=0; k<truck[0][0].length; k++) {
+					if(truck[j][i][k].equals("-")) {
+						position[0]=j;
+						position[1]=i;
+						position[2]=k;
+						System.out.println("Position to ADd"+position[0]+" "+position[1]+" "+position[2]);
+						return position;
+					}
+				}
+			}
+		}
+		return position;
+		
+	}
+
     /**
      * Default constructor for this project. Truck with size: 16.5 x 4.0 x 2.5 .
      */
@@ -62,38 +96,49 @@ public class Truck {
     public int getHeight() { return height; }
 
     /**
+     * Method to get the volume of the truck
+     * @return The volume of the truck.
+     */
+    public int getVolume() {return height*width*length;}
+
+    /**
      * Method to add a parcel object to the truck.
      * @param p The parcel to be added to the truck.
+     * @param pos The position where the parcel will be added.
      */
-    public void addParcel(Parcel p){
-        for(int i = 0; i<width-p.getWidth() ; i++){
-            for(int j=0; j<height-p.getHeight(); j++){
-                for(int k=0; k<length-p.getLength(); k++){
-                    if(isPossible(p,new Point3D(i,j,k))){
-                        parcelList.add(p);
-                        for(int a=0; a<p.getWidth(); a++){
-                            for(int b=0; b<p.getHeight(); b++){
-                                for(int c=0; c<p.getLength();c++){
-                                    truck[a+i][b+j][c+k] = p.getID();
-                                }
-                            }
-                        }
-                        p.setPos(new Point3D(i,j,k));
-                    }
+    public void addParcel(Parcel p, Point3D pos){
+	    parcelList.add(p);
+	    int x = (int) (pos.getX()/0.5);
+        int y = (int) (pos.getY()/0.5);
+        int z = (int) (pos.getZ()/0.5);
+        for(int i=0; i<p.getWidth(); i++){
+            for(int j=0; j<p.getHeight(); j++){
+                for(int k=0; k<p.getLength();k++){
+                    truck[x+i][y+j][z+k] = p.getID();
                 }
             }
         }
 	}
 
-	public boolean isPossible(Parcel p, Point3D pos){
-        for(int i=0; i<p.getWidth(); i++){
-            for(int j=0; j<p.getHeight(); j++){
-                for(int k=0; k<p.getLength();k++){
-                    if(!truck[i+(int)pos.getX()][j+(int)pos.getY()][k+(int)pos.getZ()].equals("-")) return false;
-                }
-            }
-        }
-        return true;
+    public boolean isPossible(Parcel p, Point3D pos) {
+    		 boolean isPossible=true;
+
+      	 int x = (int) (pos.getX()/0.5);
+         int y = (int) (pos.getY()/0.5);
+         int z = (int) (pos.getZ()/0.5);
+         if(x+p.getWidth()>=truck.length || y+p.getHeight()>=truck[0].length || z+p.getLength()>=truck[0][0].length) {
+        	 	isPossible=false;
+         }else {
+         for(int i=0; i<p.getWidth(); i++){
+             for(int j=0; j<p.getHeight(); j++){
+                 for(int k=0; k<p.getLength();k++){
+                     if(!truck[x+i][y+j][z+k].equals("-"))
+                    	 isPossible=false;
+                 }
+             }
+         }
+         }
+        	 return isPossible;
     }
 
     /**
@@ -123,10 +168,6 @@ public class Truck {
         return total;
     }
 
-    public int getVolume(){
-	    return height*width*length;
-    }
-
     public void fill(ArrayList<Parcel> list){
 	    this.parcelList = list;
 
@@ -134,4 +175,29 @@ public class Truck {
 	    fill here
 	     */
     }
+
+	public String[][][] copyTruck(){
+		String[][][] newTruck = new String[truck.length][truck[0].length][truck[0][0].length];
+		for(int i=0; i<truck.length; i++) {
+			for(int j=0; j<truck[0].length; j++) {
+				for(int k=0; k<truck[0][0].length; k++) {
+					newTruck[i][j][k]=truck[i][j][k];
+				}
+			}
+		}
+		return newTruck;
+	}
+
+	public void printTruck() {
+		System.out.println("");
+		for(int i=0; i<truck[0][0].length; i++) {
+			for(int j=0; j<truck.length; j++) {
+				for(int k=0; k<truck[0].length; k++) {
+					System.out.print(truck[j][k][i]+ " ");
+				}
+				System.out.println("");
+			}
+			System.out.println("");
+		}
+	}
 }
