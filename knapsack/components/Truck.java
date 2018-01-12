@@ -28,9 +28,9 @@ public class Truck {
 		height = (int) (h/0.5);
 		width = (int) (w/0.5);
 		truck = new String[width][height][length];
-		for(int i = 0; i<truck.length ; i++){
-		    for(int j=0; j<truck[0].length; j++){
-		        for(int k=0; k<truck[0][0].length; k++){
+		for(int i = 0; i<width ; i++){
+		    for(int j=0; j<height; j++){
+		        for(int k=0; k<length; k++){
 		            truck[i][j][k] = "-";
                 }
             }
@@ -66,19 +66,35 @@ public class Truck {
      * @param p The parcel to be added to the truck.
      */
     public void addParcel(Parcel p){
-	    parcelList.add(p);
-	    Point3D pos = p.getPos();
-	    int x = (int) (pos.getX()/0.5);
-        int y = (int) (pos.getY()/0.5);
-        int z = (int) (pos.getZ()/0.5);
-        for(int i=0; i<p.getWidth(); i++){
-            for(int j=0; j<p.getHeight(); j++){
-                for(int k=0; k<p.getLength();k++){
-                    truck[x+i][y+j][z+k] = p.getID();
+        for(int i = 0; i<width-p.getWidth() ; i++){
+            for(int j=0; j<height-p.getHeight(); j++){
+                for(int k=0; k<length-p.getLength(); k++){
+                    if(isPossible(p,new Point3D(i,j,k))){
+                        parcelList.add(p);
+                        for(int a=0; a<p.getWidth(); a++){
+                            for(int b=0; b<p.getHeight(); b++){
+                                for(int c=0; c<p.getLength();c++){
+                                    truck[a+i][b+j][c+k] = p.getID();
+                                }
+                            }
+                        }
+                        p.setPos(new Point3D(i,j,k));
+                    }
                 }
             }
         }
 	}
+
+	public boolean isPossible(Parcel p, Point3D pos){
+        for(int i=0; i<p.getWidth(); i++){
+            for(int j=0; j<p.getHeight(); j++){
+                for(int k=0; k<p.getLength();k++){
+                    if(!truck[i+(int)pos.getX()][j+(int)pos.getY()][k+(int)pos.getZ()].equals("-")) return false;
+                }
+            }
+        }
+        return true;
+    }
 
     /**
      * Method to remove a parcel from the truck.
@@ -97,5 +113,25 @@ public class Truck {
                 }
             }
         }
+    }
+
+    public int getValue(){
+	    int total = 0;
+        for (Parcel p: parcelList) {
+            total += p.getValue();
+        }
+        return total;
+    }
+
+    public int getVolume(){
+	    return height*width*length;
+    }
+
+    public void fill(ArrayList<Parcel> list){
+	    this.parcelList = list;
+
+	    /*
+	    fill here
+	     */
     }
 }

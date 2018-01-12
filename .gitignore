@@ -6,6 +6,5 @@ scores.dat
 out/
 *.tree
 .metadata/
-doc/
 .classpath
 .project

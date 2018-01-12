@@ -53,7 +53,7 @@ public class CubeDrawer extends JPanel {
         truck.addParcel(A);
         truck.addParcel(B);
     }
-    
+
     /**
      *  Draws the 'Truck' and all of the Parcels it holds.<br>
      *  The Truck is drawn at the Center of the Screen and Scene.
