@@ -6,4 +6,14 @@ scores.dat
 out/
 *.tree
 .metadata/
+<<<<<<< HEAD
+.project
+.classpath
+=======
 doc/
+<<<<<<< HEAD
+.classpath
+.project
+=======
+>>>>>>> 06154747100f0fd46f73b069701ad94dafcde56d
+>>>>>>> 314bf53dfe856fd9c78ac137e2ffbd4c987c604a
