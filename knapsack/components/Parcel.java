@@ -144,6 +144,10 @@ public class Parcel {
         return value;
     }
 
+    public int getVolume(){
+        return height*width*length;
+    }
+
     public void rotateAroundX(){
         int temp = length;
         length = height;

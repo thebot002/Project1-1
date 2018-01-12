@@ -1,11 +1,12 @@
 package knapsack.greedy;
 
 import knapsack.components.Parcel;
-import knapsack.components.ParcelSet;
 import knapsack.components.Truck;
 
+import java.util.ArrayList;
+
 public class Greedy {
-    public static void findBestFit(Truck t, ParcelSet set){
+    public static void findBestFit(Truck t, ArrayList<Parcel> set){
         //stops recursion
         if(set.size() != 0) return;
 

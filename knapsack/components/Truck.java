@@ -122,4 +122,16 @@ public class Truck {
         }
         return total;
     }
+
+    public int getVolume(){
+	    return height*width*length;
+    }
+
+    public void fill(ArrayList<Parcel> list){
+	    this.parcelList = list;
+
+	    /*
+	    fill here
+	     */
+    }
 }
