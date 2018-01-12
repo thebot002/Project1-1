@@ -50,14 +50,14 @@ public class Truck {
      */
 	public int getLength() { return length; }
     /**
-     * Method to get the height of the truck. (y axis)
-     * @return The height of the truck.
+     * Method to get the width of the truck. (y axis)
+     * @return The width of the truck.
      */
 
 	public int getWidth()  { return width;  }
     /**
-     * Method to get the width of the truck. (x axis)
-     * @return The width of the truck.
+     * Method to get the height of the truck. (x axis)
+     * @return The height of the truck.
      */
     public int getHeight() { return height; }
 
