@@ -106,8 +106,10 @@ public class Menu extends JPanel implements ActionListener {
 
 		SwitchTabbedPane rectangleTab = new SwitchTabbedPane("A", "B", "C", "Dimensions", "1.0 x 1.0 x 2.0", "1.0 x 1.5 x 2.0", "1.5 x 1.5 x 1.5");
 		SwitchTabbedPane pentominoTab = new SwitchTabbedPane("L", "P", "T", "", "", "", "");
+		InfoTabbedPane infoTab = new InfoTabbedPane();
 		tabbedPane.addTab("Rectangle", rectangleTab);
 		tabbedPane.addTab("Pentomino", pentominoTab);
+		tabbedPane.addTab("Info", infoTab);
 	}
 
 	public void actionPerformed(ActionEvent e) {
