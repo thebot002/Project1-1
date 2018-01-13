@@ -104,41 +104,36 @@ public class Truck {
     /**
      * Method to add a parcel object to the truck.
      * @param p The parcel to be added to the truck.
-     * @param pos The position where the parcel will be added.
      */
-    public void addParcel(Parcel p, Point3D pos){
-	    parcelList.add(p);
-	    int x = (int) (pos.getX()/0.5);
-        int y = (int) (pos.getY()/0.5);
-        int z = (int) (pos.getZ()/0.5);
-        for(int i=0; i<p.getWidth(); i++){
-            for(int j=0; j<p.getHeight(); j++){
-                for(int k=0; k<p.getLength();k++){
-                    truck[x+i][y+j][z+k] = p.getID();
+    public void addParcel(Parcel p){
+        for(int i = 0; i<width-p.getWidth() ; i++){
+            for(int j=0; j<height-p.getHeight(); j++){
+                for(int k=0; k<length-p.getLength(); k++){
+                    if(isPossible(p,new Point3D(i,j,k))){
+                        parcelList.add(p);
+                        for(int a=0; a<p.getWidth(); a++){
+                            for(int b=0; b<p.getHeight(); b++){
+                                for(int c=0; c<p.getLength();c++){
+                                    truck[a+i][b+j][c+k] = p.getID();
+                                }
+                            }
+                        }
+                        p.setPos(new Point3D(i,j,k));
+                    }
                 }
             }
         }
 	}
 
-    public boolean isPossible(Parcel p, Point3D pos) {
-    		 boolean isPossible=true;
-
-      	 int x = (int) (pos.getX()/0.5);
-         int y = (int) (pos.getY()/0.5);
-         int z = (int) (pos.getZ()/0.5);
-         if(x+p.getWidth()>=truck.length || y+p.getHeight()>=truck[0].length || z+p.getLength()>=truck[0][0].length) {
-        	 	isPossible=false;
-         }else {
-         for(int i=0; i<p.getWidth(); i++){
-             for(int j=0; j<p.getHeight(); j++){
-                 for(int k=0; k<p.getLength();k++){
-                     if(!truck[x+i][y+j][z+k].equals("-"))
-                    	 isPossible=false;
-                 }
-             }
-         }
-         }
-        	 return isPossible;
+	public boolean isPossible(Parcel p, Point3D pos){
+        for(int i=0; i<p.getWidth(); i++){
+            for(int j=0; j<p.getHeight(); j++){
+                for(int k=0; k<p.getLength();k++){
+                    if(!truck[i+(int)pos.getX()][j+(int)pos.getY()][k+(int)pos.getZ()].equals("-")) return false;
+                }
+            }
+        }
+        return true;
     }
 
     /**

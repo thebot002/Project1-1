@@ -78,7 +78,7 @@ public class Greedy {
 
 				Truck newTruck = new Truck();
 				newTruck.setTruck(truck.copyTruck());
-				newTruck.addParcel(parcelAr[index], p);
+				newTruck.addParcel(parcelAr[index]);
 				parcelList.add(parcelAr[index]);
 				return backTracking(newTruck, parcelAr, parcelList, index);
 
