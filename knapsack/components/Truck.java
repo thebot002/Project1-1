@@ -53,7 +53,7 @@ public class Truck {
 	
 	public int[] positionToAdd() {
 		int[] position = new int[3];
-		
+
 		for(int i=0; i<truck[0].length; i++) {
 			for(int j=0; j<truck.length; j++) {
 				for(int k=0; k<truck[0][0].length; k++) {
@@ -68,7 +68,7 @@ public class Truck {
 			}
 		}
 		return position;
-		
+
 	}
 
     /**
@@ -119,6 +119,7 @@ public class Truck {
                             }
                         }
                         p.setPos(new Point3D(i,j,k));
+                        return;
                     }
                 }
             }
