@@ -75,10 +75,10 @@ public class TruckViewer extends JFrame {
                     if (key == 37)  //left arrow
                         c.rotate(-3);
 
-                    if (key == 45)  //minus
+                    if (key == 45 || key == 109)  //minus
                         c.zoom(-1);
 
-                    if (key == 61)  //plus
+                    if (key == 61 || key == 107)  //plus
                         c.zoom(1);
 
                     if (key == 68)  // d

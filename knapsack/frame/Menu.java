@@ -178,7 +178,7 @@ public class Menu extends JPanel implements ActionListener {
 
 	 /**
      * Used to update label referring to how many gaps are found
-     * @param Amount of gaps found
+     * @param found Amount of gaps found
      */
 	public void setGapsFound(int found) {
 		lblGapsFoundDisp.setText(String.valueOf(found));
@@ -186,7 +186,7 @@ public class Menu extends JPanel implements ActionListener {
 
 	 /**
      * Used to update label referring to current value of truck
-     * @param Current value
+     * @param value Current value
      */
 	public void setCurrentValue(int value) {
 		lblGapsFoundDisp.setText(String.valueOf(value));
@@ -194,7 +194,7 @@ public class Menu extends JPanel implements ActionListener {
 
 	/**
      * Used to update label referring to the time it took to fill the truck
-     * @param Amount of time took to find curent solution
+     * @param time Amount of time took to find curent solution
      */
 	public void setTimeTook(double time) {
 		lblTimeTookDisp.setText(String.valueOf(time));

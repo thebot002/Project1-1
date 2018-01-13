@@ -7,6 +7,7 @@ import knapsack.components.Parcel;
 import knapsack.components.Truck;
 
 public class Greedy {
+
 	public static void main(String[] args) {
 		Truck truck = new Truck();
 		Parcel parcelA = new Parcel("A");
