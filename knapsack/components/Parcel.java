@@ -1,6 +1,8 @@
 package knapsack.components;
 
 import javafx.geometry.Point3D;
+
+import java.net.IDN;
 import java.util.*;
 
 /**
@@ -14,6 +16,9 @@ public class Parcel {
 	private Point3D pos;
 	private int value = 1;
 	private String id;
+
+	private int state = 0;
+	private int rotationsPossible;
 
     /**
      * Create a parcel with a default position set to the origin and set its 8 vertices.
@@ -35,9 +40,9 @@ public class Parcel {
      */
 	public Parcel(String id){
 	    switch (id){
-            case "A": width = 2; height = 2; length = 4; break;
-            case "B": width = 2; height = 3; length = 4; break;
-            case "C": width = 3; height = 3; length = 3; break;
+            case "A": width = 2; height = 2; length = 4; rotationsPossible = 3; break;
+            case "B": width = 2; height = 3; length = 4; rotationsPossible = 6; break;
+            case "C": width = 3; height = 3; length = 3; rotationsPossible = 1; break;
         }
         this.id = id;
 	    setPoints();
@@ -194,5 +199,18 @@ public class Parcel {
         width = height;
         height = temp;
         setPoints();
+    }
+
+    public boolean nextState(){
+        state ++;
+        if(state == rotationsPossible){
+
+            return false;
+        }
+        else{
+            if(state%2 != 0) rotateAroundX();
+            else rotateAroundZ();
+        }
+        return true;
     }
 }

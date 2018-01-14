@@ -44,6 +44,11 @@ public class Truck {
         this(16.5,4.0,2.5);
     }
 
+    public Truck(String[][][] truck){
+    	this();
+    	this.truck = truck;
+	}
+
 	public String[][][] getTruck(){
 		return truck;
 	}
@@ -104,7 +109,7 @@ public class Truck {
      * Method to add a parcel object to the truck.
      * @param p The parcel to be added to the truck.
      */
-    public void addParcel(Parcel p){
+    public boolean addParcel(Parcel p){
         for(int i = 0; i<width-(p.getWidth()*2) ; i++){
             for(int j=0; j<height-(p.getHeight()*2); j++){
                 for(int k=0; k<length-(p.getLength()*2); k++){
@@ -119,11 +124,12 @@ public class Truck {
                             }
                         }
                         p.setPos(new Point3D(i,j,k));
-                        return;
+                        return true;
                     }
                 }
             }
         }
+        return false;
 	}
 
 	public boolean isPossible(Parcel p, Point3D pos){
@@ -172,16 +178,16 @@ public class Truck {
 	     */
     }
 
-	public String[][][] copyTruck(){
+	public Truck copyTruck(){
 		String[][][] newTruck = new String[truck.length][truck[0].length][truck[0][0].length];
-		for(int i=0; i<truck.length; i++) {
-			for(int j=0; j<truck[0].length; j++) {
-				for(int k=0; k<truck[0][0].length; k++) {
+		for(int i=0; i<width; i++) {
+			for(int j=0; j<height; j++) {
+				for(int k=0; k<length; k++) {
 					newTruck[i][j][k]=truck[i][j][k];
 				}
 			}
 		}
-		return newTruck;
+		return new Truck(newTruck);
 	}
 
 	public void printTruck() {
@@ -196,4 +202,32 @@ public class Truck {
 			System.out.println("");
 		}
 	}
+
+	public int getGapAmount() {
+	    int sum = 0;
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < height; j++) {
+                for (int k = 0; k < length; k++) {
+                    if(truck[i][j][k].equals("-")) sum++;
+                }
+            }
+        }
+        return sum;
+    }
+
+    public boolean fillTruck(ArrayList<Parcel> list, int index, Truck t){
+	    if(getVolume()*0.9 > getVolume()-getGapAmount() || list.isEmpty()) return true;
+	    else {
+            if(addParcel(list.get(index))){
+                ArrayList<Parcel> newList = new ArrayList<>();
+                for(int i=0; i<list.size(); i++) newList.add(list.get(i));
+                newList.remove(index);
+                fillTruck(list, index, t.copyTruck());
+            }
+            else {
+
+			}
+        }
+        return false;
+    }
 }
