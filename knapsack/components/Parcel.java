@@ -129,18 +129,18 @@ public class Parcel {
      * Method to get the width of the parcel. (x axis)
      * @return The width of the parcel.
      */
-    public double getWidth()  { return width/2;  }
+    public double getWidth()  { return (1.0*width)/2;  }
 
     /**
      * Method to get the height of the parcel. (y axis)
      * @return The height of the parcel.
      */
-    public double getHeight() { return height/2; }
+    public double getHeight() { return (1.0*height)/2; }
     /**
      * Method to get the length of the parcel. (z axis)
      * @return The length of the parcel.
      */
-    public double getLength() { return length/2; }
+    public double getLength() { return (1.0*length)/2; }
 
     /** 
      * Method to get the volume of the parcel.
