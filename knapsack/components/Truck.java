@@ -68,7 +68,7 @@ public class Truck {
 						position[0]=j;
 						position[1]=i;
 						position[2]=k;
-						System.out.println("Position to ADd"+position[0]+" "+position[1]+" "+position[2]);
+						System.out.println("Position to Add"+position[0]+" "+position[1]+" "+position[2]);
 						return position;
 					}
 				}

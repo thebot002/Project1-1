@@ -75,7 +75,8 @@ public class CubeDrawer extends JPanel {
         drawParcelPro(truckParcel, Color.CYAN, false);
 
         for (Parcel parcel : truck.parcelList) {
-            drawParcelPro(parcel, Color.WHITE, true);
+            System.out.println(parcel.getID());
+            drawParcelPro(parcel, Color.WHITE, false);
         }
 
         //Origin and Rotation point, Indication/Axis Lines
