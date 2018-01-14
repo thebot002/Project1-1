@@ -47,11 +47,14 @@ public class CubeDrawer extends JPanel {
     }
 
     private void populateTruck() {
-        Parcel A = new Parcel("A");
-        Parcel B = new Parcel("B");
-        B.setPos(new Point3D(5,0,0));
-        truck.addParcel(A);
-        truck.addParcel(B);
+        //for(int i=0; i<40; i++){
+            Parcel A = new Parcel("A");
+            Parcel B = new Parcel("B");
+            Parcel C = new Parcel("C");
+            truck.addParcel(A);
+            truck.addParcel(B);
+            truck.addParcel(C);
+        //}
     }
 
     /**

@@ -22,7 +22,7 @@ public class Truck {
      * @param h The height of the Truck.
      * @param w The width of the Truck
 	 */
-	public Truck(double l, double h, double w) {
+	public Truck(double w, double h, double l) {
 	    parcelList = new ArrayList<>();
 		length = (int) (l/0.5);
 		height = (int) (h/0.5);
@@ -37,10 +37,17 @@ public class Truck {
         }
 	}
 
+    /**
+     * Default constructor for this project. Truck with size: 16.5 x 4.0 x 2.5 .
+     */
+    public Truck(){
+        this(16.5,4.0,2.5);
+    }
+
 	public String[][][] getTruck(){
 		return truck;
 	}
-	
+
 	public void setTruck(String[][][] newTruck) {
 		for(int i=0; i<truck.length; i++) {
 			for(int j=0; j<truck[0].length; j++) {
@@ -50,7 +57,7 @@ public class Truck {
 			}
 		}
 	}
-	
+
 	public int[] positionToAdd() {
 		int[] position = new int[3];
 
@@ -72,28 +79,21 @@ public class Truck {
 	}
 
     /**
-     * Default constructor for this project. Truck with size: 16.5 x 4.0 x 2.5 .
-     */
-	public Truck(){
-	    this(2.5,4.0,16.5);
-    }
-
-    /**
      * Method to get the length of the truck. (z axis)
      * @return The length of the truck.
      */
-	public int getLength() { return length; }
+	public double getLength() { return length/2; }
     /**
      * Method to get the width of the truck. (y axis)
      * @return The width of the truck.
      */
 
-	public int getWidth()  { return width;  }
+	public double getWidth()  { return width/2;  }
     /**
      * Method to get the height of the truck. (x axis)
      * @return The height of the truck.
      */
-    public int getHeight() { return height; }
+    public double getHeight() { return height/2; }
 
     /**
      * Method to get the volume of the truck
@@ -109,6 +109,7 @@ public class Truck {
         for(int i = 0; i<width-p.getWidth() ; i++){
             for(int j=0; j<height-p.getHeight(); j++){
                 for(int k=0; k<length-p.getLength(); k++){
+
                     if(isPossible(p,new Point3D(i,j,k))){
                         parcelList.add(p);
                         for(int a=0; a<p.getWidth(); a++){

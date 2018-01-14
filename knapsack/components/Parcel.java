@@ -35,9 +35,9 @@ public class Parcel {
      */
 	public Parcel(String id){
 	    switch (id){
-            case "A": length = 4; width = 2; height = 2; break;
-            case "B": length = 4; width = 2; height = 3; break;
-            case "C": length = 3; width = 3; height = 3; break;
+            case "A": width = 2; height = 2; length = 4; break;
+            case "B": width = 2; height = 3; length = 4; break;
+            case "C": width = 3; height = 3; length = 3; break;
         }
         this.id = id;
 	    setPoints();
@@ -129,18 +129,18 @@ public class Parcel {
      * Method to get the width of the parcel. (x axis)
      * @return The width of the parcel.
      */
-    public int getWidth()  { return width;  }
+    public double getWidth()  { return width/2;  }
 
     /**
      * Method to get the height of the parcel. (y axis)
      * @return The height of the parcel.
      */
-    public int getHeight() { return height; }
+    public double getHeight() { return height/2; }
     /**
      * Method to get the length of the parcel. (z axis)
      * @return The length of the parcel.
      */
-    public int getLength() { return length; }
+    public double getLength() { return length/2; }
 
     /** 
      * Method to get the volume of the parcel.
