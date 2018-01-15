@@ -25,7 +25,7 @@ public class CubeDrawer extends JPanel {
 
 
     private Parcel truckParcel;
-    private int angle = 90;
+    private int angle = 0;
     private int elevation = 35;
     private Truck truck;
     private Point3D deltaO = new Point3D(0, 0, 0);
@@ -47,7 +47,7 @@ public class CubeDrawer extends JPanel {
     }
 
     private void populateTruck() {
-        for(int i=0; i<10; i++){
+        for(int i=0; i<40; i++){
             Parcel A = new Parcel("A");
             Parcel B = new Parcel("B");
             Parcel C = new Parcel("C");
@@ -75,7 +75,6 @@ public class CubeDrawer extends JPanel {
         drawParcelPro(truckParcel, Color.CYAN, false);
 
         for (Parcel parcel : truck.parcelList) {
-            System.out.println(parcel.getID());
             drawParcelPro(parcel, Color.WHITE, false);
         }
 
@@ -95,10 +94,10 @@ public class CubeDrawer extends JPanel {
         I.setPos(deltaO.multiply(-1));
         J.setPos(deltaO.multiply(-1));
         K.setPos(deltaO.multiply(-1));
-        drawParcelPro(I, Color.RED, false);
+        drawParcelPro(I, Color.BLUE, false);
         drawParcelPro(J, Color.RED, false);
         drawParcelPro(K, Color.RED, false);
-        drawParcelPro(new Parcel(5, 0, 0), Color.YELLOW, false);
+        drawParcelPro(new Parcel(5, 0, 0), Color.BLUE, false);
         drawParcelPro(new Parcel(0, 5, 0), Color.YELLOW, false);
         drawParcelPro(new Parcel(0, 0, 5), Color.YELLOW, false);
     }

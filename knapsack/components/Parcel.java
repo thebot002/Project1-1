@@ -23,9 +23,9 @@ public class Parcel {
      * @param l The length of the parcel. (z axis)
      */
 	public Parcel(double w, double h, double l) {
-        width = (int)(w/0.5);
-        height = (int)(h/0.5);
-        length = (int)(l/0.5);
+        width = (int)(w);
+        height = (int)(h);
+        length = (int)(l);
         setPoints();
 	}
 
@@ -62,13 +62,13 @@ public class Parcel {
         points = new ArrayList<Point3D>();
         points.add(new Point3D(0, 0, 0));
         points.add(new Point3D(0, height, 0));
-        points.add(new Point3D(length, height, 0));
-        points.add(new Point3D(length, 0, 0));
+        points.add(new Point3D(width, height, 0));
+        points.add(new Point3D(width, 0, 0));
 
-        points.add(new Point3D(0, 0, width));
-        points.add(new Point3D(0, height, width));
-        points.add(new Point3D(length, height, width));
-        points.add(new Point3D(length, 0, width));
+        points.add(new Point3D(0, 0, length));
+        points.add(new Point3D(0, height, length));
+        points.add(new Point3D(width, height, length));
+        points.add(new Point3D(width, 0, length));
 
     }
 
@@ -129,18 +129,18 @@ public class Parcel {
      * Method to get the width of the parcel. (x axis)
      * @return The width of the parcel.
      */
-    public double getWidth()  { return (1.0*width)/2;  }
+    public double getWidth()  { return (1.0*width);  }
 
     /**
      * Method to get the height of the parcel. (y axis)
      * @return The height of the parcel.
      */
-    public double getHeight() { return (1.0*height)/2; }
+    public double getHeight() { return (1.0*height); }
     /**
      * Method to get the length of the parcel. (z axis)
      * @return The length of the parcel.
      */
-    public double getLength() { return (1.0*length)/2; }
+    public double getLength() { return (1.0*length); }
 
     /** 
      * Method to get the volume of the parcel.

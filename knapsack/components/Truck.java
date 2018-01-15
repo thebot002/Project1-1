@@ -24,9 +24,9 @@ public class Truck {
 	 */
 	public Truck(double w, double h, double l) {
 	    parcelList = new ArrayList<>();
-		length = (int) (l/0.5);
-		height = (int) (h/0.5);
-		width = (int) (w/0.5);
+		length = (int) (l);
+		height = (int) (h);
+		width = (int) (w);
 		truck = new String[width][height][length];
 		for(int i = 0; i<width ; i++){
 		    for(int j=0; j<height; j++){
@@ -41,7 +41,7 @@ public class Truck {
      * Default constructor for this project. Truck with size: 16.5 x 4.0 x 2.5 .
      */
     public Truck(){
-        this(16.5,4.0,2.5);
+        this(33,8,5);
     }
 
 	public String[][][] getTruck(){
@@ -49,26 +49,28 @@ public class Truck {
 	}
 
 	public void setTruck(String[][][] newTruck) {
-		for(int i=0; i<truck.length; i++) {
-			for(int j=0; j<truck[0].length; j++) {
-				for(int k=0; k<truck[0][0].length; k++) {
+		for(int i=0; i<width; i++) {
+			for(int j=0; j<height; j++) {
+				for(int k=0; k<length; k++) {
 					truck[i][j][k]=newTruck[i][j][k];
 				}
 			}
 		}
 	}
 
+
+	//finds the position to add at, currently not used but am planning to - Nic
 	public int[] positionToAdd() {
 		int[] position = new int[3];
 
-		for(int i=0; i<truck[0].length; i++) {
-			for(int j=0; j<truck.length; j++) {
-				for(int k=0; k<truck[0][0].length; k++) {
-					if(truck[j][i][k].equals("-")) {
-						position[0]=j;
-						position[1]=i;
+		for(int i=0; i<width; i++) {
+			for(int j=0; j<height; j++) {
+				for(int k=0; k<length; k++) {
+					if(truck[i][j][k].equals("-")) {
+						position[0]=i;
+						position[1]=j;
 						position[2]=k;
-						System.out.println("Position to Add"+position[0]+" "+position[1]+" "+position[2]);
+						System.out.println("Position to Add("+position[0]+", "+position[1]+", "+position[2] + ")");
 						return position;
 					}
 				}
@@ -82,17 +84,17 @@ public class Truck {
      * Method to get the width of the truck. (x axis)
      * @return The width of the truck.
      */
-	public double getWidth()  { return (1.0*width)/2;  }
+	public double getWidth()  { return (1.0*width);  }
 	/**
      * Method to get the height of the truck. (y axis)
      * @return The height of the truck.
      */
-    public double getHeight() { return (1.0*height)/2; }
+    public double getHeight() { return (1.0*height); }
 	/**
 	 * Method to get the length of the truck. (z axis)
 	 * @return The length of the truck.
 	 */
-	public double getLength() { return (1.0*length)/2; }
+	public double getLength() { return (1.0*length); }
 
     /**
      * Method to get the volume of the truck
@@ -100,25 +102,29 @@ public class Truck {
      */
     public int getVolume() {return height*width*length;}
 
+
     /**
      * Method to add a parcel object to the truck.
+	 * Will Search from the origin to find the next possible position to place a parcel.
+	 * If placed the parcel will be added to the truck's parcel list.
      * @param p The parcel to be added to the truck.
      */
     public void addParcel(Parcel p){
-        for(int i = 0; i<width-(p.getWidth()*2) ; i++){
-            for(int j=0; j<height-(p.getHeight()*2); j++){
-                for(int k=0; k<length-(p.getLength()*2); k++){
+        for(int i = 0; i <= (width-p.getWidth()) ; i++){
+            for(int j=0; j <= (height-p.getHeight()); j++){
+                for(int k=0; k <= (length-p.getLength()); k++){
 
-                    if(isPossible(p,new Point3D(i,j,k))){
+                    if(isPossible(p, new Point3D(i,j,k))){
+						//System.out.println("Par Added " + new Point3D(i,j,k));
                         parcelList.add(p);
-                        for(int a=0; a<p.getWidth()*2; a++){
-                            for(int b=0; b<p.getHeight()*2; b++){
-                                for(int c=0; c<p.getLength()*2;c++){
+						p.setPos(new Point3D(i,j,k).multiply(1));
+                        for(int a=0; a<p.getWidth(); a++){
+                            for(int b=0; b<p.getHeight(); b++){
+                                for(int c=0; c<p.getLength();c++){
                                     truck[a+i][b+j][c+k] = p.getID();
                                 }
                             }
                         }
-                        p.setPos(new Point3D(i,j,k));
                         return;
                     }
                 }
@@ -126,10 +132,34 @@ public class Truck {
         }
 	}
 
+	/**
+	 * Method to check if a parcel can be added at a position.
+	 * First Checks if the Parcel can actually fit inside the truck.
+	 * Then Checks if anything is obstructing it.
+	 * @param p The Parcel to Check
+	 * @param pos The Point3D to check at
+	 * @return Boolean - true if the parcel can be added.
+	 */
+
 	public boolean isPossible(Parcel p, Point3D pos){
-        for(int i=0; i<p.getWidth()*2; i++){
-            for(int j=0; j<p.getHeight()*2; j++){
-                for(int k=0; k<p.getLength()*2;k++){
+		//System.out.println("isPossible() @ " + pos);
+        if((p.getWidth() + pos.getX()) > (getWidth())) {
+            System.out.println("Outside Truck - X");
+            return false;
+        }
+        if((p.getHeight() + pos.getY()) > (getHeight())) {
+            System.out.println("Outside Truck - Y");
+            return false;
+        }
+        if((p.getLength() + pos.getZ()) > (getLength())) {
+            System.out.println("Outside Truck - Z " + pos.getZ());
+            //System.out.println(( pos.getZ()	));
+            return false;
+        }
+		System.out.println("Par fits, ckng collision");
+        for(int i=0; i<p.getWidth(); i++){
+            for(int j=0; j<p.getHeight(); j++){
+                for(int k=0; k<p.getLength();k++){
                     if(!truck[i+(int)pos.getX()][j+(int)pos.getY()][k+(int)pos.getZ()].equals("-")) return false;
                 }
             }
