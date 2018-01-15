@@ -6,6 +6,9 @@ import javax.swing.*;
 import java.util.*;
 import java.awt.image.BufferedImage;
 import javafx.geometry.Point3D;
+import knapsack.filling.BruteForce;
+import knapsack.greedy.Greedy;
+
 import java.awt.Point;
 import java.lang.Math;
 
@@ -42,7 +45,8 @@ public class CubeDrawer extends JPanel {
         H = h;
         image = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
         truckParcel = new Parcel(truck.getWidth(), truck.getHeight(), truck.getLength());
-        populateTruck();
+        BruteForce.fill(truck);
+        //populateTruck();
         renderScene();
     }
 

@@ -54,6 +54,18 @@ public class Parcel {
     }
 
     /**
+     * Method to create a copy of this parcel.
+     * @return A new parcel object with the exact same attributes.
+     */
+    public Parcel copy(){
+        Parcel newP = new Parcel(width,height,length);
+        newP.setPos(pos);
+        newP.setID(id);
+        newP.setValue(value);
+        return newP;
+    }
+
+    /**
      * Method that sets the points of each corners of the parcel.
      */
     private void setPoints(){
@@ -136,6 +148,7 @@ public class Parcel {
      * @return The height of the parcel.
      */
     public double getHeight() { return (1.0*height); }
+
     /**
      * Method to get the length of the parcel. (z axis)
      * @return The length of the parcel.
@@ -147,6 +160,7 @@ public class Parcel {
      * @return The volume of the parcel.
      */
     public int getVolume() {return height*length*width; }
+
     /**
      * Method to get the position of the parcel in the 3D space.
      * @return A 3D point.
@@ -167,32 +181,20 @@ public class Parcel {
 	public String getID(){
 	    return id;
     }
+
+    /**
+     * Method to set the ID of the parcel. (Used for building a copy of this parcel)
+     * @param id The parcel ID.
+     */
+    private void setID(String id){
+	    this.id = id;
+    }
+
     /**
      * Method to get the value of the parcel.
      * @return The value of this parcel.
      */
     public int getValue(){
         return value;
-    }
-
-    public void rotateAroundX(){
-        int temp = length;
-        length = height;
-        height = temp;
-        setPoints();
-    }
-
-    public void rotateAroundY(){
-        int temp = length;
-        length = width;
-        width = temp;
-        setPoints();
-    }
-
-    public void rotateAroundZ(){
-        int temp = width;
-        width = height;
-        height = temp;
-        setPoints();
     }
 }
