@@ -1,6 +1,6 @@
 package knapsack.components;
 
-import javafx.geometry.Point3D; 
+import javafx.geometry.Point3D;
 import java.util.*;
 
 /**
@@ -89,7 +89,7 @@ public class Parcel {
      * @param vector The vector along which to move the parcel.
      */
 	public void translate(Point3D vector) { pos = pos.add(vector); }
-	
+
 	/**
 	 * Method to rotate the parcel along the x Axis
 	 */
@@ -98,7 +98,7 @@ public class Parcel {
 		height=width;
 		width=newWidth;
 	}
-	
+
 	/**
 	 * Method to rotate the parcel along the y Axis
 	 */
@@ -107,7 +107,7 @@ public class Parcel {
 		length=width;
 		width=newWidth;
 	}
-	
+
 	/**
 	 * Method to rotate the parcel along the y Axis
 	 */
@@ -116,7 +116,7 @@ public class Parcel {
 		length=height;
 		height=newHeight;
 	}
-	
+
     /**
      * Method to get a list of the coordinates of the corners of this parcel.
      * @return An ArrayList containing 3D points.
@@ -142,8 +142,8 @@ public class Parcel {
      */
     public int getLength() { return length; }
 
-    
-    /** 
+
+    /**
      * Method to get the volume of the parcel.
      * @return The volume of the parcel.
      */
@@ -168,4 +168,8 @@ public class Parcel {
 	public String getID(){
 	    return id;
     }
+
+	public int getValue() {
+		return value;
+	}
 }
