@@ -8,89 +8,102 @@ import knapsack.components.Truck;
 
 public class Greedy {
 
+	private static ArrayList<Truck> truckList = new ArrayList<>();
+	private static ArrayList<Integer> truckValueList = new ArrayList<>();
+
 	public static void main(String[] args) {
-		Truck truck = new Truck();
-		Parcel parcelA = new Parcel("A");
-		Parcel parcelB = new Parcel("B");
-		Parcel parcelC = new Parcel("C");
-		ArrayList<Parcel> parcelList = new ArrayList<Parcel>();
-		Parcel[] parcelAr = new Parcel[10];
 
-		Parcel xRotParcelA = new Parcel("A");
-		xRotParcelA.xRotate();
-		Parcel yRotParcelA = new Parcel("A");
-		yRotParcelA.yRotate();
-		Parcel zRotParcelA = new Parcel("A");
-		zRotParcelA.zRotate();
-		Parcel xyRotParcelA = new Parcel("A");
-		xyRotParcelA.xRotate();
-		xyRotParcelA.yRotate();
-		Parcel xzRotParcelA = new Parcel("A");
-		xzRotParcelA.xRotate();
-		xzRotParcelA.zRotate();
-		Parcel yRotParcelB = new Parcel("B");
-		yRotParcelB.yRotate();
-		Parcel zRotParcelB = new Parcel("B");
-		zRotParcelB.zRotate();
+	    // Build the truck.
+			Truck truck = new Truck();
 
-		parcelAr[0]=parcelA;
-		parcelAr[1]=xRotParcelA;
-		parcelAr[2]=yRotParcelA;
-		parcelAr[3]=zRotParcelA;
-		parcelAr[4]=xyRotParcelA;
-		parcelAr[5]=xzRotParcelA;
-		parcelAr[6]=parcelB;
-		parcelAr[7]=yRotParcelB;
-		parcelAr[8]=zRotParcelB;
-		parcelAr[9]=parcelC;
+	    // Build the three parcels
+			Parcel parcelA = new Parcel("A",3);
+			Parcel parcelB = new Parcel("B",4);
+			Parcel parcelC = new Parcel("C",5);
 
-		backTracking(truck, parcelAr, parcelList,  0);
-	}
+	    // Crete a list to keep truck of the parcels we have already placed
+			ArrayList<Parcel> parcelList = new ArrayList<Parcel>();
 
-	public static boolean backTracking(Truck truck, Parcel[] parcelAr, ArrayList<Parcel> parcelList, int index) {
+	    /* Create an array with the three parcels and
+	       all their rotations. */
+			Parcel[] parcelAr = new Parcel[10];
 
-		int totVol = 0;
-		int[] position = new int[3];
+	    // Get the rotations of the parcels
+			Parcel xRotParcelA = new Parcel("A",3);
+			xRotParcelA.xRotate();
+			Parcel yRotParcelA = new Parcel("A",3);
+			yRotParcelA.yRotate();
+			Parcel zRotParcelA = new Parcel("A",3);
+			zRotParcelA.zRotate();
+			Parcel xyRotParcelA = new Parcel("A",3);
+			xyRotParcelA.xRotate();
+			xyRotParcelA.yRotate();
+			Parcel xzRotParcelA = new Parcel("A",3);
+			xzRotParcelA.xRotate();
+			xzRotParcelA.zRotate();
+			Parcel yRotParcelB = new Parcel("B",3);
+			yRotParcelB.yRotate();
+			Parcel zRotParcelB = new Parcel("B",3);
+			zRotParcelB.zRotate();
 
-		truck.printTruck();
+	    // Place everything into the parcel array
+			parcelAr[9]=parcelA;
+			parcelAr[1]=xRotParcelA;
+			parcelAr[2]=yRotParcelA;
+			parcelAr[3]=zRotParcelA;
+			parcelAr[4]=xyRotParcelA;
+			parcelAr[5]=xzRotParcelA;
+			parcelAr[6]=parcelB;
+			parcelAr[7]=yRotParcelB;
+			parcelAr[8]=zRotParcelB;
+			parcelAr[0]=parcelC;
 
-		for(int i=0; i<parcelList.size(); i++) {
-			totVol+=parcelList.get(i).getVolume();
+			// Call the method that fills the truck with parcels.
+			bruteForce(truck, parcelAr, 0, parcelList);
+
+
+
+
 		}
 
-		if(totVol>truck.getVolume()) {
 
-//			System.out.println("HERE!!");
-			return false;
 
-		}else if((int)(0.90*truck.getVolume())<totVol && totVol<=truck.getVolume()){
 
-			truck.printTruck();
-//			System.out.println("MAYBE HERE???");
-			return true;
 
-		}else {
+	/**
+	 * The method fills the truck with brute force.
+	 * @param truck The truck we fill with parcels
+	 * @param parcelAr The array that contains the parcels and their rotations
+	 * @param index Keeps truck of the parcel array elements
+	 * @param parcelList This list contains the parcels we have added to the truck
+	 * */
+	public static void bruteForce(Truck truck, Parcel[] parcelAr,int index, ArrayList<Parcel> parcelList) {
+		int totVal=0;
 
-			position=truck.positionToAdd();
-			Point3D p = new Point3D(position[0],position[1],position[2]);
 
-			if(truck.isPossible(parcelAr[index], p	)) {
-
-				Truck newTruck = new Truck();
-				newTruck.setTruck(truck.copyTruck());
-				newTruck.addParcel(parcelAr[index]);
-				parcelList.add(parcelAr[index]);
-				return backTracking(newTruck, parcelAr, parcelList, index);
-
-			}else {
-					index++;
-					if(index==9)
-						index=0;
-
-					return backTracking(truck, parcelAr,parcelList, index);
-
+		/* We use the nested for loops in order to check one by one all the positions of the truck
+		 * and try to each one of them to place a parcel. Whenever a parcel doesn't fit, either we try another
+		 * rotation of this parcel or another parcel. When a parcel is placed, we also add it to the parcelList */
+		for(int i=0; i<truck.getWidth(); i++) {
+			for(int j=0; j<truck.getHeight(); j++) {
+				for(int k=0; k<truck.getLength(); k++) {
+					while(!truck.isPossible(parcelAr[index], new Point3D(i, j, k)) && index<9) {
+						index++;
+					}
+					if(truck.isPossible(parcelAr[index], new Point3D(i, j, k))){
+						truck.addParcel(parcelAr[index], new Point3D(i,j,k));
+						parcelList.add(parcelAr[index]);
+					}
+					index=0;
+				}
 			}
 		}
-	}
-}
 
+		for(int i=0; i<parcelList.size(); i++) {
+			totVal+=parcelList.get(i).getValue();
+		}
+		System.out.println(totVal);
+	}
+
+
+}
