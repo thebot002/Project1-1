@@ -52,7 +52,7 @@ public class Truck {
 	public String[][][] getTruck(){
 		return truck;
 	}
-
+	
 	public void setTruck(String[][][] newTruck) {
 		for(int i=0; i<truck.length; i++) {
 			for(int j=0; j<truck[0].length; j++) {
@@ -63,9 +63,13 @@ public class Truck {
 		}
 	}
 
+	public void setTruck(int x, int y, int z, String str) {
+		truck[x][y][z]=str;
+	}
+
 	public int[] positionToAdd() {
 		int[] position = new int[3];
-
+		
 		for(int i=0; i<truck[0].length; i++) {
 			for(int j=0; j<truck.length; j++) {
 				for(int k=0; k<truck[0][0].length; k++) {
@@ -80,31 +84,39 @@ public class Truck {
 			}
 		}
 		return position;
-
+		
 	}
 
+    /**
+     * Default constructor for this project. Truck with size: 16.5 x 4.0 x 2.5 .
+     */
+	public Truck(){
+	    this(4.0,2.5,4.0);
+    }
+
+    /**
+     * Method to get the length of the truck. (z axis)
+     * @return The length of the truck.
+     */
+	public int getLength() { return length; }
+    /**
+     * Method to get the height of the truck. (y axis)
+     * @return The height of the truck.
+     */
+
+	public int getWidth()  { return width;  }
     /**
      * Method to get the width of the truck. (x axis)
      * @return The width of the truck.
      */
-	public double getWidth()  { return (1.0*width)/2;  }
-	/**
-     * Method to get the height of the truck. (y axis)
-     * @return The height of the truck.
-     */
-    public double getHeight() { return (1.0*height)/2; }
-	/**
-	 * Method to get the length of the truck. (z axis)
-	 * @return The length of the truck.
-	 */
-	public double getLength() { return (1.0*length)/2; }
+    public int getHeight() { return height; }
 
     /**
      * Method to get the volume of the truck
      * @return The volume of the truck.
      */
     public int getVolume() {return height*width*length;}
-
+    
     /**
      * Method to add a parcel object to the truck.
      * @param p The parcel to be added to the truck.
@@ -132,16 +144,26 @@ public class Truck {
         return false;
 	}
 
-	public boolean isPossible(Parcel p, Point3D pos){
-        for(int i=0; i<p.getWidth()*2; i++){
-            for(int j=0; j<p.getHeight()*2; j++){
-                for(int k=0; k<p.getLength()*2;k++){
-                    if(!truck[i+(int)pos.getX()][j+(int)pos.getY()][k+(int)pos.getZ()].equals("-")) return false;
-                }
-            }
-        }
-        return true;
-    }
+	public boolean isPossible(Parcel p, Point3D pos) {
+
+		if(pos.getX()+p.getWidth()>truck.length || pos.getY()+p.getHeight()>truck[0].length ||
+				pos.getZ()+p.getLength()>truck[0][0].length)
+			return false;
+
+
+		for (int i = 0; i < p.getWidth(); i++) {
+			for (int j = 0; j < p.getHeight(); j++) {
+				for (int k = 0; k < p.getLength(); k++) {
+
+					 if (!truck[i + (int) pos.getX()][j + (int) pos.getY()][k + (int) pos.getZ()].equals("-"))
+						return false;
+
+				}
+			}
+		}
+
+		return true;
+	}
 
     /**
      * Method to remove a parcel from the truck.
@@ -162,23 +184,7 @@ public class Truck {
         }
     }
 
-    public int getValue(){
-	    int total = 0;
-        for (Parcel p: parcelList) {
-            total += p.getValue();
-        }
-        return total;
-    }
-
-    public void fill(ArrayList<Parcel> list){
-	    this.parcelList = list;
-
-	    /*
-	    fill here
-	     */
-    }
-
-	public Truck copyTruck(){
+	public String[][][] copyTruck(){
 		String[][][] newTruck = new String[truck.length][truck[0].length][truck[0][0].length];
 		for(int i=0; i<width; i++) {
 			for(int j=0; j<height; j++) {
@@ -191,7 +197,7 @@ public class Truck {
 	}
 
 	public void printTruck() {
-		System.out.println("");
+		System.out.println("NEW TRUCK");
 		for(int i=0; i<truck[0][0].length; i++) {
 			for(int j=0; j<truck.length; j++) {
 				for(int k=0; k<truck[0].length; k++) {

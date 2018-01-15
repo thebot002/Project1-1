@@ -1,8 +1,6 @@
 package knapsack.components;
 
 import javafx.geometry.Point3D;
-
-import java.net.IDN;
 import java.util.*;
 
 /**
@@ -94,7 +92,7 @@ public class Parcel {
      * @param vector The vector along which to move the parcel.
      */
 	public void translate(Point3D vector) { pos = pos.add(vector); }
-
+	
 	/**
 	 * Method to rotate the parcel along the x Axis
 	 */
@@ -147,7 +145,7 @@ public class Parcel {
      */
     public double getLength() { return (1.0*length)/2; }
 
-    /** 
+    /**
      * Method to get the volume of the parcel.
      * @return The volume of the parcel.
      */
