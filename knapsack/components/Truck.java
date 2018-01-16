@@ -8,7 +8,7 @@ import java.util.*;
  * Class used to define the truck where the parcels or pentominoes are going to be placed.
  */
 public class Truck {
-	public ArrayList<Parcel> parcelList;
+	private ArrayList<Parcel> parcelList;
 	private int length;
 	private int height;
 	private int width;
@@ -46,18 +46,10 @@ public class Truck {
         this(33,8,5);
     }
 
-	public String[][][] getTruck(){
-		return truck;
-	}
-
-	public void setTruck(String[][][] newTruck) {
-		for(int i=0; i<width; i++) {
-			for(int j=0; j<height; j++) {
-				for(int k=0; k<length; k++) {
-					truck[i][j][k]=newTruck[i][j][k];
-				}
-			}
-		}
+    public Truck(String[][][] truck, ArrayList<Parcel> list){
+    	this();
+    	this.truck = truck;
+    	this.parcelList = list;
 	}
 
 
@@ -72,14 +64,13 @@ public class Truck {
 						position[0]=i;
 						position[1]=j;
 						position[2]=k;
-						System.out.println("Position to Add("+position[0]+", "+position[1]+", "+position[2] + ")");
+						if(debug) System.out.println("Position to ADd"+position[0]+" "+position[1]+" "+position[2]);
 						return position;
 					}
 				}
 			}
 		}
 		return position;
-
 	}
 
     /**
@@ -104,6 +95,9 @@ public class Truck {
      */
     public int getVolume() {return height*width*length;}
 
+    public ArrayList<Parcel> getParcelList() {
+        return parcelList;
+    }
 
     /**
      * Method to add a parcel object to the truck.
@@ -117,7 +111,7 @@ public class Truck {
                 for(int k=0; k <= (length-p.getLength()); k++){
 
                     if(isPossible(p, new Point3D(i,j,k))){
-						//System.out.println("Par Added " + new Point3D(i,j,k));
+						if(debug) System.out.println("Par Added " + new Point3D(i,j,k));
                         parcelList.add(p);
 						p.setPos(new Point3D(i,j,k).multiply(1));
                         for(int a=0; a<p.getWidth(); a++){
@@ -199,20 +193,22 @@ public class Truck {
         return total;
     }
 
-	public String[][][] copyTruck(){
+	public Truck copyTruck(){
 		String[][][] newTruck = new String[truck.length][truck[0].length][truck[0][0].length];
-		for(int i=0; i<truck.length; i++) {
-			for(int j=0; j<truck[0].length; j++) {
-				for(int k=0; k<truck[0][0].length; k++) {
+		for(int i=0; i<width; i++) {
+			for(int j=0; j<height; j++) {
+				for(int k=0; k<length; k++) {
 					newTruck[i][j][k]=truck[i][j][k];
 				}
 			}
 		}
-		return newTruck;
+		ArrayList<Parcel> newList = new ArrayList<>();
+		for(Parcel p: parcelList) newList.add(p);
+		return new Truck(newTruck, newList);
 	}
 
 	public void printTruck() {
-		System.out.println("");
+		System.out.println("NEW TRUCK");
 		for(int i=0; i<truck[0][0].length; i++) {
 			for(int j=0; j<truck.length; j++) {
 				for(int k=0; k<truck[0].length; k++) {
@@ -242,7 +238,7 @@ public class Truck {
 		}
 		return truckString;
 	}
-	
+
 	public void setParcelList(ArrayList<Parcel> parcelListInput) {
 		parcelList = parcelListInput;
 	}

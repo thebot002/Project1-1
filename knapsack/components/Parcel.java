@@ -15,6 +15,10 @@ public class Parcel {
 	private int value = 1;
 	private String id;
 
+	private HashMap<Point3D,Point3D> edges;
+
+	private int state = 0;
+    private ArrayList<ArrayList<Point3D>> rotations;
     /**
      * Create a parcel with a default position set to the origin and set its 8 vertices.
      * Constructor of a parcel object with given dimensions.
@@ -71,7 +75,7 @@ public class Parcel {
     private void setPoints(){
         pos = new Point3D(0,0,0);
 
-        points = new ArrayList<Point3D>();
+        points = new ArrayList<>();
         points.add(new Point3D(0, 0, 0));
         points.add(new Point3D(0, height, 0));
         points.add(new Point3D(width, height, 0));
@@ -81,6 +85,23 @@ public class Parcel {
         points.add(new Point3D(0, height, length));
         points.add(new Point3D(width, height, length));
         points.add(new Point3D(width, 0, length));
+
+        edges = new HashMap<>();
+
+        edges.put(points.get(0),points.get(1));
+        edges.put(points.get(1),points.get(2));
+        edges.put(points.get(2),points.get(3));
+        edges.put(points.get(3),points.get(0));
+
+        edges.put(points.get(0),points.get(4));
+        edges.put(points.get(1),points.get(5));
+        edges.put(points.get(2),points.get(6));
+        edges.put(points.get(3),points.get(7));
+
+        edges.put(points.get(4),points.get(5));
+        edges.put(points.get(5),points.get(6));
+        edges.put(points.get(6),points.get(7));
+        edges.put(points.get(7),points.get(4));
 
     }
 
@@ -155,7 +176,7 @@ public class Parcel {
      */
     public double getLength() { return (1.0*length); }
 
-    /** 
+    /**
      * Method to get the volume of the parcel.
      * @return The volume of the parcel.
      */
@@ -196,5 +217,39 @@ public class Parcel {
      */
     public int getValue(){
         return value;
+    }
+
+    public void rotateAroundX(){
+        int temp = length;
+        length = height;
+        height = temp;
+        setPoints();
+    }
+
+    public void rotateAroundY(){
+        int temp = length;
+        length = width;
+        width = temp;
+        setPoints();
+    }
+
+    public void rotateAroundZ(){
+        int temp = width;
+        width = height;
+        height = temp;
+        setPoints();
+    }
+
+    public boolean nextState(){
+        state ++;
+        if(state == 1){
+
+            return false;
+        }
+        else{
+            if(state%2 != 0) rotateAroundX();
+            else rotateAroundZ();
+        }
+        return true;
     }
 }
