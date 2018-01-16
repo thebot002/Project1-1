@@ -8,7 +8,7 @@ import java.util.*;
  * Class used to define the truck where the parcels or pentominoes are going to be placed.
  */
 public class Truck {
-	public ArrayList<Parcel> parcelList;
+	private ArrayList<Parcel> parcelList;
 	private int length;
 	private int height;
 	private int width;
@@ -44,27 +44,10 @@ public class Truck {
         this(16.5,4.0,2.5);
     }
 
-    public Truck(String[][][] truck){
+    public Truck(String[][][] truck, ArrayList<Parcel> list){
     	this();
     	this.truck = truck;
-	}
-
-	public String[][][] getTruck(){
-		return truck;
-	}
-	
-	public void setTruck(String[][][] newTruck) {
-		for(int i=0; i<truck.length; i++) {
-			for(int j=0; j<truck[0].length; j++) {
-				for(int k=0; k<truck[0][0].length; k++) {
-					truck[i][j][k]=newTruck[i][j][k];
-				}
-			}
-		}
-	}
-
-	public void setTruck(int x, int y, int z, String str) {
-		truck[x][y][z]=str;
+    	this.parcelList = list;
 	}
 
 	public int[] positionToAdd() {
@@ -77,7 +60,7 @@ public class Truck {
 						position[0]=j;
 						position[1]=i;
 						position[2]=k;
-						System.out.println("Position to ADd"+position[0]+" "+position[1]+" "+position[2]);
+						//System.out.println("Position to ADd"+position[0]+" "+position[1]+" "+position[2]);
 						return position;
 					}
 				}
@@ -86,13 +69,6 @@ public class Truck {
 		return position;
 		
 	}
-
-    /**
-     * Default constructor for this project. Truck with size: 16.5 x 4.0 x 2.5 .
-     */
-	public Truck(){
-	    this(4.0,2.5,4.0);
-    }
 
     /**
      * Method to get the length of the truck. (z axis)
@@ -116,7 +92,11 @@ public class Truck {
      * @return The volume of the truck.
      */
     public int getVolume() {return height*width*length;}
-    
+
+    public ArrayList<Parcel> getParcelList() {
+        return parcelList;
+    }
+
     /**
      * Method to add a parcel object to the truck.
      * @param p The parcel to be added to the truck.
@@ -184,7 +164,7 @@ public class Truck {
         }
     }
 
-	public String[][][] copyTruck(){
+	public Truck copyTruck(){
 		String[][][] newTruck = new String[truck.length][truck[0].length][truck[0][0].length];
 		for(int i=0; i<width; i++) {
 			for(int j=0; j<height; j++) {
@@ -193,7 +173,9 @@ public class Truck {
 				}
 			}
 		}
-		return new Truck(newTruck);
+		ArrayList<Parcel> newList = new ArrayList<>();
+		for(Parcel p: parcelList) newList.add(p);
+		return new Truck(newTruck, newList);
 	}
 
 	public void printTruck() {
@@ -219,21 +201,5 @@ public class Truck {
             }
         }
         return sum;
-    }
-
-    public boolean fillTruck(ArrayList<Parcel> list, int index, Truck t){
-	    if(getVolume()*0.9 > getVolume()-getGapAmount() || list.isEmpty()) return true;
-	    else {
-            if(addParcel(list.get(index))){
-                ArrayList<Parcel> newList = new ArrayList<>();
-                for(int i=0; i<list.size(); i++) newList.add(list.get(i));
-                newList.remove(index);
-                fillTruck(list, index, t.copyTruck());
-            }
-            else {
-
-			}
-        }
-        return false;
     }
 }

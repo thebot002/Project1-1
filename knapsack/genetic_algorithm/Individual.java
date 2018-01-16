@@ -28,8 +28,8 @@ public class Individual {
             if(genome.charAt(i) == '1')parcelList.add(list.get(i));
         }
         Truck t = new Truck();
-        t.fill(parcelList);
-        fitness = t.getValue();
+        //fill(parcelList);
+        //fitness = t.getValue();
     }
     public void setGenome(String genome){
         this.genome = genome;

@@ -98,9 +98,7 @@ public class BackTrack {
   * @param index The index that keep trucks of the position in the parcel array.
   */
 	public static boolean backTracking(Truck truck, Parcel[] parcelAr, ArrayList<Parcel> parcelList, int index, int recursionCounter) {
-
-
-    int totVol = 0; // The total volume of the placed parcels.
+	    int totVol = 0; // The total volume of the placed parcels.
 		int totVal = 0; // The total value of the placed parcels.
 		int[] position = new int[3]; // position to add the next parcel.
 
@@ -139,9 +137,8 @@ public class BackTrack {
       // If the parcel can be placed...
 			if(truck.isPossible(parcelAr[index], p	)) {
 				p = new Point3D(position[0],position[1],position[2]);
-				Truck newTruck = new Truck();
-				newTruck.setTruck(truck.copyTruck()); // Creates a copy of the truck
-				newTruck.addParcel(parcelAr[index], p); // Adds a new parcel to the copy
+				Truck newTruck = truck.copyTruck(); // Creates a copy of the truck
+				newTruck.addParcel(parcelAr[index]); // Adds a new parcel to the copy
 
         // Creates a new parcelList
 				ArrayList<Parcel> newParcelList = new ArrayList<>(parcelList);
@@ -151,7 +148,7 @@ public class BackTrack {
 				if (backTracking(newTruck, parcelAr, newParcelList, index, recursionCounter+1))
 
         // If we change this to true, we will only get one solution
-          return false;
+          return true;
 			}
 
       /* If the parcel can't be placed we move on to the next element

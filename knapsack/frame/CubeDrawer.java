@@ -74,7 +74,7 @@ public class CubeDrawer extends JPanel {
         //draw a parcel to represent the truck
         drawParcelPro(truckParcel, Color.CYAN, false);
 
-        for (Parcel parcel : truck.parcelList) {
+        for (Parcel parcel : truck.getParcelList()) {
             drawParcelPro(parcel, Color.WHITE, true);
         }
 

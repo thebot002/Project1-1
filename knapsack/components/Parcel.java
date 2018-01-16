@@ -15,9 +15,10 @@ public class Parcel {
 	private int value = 1;
 	private String id;
 
-	private int state = 0;
-	private int rotationsPossible;
+	private HashMap<Point3D,Point3D> edges;
 
+	private int state = 0;
+    private ArrayList<ArrayList<Point3D>> rotations;
     /**
      * Create a parcel with a default position set to the origin and set its 8 vertices.
      * Constructor of a parcel object with given dimensions.
@@ -38,9 +39,9 @@ public class Parcel {
      */
 	public Parcel(String id){
 	    switch (id){
-            case "A": width = 2; height = 2; length = 4; rotationsPossible = 3; break;
-            case "B": width = 2; height = 3; length = 4; rotationsPossible = 6; break;
-            case "C": width = 3; height = 3; length = 3; rotationsPossible = 1; break;
+            case "A": width = 2; height = 2; length = 4; break;
+            case "B": width = 2; height = 3; length = 4; break;
+            case "C": width = 3; height = 3; length = 3; break;
         }
         this.id = id;
 	    setPoints();
@@ -62,7 +63,7 @@ public class Parcel {
     private void setPoints(){
         pos = new Point3D(0,0,0);
 
-        points = new ArrayList<Point3D>();
+        points = new ArrayList<>();
         points.add(new Point3D(0, 0, 0));
         points.add(new Point3D(0, height, 0));
         points.add(new Point3D(length, height, 0));
@@ -72,6 +73,23 @@ public class Parcel {
         points.add(new Point3D(0, height, width));
         points.add(new Point3D(length, height, width));
         points.add(new Point3D(length, 0, width));
+
+        edges = new HashMap<>();
+
+        edges.put(points.get(0),points.get(1));
+        edges.put(points.get(1),points.get(2));
+        edges.put(points.get(2),points.get(3));
+        edges.put(points.get(3),points.get(0));
+
+        edges.put(points.get(0),points.get(4));
+        edges.put(points.get(1),points.get(5));
+        edges.put(points.get(2),points.get(6));
+        edges.put(points.get(3),points.get(7));
+
+        edges.put(points.get(4),points.get(5));
+        edges.put(points.get(5),points.get(6));
+        edges.put(points.get(6),points.get(7));
+        edges.put(points.get(7),points.get(4));
 
     }
 
@@ -201,7 +219,7 @@ public class Parcel {
 
     public boolean nextState(){
         state ++;
-        if(state == rotationsPossible){
+        if(state == 1){
 
             return false;
         }
