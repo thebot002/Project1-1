@@ -7,7 +7,8 @@ import java.util.*;
  * Class defining the parcels to be placed in a truck object.
  */
 public class Parcel {
-	public ArrayList<Point3D> points;
+	private ArrayList<Point3D> points;
+	private HashMap<Point3D,Point3D> edges;
 	private int length;
 	private int height;
 	private int width;
