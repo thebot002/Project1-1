@@ -226,4 +226,8 @@ public class Truck {
 			System.out.println("");
 		}
 	}
+	
+	public void setParcelList(ArrayList<Parcel> parcelListInput) {
+		parcelList = parcelListInput;
+	}
 }

@@ -150,20 +150,22 @@ public class Menu extends JPanel implements ActionListener {
      */
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == btnFillTruck) {
-			if(tabbedPane.getSelectedComponent() == rectangleTab) { // Used to be able to differentiate between the type of  parcels (ABC vs LPT)
+			System.out.println(String.valueOf(tabbedPane.getSelectedComponent()));
+			if(tabbedPane.getSelectedIndex() == 0) { // Used to be able to differentiate between the type of  parcels (ABC vs LPT)
 	        	try {
 					rectangleTab.collectParcels();
-					int[][] parcelsRectangle = rectangleTab.collectParcels(); //output of tabs need to be converted to input of algorithms
-
+					int[][] parcelsRectangle = rectangleTab.collectParcels(); //output of tabs is stored
+																			// Depending on which algorithm and parameters some method needs to be called
+					
 				} catch (ParseException e1) {
 					System.out.println("The currently edited value couldn't be commited.");
 					JOptionPane.showMessageDialog(tabbedPane, "The currently edited value couldn't be commited.");
 				}
 	        }
-	        else if(tabbedPane.getSelectedComponent() == pentominoTab) {// Used to be able to differentiate between the type of  parcels (ABC vs LPT)
+	        else if(tabbedPane.getSelectedIndex() == 1) {// Used to be able to differentiate between the type of  parcels (ABC vs LPT)
 	        	try {
 					int[][] parcelsPentomino = pentominoTab.collectParcels(); //output of tabs need to be converted to input of algorithms
-
+																			// Depending on which algorithm and parameters some method needs to be called
 				} catch (ParseException e1) {
 					System.out.println("The currently edited value couldn't be commited.");
 					JOptionPane.showMessageDialog(tabbedPane, "The currently edited value couldn't be commited.");
