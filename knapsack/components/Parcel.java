@@ -27,9 +27,9 @@ public class Parcel {
      * @param l The length of the parcel. (z axis)
      */
 	public Parcel(double w, double h, double l) {
-        width = (int)(w/0.5);
-        height = (int)(h/0.5);
-        length = (int)(l/0.5);
+        width = (int)(w);
+        height = (int)(h);
+        length = (int)(l);
         setPoints();
 	}
 
@@ -58,6 +58,18 @@ public class Parcel {
     }
 
     /**
+     * Method to create a copy of this parcel.
+     * @return A new parcel object with the exact same attributes.
+     */
+    public Parcel copy(){
+        Parcel newP = new Parcel(width,height,length);
+        newP.setPos(pos);
+        newP.setID(id);
+        newP.setValue(value);
+        return newP;
+    }
+
+    /**
      * Method that sets the points of each corners of the parcel.
      */
     private void setPoints(){
@@ -66,13 +78,13 @@ public class Parcel {
         points = new ArrayList<>();
         points.add(new Point3D(0, 0, 0));
         points.add(new Point3D(0, height, 0));
-        points.add(new Point3D(length, height, 0));
-        points.add(new Point3D(length, 0, 0));
+        points.add(new Point3D(width, height, 0));
+        points.add(new Point3D(width, 0, 0));
 
-        points.add(new Point3D(0, 0, width));
-        points.add(new Point3D(0, height, width));
-        points.add(new Point3D(length, height, width));
-        points.add(new Point3D(length, 0, width));
+        points.add(new Point3D(0, 0, length));
+        points.add(new Point3D(0, height, length));
+        points.add(new Point3D(width, height, length));
+        points.add(new Point3D(width, 0, length));
 
         edges = new HashMap<>();
 
@@ -110,7 +122,7 @@ public class Parcel {
      * @param vector The vector along which to move the parcel.
      */
 	public void translate(Point3D vector) { pos = pos.add(vector); }
-	
+
 	/**
 	 * Method to rotate the parcel along the x Axis
 	 */
@@ -150,24 +162,26 @@ public class Parcel {
      * Method to get the width of the parcel. (x axis)
      * @return The width of the parcel.
      */
-    public double getWidth()  { return (1.0*width)/2;  }
+    public double getWidth()  { return (1.0*width);  }
 
     /**
      * Method to get the height of the parcel. (y axis)
      * @return The height of the parcel.
      */
-    public double getHeight() { return (1.0*height)/2; }
+    public double getHeight() { return (1.0*height); }
+
     /**
      * Method to get the length of the parcel. (z axis)
      * @return The length of the parcel.
      */
-    public double getLength() { return (1.0*length)/2; }
+    public double getLength() { return (1.0*length); }
 
     /**
      * Method to get the volume of the parcel.
      * @return The volume of the parcel.
      */
     public int getVolume() {return height*length*width; }
+
     /**
      * Method to get the position of the parcel in the 3D space.
      * @return A 3D point.
@@ -188,6 +202,15 @@ public class Parcel {
 	public String getID(){
 	    return id;
     }
+
+    /**
+     * Method to set the ID of the parcel. (Used for building a copy of this parcel)
+     * @param id The parcel ID.
+     */
+    private void setID(String id){
+	    this.id = id;
+    }
+
     /**
      * Method to get the value of the parcel.
      * @return The value of this parcel.

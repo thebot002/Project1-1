@@ -6,6 +6,9 @@ import javax.swing.*;
 import java.util.*;
 import java.awt.image.BufferedImage;
 import javafx.geometry.Point3D;
+import knapsack.filling.BruteForce;
+import knapsack.greedy.Greedy;
+
 import java.awt.Point;
 import java.lang.Math;
 
@@ -25,7 +28,7 @@ public class CubeDrawer extends JPanel {
 
 
     private Parcel truckParcel;
-    private int angle = 90;
+    private int angle = 0;
     private int elevation = 35;
     private Truck truck;
     private Point3D deltaO = new Point3D(0, 0, 0);
@@ -42,12 +45,13 @@ public class CubeDrawer extends JPanel {
         H = h;
         image = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
         truckParcel = new Parcel(truck.getWidth(), truck.getHeight(), truck.getLength());
-        populateTruck();
+        BruteForce.fill(truck);
+        //populateTruck();
         renderScene();
     }
 
     private void populateTruck() {
-        for(int i=0; i<11; i++){
+        for(int i=0; i<40; i++){
             Parcel A = new Parcel("A");
             Parcel B = new Parcel("B");
             Parcel C = new Parcel("C");
@@ -94,10 +98,10 @@ public class CubeDrawer extends JPanel {
         I.setPos(deltaO.multiply(-1));
         J.setPos(deltaO.multiply(-1));
         K.setPos(deltaO.multiply(-1));
-        drawParcelPro(I, Color.RED, false);
+        drawParcelPro(I, Color.BLUE, false);
         drawParcelPro(J, Color.RED, false);
         drawParcelPro(K, Color.RED, false);
-        drawParcelPro(new Parcel(5, 0, 0), Color.YELLOW, false);
+        drawParcelPro(new Parcel(5, 0, 0), Color.BLUE, false);
         drawParcelPro(new Parcel(0, 5, 0), Color.YELLOW, false);
         drawParcelPro(new Parcel(0, 0, 5), Color.YELLOW, false);
     }

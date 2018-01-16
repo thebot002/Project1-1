@@ -1,4 +1,4 @@
-package knapsack.genetic_algorithm;
+package knapsack.filling.genetic_algorithm;
 
 import knapsack.components.Parcel;
 
