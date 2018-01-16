@@ -21,7 +21,7 @@ public class CubeDrawer extends JPanel {
     private int H;
     private int W;
     private BufferedImage image;
-    private int unit = 13; //scaling factor
+    private int unit = 20; //scaling factor
 
 
     private Parcel truckParcel;
@@ -164,6 +164,8 @@ public class CubeDrawer extends JPanel {
      */
     public void zoom(int i) {
         unit += i;
+        if(unit < 6) unit = 6;
+        if(unit > 30) unit = 30;
         renderScene();
     }
 
@@ -290,5 +292,17 @@ public class CubeDrawer extends JPanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         g.drawImage(image, 0, 0, null);
+    }
+
+    public void resetCamera() {
+        angle = 0;
+        elevation = 35;
+        unit = 20;
+        renderScene();
+    }
+
+    public void emptyTruck() {
+       truck = new Truck();
+       renderScene();
     }
 }
