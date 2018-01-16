@@ -7,7 +7,8 @@ import java.util.*;
  * Class defining the parcels to be placed in a truck object.
  */
 public class Parcel {
-	public ArrayList<Point3D> points;
+	private ArrayList<Point3D> points;
+	private HashMap<Point3D,Point3D> edges;
 	private int length;
 	private int height;
 	private int width;
@@ -81,6 +82,23 @@ public class Parcel {
         points.add(new Point3D(0, height, length));
         points.add(new Point3D(width, height, length));
         points.add(new Point3D(width, 0, length));
+
+        edges = new HashMap<>();
+
+        edges.put(points.get(0),points.get(1));
+        edges.put(points.get(1),points.get(2));
+        edges.put(points.get(2),points.get(3));
+        edges.put(points.get(3),points.get(0));
+
+        edges.put(points.get(0),points.get(4));
+        edges.put(points.get(1),points.get(5));
+        edges.put(points.get(2),points.get(6));
+        edges.put(points.get(3),points.get(7));
+
+        edges.put(points.get(4),points.get(5));
+        edges.put(points.get(5),points.get(6));
+        edges.put(points.get(6),points.get(7));
+        edges.put(points.get(7),points.get(4));
 
     }
 
