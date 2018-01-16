@@ -20,9 +20,9 @@ public class FillTruck {
 
         ArrayList<Integer> amounts = new ArrayList<>();
 
-        amounts.add(12);
-        amounts.add(12);
-        amounts.add(12);
+        amounts.add(16);
+        amounts.add(16);
+        amounts.add(16);
 
         ArrayList<Parcel> pList = new ArrayList<>();
         for(int i=0; i<list.size(); i++){
@@ -38,38 +38,45 @@ public class FillTruck {
 
     private static boolean fill(Truck t, ArrayList<Parcel> list, int rotation, int index){
 
+        //recursion stop signal (list empty or filled at N%
         if((list.size() == 0) || ((t.getVolume() * 0.8) < (t.getVolume() - t.getGapAmount()))){
             filled = t;
             t.printTruck();
             return true;
         }
-        else{
-            if(t.isPossible(list.get(index))){
-                ArrayList<Parcel> newList = new ArrayList<>();
-                for(int i=0; i<list.size(); i++){
-                    newList.add(list.get(i).copy());
-                }
-                newList.remove(index);
-                Truck newT = t.copy();
-                newT.addParcel(list.get(index));
-                if(fill(newT, newList, 0, 0)) return true;
+
+        //adds a parcel to a new truck and calls recursively.
+        if(t.isPossible(list.get(index))){
+            ArrayList<Parcel> newList = new ArrayList<>();
+            for(int i=0; i<list.size(); i++){
+                newList.add(list.get(i).copy());
             }
-            else {
-                if(/*(*/rotation<6 /*&& list.get(index).getID().equals("B")) || (rotation<3 && list.get(index).getID().equals("A")) || (rotation<0 && list.get(index).getID().equals("C"))*/){
-                    if(rotation%3 == 0) list.get(index).rotateAroundX();
-                    else if(rotation%3 == 1) list.get(index).rotateAroundZ();
-                    else list.get(index).rotateAroundY();
-                    rotation++;
-                }
-                else if(index+1 < list.size()){
-                    index++;
-                    rotation = 0;
-                }
-                else{
-                    return false;
-                }
-            }
+            newList.remove(index);
+            Truck newT = t.copy();
+            newT.addParcel(list.get(index));
+            if(fill(newT, newList, 0, 0)) return true; //true: one solution
         }
+
+        //tries the next rotation if the previous call was unsuccessful (=fill call returned false)
+        if((rotation<6 && list.get(index).getID().equals("B")) || (rotation<3 && list.get(index).getID().equals("A")) || (rotation<0 && list.get(index).getID().equals("C"))){
+            if(rotation%3 == 0) list.get(index).rotateAroundX();
+            else if(rotation%3 == 1) list.get(index).rotateAroundZ();
+            else list.get(index).rotateAroundY();
+            rotation++;
+        }
+        //if no more rotation tries next parcel
+        else{
+            index++;
+            rotation = 0;
+        }
+        //if no more parcels in the list return false;
+        /*else{
+            return false;
+        }*/
+
+        if(index+1 >= list.size()) return false;
+
+        //returns the result of another recursive call with one more rotation/index
         return fill(t,list,rotation,index);
     }
 }

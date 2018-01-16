@@ -86,6 +86,7 @@ public class Parcel {
         points.add(new Point3D(width, height, length));
         points.add(new Point3D(width, 0, length));
 
+        edges = null;
         edges = new HashMap<>();
 
         edges.put(points.get(0),points.get(1));
