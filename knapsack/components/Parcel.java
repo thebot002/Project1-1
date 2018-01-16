@@ -63,7 +63,7 @@ public class Parcel {
      */
     public Parcel copy(){
         Parcel newP = new Parcel(width,height,length);
-        newP.setPos(pos);
+        newP.setPos(new Point3D(pos.getX(),pos.getY(),pos.getZ()));
         newP.setID(id);
         newP.setValue(value);
         return newP;
@@ -251,5 +251,9 @@ public class Parcel {
             else rotateAroundZ();
         }
         return true;
+    }
+
+    public String toString(){
+        return "Parcel[ID="+id+"]";
     }
 }

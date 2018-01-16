@@ -46,14 +46,28 @@ public class Truck {
         this(33,8,5);
     }
 
-    public Truck(String[][][] truck, ArrayList<Parcel> list){
+    public Truck(String[][][] newTruck, ArrayList<Parcel> newList){
     	this();
-    	this.truck = truck;
-    	this.parcelList = list;
+    	this.truck = newTruck;
+    	this.parcelList = newList;
 	}
 
+    public Truck copy(){
+        String[][][] newTruck = new String[width][height][length];
+        for(int i=0; i<width; i++) {
+            for(int j=0; j<height; j++) {
+                for(int k=0; k<length; k++) {
+                    newTruck[i][j][k]=truck[i][j][k];
+                }
+            }
+        }
+        ArrayList<Parcel> newList = new ArrayList<>();
+        for(int i=0; i<parcelList.size(); i++) newList.add(parcelList.get(i).copy());
+        return new Truck(newTruck, newList);
+    }
 
-	//finds the position to add at, currently not used but am planning to - Nic
+    //finds the position to add at, currently not used but am planning to - Nic
+
 	public int[] positionToAdd() {
 		int[] position = new int[3];
 
@@ -72,17 +86,17 @@ public class Truck {
 		}
 		return position;
 	}
-
     /**
      * Method to get the width of the truck. (x axis)
      * @return The width of the truck.
      */
 	public double getWidth()  { return (1.0*width);  }
-	/**
+    /**
      * Method to get the height of the truck. (y axis)
      * @return The height of the truck.
      */
     public double getHeight() { return (1.0*height); }
+
 	/**
 	 * Method to get the length of the truck. (z axis)
 	 * @return The length of the truck.
@@ -162,6 +176,17 @@ public class Truck {
         return true;
     }
 
+    public boolean isPossible(Parcel p){
+        for(int i = 0; i <= (width-p.getWidth()) ; i++){
+            for(int j=0; j <= (height-p.getHeight()); j++){
+                for(int k=0; k <= (length-p.getLength()); k++){
+                    if(isPossible(p,new Point3D(i,j,k))) return true;
+                }
+            }
+        }
+        return false;
+    }
+
     /**
      * Method to remove a parcel from the truck.
      * @param p The parcel to be removed.
@@ -192,20 +217,6 @@ public class Truck {
         }
         return total;
     }
-
-	public Truck copyTruck(){
-		String[][][] newTruck = new String[truck.length][truck[0].length][truck[0][0].length];
-		for(int i=0; i<width; i++) {
-			for(int j=0; j<height; j++) {
-				for(int k=0; k<length; k++) {
-					newTruck[i][j][k]=truck[i][j][k];
-				}
-			}
-		}
-		ArrayList<Parcel> newList = new ArrayList<>();
-		for(Parcel p: parcelList) newList.add(p);
-		return new Truck(newTruck, newList);
-	}
 
 	public void printTruck() {
 		System.out.println("NEW TRUCK");

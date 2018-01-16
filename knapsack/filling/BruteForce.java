@@ -25,7 +25,7 @@ public class BruteForce {
         Parcel parcelC = new Parcel("C",5);
 
         // Crete a list to keep truck of the parcels we have already placed
-        ArrayList<Parcel> parcelList = new ArrayList<Parcel>();
+        ArrayList<Parcel> parcelList = new ArrayList<>();
 
 	    /* Create an array with the three parcels and
 	       all their rotations. */
@@ -94,5 +94,4 @@ public class BruteForce {
         }
         System.out.println(totVal);
     }
-
 }

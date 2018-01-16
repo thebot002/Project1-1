@@ -137,7 +137,7 @@ public class BackTrack {
       // If the parcel can be placed...
 			if(truck.isPossible(parcelAr[index], p	)) {
 				p = new Point3D(position[0],position[1],position[2]);
-				Truck newTruck = truck.copyTruck(); // Creates a copy of the truck
+				Truck newTruck = truck.copy(); // Creates a copy of the truck
 				newTruck.addParcel(parcelAr[index]); // Adds a new parcel to the copy
 
         // Creates a new parcelList
