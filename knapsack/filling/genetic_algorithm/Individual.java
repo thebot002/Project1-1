@@ -1,4 +1,4 @@
-package knapsack.genetic_algorithm;
+package knapsack.filling.genetic_algorithm;
 
 import knapsack.components.Parcel;
 import knapsack.components.Truck;
@@ -28,7 +28,10 @@ public class Individual {
             if(genome.charAt(i) == '1')parcelList.add(list.get(i));
         }
         Truck t = new Truck();
-        t.fill(parcelList);
+
+        //insert filling algorithm to use. (Backtrack?)
+
+        //t.fill(parcelList);
         fitness = t.getValue();
     }
     public void setGenome(String genome){

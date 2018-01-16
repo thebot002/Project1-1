@@ -14,6 +14,8 @@ public class Truck {
 	private int width;
 	private String[][][] truck;
 
+	private boolean debug = false;
+
 	/**
 	 *Create a parcel with a default position set to the origin and set its 8 vertices.
      *Object constructor.
@@ -109,7 +111,7 @@ public class Truck {
 	 * If placed the parcel will be added to the truck's parcel list.
      * @param p The parcel to be added to the truck.
      */
-    public void addParcel(Parcel p){
+    public boolean addParcel(Parcel p){
         for(int i = 0; i <= (width-p.getWidth()) ; i++){
             for(int j=0; j <= (height-p.getHeight()); j++){
                 for(int k=0; k <= (length-p.getLength()); k++){
@@ -125,11 +127,12 @@ public class Truck {
                                 }
                             }
                         }
-                        return;
+                        return true;
                     }
                 }
             }
         }
+        return false;
 	}
 
 	/**
@@ -142,21 +145,19 @@ public class Truck {
 	 */
 
 	public boolean isPossible(Parcel p, Point3D pos){
-		//System.out.println("isPossible() @ " + pos);
         if((p.getWidth() + pos.getX()) > (getWidth())) {
-            System.out.println("Outside Truck - X");
+            if(debug) System.out.println("Outside Truck - X");
             return false;
         }
         if((p.getHeight() + pos.getY()) > (getHeight())) {
-            System.out.println("Outside Truck - Y");
+            if(debug) System.out.println("Outside Truck - Y");
             return false;
         }
         if((p.getLength() + pos.getZ()) > (getLength())) {
-            System.out.println("Outside Truck - Z " + pos.getZ());
-            //System.out.println(( pos.getZ()	));
+            if(debug) System.out.println("Outside Truck - Z " + pos.getZ());
             return false;
         }
-		System.out.println("Par fits, ckng collision");
+        if(debug) System.out.println("Par fits, ckng collision");
         for(int i=0; i<p.getWidth(); i++){
             for(int j=0; j<p.getHeight(); j++){
                 for(int k=0; k<p.getLength();k++){
@@ -186,20 +187,16 @@ public class Truck {
         }
     }
 
+    /**
+     * Method used to return the total value of the truck.
+     * @return The sum of the values of the parcels contained in the truck.
+     */
     public int getValue(){
 	    int total = 0;
         for (Parcel p: parcelList) {
             total += p.getValue();
         }
         return total;
-    }
-
-    public void fill(ArrayList<Parcel> list){
-	    this.parcelList = list;
-
-	    /*
-	    fill here
-	     */
     }
 
 	public String[][][] copyTruck(){
@@ -226,8 +223,43 @@ public class Truck {
 			System.out.println("");
 		}
 	}
+
+    /**
+     * Method used to have a String representation of the truck to be printed in the command line.
+     * @return A string version of the content of the truck.
+     */
+	public String toString(){
+		String truckString = "";
+		//special assignment of i,j,k value for readability purpose.
+		for(int i=0; i<length; i++) {
+			for(int j=0; j<width; j++) {
+				for(int k=0; k<height; k++) {
+					truckString += truck[j][k][i]+ " ";
+				}
+				truckString += "\n";
+			}
+			truckString += "\n";
+		}
+		return truckString;
+	}
 	
 	public void setParcelList(ArrayList<Parcel> parcelListInput) {
 		parcelList = parcelListInput;
+	}
+
+    /**
+     * Method to get the amounts of gap left in the truck. (debug purpose)
+     * @return The amounts of gaps in truck.
+     */
+	public int getGapAmount(){
+		int sum =0;
+		for(int i=0; i<width; i++){
+			for(int j=0; j<height; j++){
+				for(int k=0; k<length; k++){
+					if(truck[i][j][k].equals("-")) sum++;
+				}
+			}
+		}
+		return sum;
 	}
 }
