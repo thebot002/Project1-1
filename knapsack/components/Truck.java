@@ -14,7 +14,7 @@ public class Truck {
 	private int width;
 	private int gaps;
 	private String[][][] truck;
-
+ 
 	private boolean debug = false;
 
 	/**
@@ -246,6 +246,10 @@ public class Truck {
 	
 	public void setParcelList(ArrayList<Parcel> parcelListInput) {
 		parcelList = parcelListInput;
+	}
+	
+	public ArrayList<Parcel> getParcelList() {
+		return parcelList;
 	}
 
     /**

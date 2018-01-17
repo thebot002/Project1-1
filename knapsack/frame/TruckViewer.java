@@ -41,7 +41,9 @@ public class TruckViewer extends JFrame {
         c = new CubeDrawer(W/3*2, H);
         c.setPreferredSize(new Dimension(W/3*2, H));
 
-
+        m.setGapsFound(c.getGapAmount());
+        m.setCurrentValue(c.getValue());
+        //m.setTimeTook(c.getTimeTook());
         add(m, BorderLayout.EAST);
         add(c, BorderLayout.CENTER);
         c.setVisible(true);
@@ -88,4 +90,5 @@ public class TruckViewer extends JFrame {
             }
         });
     }
+
 }

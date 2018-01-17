@@ -178,7 +178,45 @@ public class CubeDrawer extends JPanel {
         debug = !debug;
         renderScene();
     }
-
+    
+    /**
+     * Gets truck.
+     */
+    public Truck getTruck() {
+        return truck;
+    }
+    /**
+     * Sets truck
+     * @param truck object to be set
+     */
+    public void setTruck(Truck truck) {
+        this.truck = truck;
+    }
+    /**
+     * Finds the amount of gaps in truck drawn in CubeDrawer
+     */
+    public int getGapAmount(){
+//		int gaps = 0;
+//		for(int i=0; i<getTruck().getWidth(); i++){
+//			for(int j=0; j<getTruck().getHeight(); j++){
+//				for(int k=0; k<getTruck().getLength(); k++){
+//					if(getTruck().getTruck()[i][j][k].equals("-")) gaps++;
+//				}
+//			}
+//		}
+		return truck.getGapAmount();
+	}
+    /**
+     * Finds the current value of truck drawn in CubeDrawer
+     */
+    public int getValue(){
+//	    int total = 0;
+//        for (Parcel p: getTruck().getParcelList()) {
+//            total += p.getValue();
+//        }
+        return truck.getValue();
+    }
+   
     /* Drawing Methods for different parts of the 'Truck' Display */
 
     /**
