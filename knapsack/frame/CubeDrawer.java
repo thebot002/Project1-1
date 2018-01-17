@@ -204,7 +204,7 @@ public class CubeDrawer extends JPanel {
 //				}
 //			}
 //		}
-		return truck.getGapAmount();
+		return truck.getGapAmount()/8; //Divide by 8 to compensate for multiplying length, width and height by 2 at the start
 	}
     /**
      * Finds the current value of truck drawn in CubeDrawer
