@@ -29,21 +29,21 @@ public class Greedy {
 			Parcel[] parcelAr = new Parcel[10];
 
 	    // Get the rotations of the parcels
-			Parcel xRotParcelA = new Parcel("A",3);
+			Parcel xRotParcelA = new Parcel("B",4);
 			xRotParcelA.xRotate();
-			Parcel yRotParcelA = new Parcel("A",3);
+			Parcel yRotParcelA = new Parcel("B",4);
 			yRotParcelA.yRotate();
-			Parcel zRotParcelA = new Parcel("A",3);
+			Parcel zRotParcelA = new Parcel("B",4);
 			zRotParcelA.zRotate();
-			Parcel xyRotParcelA = new Parcel("A",3);
+			Parcel xyRotParcelA = new Parcel("B",4);
 			xyRotParcelA.xRotate();
 			xyRotParcelA.yRotate();
-			Parcel xzRotParcelA = new Parcel("A",3);
+			Parcel xzRotParcelA = new Parcel("B",4);
 			xzRotParcelA.xRotate();
 			xzRotParcelA.zRotate();
-			Parcel yRotParcelB = new Parcel("B",3);
+			Parcel yRotParcelB = new Parcel("A",3);
 			yRotParcelB.yRotate();
-			Parcel zRotParcelB = new Parcel("B",3);
+			Parcel zRotParcelB = new Parcel("A",3);
 			zRotParcelB.zRotate();
 
 	    // Place everything into the parcel array
@@ -59,7 +59,7 @@ public class Greedy {
 			parcelAr[0]=parcelC;
 
 			// Call the method that fills the truck with parcels.
-			bruteForce(truck, parcelAr, 0, parcelList);
+			greedyAl(truck, parcelAr, 0, parcelList);
 
 
 
@@ -77,7 +77,7 @@ public class Greedy {
 	 * @param index Keeps truck of the parcel array elements
 	 * @param parcelList This list contains the parcels we have added to the truck
 	 * */
-	public static void bruteForce(Truck truck, Parcel[] parcelAr,int index, ArrayList<Parcel> parcelList) {
+	public static void greedyAl(Truck truck, Parcel[] parcelAr,int index, ArrayList<Parcel> parcelList) {
 		int totVal=0;
 
 
