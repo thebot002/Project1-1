@@ -41,6 +41,7 @@ public class CubeDrawer extends JPanel {
     }
 
     public CubeDrawer(int w, int h, Truck truck) {
+        //this.truck = truck;
         this.truck = FillTruck.getFilled();
         W = w;
         H = h;
@@ -48,7 +49,7 @@ public class CubeDrawer extends JPanel {
         truckParcel = new Parcel(truck.getWidth(), truck.getHeight(), truck.getLength());
         //truck = FillTruck.getFilled();
 
-        //BruteForce.fill(truck);
+        BruteForce.fill(truck);
         //populateTruck();
         renderScene();
     }

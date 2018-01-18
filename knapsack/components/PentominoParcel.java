@@ -10,4 +10,8 @@ public class PentominoParcel extends Parcel{
             case "T": w=3; h=3; l=1; break;
         }
     }
+
+    private void setPoints(){
+
+    }
 }

@@ -123,25 +123,29 @@ public class Truck {
         for(int i = 0; i <= (width-p.getWidth()) ; i++){
             for(int j=0; j <= (height-p.getHeight()); j++){
                 for(int k=0; k <= (length-p.getLength()); k++){
-
-                    if(isPossible(p, new Point3D(i,j,k))){
-						if(debug) System.out.println("Par Added " + new Point3D(i,j,k));
-                        parcelList.add(p);
-						p.setPos(new Point3D(i,j,k).multiply(1));
-                        for(int a=0; a<p.getWidth(); a++){
-                            for(int b=0; b<p.getHeight(); b++){
-                                for(int c=0; c<p.getLength();c++){
-                                    truck[a+i][b+j][c+k] = p.getID();
-                                }
-                            }
-                        }
+                    Point3D pos = new Point3D(i,j,k);
+                    if(isPossible(p, pos)){
+                        addParcel(p,pos);
                         return true;
                     }
                 }
             }
         }
         return false;
-	}
+    }
+
+	public void addParcel(Parcel p, Point3D pos){
+        if(debug) System.out.println("Par Added " + pos);
+        parcelList.add(p);
+        p.setPos(pos.multiply(1));
+        for(int a=0; a<p.getWidth(); a++){
+            for(int b=0; b<p.getHeight(); b++){
+                for(int c=0; c<p.getLength();c++){
+                    truck[a+(int)pos.getX()][b+(int)pos.getY()][c+(int)pos.getZ()] = p.getID();
+                }
+            }
+        }
+    }
 
 	/**
 	 * Method to check if a parcel can be added at a position.
@@ -176,15 +180,15 @@ public class Truck {
         return true;
     }
 
-    public boolean isPossible(Parcel p){
+    public Point3D isPossible(Parcel p){
         for(int i = 0; i <= (width-p.getWidth()) ; i++){
             for(int j=0; j <= (height-p.getHeight()); j++){
                 for(int k=0; k <= (length-p.getLength()); k++){
-                    if(isPossible(p,new Point3D(i,j,k))) return true;
+                    if(isPossible(p,new Point3D(i,j,k))) return new Point3D(i,j,k);
                 }
             }
         }
-        return false;
+        return null;
     }
 
     /**
@@ -259,14 +263,23 @@ public class Truck {
      * @return The amounts of gaps in truck.
      */
 	public int getGapAmount(){
-		int sum =0;
-		for(int i=0; i<width; i++){
-			for(int j=0; j<height; j++){
-				for(int k=0; k<length; k++){
-					if(truck[i][j][k].equals("-")) sum++;
-				}
-			}
-		}
-		return sum;
+		return getGapAmount(new Point3D(width,height,length));
 	}
+
+
+	public int getGapAmount(Point3D pos){
+        int sum =0;
+        for(int i=0; i<pos.getX(); i++){
+            for(int j=0; j<pos.getY(); j++){
+                for(int k=0; k<pos.getZ(); k++){
+                    if(truck[i][j][k].equals("-")) sum++;
+                }
+            }
+        }
+        return sum;
+    }
+
+    public ArrayList<Parcel> getTruck(){
+	    return parcelList;
+    }
 }

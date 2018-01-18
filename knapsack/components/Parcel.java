@@ -257,4 +257,13 @@ public class Parcel {
     public String toString(){
         return "Parcel[ID="+id+"]";
     }
+
+    public boolean equals(Parcel p){
+        if(edges.equals(p.getEdges()) && pos.equals(p.getPos())) return true;
+        return false;
+    }
+
+    public HashMap<Point3D,Point3D> getEdges(){
+        return edges;
+    }
 }
