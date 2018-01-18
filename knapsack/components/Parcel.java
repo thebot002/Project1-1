@@ -7,11 +7,11 @@ import java.util.*;
  * Class defining the parcels to be placed in a truck object.
  */
 public class Parcel {
-	private ArrayList<Point3D> points;
-	private ArrayList<Edge3D> edges = new ArrayList<>();
-	private int length;
-	private int height;
-	private int width;
+	protected ArrayList<Point3D> points;
+	protected ArrayList<Edge3D> edges = new ArrayList<>();
+	protected int length;
+	protected int height;
+	protected int width;
 	private Point3D pos;
 	private int value = 1;
 	private String id;
@@ -29,6 +29,7 @@ public class Parcel {
         width = (int)(w);
         height = (int)(h);
         length = (int)(l);
+        id = "u";
         setPoints();
 	}
 
@@ -38,12 +39,11 @@ public class Parcel {
      */
 	public Parcel(String id){
 	    switch (id){
-            case "A": width = 2; height = 2; length = 4; break;
-            case "B": width = 2; height = 3; length = 4; break;
-            case "C": width = 3; height = 3; length = 3; break;
+            case "A": width = 2; height = 2; length = 4; setPoints(); break;
+            case "B": width = 2; height = 3; length = 4; setPoints(); break;
+            case "C": width = 3; height = 3; length = 3; setPoints(); break;
         }
         this.id = id;
-	    setPoints();
     }
 
     /**
@@ -54,6 +54,10 @@ public class Parcel {
     public Parcel(String id, int value){
 	    this(id);
 	    setValue(value);
+    }
+
+    public Parcel() {
+        this(1,1,1);
     }
 
     /**
@@ -71,7 +75,7 @@ public class Parcel {
     /**
      * Method that sets the points of each corners of the parcel.
      */
-    private void setPoints(){
+    private void setPoints() {
         pos = new Point3D(0,0,0);
 
         points = new ArrayList<>();
@@ -210,7 +214,7 @@ public class Parcel {
      * Method to set the ID of the parcel. (Used for building a copy of this parcel)
      * @param id The parcel ID.
      */
-    private void setID(String id){
+    protected void setID(String id){
 	    this.id = id;
     }
 
@@ -241,6 +245,12 @@ public class Parcel {
         width = height;
         height = temp;
         setPoints();
+    }
+
+    protected void setSize(int w, int h, int l) {
+        width = w;
+        height = h;
+        length = l;
     }
 
     public boolean nextState(){

@@ -32,7 +32,7 @@ public class CubeDrawer extends JPanel {
     private int elevation = 35;
     private Truck truck;
     private Point3D deltaO = new Point3D(0, 0, 0);
-    private Boolean debug = true;
+    private Boolean debug = false;
 
 
     public CubeDrawer(int w, int h) {
@@ -45,19 +45,25 @@ public class CubeDrawer extends JPanel {
         H = h;
         image = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
         truckParcel = new Parcel(truck.getWidth(), truck.getHeight(), truck.getLength());
-        BruteForce.fill(truck);
+        //BruteForce.fill(truck);
         //populateTruck();
         renderScene();
     }
 
     private void populateTruck() {
-        for(int i=0; i<3; i++){
-            Parcel A = new Parcel("A");
-            Parcel B = new Parcel("B");
-            Parcel C = new Parcel("C");
+        for(int i=0; i<1; i++){
+            Parcel A = new Parcel();
+            A.setPos(new Point3D(1,0,0));
+            Parcel B = new Parcel();
+            B.setPos(new Point3D(1,0,0));
+            Parcel C = new Parcel();
+            C.setPos(new Point3D(2,0,0));
+            Parcel D = new Parcel();
+            D.setPos(new Point3D(3,0,0));
             truck.addParcel(A);
             truck.addParcel(B);
             truck.addParcel(C);
+            truck.addParcel(D);
         }
     }
 
@@ -77,6 +83,20 @@ public class CubeDrawer extends JPanel {
 
         //draw a parcel to represent the truck
         drawParcelPro(truckParcel, Color.CYAN, false);
+
+
+        PentominoParcel t = new PentominoParcel("T");
+        t.setPos(new Point3D(3,0,2));
+        drawParcelPro(t, Color.WHITE, false);
+
+        PentominoParcel l = new PentominoParcel("L");
+        l.setPos(new Point3D(5,0,0));
+        drawParcelPro(l, Color.WHITE, false);
+
+        PentominoParcel p = new PentominoParcel("P");
+        drawParcelPro(p, Color.WHITE, false);
+
+
 
         for (Parcel parcel : truck.getParcelList()) {
             drawParcelPro(parcel, Color.WHITE, false);
@@ -169,7 +189,7 @@ public class CubeDrawer extends JPanel {
     public void zoom(int i) {
         unit += i;
         if(unit < 6) unit = 6;
-        if(unit > 30) unit = 30;
+        if(unit > 40) unit = 40;
         renderScene();
     }
 
@@ -243,6 +263,7 @@ public class CubeDrawer extends JPanel {
         }
 
         for(Edge3D edge : edges) {
+            System.out.println("Edge");
             Point a = convertPointPro(edge.a.add(pos));
             Point b = convertPointPro(edge.b.add(pos));
             newEdges.add(new Edge(a,b));
@@ -257,14 +278,14 @@ public class CubeDrawer extends JPanel {
     /**
      * Draws a Wire Frame of a Cube represented as a <code>ArrayList</code> of Edge Objects and a <code>Color</code>.<br>
      *
-     * @param p The ArrayList of the 2D edges of the Cube to draw.
+     * @param edges The ArrayList of the 2D edges of the Cube to draw.
      * @param c A Color to draw the Wire Frame from.
      */
-    private void drawWireFrame(ArrayList<Edge> newEdges, Color c) {
+    private void drawWireFrame(ArrayList<Edge> edges, Color c) {
         Graphics2D g = (Graphics2D) image.getGraphics();
         g.setColor(c);
 
-        for(Edge edge : newEdges) {
+        for(Edge edge : edges) {
             drawLine(edge.a, edge.b, c);
         }
     }

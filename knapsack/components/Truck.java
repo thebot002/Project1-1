@@ -41,7 +41,7 @@ public class Truck {
 	}
 
     /**
-     * Default constructor for this project. Truck with size: 16.5 x 4.0 x 2.5 .
+     * Default constructor for this project. Truck with size: 33 x 8 x 5 .
      */
     public Truck(){
         this(33,8,5);
@@ -243,10 +243,7 @@ public class Truck {
 	public void setParcelList(ArrayList<Parcel> parcelListInput) {
 		parcelList = parcelListInput;
 	}
-	
-	public ArrayList<Parcel> getParcelList() {
-		return parcelList;
-	}
+
 
     /**
      * Method to get the amounts of gap left in the truck. (debug purpose)
