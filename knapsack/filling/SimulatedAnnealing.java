@@ -6,6 +6,12 @@ import knapsack.components.Truck;
 
 import java.util.ArrayList;
 
+/*
+
+List length problem: other get method to get actual index of array? Something else?
+
+ */
+
 public class SimulatedAnnealing {
     private static double temperature;
     private static double beta = 0.9; //cooling parameter
@@ -17,25 +23,36 @@ public class SimulatedAnnealing {
     private static int bestVolume;
 
     private static final double INITIAL_TEMPERATURE = 100.0;
-    private static final int NEIGHBOURHOOD_SIZE = 20; // to be adapted...
     private static final int TOTAL_ROTATIONS = 6; //to be adapted if pentominoes
 
     private static long startTime;
     private static long timeToRun = 60000; //60sec, to be adapted...
 
-    public static Truck getTruck(ParcelList list){
-        list = list;
-        return new Truck();
+    public static Truck getTruck(){
+        list = new ParcelList();
+
+        list.add(new Parcel("A"),14);
+        list.add(new Parcel("B"),14);
+        list.add(new Parcel("C"),14);
+
+        simulate();
+
+        return truck;
     }
 
-    static{
+    private static void simulate(){
         //variable initialization
         startTime = System.currentTimeMillis();
         temperature = INITIAL_TEMPERATURE;
-        sequence = new int[4][list.size()];
+        //initialize the sequence
+        sequence = new int[4][list.getTotalSize()];
+        generate();
 
-        //to be modified
-        //truck = generate();
+        //construct the truck
+        truck = fill(sequence);
+
+        //gets the volume to initialize bestVolume variable
+        bestVolume = truck.getVolume();
 
         //annealing loop (separate method?)
         while(System.currentTimeMillis()-startTime < timeToRun){
@@ -44,9 +61,9 @@ public class SimulatedAnnealing {
             ArrayList<int[][]> neighbourhood = new ArrayList<>();
             neighbourhood = generate(sequence); //place list here
 
-            //tries to fill truck
-            int[][] neighbour = neighbourhood.get((int)(Math.random()*neighbourhood.size()));
-            int volume = 0; //neighbour.getVolume();
+            //tries to fill truck with random neighbour
+            Truck newT = fill(neighbourhood.get((int)(Math.random()*neighbourhood.size())));
+            int volume = newT.getVolume();
             boolean better = false;
 
             //check if filling is better in new neighbour
@@ -67,8 +84,8 @@ public class SimulatedAnnealing {
             //saves configuration
             if(better){
                 //selected++; WHAT IS THE THATTTT?
-                //truck = neighbour;
-                //bestVolume = neighbour.getVolume();
+                truck = newT;
+                bestVolume = volume;
             }
         }
 
@@ -140,14 +157,16 @@ public class SimulatedAnnealing {
         return newS;
     }
 
-    public static Truck getTruck(){
-        return truck;
-    }
-
-    private Truck fill(int[][] s){
+    private static Truck fill(int[][] s){
         Truck t = new Truck();
         for(int i=0; i<s.length; i++){
-
+            Parcel toPlace = list.get(s[1][i]).copy();
+            for(int j=0; j<s[3][s[1][i]];j++){
+                if(j%3 == 0) toPlace.rotateAroundX();
+                else if(j%3 == 1) toPlace.rotateAroundZ();
+                else toPlace.rotateAroundY();
+            }
+            truck.addParcel(toPlace);
         }
         return t;
     }

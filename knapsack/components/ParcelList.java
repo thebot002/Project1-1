@@ -31,4 +31,12 @@ public class ParcelList extends ArrayList<Parcel>{
             amounts.set(index, amounts.get(index)-1);
         }
     }
+
+    public int getTotalSize(){
+        int sum = 0;
+        for(int i: amounts){
+            sum += i;
+        }
+        return sum;
+    }
 }
