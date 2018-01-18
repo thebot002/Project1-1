@@ -44,7 +44,9 @@ public class TruckViewer extends JFrame {
 
 
 
-
+        m.setGapsFound(c.getGapAmount());
+        m.setCurrentValue(c.getValue());
+        //m.setTimeTook(c.getTimeTook());
         add(m, BorderLayout.EAST);
         add(c, BorderLayout.CENTER);
         c.setVisible(true);
@@ -91,4 +93,5 @@ public class TruckViewer extends JFrame {
             }
         });
     }
+
 }

@@ -198,7 +198,7 @@ public class Menu extends JPanel implements ActionListener {
      * @param value Current value
      */
 	public void setCurrentValue(int value) {
-		lblGapsFoundDisp.setText(String.valueOf(value));
+		lblCurrentValueDisp.setText(String.valueOf(value));
 	}
 
 	/**

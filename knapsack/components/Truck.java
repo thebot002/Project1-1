@@ -12,8 +12,9 @@ public class Truck {
 	private int length;
 	private int height;
 	private int width;
+	private int gaps;
 	private String[][][] truck;
-
+ 
 	private boolean debug = false;
 
 	/**
@@ -242,20 +243,24 @@ public class Truck {
 	public void setParcelList(ArrayList<Parcel> parcelListInput) {
 		parcelList = parcelListInput;
 	}
+	
+	public ArrayList<Parcel> getParcelList() {
+		return parcelList;
+	}
 
     /**
      * Method to get the amounts of gap left in the truck. (debug purpose)
      * @return The amounts of gaps in truck.
      */
 	public int getGapAmount(){
-		int sum =0;
+		int gaps = 0;
 		for(int i=0; i<width; i++){
 			for(int j=0; j<height; j++){
 				for(int k=0; k<length; k++){
-					if(truck[i][j][k].equals("-")) sum++;
+					if(truck[i][j][k].equals("-")) gaps++;
 				}
 			}
 		}
-		return sum;
+		return gaps;
 	}
 }
