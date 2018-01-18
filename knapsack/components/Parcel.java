@@ -89,21 +89,35 @@ public class Parcel {
         points.add(new Point3D(width, height, length));
         points.add(new Point3D(width, 0, length));
 
+        setEdges();
 
-        edges.add(new Edge3D(points.get(0),points.get(1)));
-        edges.add(new Edge3D(points.get(1),points.get(2)));
-        edges.add(new Edge3D(points.get(2),points.get(3)));
-        edges.add(new Edge3D(points.get(3),points.get(0)));
+//        edges.add(new Edge3D(points.get(0),points.get(1)));
+//        edges.add(new Edge3D(points.get(1),points.get(2)));
+//        edges.add(new Edge3D(points.get(2),points.get(3)));
+//        edges.add(new Edge3D(points.get(3),points.get(0)));
+//
+//        edges.add(new Edge3D(points.get(0),points.get(4)));
+//        edges.add(new Edge3D(points.get(1),points.get(5)));
+//        edges.add(new Edge3D(points.get(2),points.get(6)));
+//        edges.add(new Edge3D(points.get(3),points.get(7)));
+//
+//        edges.add(new Edge3D(points.get(4),points.get(5)));
+//        edges.add(new Edge3D(points.get(5),points.get(6)));
+//        edges.add(new Edge3D(points.get(6),points.get(7)));
+//        edges.add(new Edge3D(points.get(7),points.get(4)));
+    }
 
-        edges.add(new Edge3D(points.get(0),points.get(4)));
-        edges.add(new Edge3D(points.get(1),points.get(5)));
-        edges.add(new Edge3D(points.get(2),points.get(6)));
-        edges.add(new Edge3D(points.get(3),points.get(7)));
 
-        edges.add(new Edge3D(points.get(4),points.get(5)));
-        edges.add(new Edge3D(points.get(5),points.get(6)));
-        edges.add(new Edge3D(points.get(6),points.get(7)));
-        edges.add(new Edge3D(points.get(7),points.get(4)));
+    protected void setEdges() {
+        int s = (points.size()/2) - 1;
+        for(int inc = 0; inc < s; inc++) {
+            edges.add(new Edge3D(points.get(inc), points.get(inc+1)));
+            edges.add(new Edge3D(points.get(inc), points.get(inc+s+1)));
+            edges.add(new Edge3D(points.get(inc+s+1), points.get(inc+s+2)));
+        }
+        edges.add(new Edge3D(points.get(s),points.get(0)));
+        edges.add(new Edge3D(points.get(s),points.get(s*2+1)));
+        edges.add(new Edge3D(points.get(s*2+1),points.get(s+1)));
     }
 
     /**

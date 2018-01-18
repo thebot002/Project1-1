@@ -84,6 +84,9 @@ public class CubeDrawer extends JPanel {
         //draw a parcel to represent the truck
         drawParcelPro(truckParcel, Color.CYAN, false);
 
+        Parcel x = new Parcel();
+        x.setPos(new Point3D(10, 0, 0));
+        drawParcelPro(x, Color.WHITE, false);
 
         PentominoParcel t = new PentominoParcel("T");
         t.setPos(new Point3D(3,0,2));
