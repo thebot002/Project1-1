@@ -3,10 +3,16 @@ package knapsack.frame;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+
+import javax.swing.ButtonGroup;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import java.text.ParseException;
+import javax.swing.JRadioButton;
+import javax.swing.JRadioButtonMenuItem;
+import javax.swing.JComboBox;
+import javax.swing.JToggleButton;
 
 public class SwitchTabbedPane extends JPanel {
 
@@ -25,13 +31,19 @@ public class SwitchTabbedPane extends JPanel {
 	private JSpinner spnnrValDispFR;
 	private JSpinner spnnrValDispSR;
 	private JSpinner spnnrValDispTR;
-
+	private JRadioButton rdbtnGreedy;
+	private JRadioButton rdbtnBacktracking;
+	private JComboBox comboBoxGreedyOptions;
+	private JComboBox comboBoxBacktrackingOptions;
+	private ButtonGroup algorithmSwitch;
+	private String listOrder;
+	
 	public SwitchTabbedPane(String firstRow, String secondRow, String thirdRow, String dim, String dimFirstRow, String dimSecondRow, String dimThirdRow ) {
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{0, 61, 15, 0, 0, 0, 0, 0, 0};
-		gridBagLayout.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+		gridBagLayout.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 1.0, 0.0, 1.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
-		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
 
 		lblAmnt = new JLabel("Amount");
@@ -144,6 +156,59 @@ public class SwitchTabbedPane extends JPanel {
 		gbc_lblDimTR.gridx = 6;
 		gbc_lblDimTR.gridy = 6;
 		add(lblDimTR, gbc_lblDimTR);
+		
+		rdbtnGreedy = new JRadioButton("Greedy");
+		GridBagConstraints gbc_rdbtnGreedy = new GridBagConstraints();
+		gbc_rdbtnGreedy.insets = new Insets(0, 0, 5, 5);
+		gbc_rdbtnGreedy.gridx = 2;
+		gbc_rdbtnGreedy.gridy = 8;
+		rdbtnGreedy.setSelected(true);
+		rdbtnGreedy.setActionCommand("Greedy");
+		add(rdbtnGreedy, gbc_rdbtnGreedy);
+		
+		rdbtnBacktracking = new JRadioButton("Backtracking");
+		GridBagConstraints gbc_rdbtnBacktracking = new GridBagConstraints();
+		gbc_rdbtnBacktracking.insets = new Insets(0, 0, 5, 5);
+		gbc_rdbtnBacktracking.gridx = 4;
+		gbc_rdbtnBacktracking.gridy = 8;
+		rdbtnBacktracking.setActionCommand("Backtracking");
+		add(rdbtnBacktracking, gbc_rdbtnBacktracking);
+		
+		algorithmSwitch = new ButtonGroup();
+		algorithmSwitch.add(rdbtnGreedy);
+		algorithmSwitch.add(rdbtnBacktracking);
+		
+		String[] options = {"Decreasing value/volume", "Decreasing value", "Decreasing volume", "Genetic Algorithm"};
+		
+		comboBoxGreedyOptions = new JComboBox(options);
+		GridBagConstraints gbc_comboBoxGreedyOptions = new GridBagConstraints();
+		gbc_comboBoxGreedyOptions.insets = new Insets(0, 0, 5, 5);
+		gbc_comboBoxGreedyOptions.fill = GridBagConstraints.HORIZONTAL;
+		gbc_comboBoxGreedyOptions.gridx = 2;
+		gbc_comboBoxGreedyOptions.gridy = 9;
+		add(comboBoxGreedyOptions, gbc_comboBoxGreedyOptions);
+		
+		comboBoxBacktrackingOptions = new JComboBox(options);
+		GridBagConstraints gbc_comboBoxBacktrackingOptions = new GridBagConstraints();
+		gbc_comboBoxBacktrackingOptions.insets = new Insets(0, 0, 5, 5);
+		gbc_comboBoxBacktrackingOptions.fill = GridBagConstraints.HORIZONTAL;
+		gbc_comboBoxBacktrackingOptions.gridx = 4;
+		gbc_comboBoxBacktrackingOptions.gridy = 9;
+		add(comboBoxBacktrackingOptions, gbc_comboBoxBacktrackingOptions);
+	}
+	/**
+     * Method to get truck filling settings. First row represents algorithm (Greedy/Backtracking) and second how the list from which the algorithm picks shapes is determined
+     * @return String array containing settings for how to fill the truck.
+     */
+	public String[] collectParcelSettings() {
+		if(algorithmSwitch.getSelection().getActionCommand().equals("Greedy")) {
+			listOrder = (String)comboBoxGreedyOptions.getSelectedItem();
+		}
+		if(algorithmSwitch.getSelection().getActionCommand().equals("Backtracking")) {
+			listOrder = (String)comboBoxBacktrackingOptions.getSelectedItem();
+		}
+		String[] settings = {algorithmSwitch.getSelection().getActionCommand(), listOrder};
+		return settings;
 	}
 
 	 /**
