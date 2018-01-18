@@ -34,12 +34,15 @@ public class TruckViewer extends JFrame {
         setResizable(false);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
+        c = new CubeDrawer(W/3*2, H);
+        c.setPreferredSize(new Dimension(W/3*2, H));
+
         m = new Menu();
+        m.setCubeDrawer(c);
         //m.setPreferredSize(new Dimension(W/3, H));
         m.setVisible(true);
 
-        c = new CubeDrawer(W/3*2, H);
-        c.setPreferredSize(new Dimension(W/3*2, H));
+
 
         m.setGapsFound(c.getGapAmount());
         m.setCurrentValue(c.getValue());

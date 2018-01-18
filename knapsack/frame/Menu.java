@@ -30,6 +30,7 @@ public class Menu extends JPanel implements ActionListener {
 	private SwitchTabbedPane pentominoTab;
 	private JLabel lblTimeTook;
 	private JLabel lblTimeTookDisp;
+	private CubeDrawer cubeDrawer;
 
 	public Menu() {
 		setBackground(SystemColor.menu);
@@ -137,6 +138,10 @@ public class Menu extends JPanel implements ActionListener {
 		add(lblTimeTookDisp, gbc_lblTimeTookDisp);
 	}
 
+	public void setCubeDrawer(CubeDrawer c) {
+		cubeDrawer = c;
+	}
+
 	 /**
      * Implementation of action listeners of buttons
      * If "Fill Truck" is clicked the values of the JSpinners are put into an arraylist
@@ -171,10 +176,12 @@ public class Menu extends JPanel implements ActionListener {
 	        }
 		}
 		else if(e.getSource() == btnClearTruck) {
-
+			if(cubeDrawer != null)
+				cubeDrawer.emptyTruck();
 		}
 		else if(e.getSource() == btnResetCamera) {
-
+			if(cubeDrawer != null)
+				cubeDrawer.resetCamera();
 		}
 	}
 

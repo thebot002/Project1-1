@@ -24,7 +24,7 @@ public class CubeDrawer extends JPanel {
     private int H;
     private int W;
     private BufferedImage image;
-    private int unit = 13; //scaling factor
+    private int unit = 20; //scaling factor
 
 
     private Parcel truckParcel;
@@ -51,7 +51,7 @@ public class CubeDrawer extends JPanel {
     }
 
     private void populateTruck() {
-        for(int i=0; i<40; i++){
+        for(int i=0; i<3; i++){
             Parcel A = new Parcel("A");
             Parcel B = new Parcel("B");
             Parcel C = new Parcel("C");
@@ -78,7 +78,7 @@ public class CubeDrawer extends JPanel {
         //draw a parcel to represent the truck
         drawParcelPro(truckParcel, Color.CYAN, false);
 
-        for (Parcel parcel : truck.parcelList) {
+        for (Parcel parcel : truck.getParcelList()) {
             drawParcelPro(parcel, Color.WHITE, false);
         }
 
@@ -99,10 +99,10 @@ public class CubeDrawer extends JPanel {
         J.setPos(deltaO.multiply(-1));
         K.setPos(deltaO.multiply(-1));
         drawParcelPro(I, Color.BLUE, false);
-        drawParcelPro(J, Color.RED, false);
-        drawParcelPro(K, Color.RED, false);
+        drawParcelPro(J, Color.GREEN, false);
+        drawParcelPro(K, Color.YELLOW, false);
         drawParcelPro(new Parcel(5, 0, 0), Color.BLUE, false);
-        drawParcelPro(new Parcel(0, 5, 0), Color.YELLOW, false);
+        drawParcelPro(new Parcel(0, 5, 0), Color.GREEN, false);
         drawParcelPro(new Parcel(0, 0, 5), Color.YELLOW, false);
     }
 
@@ -168,6 +168,8 @@ public class CubeDrawer extends JPanel {
      */
     public void zoom(int i) {
         unit += i;
+        if(unit < 6) unit = 6;
+        if(unit > 30) unit = 30;
         renderScene();
     }
 
@@ -229,45 +231,45 @@ public class CubeDrawer extends JPanel {
     private void drawParcelPro(Parcel p, Color c, Boolean fill) {
         Point3D pos = p.getPos();
         ArrayList<Point3D> points = p.getPoints();
-        ArrayList<Point> pp = new ArrayList<>();
+        ArrayList<Point> newPoints = new ArrayList<>();
+
+        ArrayList<Edge3D> edges = p.getEdges();
+        ArrayList<Edge> newEdges = new ArrayList<>();
+
 
         //Convert all 3D points to Projected 2D points relative to the Parcels position.
         for (Point3D point : points) {
-            pp.add(convertPointPro(point.add(pos)));
+            newPoints.add(convertPointPro(point.add(pos)));
         }
-        drawWireFrame(pp, c);
+
+        for(Edge3D edge : edges) {
+            Point a = convertPointPro(edge.a.add(pos));
+            Point b = convertPointPro(edge.b.add(pos));
+            newEdges.add(new Edge(a,b));
+        } //Add convert Edge Method.
+
+        drawWireFrame(newEdges, c);
         if(fill)
-            fillCube(pp, new Color(1,0,0,0.3f));
+            fillCube(newPoints, new Color(1,0,0,0.3f));
     }
+
 
     /**
-     * Draws a Wire Frame of a Cube represented as an <code>ArrayList</code> of (2d) <code>Point</code> Objects and a <code>Color</code>.<br>
-     * The set of Points can be generated using the <code>convertPointPro()</code> method.
+     * Draws a Wire Frame of a Cube represented as a <code>ArrayList</code> of Edge Objects and a <code>Color</code>.<br>
      *
-     * @param p The ArrayList of the 2D points of the Cube to draw.
+     * @param p The ArrayList of the 2D edges of the Cube to draw.
      * @param c A Color to draw the Wire Frame from.
      */
-    private void drawWireFrame(ArrayList<Point> p, Color c) {
+    private void drawWireFrame(ArrayList<Edge> newEdges, Color c) {
         Graphics2D g = (Graphics2D) image.getGraphics();
         g.setColor(c);
-        drawLine(p.get(0), p.get(1), c);
-        drawLine(p.get(0), p.get(3), c);
-        drawLine(p.get(0), p.get(4), c);
 
-        drawLine(p.get(1), p.get(2), c);
-        drawLine(p.get(1), p.get(5), c);
-
-        drawLine(p.get(2), p.get(3), c);
-        drawLine(p.get(2), p.get(6), c);
-
-        drawLine(p.get(3), p.get(7), c);
-
-        drawLine(p.get(4), p.get(5), c);
-        drawLine(p.get(4), p.get(7), c);
-
-        drawLine(p.get(6), p.get(5), c);
-        drawLine(p.get(6), p.get(7), c);
+        for(Edge edge : newEdges) {
+            drawLine(edge.a, edge.b, c);
+        }
     }
+
+
 
     /**
      * Draws a transparent Cube represented as an <code>ArrayList</code> of (2d) <code>Point</code> Objects and a <code>Color</code>.<br>
@@ -332,5 +334,17 @@ public class CubeDrawer extends JPanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         g.drawImage(image, 0, 0, null);
+    }
+
+    public void resetCamera() {
+        angle = 0;
+        elevation = 35;
+        unit = 20;
+        renderScene();
+    }
+
+    public void emptyTruck() {
+       truck = new Truck();
+       renderScene();
     }
 }
