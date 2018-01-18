@@ -94,5 +94,11 @@ public class BruteForce {
         }
         System.out.println(totVal);
     }
+    public static void setParcelArray(Parcel[] customParcelAr) {
+    	parcelAr = customParcelAr;
+    }
+    public static Parcel[] getParcelArray() {
+    	return parcelAr;
+    }
 
 }
