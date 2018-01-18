@@ -8,15 +8,13 @@ import java.util.*;
  */
 public class Parcel {
 	private ArrayList<Point3D> points;
-	private HashMap<Point3D,Point3D> edges;
+	private ArrayList<Edge3D> edges = new ArrayList<>();
 	private int length;
 	private int height;
 	private int width;
 	private Point3D pos;
 	private int value = 1;
 	private String id;
-
-	private HashMap<Point3D,Point3D> edges;
 
 	private int state = 0;
     private ArrayList<ArrayList<Point3D>> rotations;
@@ -87,23 +85,21 @@ public class Parcel {
         points.add(new Point3D(width, height, length));
         points.add(new Point3D(width, 0, length));
 
-        edges = new HashMap<>();
 
-        edges.put(points.get(0),points.get(1));
-        edges.put(points.get(1),points.get(2));
-        edges.put(points.get(2),points.get(3));
-        edges.put(points.get(3),points.get(0));
+        edges.add(new Edge3D(points.get(0),points.get(1)));
+        edges.add(new Edge3D(points.get(1),points.get(2)));
+        edges.add(new Edge3D(points.get(2),points.get(3)));
+        edges.add(new Edge3D(points.get(3),points.get(0)));
 
-        edges.put(points.get(0),points.get(4));
-        edges.put(points.get(1),points.get(5));
-        edges.put(points.get(2),points.get(6));
-        edges.put(points.get(3),points.get(7));
+        edges.add(new Edge3D(points.get(0),points.get(4)));
+        edges.add(new Edge3D(points.get(1),points.get(5)));
+        edges.add(new Edge3D(points.get(2),points.get(6)));
+        edges.add(new Edge3D(points.get(3),points.get(7)));
 
-        edges.put(points.get(4),points.get(5));
-        edges.put(points.get(5),points.get(6));
-        edges.put(points.get(6),points.get(7));
-        edges.put(points.get(7),points.get(4));
-
+        edges.add(new Edge3D(points.get(4),points.get(5)));
+        edges.add(new Edge3D(points.get(5),points.get(6)));
+        edges.add(new Edge3D(points.get(6),points.get(7)));
+        edges.add(new Edge3D(points.get(7),points.get(4)));
     }
 
     /**
@@ -158,6 +154,12 @@ public class Parcel {
 	public ArrayList<Point3D> getPoints() {
 		return points;
 	}
+
+    /**
+     * Returns a HashMap of connected points of a Parcel
+     * @return a HashMap<Point3D, Point3D> of the edges.
+     */
+	public ArrayList<Edge3D> getEdges() {return edges;}
 
     /**
      * Method to get the width of the parcel. (x axis)
