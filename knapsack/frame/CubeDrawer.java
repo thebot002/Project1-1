@@ -371,4 +371,16 @@ public class CubeDrawer extends JPanel {
        truck = new Truck();
        renderScene();
     }
+    
+    public int getZoom() {
+    	return unit;
+    }
+    
+    public int getElevation() {
+    	return elevation;
+    }
+    
+    public int getAngle() {
+    	return angle;
+    }
 }
