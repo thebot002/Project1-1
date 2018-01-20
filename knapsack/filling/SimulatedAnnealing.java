@@ -18,7 +18,7 @@ public class SimulatedAnnealing {
     private static double alpha = 0.5; //heating parameter
 
     private static Truck truck;
-    private static ParcelList list;
+    private static ArrayList<Parcel> list;
     private static int[][] sequence;
     private static int bestVolume;
 
@@ -29,11 +29,13 @@ public class SimulatedAnnealing {
     private static long timeToRun = 60000; //60sec, to be adapted...
 
     public static Truck getTruck(){
-        list = new ParcelList();
+        ParcelList pList = new ParcelList();
 
-        list.add(new Parcel("A"),14);
-        list.add(new Parcel("B"),14);
-        list.add(new Parcel("C"),14);
+        pList.add(new Parcel("A"),14);
+        pList.add(new Parcel("B"),14);
+        pList.add(new Parcel("C"),14);
+
+        list = pList.getFullArray();
 
         simulate();
 
@@ -45,7 +47,7 @@ public class SimulatedAnnealing {
         startTime = System.currentTimeMillis();
         temperature = INITIAL_TEMPERATURE;
         //initialize the sequence
-        sequence = new int[4][list.getTotalSize()];
+        sequence = new int[4][list.size()];
         generate();
 
         //construct the truck
@@ -73,8 +75,6 @@ public class SimulatedAnnealing {
                 double delta = (bestVolume- volume)/bestVolume;
                 double i = Math.random();
 
-                //logical error? check code...
-
                 if(i < Math.exp(-delta / temperature)) better = true; //the cooler it gets the smaller chance there is for this to be activated
                 else{ //reheats the temperature
                     temperature = temperature/(1-(alpha*temperature));
@@ -83,7 +83,6 @@ public class SimulatedAnnealing {
 
             //saves configuration
             if(better){
-                //selected++; WHAT IS THE THATTTT?
                 truck = newT;
                 bestVolume = volume;
             }
@@ -102,8 +101,9 @@ public class SimulatedAnnealing {
                 int parcel;
                 boolean contains = false;
                 do{
+                    contains = false;
                     parcel = (int)(Math.random()*sequence.length);
-                    for(int k=0;k<sequence[i].length;k++) if(sequence[i][k] == parcel) contains = true;
+                    for(int k=j-1;k>0;k--) if(sequence[i][k] == parcel) contains = true;
                 }while(contains);
                 sequence[i][j]=parcel;
             }

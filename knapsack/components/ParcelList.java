@@ -39,4 +39,14 @@ public class ParcelList extends ArrayList<Parcel>{
         }
         return sum;
     }
+
+    public ArrayList<Parcel> getFullArray(){
+        ArrayList<Parcel> list = new ArrayList<>();
+        for (int i=0; i<size();i++){
+            for (int j=0; j<amounts.get(i);j++){
+                list.add(get(i).copy());
+            }
+        }
+        return list;
+    }
 }

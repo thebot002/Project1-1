@@ -8,6 +8,7 @@ import java.awt.image.BufferedImage;
 import javafx.geometry.Point3D;
 import knapsack.filling.BruteForce;
 import knapsack.filling.FillTruck;
+import knapsack.filling.SimulatedAnnealing;
 import knapsack.greedy.Greedy;
 
 import java.awt.Point;
@@ -42,7 +43,8 @@ public class CubeDrawer extends JPanel {
 
     public CubeDrawer(int w, int h, Truck truck) {
         //this.truck = truck;
-        this.truck = FillTruck.getFilled();
+        //this.truck = FillTruck.getFilled();
+        this.truck = SimulatedAnnealing.getTruck();
         W = w;
         H = h;
         image = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
