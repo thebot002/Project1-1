@@ -17,7 +17,7 @@ public class SimulatedAnnealing {
     private static double beta = 0.9; //cooling parameter
     private static double alpha = 0.5; //heating parameter
 
-    private static Truck truck;
+    private static Truck bestTruck;
     private static ArrayList<Parcel> list;
     private static int[][] sequence;
     private static int bestVolume;
@@ -37,9 +37,11 @@ public class SimulatedAnnealing {
 
         list = pList.getFullArray();
 
+        sequence = new int[4][pList.getTotalSize()];
+
         simulate();
 
-        return truck;
+        return bestTruck;
     }
 
     private static void simulate(){
@@ -47,25 +49,24 @@ public class SimulatedAnnealing {
         startTime = System.currentTimeMillis();
         temperature = INITIAL_TEMPERATURE;
         //initialize the sequence
-        sequence = new int[4][list.size()];
         generate();
 
         //construct the truck
-        truck = fill(sequence);
+        bestTruck = new Truck();
+        bestTruck = fill(sequence);
 
         //gets the volume to initialize bestVolume variable
-        bestVolume = truck.getVolume();
+        bestVolume = bestTruck.getParcelVolume();
 
         //annealing loop (separate method?)
         while(System.currentTimeMillis()-startTime < timeToRun){
 
             //creates neighbourhood
-            ArrayList<int[][]> neighbourhood = new ArrayList<>();
-            neighbourhood = generate(sequence); //place list here
+            ArrayList<int[][]> neighbourhood = generate(sequence); //place list here
 
             //tries to fill truck with random neighbour
             Truck newT = fill(neighbourhood.get((int)(Math.random()*neighbourhood.size())));
-            int volume = newT.getVolume();
+            int volume = newT.getParcelVolume();
             boolean better = false;
 
             //check if filling is better in new neighbour
@@ -83,14 +84,11 @@ public class SimulatedAnnealing {
 
             //saves configuration
             if(better){
-                truck = newT;
+                bestTruck = newT.copy();
                 bestVolume = volume;
             }
         }
 
-    }
-
-    public static void fill(Truck t){
     }
 
     //generates a random sequence to fill the truck
@@ -102,7 +100,7 @@ public class SimulatedAnnealing {
                 boolean contains = false;
                 do{
                     contains = false;
-                    parcel = (int)(Math.random()*sequence.length);
+                    parcel = (int)(Math.random()*sequence[0].length);
                     for(int k=j-1;k>0;k--) if(sequence[i][k] == parcel) contains = true;
                 }while(contains);
                 sequence[i][j]=parcel;
@@ -157,16 +155,29 @@ public class SimulatedAnnealing {
         return newS;
     }
 
+    public static void setBeta(double beta) {
+        SimulatedAnnealing.beta = beta;
+    }
+
+    public static void setAlpha(double alpha) {
+
+        SimulatedAnnealing.alpha = alpha;
+    }
+
     private static Truck fill(int[][] s){
         Truck t = new Truck();
-        for(int i=0; i<s.length; i++){
+        //item to place
+        for(int i=0; i<s[0].length; i++){
+            //only sequence B, see report for details
             Parcel toPlace = list.get(s[1][i]).copy();
+            //rotation loop
             for(int j=0; j<s[3][s[1][i]];j++){
                 if(j%3 == 0) toPlace.rotateAroundX();
                 else if(j%3 == 1) toPlace.rotateAroundZ();
                 else toPlace.rotateAroundY();
             }
-            truck.addParcel(toPlace);
+
+            t.addParcel(toPlace);
         }
         return t;
     }

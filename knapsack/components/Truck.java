@@ -266,6 +266,9 @@ public class Truck {
 		return getGapAmount(new Point3D(width,height,length));
 	}
 
+	public int getParcelVolume(){
+	    return getVolume()-getGapAmount();
+    }
 
 	public int getGapAmount(Point3D pos){
         int sum =0;
