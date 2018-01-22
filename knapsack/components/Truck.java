@@ -57,20 +57,6 @@ public class Truck implements Scene {
     	this.parcelList = list;
 	}
 
-    public Truck copy(){
-        String[][][] newTruck = new String[width][height][length];
-        for(int i=0; i<width; i++) {
-            for(int j=0; j<height; j++) {
-                for(int k=0; k<length; k++) {
-                    newTruck[i][j][k]=truck[i][j][k];
-                }
-            }
-        }
-        ArrayList<Parcel> newList = new ArrayList<>();
-        for(int i=0; i<parcelList.size(); i++) newList.add(parcelList.get(i).copy());
-        return new Truck(newTruck, newList);
-    }
-
 	//finds the position to add at, currently not used but am planning to - Nic
 	public int[] positionToAdd() {
 		int[] position = new int[3];
@@ -239,7 +225,7 @@ public class Truck implements Scene {
         return total;
     }
 
-	public Truck copyTruck(){
+	public Truck copy(){
 		String[][][] newTruck = new String[truck.length][truck[0].length][truck[0][0].length];
 		for(int i=0; i<width; i++) {
 			for(int j=0; j<height; j++) {
@@ -286,22 +272,6 @@ public class Truck implements Scene {
 		return truckString;
 	}
 
-    /**
-     * Method to get the amounts of gap left in the truck. (debug purpose)
-     * @return The amounts of gaps in truck.
-     */
-	public int getGapAmount(){
-		int gaps = 0;
-		for(int i=0; i<width; i++){
-			for(int j=0; j<height; j++){
-				for(int k=0; k<length; k++){
-					if(truck[i][j][k].equals("-")) gaps++;
-				}
-			}
-		}
-		return gaps;
-	}
-
     public void setSize(int i, int i1, int i2) {
 	    this.width = i;
 	    this.height = i1;
@@ -338,11 +308,17 @@ public class Truck implements Scene {
 			}
 		}
 	}
-		return getGapAmount(new Point3D(width,height,length));
-	}
 
 	public int getParcelVolume(){
 	    return getVolume()-getGapAmount();
+    }
+
+    /**
+     * Method to get the amounts of gap left in the truck. (debug purpose)
+     * @return The amounts of gaps in truck.
+     */
+    public int getGapAmount(){
+        return getGapAmount(new Point3D(width,height,length));
     }
 
 	public int getGapAmount(Point3D pos){
@@ -355,9 +331,5 @@ public class Truck implements Scene {
             }
         }
         return gaps;
-    }
-
-    public ArrayList<Parcel> getTruck(){
-	    return parcelList;
     }
 }

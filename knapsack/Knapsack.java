@@ -1,7 +1,7 @@
 package knapsack;
 
 import knapsack.components.Truck;
-import knapsack.filling.BruteForce;
+import knapsack.filling.SimulatedAnnealing;
 import knapsack.frame.CubeDrawer;
 
 
@@ -15,10 +15,11 @@ public class Knapsack {
     }
 
     private void posiInit() {
-        Truck truck = new Truck();
+        SimulatedAnnealing s = new SimulatedAnnealing();
+        Truck truck = s.fillTruck();
         CubeDrawer c = new CubeDrawer(1000, 600, truck);
 
-        BruteForce.fill(truck);
+        //Greedy.fill(truck);
         c.renderScene();
     }
 }

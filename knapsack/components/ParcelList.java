@@ -2,6 +2,9 @@ package knapsack.components;
 
 import java.util.ArrayList;
 
+/**
+ * Class used to store parcel objects to
+ */
 public class ParcelList extends ArrayList<Parcel>{
     private ArrayList<Integer> amounts;
 

@@ -4,15 +4,26 @@ import java.util.ArrayList;
 
 import javafx.geometry.Point3D;
 import knapsack.components.Parcel;
+import knapsack.components.ParcelList;
 import knapsack.components.Truck;
 
-public class BackTrack {
+public class Backtracking implements TruckFilling {
 
 
 	private static ArrayList<Truck> truckList = new ArrayList<>();
 	private static ArrayList<Integer> truckValueList = new ArrayList<>();
 
-	public static void main(String[] args) {
+    @Override
+    public Truck fillTruck() {
+        return null;
+    }
+
+    @Override
+    public void setParcelList(ParcelList list) {
+
+    }
+
+    public static void main(String[] args) {
 
     // Build the truck.
 		Truck truck = new Truck();

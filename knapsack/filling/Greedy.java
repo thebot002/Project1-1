@@ -2,11 +2,22 @@ package knapsack.filling;
 
 import javafx.geometry.Point3D;
 import knapsack.components.Parcel;
+import knapsack.components.ParcelList;
 import knapsack.components.Truck;
 
 import java.util.ArrayList;
 
-public class BruteForce {
+public class Greedy implements TruckFilling{
+    @Override
+    public Truck fillTruck() {
+        return null;
+    }
+
+    @Override
+    public void setParcelList(ParcelList list) {
+
+    }
+
     private static Parcel[] parcelAr;
 
     public static void main(String[] args){

@@ -7,10 +7,6 @@ import java.text.DecimalFormat;
 import java.util.*;
 import java.awt.image.BufferedImage;
 import javafx.geometry.Point3D;
-import knapsack.filling.BruteForce;
-import knapsack.filling.FillTruck;
-import knapsack.filling.SimulatedAnnealing;
-import knapsack.greedy.Greedy;
 
 import java.awt.Point;
 import java.lang.Math;
