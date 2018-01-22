@@ -3,15 +3,12 @@ package knapsack.frame;
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.KeyEvent;
-import java.awt.Dimension;
-import javax.swing.JPanel;
 
 public class CubeViewer extends JFrame {
     private Font font;
 
     private CubeDrawer c;
     private Menu m;
-    private JPanel container;
 
     public CubeViewer(CubeDrawer c) {
         this.c = c;

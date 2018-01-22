@@ -69,7 +69,7 @@ public class Truck implements Scene {
 						position[0]=i;
 						position[1]=j;
 						position[2]=k;
-						if(debug) System.out.println("Position to ADd"+position[0]+" "+position[1]+" "+position[2]);
+						if(debug) System.out.println("Position to Add"+position[0]+" "+position[1]+" "+position[2]);
 						return position;
 					}
 				}
