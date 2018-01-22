@@ -2,8 +2,7 @@ package knapsack.greedy;
 
 import java.util.ArrayList;
 
-import javafx.geometry.Point3D;
-import knapsack.components.FillTruck;
+import knapsack.filling.FillTruck;
 import knapsack.components.Parcel;
 import knapsack.components.Truck;
 

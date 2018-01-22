@@ -1,4 +1,7 @@
-package knapsack.components;
+package knapsack.filling;
+
+import knapsack.components.Parcel;
+import knapsack.components.Truck;
 
 import java.util.ArrayList;
 

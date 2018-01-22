@@ -29,14 +29,14 @@ public class CubeDrawer extends JPanel {
     private Scene scene;
     private Boolean debug = false;
     private Boolean drawCoordinates = false;
+    private Boolean fill = false;
 
     public CubeDrawer(int w, int h, Scene s) {
-        this.W = w/3*2;
+        this.W = w;
         this.H = h;
         setBackground(Color.WHITE);
         setPreferredSize(new Dimension(W, H));
         setVisible(true);
-        CubeViewer tv = new CubeViewer(this);
         scene = s;
         image = new BufferedImage(W, H, BufferedImage.TYPE_INT_ARGB);
     }
@@ -58,7 +58,7 @@ public class CubeDrawer extends JPanel {
 
         //draw Scene's Cube List
         for (Cube cube : scene.getCubeList()) {
-            drawCubePro(cube, Color.RED, false);
+            drawCubePro(cube, Color.BLACK, fill);
         }
 
         //Origin and Rotation point, Indication/Axis Lines
@@ -162,7 +162,7 @@ public class CubeDrawer extends JPanel {
         } //Add convert Edge Method.
 
         if(fill)
-            fillCube(newPoints, new Color(1,0,0,0.3f));
+            fillCube(newPoints, cube.getColor());
         drawWireFrame(newEdges, c);
     }
 
@@ -310,6 +310,11 @@ public class CubeDrawer extends JPanel {
      */
     public void toggleDebug() {
         debug = !debug;
+        renderScene();
+    }
+
+    public void toggleFill() {
+        fill = !fill;
         renderScene();
     }
 

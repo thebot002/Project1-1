@@ -1,27 +1,33 @@
 package knapsack.frame;
 
+import knapsack.components.Truck;
+import knapsack.filling.BruteForce;
+
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.KeyEvent;
-import java.awt.Dimension;
-import javax.swing.JPanel;
 
-public class CubeViewer extends JFrame {
-    private Font font;
+public class Knapsack extends JFrame {
+    private final Truck truck;
+
+    public static void main(String[] args) {
+        new Knapsack();
+    }
 
     private CubeDrawer c;
     private Menu m;
-    private JPanel container;
 
-    public CubeViewer(CubeDrawer c) {
-        this.c = c;
-        setTitle("Truck");
+    public Knapsack() {
+        setTitle("Knapsack");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         addKeyInput();
 
-        m = new Menu();
+        truck = new Truck();
+        BruteForce.fill(truck);
+        c = new CubeDrawer(800, 600, truck);
+
+        m = new Menu(this);
         m.setCubeDrawer(c);
-        m.setVisible(true);
 
         add(m, BorderLayout.EAST);
         add(c, BorderLayout.CENTER);
@@ -29,6 +35,8 @@ public class CubeViewer extends JFrame {
         setVisible(true);
         setResizable(false);
     }
+
+    
 
 
     private void addKeyInput() {
@@ -40,7 +48,6 @@ public class CubeViewer extends JFrame {
             public boolean dispatchKeyEvent(KeyEvent e) {
                 if(e.getID()==KeyEvent.KEY_PRESSED ) {
                     int key = e.getKeyCode();
-                    //System.out.println(key);
 
                     if (key == 40)  //down arrow
                         c.roll(-3);
@@ -65,6 +72,9 @@ public class CubeViewer extends JFrame {
 
                     if (key == 80)  // p
                         c.toggleCoodDrawing();
+
+                    if (key == 70)  // f
+                        c.toggleFill();
                 }
                 return false;
             }

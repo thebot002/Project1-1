@@ -1,7 +1,6 @@
 package knapsack.components;
 
 import javafx.geometry.Point3D;
-
 import java.util.*;
 
 /**
@@ -48,7 +47,7 @@ public class Truck implements Scene {
      * Default constructor for this project. Truck with size: 33 x 8 x 5 .
      */
     public Truck(){
-        this(10,10,10);
+        this(33,8,5);
     }
 
     public Truck(String[][][] truck, ArrayList<Cube> list){
@@ -69,7 +68,7 @@ public class Truck implements Scene {
 						position[0]=i;
 						position[1]=j;
 						position[2]=k;
-						if(debug) System.out.println("Position to ADd"+position[0]+" "+position[1]+" "+position[2]);
+						if(debug) System.out.println("Position to Add"+position[0]+" "+position[1]+" "+position[2]);
 						return position;
 					}
 				}
@@ -108,7 +107,7 @@ public class Truck implements Scene {
      * @param p The parcel to be added to the truck.
      */
     public boolean addParcel(Parcel p){
-        for(int i = 0; i <= (width-p.getWidth()) ; i++){
+        for(int i = 0; i <= (width-p.getWidth()); i++){
             for(int j=0; j <= (height-p.getHeight()); j++){
                 for(int k=0; k <= (length-p.getLength()); k++){
 
