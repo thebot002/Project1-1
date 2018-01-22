@@ -8,6 +8,8 @@ import javax.swing.*;
 import java.awt.event.KeyEvent;
 
 public class Knapsack extends JFrame {
+    private final Truck truck;
+
     public static void main(String[] args) {
         new Knapsack();
     }
@@ -20,7 +22,7 @@ public class Knapsack extends JFrame {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         addKeyInput();
 
-        Truck truck = new Truck();
+        truck = new Truck();
         BruteForce.fill(truck);
         c = new CubeDrawer(800, 600, truck);
 
@@ -33,6 +35,8 @@ public class Knapsack extends JFrame {
         setVisible(true);
         setResizable(false);
     }
+
+    
 
 
     private void addKeyInput() {
