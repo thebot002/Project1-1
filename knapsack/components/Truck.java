@@ -1,7 +1,6 @@
 package knapsack.components;
 
 import javafx.geometry.Point3D;
-
 import java.util.*;
 
 /**

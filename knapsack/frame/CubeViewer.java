@@ -37,7 +37,6 @@ public class CubeViewer extends JFrame {
             public boolean dispatchKeyEvent(KeyEvent e) {
                 if(e.getID()==KeyEvent.KEY_PRESSED ) {
                     int key = e.getKeyCode();
-                    //System.out.println(key);
 
                     if (key == 40)  //down arrow
                         c.roll(-3);
@@ -62,6 +61,9 @@ public class CubeViewer extends JFrame {
 
                     if (key == 80)  // p
                         c.toggleCoodDrawing();
+
+                    if (key == 70)  // f
+                        c.toggleFill();
                 }
                 return false;
             }
