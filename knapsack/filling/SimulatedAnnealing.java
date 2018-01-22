@@ -6,12 +6,9 @@ import knapsack.components.Truck;
 
 import java.util.ArrayList;
 
-/*
-
-List length problem: other get method to get actual index of array? Something else?
-
+/**
+ * Class used to fill a truck with a given set of items using simulated annealing technique.
  */
-
 public class SimulatedAnnealing {
     private static double temperature;
     private static double beta = 0.2; //cooling parameter
@@ -28,12 +25,16 @@ public class SimulatedAnnealing {
     private static long startTime;
     private static long timeToRun = 1200000; //60sec, to be adapted...
 
+    /**
+     * Method used to fill a truck and return it filled.
+     * @return The filled truck.
+     */
     public static Truck getTruck(){
         ParcelList pList = new ParcelList();
 
-        pList.add(new Parcel("A"),20);
-        pList.add(new Parcel("B"),20);
-        pList.add(new Parcel("C"),20);
+        pList.add(new Parcel("A"),82);
+        pList.add(new Parcel("B"),55);
+        pList.add(new Parcel("C"),48);
 
         list = pList.getFullArray();
 
@@ -44,6 +45,9 @@ public class SimulatedAnnealing {
         return bestTruck;
     }
 
+    /**
+     * The simulated annealing loop. It runs for a given time and sets the best truck to the best result it found.
+     */
     private static void simulate(){
         //variable initialization
         startTime = System.currentTimeMillis();
@@ -58,7 +62,7 @@ public class SimulatedAnnealing {
         //gets the volume to initialize bestVolume variable
         bestVolume = bestTruck.getParcelVolume();
 
-        //annealing loop (separate method?)
+        //annealing loop
         while(System.currentTimeMillis()-startTime < timeToRun){
 
             //creates neighbourhood
@@ -91,7 +95,9 @@ public class SimulatedAnnealing {
         System.out.println(bestVolume);
     }
 
-    //generates a random sequence to fill the truck
+    /**
+     * Generates a random sequence triple to fill the truck. The sequence is used to define the placing order of the items to be placed in the truck.
+     */
     private static void generate(){
         //A, B & C sequence definition
         for(int i=0; i<sequence.length-1;i++){
@@ -112,6 +118,11 @@ public class SimulatedAnnealing {
         }
     }
 
+    /**
+     * Method the generate the sequence triple neighbourhood of a given sequence.
+     * @param s The given sequence triple to generate the neighbourhood from
+     * @return An ArrayList of sequence triples defining the created neighbourhood.
+     */
     private static ArrayList<int[][]> generate(int[][] s){
         ArrayList<int[][]> sequenceList = new ArrayList<>();
 
@@ -137,6 +148,13 @@ public class SimulatedAnnealing {
         return sequenceList;
     }
 
+    /**
+     * Method used to switch two items inside a sequence given sequence.
+     * @param s The given sequence triple.
+     * @param index The index of the sequence inside which two box are going to be permuted.
+     *              (0 = sequence A; 1 = sequence B; 2 = sequence C; 3 = rotation vector)
+     * @return The sequence triple with the permuted items.
+     */
     private static int[][] switchBox(int[][] s, int index){
         int a = (int)(Math.random()*s[0].length);
         int b;
@@ -155,15 +173,11 @@ public class SimulatedAnnealing {
         return newS;
     }
 
-    public static void setBeta(double beta) {
-        SimulatedAnnealing.beta = beta;
-    }
-
-    public static void setAlpha(double alpha) {
-
-        SimulatedAnnealing.alpha = alpha;
-    }
-
+    /**
+     * Method used to fill a truck with a sequence of parcels. Follows the sequence B.
+     * @param s The sequence with which the truck has to be filled.
+     * @return A filled truck.
+     */
     private static Truck fill(int[][] s){
         Truck t = new Truck();
         //item to place
