@@ -22,7 +22,7 @@ public class CubeDrawer extends JPanel {
     private int H;
     private int W;
     private BufferedImage image;
-    private int scale = 10; //scaling factor
+    private int scale = 20; //scaling factor
 
     private int angle = 0;
     private int elevation = 35;
@@ -319,7 +319,7 @@ public class CubeDrawer extends JPanel {
     }
     
     public int getZoom() {
-    	return unit;
+    	return scale;
     }
     
     public int getElevation() {
