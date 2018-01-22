@@ -34,14 +34,19 @@ public class TruckViewer extends JFrame {
         setResizable(false);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-        m = new Menu();
-        //m.setPreferredSize(new Dimension(W/3, H));
-        m.setVisible(true);
-
         c = new CubeDrawer(W/3*2, H);
         c.setPreferredSize(new Dimension(W/3*2, H));
 
+        m = new Menu();
+        m.setCubeDrawer(c);
+        //m.setPreferredSize(new Dimension(W/3, H));
+        m.setVisible(true);
 
+
+
+        m.setGapsFound(c.getGapAmount());
+        m.setCurrentValue(c.getValue());
+        //m.setTimeTook(c.getTimeTook());
         add(m, BorderLayout.EAST);
         add(c, BorderLayout.CENTER);
         c.setVisible(true);
@@ -65,22 +70,22 @@ public class TruckViewer extends JFrame {
 
                     if (key == 40)  //down arrow
                         c.roll(-3);
-
+                    	m.getInfoTab().setElevation(c.getElevation());
                     if (key == 38)  //up arrow
                         c.roll(3);
-
+                    	m.getInfoTab().setElevation(c.getElevation());
                     if (key == 39)  //right arrow
                         c.rotate(3);
-
+                    	m.getInfoTab().setAngle(c.getAngle());
                     if (key == 37)  //left arrow
                         c.rotate(-3);
-
+                    	m.getInfoTab().setAngle(c.getAngle());
                     if (key == 45 || key == 109)  //minus
                         c.zoom(-1);
-
+                    	m.getInfoTab().setZoom(c.getZoom());
                     if (key == 61 || key == 107)  //plus
                         c.zoom(1);
-
+                    	m.getInfoTab().setZoom(c.getZoom());
                     if (key == 68)  // d
                         c.toggleDebug();
                 }
@@ -88,4 +93,5 @@ public class TruckViewer extends JFrame {
             }
         });
     }
+
 }

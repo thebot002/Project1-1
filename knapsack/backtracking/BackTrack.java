@@ -22,7 +22,7 @@ public class BackTrack {
 		Parcel parcelB = new Parcel("B",4);
 		Parcel parcelC = new Parcel("C",5);
 
-    // Crete a list to keep truck of the parcels we have already placed
+    // Create a list to keep track of the parcels we have already placed
 		ArrayList<Parcel> parcelList = new ArrayList<Parcel>();
 
     /* Create an array with the three parcels and

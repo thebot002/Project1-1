@@ -7,15 +7,14 @@ import java.util.*;
  * Class defining the parcels to be placed in a truck object.
  */
 public class Parcel {
-	public ArrayList<Point3D> points;
-	private int length;
-	private int height;
-	private int width;
+	protected ArrayList<Point3D> points;
+	protected ArrayList<Edge3D> edges = new ArrayList<>();
+	protected int length;
+	protected int height;
+	protected int width;
 	private Point3D pos;
 	private int value = 1;
 	private String id;
-
-	private HashMap<Point3D,Point3D> edges;
 
 	private int state = 0;
     private ArrayList<ArrayList<Point3D>> rotations;
@@ -30,6 +29,7 @@ public class Parcel {
         width = (int)(w);
         height = (int)(h);
         length = (int)(l);
+        id = "u";
         setPoints();
 	}
 
@@ -39,12 +39,11 @@ public class Parcel {
      */
 	public Parcel(String id){
 	    switch (id){
-            case "A": width = 2; height = 2; length = 4; break;
-            case "B": width = 2; height = 3; length = 4; break;
-            case "C": width = 3; height = 3; length = 3; break;
+            case "A": width = 2; height = 2; length = 4; setPoints(); break;
+            case "B": width = 2; height = 3; length = 4; setPoints(); break;
+            case "C": width = 3; height = 3; length = 3; setPoints(); break;
         }
         this.id = id;
-	    setPoints();
     }
 
     /**
@@ -55,6 +54,10 @@ public class Parcel {
     public Parcel(String id, int value){
 	    this(id);
 	    setValue(value);
+    }
+
+    public Parcel() {
+        this(1,1,1);
     }
 
     /**
@@ -72,7 +75,7 @@ public class Parcel {
     /**
      * Method that sets the points of each corners of the parcel.
      */
-    private void setPoints(){
+    private void setPoints() {
         pos = new Point3D(0,0,0);
 
         points = new ArrayList<>();
@@ -86,24 +89,35 @@ public class Parcel {
         points.add(new Point3D(width, height, length));
         points.add(new Point3D(width, 0, length));
 
-        edges = null;
-        edges = new HashMap<>();
+        setEdges();
 
-        edges.put(points.get(0),points.get(1));
-        edges.put(points.get(1),points.get(2));
-        edges.put(points.get(2),points.get(3));
-        edges.put(points.get(3),points.get(0));
+//        edges.add(new Edge3D(points.get(0),points.get(1)));
+//        edges.add(new Edge3D(points.get(1),points.get(2)));
+//        edges.add(new Edge3D(points.get(2),points.get(3)));
+//        edges.add(new Edge3D(points.get(3),points.get(0)));
+//
+//        edges.add(new Edge3D(points.get(0),points.get(4)));
+//        edges.add(new Edge3D(points.get(1),points.get(5)));
+//        edges.add(new Edge3D(points.get(2),points.get(6)));
+//        edges.add(new Edge3D(points.get(3),points.get(7)));
+//
+//        edges.add(new Edge3D(points.get(4),points.get(5)));
+//        edges.add(new Edge3D(points.get(5),points.get(6)));
+//        edges.add(new Edge3D(points.get(6),points.get(7)));
+//        edges.add(new Edge3D(points.get(7),points.get(4)));
+    }
 
-        edges.put(points.get(0),points.get(4));
-        edges.put(points.get(1),points.get(5));
-        edges.put(points.get(2),points.get(6));
-        edges.put(points.get(3),points.get(7));
 
-        edges.put(points.get(4),points.get(5));
-        edges.put(points.get(5),points.get(6));
-        edges.put(points.get(6),points.get(7));
-        edges.put(points.get(7),points.get(4));
-
+    protected void setEdges() {
+        int s = (points.size()/2) - 1;
+        for(int inc = 0; inc < s; inc++) {
+            edges.add(new Edge3D(points.get(inc), points.get(inc+1)));
+            edges.add(new Edge3D(points.get(inc), points.get(inc+s+1)));
+            edges.add(new Edge3D(points.get(inc+s+1), points.get(inc+s+2)));
+        }
+        edges.add(new Edge3D(points.get(s),points.get(0)));
+        edges.add(new Edge3D(points.get(s),points.get(s*2+1)));
+        edges.add(new Edge3D(points.get(s*2+1),points.get(s+1)));
     }
 
     /**
@@ -160,6 +174,12 @@ public class Parcel {
 	}
 
     /**
+     * Returns a HashMap of connected points of a Parcel
+     * @return a HashMap<Point3D, Point3D> of the edges.
+     */
+	public ArrayList<Edge3D> getEdges() {return edges;}
+
+    /**
      * Method to get the width of the parcel. (x axis)
      * @return The width of the parcel.
      */
@@ -208,7 +228,7 @@ public class Parcel {
      * Method to set the ID of the parcel. (Used for building a copy of this parcel)
      * @param id The parcel ID.
      */
-    private void setID(String id){
+    protected void setID(String id){
 	    this.id = id;
     }
 
@@ -241,6 +261,12 @@ public class Parcel {
         setPoints();
     }
 
+    protected void setSize(int w, int h, int l) {
+        width = w;
+        height = h;
+        length = l;
+    }
+
     public boolean nextState(){
         state ++;
         if(state == 1){
@@ -261,9 +287,5 @@ public class Parcel {
     public boolean equals(Parcel p){
         if(edges.equals(p.getEdges()) && pos.equals(p.getPos())) return true;
         return false;
-    }
-
-    public HashMap<Point3D,Point3D> getEdges(){
-        return edges;
     }
 }

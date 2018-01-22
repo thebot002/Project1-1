@@ -12,6 +12,7 @@ public class Truck {
 	private int length;
 	private int height;
 	private int width;
+	private int gaps;
 	private String[][][] truck;
 
 	private boolean debug = false;
@@ -40,7 +41,7 @@ public class Truck {
 	}
 
     /**
-     * Default constructor for this project. Truck with size: 16.5 x 4.0 x 2.5 .
+     * Default constructor for this project. Truck with size: 33 x 8 x 5 .
      */
     public Truck(){
         this(33,8,5);
@@ -86,6 +87,7 @@ public class Truck {
 		}
 		return position;
 	}
+
     /**
      * Method to get the width of the truck. (x axis)
      * @return The width of the truck.
@@ -271,15 +273,15 @@ public class Truck {
     }
 
 	public int getGapAmount(Point3D pos){
-        int sum =0;
+        int gaps =0;
         for(int i=0; i<pos.getX(); i++){
             for(int j=0; j<pos.getY(); j++){
                 for(int k=0; k<pos.getZ(); k++){
-                    if(truck[i][j][k].equals("-")) sum++;
+                    if(truck[i][j][k].equals("-")) gaps++;
                 }
             }
         }
-        return sum;
+        return gaps;
     }
 
     public ArrayList<Parcel> getTruck(){

@@ -26,7 +26,7 @@ public class CubeDrawer extends JPanel {
     private int H;
     private int W;
     private BufferedImage image;
-    private int unit = 13; //scaling factor
+    private int unit = 20; //scaling factor
 
 
     private Parcel truckParcel;
@@ -34,7 +34,7 @@ public class CubeDrawer extends JPanel {
     private int elevation = 35;
     private Truck truck;
     private Point3D deltaO = new Point3D(0, 0, 0);
-    private Boolean debug = true;
+    private Boolean debug = false;
 
 
     public CubeDrawer(int w, int h) {
@@ -42,28 +42,32 @@ public class CubeDrawer extends JPanel {
     }
 
     public CubeDrawer(int w, int h, Truck truck) {
-        //this.truck = truck;
-        //this.truck = FillTruck.getFilled();
-        this.truck = SimulatedAnnealing.getTruck();
+        //this.truck = truck; //default
+        //this.truck = FillTruck.getFilled(); // backtracking - Arnaud
+        //this.truck = SimulatedAnnealing.getTruck(); //Simulated annealing
         W = w;
         H = h;
         image = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
         truckParcel = new Parcel(truck.getWidth(), truck.getHeight(), truck.getLength());
-        //truck = FillTruck.getFilled();
-
-        BruteForce.fill(truck);
+        BruteForce.fill(truck); //
         //populateTruck();
         renderScene();
     }
 
     private void populateTruck() {
-        for(int i=0; i<40; i++){
-            Parcel A = new Parcel("A");
-            Parcel B = new Parcel("B");
-            Parcel C = new Parcel("C");
+        for(int i=0; i<1; i++){
+            Parcel A = new Parcel();
+            A.setPos(new Point3D(1,0,0));
+            Parcel B = new Parcel();
+            B.setPos(new Point3D(1,0,0));
+            Parcel C = new Parcel();
+            C.setPos(new Point3D(2,0,0));
+            Parcel D = new Parcel();
+            D.setPos(new Point3D(3,0,0));
             truck.addParcel(A);
             truck.addParcel(B);
             truck.addParcel(C);
+            truck.addParcel(D);
         }
     }
 
@@ -84,8 +88,25 @@ public class CubeDrawer extends JPanel {
         //draw a parcel to represent the truck
         drawParcelPro(truckParcel, Color.CYAN, false);
 
+        Parcel x = new Parcel();
+        x.setPos(new Point3D(10, 0, 0));
+        drawParcelPro(x, Color.WHITE, false);
+
+        PentominoParcel t = new PentominoParcel("T");
+        t.setPos(new Point3D(3,0,2));
+        drawParcelPro(t, Color.WHITE, false);
+
+        PentominoParcel l = new PentominoParcel("L");
+        l.setPos(new Point3D(5,0,0));
+        drawParcelPro(l, Color.WHITE, false);
+
+        PentominoParcel p = new PentominoParcel("P");
+        drawParcelPro(p, Color.WHITE, false);
+
+
+
         for (Parcel parcel : truck.getParcelList()) {
-            drawParcelPro(parcel, Color.WHITE, true);
+            drawParcelPro(parcel, Color.WHITE, false);
         }
 
         //Origin and Rotation point, Indication/Axis Lines
@@ -105,10 +126,10 @@ public class CubeDrawer extends JPanel {
         J.setPos(deltaO.multiply(-1));
         K.setPos(deltaO.multiply(-1));
         drawParcelPro(I, Color.BLUE, false);
-        drawParcelPro(J, Color.RED, false);
-        drawParcelPro(K, Color.RED, false);
+        drawParcelPro(J, Color.GREEN, false);
+        drawParcelPro(K, Color.YELLOW, false);
         drawParcelPro(new Parcel(5, 0, 0), Color.BLUE, false);
-        drawParcelPro(new Parcel(0, 5, 0), Color.YELLOW, false);
+        drawParcelPro(new Parcel(0, 5, 0), Color.GREEN, false);
         drawParcelPro(new Parcel(0, 0, 5), Color.YELLOW, false);
     }
 
@@ -174,6 +195,8 @@ public class CubeDrawer extends JPanel {
      */
     public void zoom(int i) {
         unit += i;
+        if(unit < 6) unit = 6;
+        if(unit > 40) unit = 40;
         renderScene();
     }
 
@@ -183,6 +206,44 @@ public class CubeDrawer extends JPanel {
     public void toggleDebug() {
         debug = !debug;
         renderScene();
+    }
+
+    /**
+     * Gets truck.
+     */
+    public Truck getTruck() {
+        return truck;
+    }
+    /**
+     * Sets truck
+     * @param truck object to be set
+     */
+    public void setTruck(Truck truck) {
+        this.truck = truck;
+    }
+    /**
+     * Finds the amount of gaps in truck drawn in CubeDrawer
+     */
+    public int getGapAmount(){
+//		int gaps = 0;
+//		for(int i=0; i<getTruck().getWidth(); i++){
+//			for(int j=0; j<getTruck().getHeight(); j++){
+//				for(int k=0; k<getTruck().getLength(); k++){
+//					if(getTruck().getTruck()[i][j][k].equals("-")) gaps++;
+//				}
+//			}
+//		}
+		return truck.getGapAmount()/8; //Divide by 8 to compensate for multiplying length, width and height by 2 at the start
+	}
+    /**
+     * Finds the current value of truck drawn in CubeDrawer
+     */
+    public int getValue(){
+//	    int total = 0;
+//        for (Parcel p: getTruck().getParcelList()) {
+//            total += p.getValue();
+//        }
+        return truck.getValue();
     }
 
     /* Drawing Methods for different parts of the 'Truck' Display */
@@ -197,45 +258,46 @@ public class CubeDrawer extends JPanel {
     private void drawParcelPro(Parcel p, Color c, Boolean fill) {
         Point3D pos = p.getPos();
         ArrayList<Point3D> points = p.getPoints();
-        ArrayList<Point> pp = new ArrayList<>();
+        ArrayList<Point> newPoints = new ArrayList<>();
+
+        ArrayList<Edge3D> edges = p.getEdges();
+        ArrayList<Edge> newEdges = new ArrayList<>();
+
 
         //Convert all 3D points to Projected 2D points relative to the Parcels position.
         for (Point3D point : points) {
-            pp.add(convertPointPro(point.add(pos)));
+            newPoints.add(convertPointPro(point.add(pos)));
         }
-        drawWireFrame(pp, c);
+
+        for(Edge3D edge : edges) {
+            System.out.println("Edge");
+            Point a = convertPointPro(edge.a.add(pos));
+            Point b = convertPointPro(edge.b.add(pos));
+            newEdges.add(new Edge(a,b));
+        } //Add convert Edge Method.
+
+        drawWireFrame(newEdges, c);
         if(fill)
-            fillCube(pp, new Color(1,0,0,0.3f));
+            fillCube(newPoints, new Color(1,0,0,0.3f));
     }
+
 
     /**
-     * Draws a Wire Frame of a Cube represented as an <code>ArrayList</code> of (2d) <code>Point</code> Objects and a <code>Color</code>.<br>
-     * The set of Points can be generated using the <code>convertPointPro()</code> method.
+     * Draws a Wire Frame of a Cube represented as a <code>ArrayList</code> of Edge Objects and a <code>Color</code>.<br>
      *
-     * @param p The ArrayList of the 2D points of the Cube to draw.
+     * @param edges The ArrayList of the 2D edges of the Cube to draw.
      * @param c A Color to draw the Wire Frame from.
      */
-    private void drawWireFrame(ArrayList<Point> p, Color c) {
+    private void drawWireFrame(ArrayList<Edge> edges, Color c) {
         Graphics2D g = (Graphics2D) image.getGraphics();
         g.setColor(c);
-        drawLine(p.get(0), p.get(1), c);
-        drawLine(p.get(0), p.get(3), c);
-        drawLine(p.get(0), p.get(4), c);
 
-        drawLine(p.get(1), p.get(2), c);
-        drawLine(p.get(1), p.get(5), c);
-
-        drawLine(p.get(2), p.get(3), c);
-        drawLine(p.get(2), p.get(6), c);
-
-        drawLine(p.get(3), p.get(7), c);
-
-        drawLine(p.get(4), p.get(5), c);
-        drawLine(p.get(4), p.get(7), c);
-
-        drawLine(p.get(6), p.get(5), c);
-        drawLine(p.get(6), p.get(7), c);
+        for(Edge edge : edges) {
+            drawLine(edge.a, edge.b, c);
+        }
     }
+
+
 
     /**
      * Draws a transparent Cube represented as an <code>ArrayList</code> of (2d) <code>Point</code> Objects and a <code>Color</code>.<br>
@@ -300,5 +362,29 @@ public class CubeDrawer extends JPanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         g.drawImage(image, 0, 0, null);
+    }
+
+    public void resetCamera() {
+        angle = 0;
+        elevation = 35;
+        unit = 20;
+        renderScene();
+    }
+
+    public void emptyTruck() {
+       truck = new Truck();
+       renderScene();
+    }
+
+    public int getZoom() {
+    	return unit;
+    }
+
+    public int getElevation() {
+    	return elevation;
+    }
+
+    public int getAngle() {
+    	return angle;
     }
 }

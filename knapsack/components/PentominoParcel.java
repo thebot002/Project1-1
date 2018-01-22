@@ -1,13 +1,65 @@
 package knapsack.components;
 
-public class PentominoParcel extends Parcel{
+import javafx.geometry.Point3D;
+
+import java.util.ArrayList;
+
+public class PentominoParcel extends Parcel {
+
+
+
     public PentominoParcel(String id) {
-        super(1,2,2);
-        int w=0,h=0,l=0;
+        super(id, 0);
+        setPos(new Point3D(0,0,0));
         switch (id){
-            case "L": w=4; h=2; l=1; break;
-            case "P": w=3; h=2; l=1; break;
-            case "T": w=3; h=3; l=1; break;
+            case "L": width=4; height=1; length=2; setPointsL(); break;
+            case "P": width=3; height=1; length=2; setPointsP(); break;
+            case "T": width=3; height=1; length=3; setPointsT(); break;
+        }
+        setEdges();
+    }
+
+    private void setPointsT() {
+        setID("T");
+
+        points = new ArrayList<>();
+        for (int i = 0; i <= 1; i++) {
+            points.add(new Point3D(0, i, 0));
+            points.add(new Point3D(1, i, 0));
+            points.add(new Point3D(1, i, 1));
+            points.add(new Point3D(3, i, 1));
+            points.add(new Point3D(3, i, 2));
+            points.add(new Point3D(1, i, 2));
+            points.add(new Point3D(1, i, 3));
+            points.add(new Point3D(0, i, 3));
+        }
+    }
+
+    private void setPointsP() {
+        setID("P");
+
+        points = new ArrayList<>();
+        for (int i = 0; i <= 1; i++) {
+            points.add(new Point3D(0, i, 0));
+            points.add(new Point3D(3, i, 0));
+            points.add(new Point3D(3, i, 1));
+            points.add(new Point3D(2, i, 1));
+            points.add(new Point3D(2, i, 2));
+            points.add(new Point3D(0, i, 2));
+        }
+    }
+
+    private void setPointsL() {
+        setID("L");
+
+        points = new ArrayList<>();
+        for (int i = 0; i <= 1; i++) {
+            points.add(new Point3D(0, i, 0));
+            points.add(new Point3D(4, i, 0));
+            points.add(new Point3D(4, i, 2));
+            points.add(new Point3D(3, i, 2));
+            points.add(new Point3D(3, i, 1));
+            points.add(new Point3D(0, i, 1));
         }
     }
 
