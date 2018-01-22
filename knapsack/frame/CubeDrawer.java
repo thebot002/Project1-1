@@ -44,7 +44,8 @@ public class CubeDrawer extends JPanel {
     public CubeDrawer(int w, int h, Truck truck) {
         //this.truck = truck; //default
         //this.truck = FillTruck.getFilled(); // backtracking - Arnaud
-        this.truck = SimulatedAnnealing.getTruck(); //Simulated annealing
+        SimulatedAnnealing s = new SimulatedAnnealing();
+        this.truck = s.fillTruck(); //Simulated annealing
         W = w;
         H = h;
         image = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
@@ -88,7 +89,7 @@ public class CubeDrawer extends JPanel {
         //draw a parcel to represent the truck
         drawParcelPro(truckParcel, Color.CYAN, false);
 
-        Parcel x = new Parcel();
+        /*Parcel x = new Parcel();
         x.setPos(new Point3D(10, 0, 0));
         drawParcelPro(x, Color.WHITE, false);
 
@@ -101,12 +102,12 @@ public class CubeDrawer extends JPanel {
         drawParcelPro(l, Color.WHITE, false);
 
         PentominoParcel p = new PentominoParcel("P");
-        drawParcelPro(p, Color.WHITE, false);
+        drawParcelPro(p, Color.WHITE, false);*/
 
 
 
         for (Parcel parcel : truck.getParcelList()) {
-            drawParcelPro(parcel, Color.WHITE, false);
+            drawParcelPro(parcel, Color.WHITE, true);
         }
 
         //Origin and Rotation point, Indication/Axis Lines
@@ -277,8 +278,12 @@ public class CubeDrawer extends JPanel {
         } //Add convert Edge Method.
 
         drawWireFrame(newEdges, c);
-        if(fill)
-            fillCube(newPoints, new Color(1,0,0,0.3f));
+        if(fill){
+            if(p.getID().equals("A") || p.getID().equals("L")) fillCube(newPoints, new Color(1,0,0,0.3f)); //red
+            else if(p.getID().equals("B") || p.getID().equals("P")) fillCube(newPoints,new Color(0,1,0,0.3f)); //green
+            else if(p.getID().equals("C") || p.getID().equals("T")) fillCube(newPoints,new Color(0,0,1,0.3f)); //blue
+            else fillCube(newPoints,new Color(1,1,1,0.3f)); //gray?
+        }
     }
 
 
