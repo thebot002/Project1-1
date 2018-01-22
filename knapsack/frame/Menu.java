@@ -33,7 +33,7 @@ public class Menu extends JPanel implements ActionListener {
 	private JLabel lblTimeTookDisp;
 	private CubeDrawer cubeDrawer;
 
-	public Menu() {
+	public Menu(Knapsack parent) {
 		setBackground(SystemColor.menu);
 		setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		GridBagLayout gridBagLayout = new GridBagLayout();
@@ -137,6 +137,9 @@ public class Menu extends JPanel implements ActionListener {
 		gbc_lblTimeTookDisp.gridx = 5;
 		gbc_lblTimeTookDisp.gridy = 12;
 		add(lblTimeTookDisp, gbc_lblTimeTookDisp);
+
+
+        setVisible(true);
 	}
 
 	public void setCubeDrawer(CubeDrawer c) {

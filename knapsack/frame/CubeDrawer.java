@@ -32,12 +32,11 @@ public class CubeDrawer extends JPanel {
     private Boolean fill = false;
 
     public CubeDrawer(int w, int h, Scene s) {
-        this.W = w/3*2;
+        this.W = w;
         this.H = h;
         setBackground(Color.WHITE);
         setPreferredSize(new Dimension(W, H));
         setVisible(true);
-        CubeViewer tv = new CubeViewer(this);
         scene = s;
         image = new BufferedImage(W, H, BufferedImage.TYPE_INT_ARGB);
     }

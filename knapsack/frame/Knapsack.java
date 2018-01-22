@@ -1,24 +1,31 @@
 package knapsack.frame;
 
+import knapsack.components.Truck;
+import knapsack.filling.BruteForce;
+
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.KeyEvent;
 
-public class CubeViewer extends JFrame {
-    private Font font;
+public class Knapsack extends JFrame {
+    public static void main(String[] args) {
+        new Knapsack();
+    }
 
     private CubeDrawer c;
     private Menu m;
 
-    public CubeViewer(CubeDrawer c) {
-        this.c = c;
-        setTitle("Truck");
+    public Knapsack() {
+        setTitle("Knapsack");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         addKeyInput();
 
-        m = new Menu();
+        Truck truck = new Truck();
+        BruteForce.fill(truck);
+        c = new CubeDrawer(800, 600, truck);
+
+        m = new Menu(this);
         m.setCubeDrawer(c);
-        m.setVisible(true);
 
         add(m, BorderLayout.EAST);
         add(c, BorderLayout.CENTER);
