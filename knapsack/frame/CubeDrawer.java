@@ -44,12 +44,12 @@ public class CubeDrawer extends JPanel {
     public CubeDrawer(int w, int h, Truck truck) {
         //this.truck = truck; //default
         //this.truck = FillTruck.getFilled(); // backtracking - Arnaud
-        //this.truck = SimulatedAnnealing.getTruck(); //Simulated annealing
+        this.truck = SimulatedAnnealing.getTruck(); //Simulated annealing
         W = w;
         H = h;
         image = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
         truckParcel = new Parcel(truck.getWidth(), truck.getHeight(), truck.getLength());
-        BruteForce.fill(truck); //
+        //BruteForce.fill(truck); //
         //populateTruck();
         renderScene();
     }
@@ -270,7 +270,7 @@ public class CubeDrawer extends JPanel {
         }
 
         for(Edge3D edge : edges) {
-            System.out.println("Edge");
+            if(debug) System.out.println("Edge");
             Point a = convertPointPro(edge.a.add(pos));
             Point b = convertPointPro(edge.b.add(pos));
             newEdges.add(new Edge(a,b));

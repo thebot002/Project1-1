@@ -14,26 +14,26 @@ List length problem: other get method to get actual index of array? Something el
 
 public class SimulatedAnnealing {
     private static double temperature;
-    private static double beta = 0.9; //cooling parameter
-    private static double alpha = 0.5; //heating parameter
+    private static double beta = 0.2; //cooling parameter
+    private static double alpha = 0.002; //heating parameter
 
     private static Truck bestTruck;
     private static ArrayList<Parcel> list;
     private static int[][] sequence;
     private static int bestVolume;
 
-    private static final double INITIAL_TEMPERATURE = 100.0;
+    private static final double INITIAL_TEMPERATURE = 0.2;
     private static final int TOTAL_ROTATIONS = 6; //to be adapted if pentominoes
 
     private static long startTime;
-    private static long timeToRun = 60000; //60sec, to be adapted...
+    private static long timeToRun = 1200000; //60sec, to be adapted...
 
     public static Truck getTruck(){
         ParcelList pList = new ParcelList();
 
-        pList.add(new Parcel("A"),14);
-        pList.add(new Parcel("B"),14);
-        pList.add(new Parcel("C"),14);
+        pList.add(new Parcel("A"),20);
+        pList.add(new Parcel("B"),20);
+        pList.add(new Parcel("C"),20);
 
         list = pList.getFullArray();
 
@@ -88,7 +88,7 @@ public class SimulatedAnnealing {
                 bestVolume = volume;
             }
         }
-
+        System.out.println(bestVolume);
     }
 
     //generates a random sequence to fill the truck
