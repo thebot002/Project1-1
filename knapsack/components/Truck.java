@@ -7,14 +7,16 @@ import java.util.*;
 /**
  * Class used to define the truck where the parcels or pentominoes are going to be placed.
  */
-public class Truck {
-	private ArrayList<Parcel> parcelList;
+public class Truck implements Scene {
+	private ArrayList<Cube> parcelList;
 	private int length;
 	private int height;
 	private int width;
 	private int gaps;
 	private String[][][] truck;
- 
+
+	public static Parcel truckParcel;
+	private Point3D deltaO = new Point3D(0, 0, 0);
 	private boolean debug = false;
 
 	/**
@@ -30,6 +32,8 @@ public class Truck {
 		length = (int) (l);
 		height = (int) (h);
 		width = (int) (w);
+		truckParcel = new Parcel(w, h, l);
+		deltaO = (truckParcel.get(0).midpoint(truckParcel.get(6))).multiply(-1);
 		truck = new String[width][height][length];
 		for(int i = 0; i<width ; i++){
 		    for(int j=0; j<height; j++){
@@ -44,10 +48,10 @@ public class Truck {
      * Default constructor for this project. Truck with size: 33 x 8 x 5 .
      */
     public Truck(){
-        this(33,8,5);
+        this(10,10,10);
     }
 
-    public Truck(String[][][] truck, ArrayList<Parcel> list){
+    public Truck(String[][][] truck, ArrayList<Cube> list){
     	this();
     	this.truck = truck;
     	this.parcelList = list;
@@ -96,9 +100,6 @@ public class Truck {
      */
     public int getVolume() {return height*width*length;}
 
-    public ArrayList<Parcel> getParcelList() {
-        return parcelList;
-    }
 
     /**
      * Method to add a parcel object to the truck.
@@ -130,6 +131,20 @@ public class Truck {
         return false;
 	}
 
+    public boolean addParcel(PentominoParcel p) {
+        for(int i = 0; i <= (width-p.getWidth()) ; i++){
+            for(int j=0; j <= (height-p.getHeight()); j++){
+                for(int k=0; k <= (length-p.getLength()); k++){
+                    if(isPossible(p, new Point3D(i,j,k))) {
+
+                    }
+                }
+            }
+        }
+
+        return false;
+    }
+
 	/**
 	 * Method to check if a parcel can be added at a position.
 	 * First Checks if the Parcel can actually fit inside the truck.
@@ -140,6 +155,7 @@ public class Truck {
 	 */
 
 	public boolean isPossible(Parcel p, Point3D pos){
+
         if((p.getWidth() + pos.getX()) > (getWidth())) {
             if(debug) System.out.println("Outside Truck - X");
             return false;
@@ -188,8 +204,8 @@ public class Truck {
      */
     public int getValue(){
 	    int total = 0;
-        for (Parcel p: parcelList) {
-            total += p.getValue();
+        for (Cube p: parcelList) {
+            total += ((Parcel)p).getValue();
         }
         return total;
     }
@@ -203,8 +219,9 @@ public class Truck {
 				}
 			}
 		}
-		ArrayList<Parcel> newList = new ArrayList<>();
-		for(Parcel p: parcelList) newList.add(p);
+		ArrayList<Cube> newList = new ArrayList<>();
+		for(Cube c: parcelList)
+			newList.add(c);
 		return new Truck(newTruck, newList);
 	}
 
@@ -240,11 +257,6 @@ public class Truck {
 		return truckString;
 	}
 
-	public void setParcelList(ArrayList<Parcel> parcelListInput) {
-		parcelList = parcelListInput;
-	}
-
-
     /**
      * Method to get the amounts of gap left in the truck. (debug purpose)
      * @return The amounts of gaps in truck.
@@ -259,5 +271,42 @@ public class Truck {
 			}
 		}
 		return gaps;
+	}
+
+    public void setSize(int i, int i1, int i2) {
+	    this.width = i;
+	    this.height = i1;
+	    this.length = i2;
+    }
+
+	public void updateDeltaOrigin() {
+		deltaO = (truckParcel.get(0).midpoint(truckParcel.get(6))).multiply(-1);
+	}
+
+	public Point3D getDeltaO() {
+		return deltaO;
+	}
+
+	@Override
+	public ArrayList<Cube> getCubeList() {
+		return parcelList;
+	}
+
+	@Override
+	public Cube getCube() {
+		return truckParcel;
+	}
+
+	@Override
+	public void empty() {
+		parcelList = new ArrayList<>();
+		truck = new String[width][height][length];
+		for(int i = 0; i<width ; i++){
+			for(int j=0; j<height; j++){
+				for(int k=0; k<length; k++){
+					truck[i][j][k] = "-";
+				}
+			}
+		}
 	}
 }
