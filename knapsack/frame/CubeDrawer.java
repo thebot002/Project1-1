@@ -317,4 +317,16 @@ public class CubeDrawer extends JPanel {
         drawCoordinates = !drawCoordinates;
         renderScene();
     }
+    
+    public int getZoom() {
+    	return unit;
+    }
+    
+    public int getElevation() {
+    	return elevation;
+    }
+    
+    public int getAngle() {
+    	return angle;
+    }
 }

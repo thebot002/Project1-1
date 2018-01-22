@@ -28,6 +28,7 @@ public class Menu extends JPanel implements ActionListener {
 	private JTabbedPane tabbedPane;
 	private SwitchTabbedPane rectangleTab;
 	private SwitchTabbedPane pentominoTab;
+	private InfoTabbedPane infoTab;
 	private JLabel lblTimeTook;
 	private JLabel lblTimeTookDisp;
 	private CubeDrawer cubeDrawer;
@@ -77,7 +78,7 @@ public class Menu extends JPanel implements ActionListener {
 		gbc_lblGapsFound.gridy = 11;
 		add(lblGapsFound, gbc_lblGapsFound);
 
-		JLabel lblCurrentValue = new JLabel("Current Value");
+		lblCurrentValue = new JLabel("Current Value");
 		GridBagConstraints gbc_lblCurrentValue = new GridBagConstraints();
 		gbc_lblCurrentValue.gridwidth = 2;
 		gbc_lblCurrentValue.insets = new Insets(0, 0, 5, 5);
@@ -112,9 +113,9 @@ public class Menu extends JPanel implements ActionListener {
 		gbc_tabbedPane.gridy = 3;
 		add(tabbedPane, gbc_tabbedPane);
 
-		SwitchTabbedPane rectangleTab = new SwitchTabbedPane("A", "B", "C", "Dimensions", "1.0 x 1.0 x 2.0", "1.0 x 1.5 x 2.0", "1.5 x 1.5 x 1.5");
-		SwitchTabbedPane pentominoTab = new SwitchTabbedPane("L", "P", "T", "", "", "", "");
-		InfoTabbedPane infoTab = new InfoTabbedPane();
+		rectangleTab = new SwitchTabbedPane("A", "B", "C", "Dimensions", "1.0 x 1.0 x 2.0", "1.0 x 1.5 x 2.0", "1.5 x 1.5 x 1.5");
+		pentominoTab = new SwitchTabbedPane("L", "P", "T", "", "", "", "");
+		infoTab = new InfoTabbedPane();
 		tabbedPane.addTab("Rectangle", rectangleTab);
 		tabbedPane.addTab("Pentomino", pentominoTab);
 		tabbedPane.addTab("Info", infoTab);
@@ -155,6 +156,7 @@ public class Menu extends JPanel implements ActionListener {
 	        	try {
 					rectangleTab.collectParcels();
 					int[][] parcelsRectangle = rectangleTab.collectParcels(); //output of tabs is stored
+					String[] settings = rectangleTab.collectParcelSettings();
 																			// Depending on which algorithm and parameters some method needs to be called
 					
 				} catch (ParseException e1) {
@@ -165,6 +167,7 @@ public class Menu extends JPanel implements ActionListener {
 	        else if(tabbedPane.getSelectedIndex() == 1) {// Used to be able to differentiate between the type of  parcels (ABC vs LPT)
 	        	try {
 					int[][] parcelsPentomino = pentominoTab.collectParcels(); //output of tabs need to be converted to input of algorithms
+					String[] settings = pentominoTab.collectParcelSettings();
 																			// Depending on which algorithm and parameters some method needs to be called
 				} catch (ParseException e1) {
 					System.out.println("The currently edited value couldn't be commited.");
@@ -207,5 +210,8 @@ public class Menu extends JPanel implements ActionListener {
      */
 	public void setTimeTook(double time) {
 		lblTimeTookDisp.setText(String.valueOf(time));
+	}
+	public InfoTabbedPane getInfoTab() {
+		return infoTab;
 	}
 }
