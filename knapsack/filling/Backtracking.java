@@ -10,80 +10,85 @@ import knapsack.components.Truck;
 public class Backtracking implements TruckFilling {
 
 
-	private static ArrayList<Truck> truckList = new ArrayList<>();
-	private static ArrayList<Integer> truckValueList = new ArrayList<>();
+	private ArrayList<Truck> truckList;
+	private ArrayList<Integer> truckValueList;
+
+    private ArrayList<Parcel> parcelList;
+
+	private ParcelList list;
+
+    public Backtracking(ParcelList list) {
+        this.list = list;
+    }
+
+    //to be changed
+    public Backtracking() {
+        list = new ParcelList();
+        //filling the array with the max amount of each parcel
+        list.add(new Parcel("A"),82);
+        list.add(new Parcel("B"),55);
+        list.add(new Parcel("C"),48);
+    }
+
 
     @Override
     public Truck fillTruck() {
+        backTracking(new Truck(),null,parcelList,0,0);
         return null;
     }
 
     @Override
     public void setParcelList(ParcelList list) {
-
+        this.list = list;
     }
 
-    public static void main(String[] args) {
+    private void createArray(){
+        Parcel parcelA = new Parcel("A");
+        Parcel parcelB = new Parcel("B");
+        Parcel parcelC = new Parcel("C");
 
-    // Build the truck.
-		Truck truck = new Truck();
-
-    // Build the three parcels
-		Parcel parcelA = new Parcel("A",3);
-		Parcel parcelB = new Parcel("B",4);
-		Parcel parcelC = new Parcel("C",5);
-
-    // Create a list to keep track of the parcels we have already placed
-		ArrayList<Parcel> parcelList = new ArrayList<Parcel>();
+        // Create a list to keep track of the parcels we have already placed
+        parcelList = new ArrayList<>();
 
     /* Create an array with the three parcels and
        all their rotations. */
-		Parcel[] parcelAr = new Parcel[10];
+        Parcel[] parcelAr = new Parcel[10];
 
-    // Get the rotations of the parcels
-		Parcel xRotParcelA = new Parcel("A");
-		xRotParcelA.xRotate();
-		Parcel yRotParcelA = new Parcel("A");
-		yRotParcelA.yRotate();
-		Parcel zRotParcelA = new Parcel("A");
-		zRotParcelA.zRotate();
-		Parcel xyRotParcelA = new Parcel("A");
-		xyRotParcelA.xRotate();
-		xyRotParcelA.yRotate();
-		Parcel xzRotParcelA = new Parcel("A");
-		xzRotParcelA.xRotate();
-		xzRotParcelA.zRotate();
-		Parcel yRotParcelB = new Parcel("B");
-		yRotParcelB.yRotate();
-		Parcel zRotParcelB = new Parcel("B");
-		zRotParcelB.zRotate();
+        // Get the rotations of the parcels
+        Parcel xRotParcelA = new Parcel("A");
+        xRotParcelA.xRotate();
+        Parcel yRotParcelA = new Parcel("A");
+        yRotParcelA.yRotate();
+        Parcel zRotParcelA = new Parcel("A");
+        zRotParcelA.zRotate();
+        Parcel xyRotParcelA = new Parcel("A");
+        xyRotParcelA.xRotate();
+        xyRotParcelA.yRotate();
+        Parcel xzRotParcelA = new Parcel("A");
+        xzRotParcelA.xRotate();
+        xzRotParcelA.zRotate();
+        Parcel yRotParcelB = new Parcel("B");
+        yRotParcelB.yRotate();
+        Parcel zRotParcelB = new Parcel("B");
+        zRotParcelB.zRotate();
 
-    // Place everything into the parcel array
-		parcelAr[9]=parcelA;
-		parcelAr[1]=xRotParcelA;
-		parcelAr[2]=yRotParcelA;
-		parcelAr[3]=zRotParcelA;
-		parcelAr[4]=xyRotParcelA;
-		parcelAr[5]=xzRotParcelA;
-		parcelAr[6]=parcelB;
-		parcelAr[7]=yRotParcelB;
-		parcelAr[8]=zRotParcelB;
-		parcelAr[0]=parcelC;
+        // Place everything into the parcel array
+        parcelAr[9]=parcelA;
+        parcelAr[1]=xRotParcelA;
+        parcelAr[2]=yRotParcelA;
+        parcelAr[3]=zRotParcelA;
+        parcelAr[4]=xyRotParcelA;
+        parcelAr[5]=xzRotParcelA;
+        parcelAr[6]=parcelB;
+        parcelAr[7]=yRotParcelB;
+        parcelAr[8]=zRotParcelB;
+        parcelAr[0]=parcelC;
 
-		// Call the method that fills the truck with parcels.
-		backTracking(truck, parcelAr, parcelList,  0, 0);
-
-    // Prints out the truck with the highest total value
-		truckList.get(getBestValue()[1]).printTruck();
-
-    // Print out the optimal total value
-		System.out.println(getBestValue()[0]);
-
-	}
+    }
 
   /** This method finds the best result of the backTracking algorithm
   */
-	public static int[] getBestValue() {
+	public int[] getBestValue() {
 		int bestValue=0;
 		int index=0;
 		int[] valueIndex = new int[2];
@@ -108,7 +113,7 @@ public class Backtracking implements TruckFilling {
   * @param parcelList The list that is filled with the placed parcels.
   * @param index The index that keep trucks of the position in the parcel array.
   */
-	public static boolean backTracking(Truck truck, Parcel[] parcelAr, ArrayList<Parcel> parcelList, int index, int recursionCounter) {
+	public boolean backTracking(Truck truck, Parcel[] parcelAr, ArrayList<Parcel> parcelList, int index, int recursionCounter) {
 	    int totVol = 0; // The total volume of the placed parcels.
 		int totVal = 0; // The total value of the placed parcels.
 		int[] position = new int[3]; // position to add the next parcel.
