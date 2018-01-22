@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public class PentominoParcel extends Parcel {
 
-
+    public String[][][] pentString;
 
     public PentominoParcel(String id) {
         super(id, 0);
@@ -21,6 +21,22 @@ public class PentominoParcel extends Parcel {
 
     private void setPointsT() {
         setID("T");
+
+        String[][][] x = {
+                {
+                        {"T", "T", "T"}
+                },
+
+                {
+                        {"-", "T", "-"}
+                },
+
+                {
+                        {"-", "T", "-"}
+                },
+        };
+
+        pentString = x;
 
         points = new ArrayList<>();
         for (int i = 0; i <= 1; i++) {
@@ -38,6 +54,16 @@ public class PentominoParcel extends Parcel {
     private void setPointsP() {
         setID("P");
 
+        String[][][] x = {
+                {
+                        {"P", "P", "-"},
+                        {"P", "P", "-"},
+                        {"P", "-", "-"}
+                }
+        };
+
+        pentString = x;
+
         points = new ArrayList<>();
         for (int i = 0; i <= 1; i++) {
             points.add(new Point3D(0, i, 0));
@@ -51,6 +77,17 @@ public class PentominoParcel extends Parcel {
 
     private void setPointsL() {
         setID("L");
+
+        String[][][] x = {
+                {
+                        {"L", "-"},
+                        {"L", "-"},
+                        {"L", "-"},
+                        {"L", "L"}
+                }
+        };
+
+        pentString = x;
 
         points = new ArrayList<>();
         for (int i = 0; i <= 1; i++) {

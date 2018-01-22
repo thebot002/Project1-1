@@ -6,7 +6,7 @@ import java.util.*;
 /**
  * Class defining the parcels to be placed in a truck object.
  */
-public class Parcel {
+public class Parcel implements Cube {
 	protected ArrayList<Point3D> points;
 	protected ArrayList<Edge3D> edges = new ArrayList<>();
 	protected int length;
@@ -18,6 +18,8 @@ public class Parcel {
 
 	private int state = 0;
     private ArrayList<ArrayList<Point3D>> rotations;
+    public Point3D deltaO;
+
     /**
      * Create a parcel with a default position set to the origin and set its 8 vertices.
      * Constructor of a parcel object with given dimensions.

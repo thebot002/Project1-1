@@ -3,6 +3,7 @@ package knapsack.frame;
 import knapsack.components.*;
 import java.awt.*;
 import javax.swing.*;
+import java.text.DecimalFormat;
 import java.util.*;
 import java.awt.image.BufferedImage;
 import javafx.geometry.Point3D;
@@ -19,95 +20,49 @@ import java.lang.Math;
  */
 public class CubeDrawer extends JPanel {
     public static void main(String[] args) {
-        new TruckViewer();
     }
 
     //swing
     private int H;
     private int W;
     private BufferedImage image;
-    private int unit = 20; //scaling factor
+    private int scale = 20; //scaling factor
 
-
-    private Parcel truckParcel;
     private int angle = 0;
     private int elevation = 35;
-    private Truck truck;
-    private Point3D deltaO = new Point3D(0, 0, 0);
+    private Scene scene;
     private Boolean debug = false;
+    private Boolean drawCoordinates = false;
 
-
-    public CubeDrawer(int w, int h) {
-        this(w, h, new Truck());
-    }
-
-    public CubeDrawer(int w, int h, Truck truck) {
-        //this.truck = truck; //default
-        //this.truck = FillTruck.getFilled(); // backtracking - Arnaud
-        SimulatedAnnealing s = new SimulatedAnnealing();
-        this.truck = s.fillTruck(); //Simulated annealing
-        W = w;
-        H = h;
-        image = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
-        truckParcel = new Parcel(truck.getWidth(), truck.getHeight(), truck.getLength());
-        //BruteForce.fill(truck); //
-        //populateTruck();
-        renderScene();
-    }
-
-    private void populateTruck() {
-        for(int i=0; i<1; i++){
-            Parcel A = new Parcel();
-            A.setPos(new Point3D(1,0,0));
-            Parcel B = new Parcel();
-            B.setPos(new Point3D(1,0,0));
-            Parcel C = new Parcel();
-            C.setPos(new Point3D(2,0,0));
-            Parcel D = new Parcel();
-            D.setPos(new Point3D(3,0,0));
-            truck.addParcel(A);
-            truck.addParcel(B);
-            truck.addParcel(C);
-            truck.addParcel(D);
-        }
+    public CubeDrawer(int w, int h, Scene s) {
+        this.W = w/3*2;
+        this.H = h;
+        setBackground(Color.WHITE);
+        setPreferredSize(new Dimension(W, H));
+        setVisible(true);
+        CubeViewer tv = new CubeViewer(this);
+        scene = s;
+        image = new BufferedImage(W, H, BufferedImage.TYPE_INT_ARGB);
     }
 
     /**
      *  Draws the 'Truck' and all of the Parcels it holds.<br>
      *  The Truck is drawn at the Center of the Screen and Scene.
      */
-    private void renderScene() {
+    public void renderScene() {
         Graphics2D g = (Graphics2D) image.getGraphics();
         g.setColor(Color.WHITE);
-        g.clearRect(0, 0, W, H);
+        g.fillRect(0, 0, W, H);
 
-        //Get the center of the Truck so it can be used to draw all objects with it as a fake origin.
-        //This means the trick will be at the center of the Scene and when rotating the Scene its rotated around the
-        //center of the truck.
-        deltaO = (truckParcel.get(0).midpoint(truckParcel.get(6))).multiply(-1);
+        //Get the center of the Scene so it can be used to draw all objects with it as a fake origin.
+        scene.updateDeltaOrigin();
 
         //draw a parcel to represent the truck
-        drawParcelPro(truckParcel, Color.CYAN, false);
+        drawCubePro(scene.getCube(), Color.BLACK, false);
 
-        /*Parcel x = new Parcel();
-        x.setPos(new Point3D(10, 0, 0));
-        drawParcelPro(x, Color.WHITE, false);
-
-        PentominoParcel t = new PentominoParcel("T");
-        t.setPos(new Point3D(3,0,2));
-        drawParcelPro(t, Color.WHITE, false);
-
-        PentominoParcel l = new PentominoParcel("L");
-        l.setPos(new Point3D(5,0,0));
-        drawParcelPro(l, Color.WHITE, false);
-
-        PentominoParcel p = new PentominoParcel("P");
-        drawParcelPro(p, Color.WHITE, false);*/
-
-
-
-        for (Parcel parcel : truck.getParcelList()) {
-            drawParcelPro(parcel, Color.WHITE, true);
+        //draw Scene's Cube List
+        for (Cube cube : scene.getCubeList()) {
+            drawCubePro(cube, Color.RED, false);
         }
 
         //Origin and Rotation point, Indication/Axis Lines
@@ -120,18 +75,18 @@ public class CubeDrawer extends JPanel {
      * Will draw Origin and Rotation Axis.
      */
     private void drawDebug() {
-        Parcel I = new Parcel(3, 0, 0);
-        Parcel J = new Parcel(0, 3, 0);
-        Parcel K = new Parcel(0, 0, 3);
-        I.setPos(deltaO.multiply(-1));
-        J.setPos(deltaO.multiply(-1));
-        K.setPos(deltaO.multiply(-1));
-        drawParcelPro(I, Color.BLUE, false);
-        drawParcelPro(J, Color.GREEN, false);
-        drawParcelPro(K, Color.YELLOW, false);
-        drawParcelPro(new Parcel(5, 0, 0), Color.BLUE, false);
-        drawParcelPro(new Parcel(0, 5, 0), Color.GREEN, false);
-        drawParcelPro(new Parcel(0, 0, 5), Color.YELLOW, false);
+        Parcel I = new Parcel(1, 0, 0);
+        Parcel J = new Parcel(0, 1, 0);
+        Parcel K = new Parcel(0, 0, 1);
+        I.setPos(scene.getDeltaO().multiply(-1));
+        J.setPos(scene.getDeltaO().multiply(-1));
+        K.setPos(scene.getDeltaO().multiply(-1));
+        drawCubePro(I, Color.BLUE, false);
+        drawCubePro(J, Color.GREEN, false);
+        drawCubePro(K, Color.YELLOW, false);
+        drawCubePro(new Parcel(5, 0, 0), Color.BLUE, false);
+        drawCubePro(new Parcel(0, 5, 0), Color.GREEN, false);
+        drawCubePro(new Parcel(0, 0, 5), Color.YELLOW, false);
     }
 
 
@@ -145,7 +100,7 @@ public class CubeDrawer extends JPanel {
      * @return 2D Point Object of where the 3D Point should be drawn to emulate depth
      */
     private Point convertPointPro(Point3D point) {
-        point = point.add(deltaO);
+        point = point.add(scene.getDeltaO());
 
         double theta = Math.PI * angle / 180.0;
         double phi = Math.PI * elevation / 180.0;
@@ -164,104 +119,29 @@ public class CubeDrawer extends JPanel {
         x1 = x1 * 20f / (z1 + 50f);
         y1 = y1 * 20f / (z1 + 50f);
 
-        int ox = (int) (x1 * unit * 2 + 0.5);
-        int oy = (int) (y1 * unit * 2 + 0.5);
+        int ox = (int) (x1 * scale * 2 + 0.5);
+        int oy = (int) (y1 * scale * 2 + 0.5);
         return new Point(W / 2 + ox, H / 2 - oy);
     }
 
 
-    //Methods Used to adjust the Camera And Debug Options
+
+
+    /* Drawing Methods */
 
     /**
-     * Rotate the Truck.<br>
-     * @param i int amount to rotate - Default range: -3 ~ 3.
-     */
-    public void rotate(int i) {
-        angle += i;
-        renderScene();
-    }
-
-    /**
-     * Roll the Truck.<br>
-     * @param i int amount to roll - Default range -3 ~ 3.
-     */
-    public void roll(int i) {
-        elevation += i;
-        renderScene();
-    }
-
-    /**
-     * Change the scale of the Truck (Zoom). <br>
-     * @param i int amount to change the scale - Default range -1 ~ 1.
-     */
-    public void zoom(int i) {
-        unit += i;
-        if(unit < 6) unit = 6;
-        if(unit > 40) unit = 40;
-        renderScene();
-    }
-
-    /**
-     * Toggle if Debug Graphics should be drawn.
-     */
-    public void toggleDebug() {
-        debug = !debug;
-        renderScene();
-    }
-
-    /**
-     * Gets truck.
-     */
-    public Truck getTruck() {
-        return truck;
-    }
-    /**
-     * Sets truck
-     * @param truck object to be set
-     */
-    public void setTruck(Truck truck) {
-        this.truck = truck;
-    }
-    /**
-     * Finds the amount of gaps in truck drawn in CubeDrawer
-     */
-    public int getGapAmount(){
-//		int gaps = 0;
-//		for(int i=0; i<getTruck().getWidth(); i++){
-//			for(int j=0; j<getTruck().getHeight(); j++){
-//				for(int k=0; k<getTruck().getLength(); k++){
-//					if(getTruck().getTruck()[i][j][k].equals("-")) gaps++;
-//				}
-//			}
-//		}
-		return truck.getGapAmount()/8; //Divide by 8 to compensate for multiplying length, width and height by 2 at the start
-	}
-    /**
-     * Finds the current value of truck drawn in CubeDrawer
-     */
-    public int getValue(){
-//	    int total = 0;
-//        for (Parcel p: getTruck().getParcelList()) {
-//            total += p.getValue();
-//        }
-        return truck.getValue();
-    }
-
-    /* Drawing Methods for different parts of the 'Truck' Display */
-
-    /**
-     * Draws a <code>Parcel</code> in Projected Perspective at the Parcel's Position with a given Color.<br>
-     * The Parcel can Either be drawn with just a wire frame or with a wire frame and filled, by passing true to the 'fill' param.<br>
-     * @param p The Parcel to draw.
+     * Draws a <code>Cube</code> in Projected Perspective at the Cube's Position with a given Color.<br>
+     * The Cube can Either be drawn with just a wire frame or with a wire frame and filled, by passing true to the 'fill' param.<br>
+     * @param cube The Cube to draw.
      * @param c The Color to use for the wire frame.
-     * @param fill Sets if the Parcel Should also be filled with a transparent fill.
+     * @param fill Sets if the Cube Should also be filled with a transparent fill.
      */
-    private void drawParcelPro(Parcel p, Color c, Boolean fill) {
-        Point3D pos = p.getPos();
-        ArrayList<Point3D> points = p.getPoints();
+    private void drawCubePro(Cube cube, Color c, Boolean fill) {
+        Point3D pos = cube.getPos();
+        ArrayList<Point3D> points = cube.getPoints();
         ArrayList<Point> newPoints = new ArrayList<>();
 
-        ArrayList<Edge3D> edges = p.getEdges();
+        ArrayList<Edge3D> edges = cube.getEdges();
         ArrayList<Edge> newEdges = new ArrayList<>();
 
 
@@ -270,20 +150,24 @@ public class CubeDrawer extends JPanel {
             newPoints.add(convertPointPro(point.add(pos)));
         }
 
+        if(drawCoordinates) {
+            for (Point point : newPoints) {
+                double a = point.x * 0.01;
+                double b = point.y * 0.01;
+                DecimalFormat df = new DecimalFormat("#.##");
+                drawText(point, "(" + df.format(a) + ", " + df.format(b) + ")");
+            }
+        }
+
         for(Edge3D edge : edges) {
-            if(debug) System.out.println("Edge");
             Point a = convertPointPro(edge.a.add(pos));
             Point b = convertPointPro(edge.b.add(pos));
             newEdges.add(new Edge(a,b));
         } //Add convert Edge Method.
 
+        if(fill)
+            fillCube(newPoints, new Color(1,0,0,0.3f));
         drawWireFrame(newEdges, c);
-        if(fill){
-            if(p.getID().equals("A") || p.getID().equals("L")) fillCube(newPoints, new Color(1,0,0,0.3f)); //red
-            else if(p.getID().equals("B") || p.getID().equals("P")) fillCube(newPoints,new Color(0,1,0,0.3f)); //green
-            else if(p.getID().equals("C") || p.getID().equals("T")) fillCube(newPoints,new Color(0,0,1,0.3f)); //blue
-            else fillCube(newPoints,new Color(1,1,1,0.3f)); //gray?
-        }
     }
 
 
@@ -332,6 +216,18 @@ public class CubeDrawer extends JPanel {
         g.fillOval((int) p.getX() - 3, (int) p.getY() - 3, 6, 6);
     }
 
+    private void drawText(Point p, String text) {
+        Graphics2D g = (Graphics2D) image.getGraphics();
+        g.setFont(new Font("Dialog", Font.BOLD, 20));
+        g.setColor(Color.BLACK);
+        int k = 1;
+        if(p.getX() < W/2) {
+            g.drawString(text, (p.x - g.getFontMetrics().stringWidth(text)) - 20, p.y + 10);
+        } else {
+            g.drawString(text, p.x + 10, p.y + 10);
+        }
+    }
+
     /**
      * Draws a Line Between two (2d) Points with a given <code>Color</code>.
      *
@@ -342,6 +238,7 @@ public class CubeDrawer extends JPanel {
     private void drawLine(Point p1, Point p2, Color c) {
         Graphics2D g = (Graphics2D) image.getGraphics();
         g.setColor(c);
+        g.setStroke(new BasicStroke(2));
         g.drawLine((int) p1.getX(), (int) p1.getY(), (int) p2.getX(), (int) p2.getY());
     }
 
@@ -372,23 +269,67 @@ public class CubeDrawer extends JPanel {
     public void resetCamera() {
         angle = 0;
         elevation = 35;
-        unit = 20;
+        scale = 20;
         renderScene();
     }
 
-    public void emptyTruck() {
-       truck = new Truck();
-       renderScene();
+    public void emptyScene() {
+        scene.empty();
+        renderScene();
+    }
+
+    //Methods Used to adjust the Camera And Debug Options
+
+    /**
+     * Rotate the Truck.<br>
+     * @param i int amount to rotate - Default range: -3 ~ 3.
+     */
+    public void rotate(int i) {
+        angle += i;
+        renderScene();
+    }
+
+    /**
+     * Roll the Truck.<br>
+     * @param i int amount to roll - Default range -3 ~ 3.
+     */
+    public void roll(int i) {
+        elevation += i;
+        renderScene();
+    }
+
+    /**
+     * Change the scale of the Truck (Zoom). <br>
+     * @param i int amount to change the scale - Default range -1 ~ 1.
+     */
+    public void zoom(int i) {
+        scale += i;
+        if(scale < 6) scale = 6;
+        if(scale > 40) scale = 40;
+        renderScene();
+    }
+
+    /**
+     * Toggle if Debug Graphics should be drawn.
+     */
+    public void toggleDebug() {
+        debug = !debug;
+        renderScene();
+    }
+
+    public void toggleCoodDrawing() {
+        drawCoordinates = !drawCoordinates;
+        renderScene();
     }
 
     public int getZoom() {
-    	return unit;
+    	return scale;
     }
-
+    
     public int getElevation() {
     	return elevation;
     }
-
+    
     public int getAngle() {
     	return angle;
     }

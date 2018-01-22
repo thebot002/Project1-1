@@ -6,59 +6,33 @@ import java.awt.event.KeyEvent;
 import java.awt.Dimension;
 import javax.swing.JPanel;
 
-public class TruckViewer extends JFrame {
-    public static void main(String[] args) {
-        new TruckViewer();
-    }
-    private Thread gameThread;
-    private final int H = 700;
-    private final int W = 1400;
+public class CubeViewer extends JFrame {
     private Font font;
 
     private CubeDrawer c;
     private Menu m;
     private JPanel container;
 
-    public TruckViewer() {
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                create();
-            }
-        });
-    }
-
-    private void create() {
-        setSize(W, H);
+    public CubeViewer(CubeDrawer c) {
+        this.c = c;
         setTitle("Truck");
-        setResizable(false);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-
-        c = new CubeDrawer(W/3*2, H);
-        c.setPreferredSize(new Dimension(W/3*2, H));
+        addKeyInput();
 
         m = new Menu();
         m.setCubeDrawer(c);
-        //m.setPreferredSize(new Dimension(W/3, H));
         m.setVisible(true);
 
-
-
-        m.setGapsFound(c.getGapAmount());
-        m.setCurrentValue(c.getValue());
-        //m.setTimeTook(c.getTimeTook());
         add(m, BorderLayout.EAST);
         add(c, BorderLayout.CENTER);
-        c.setVisible(true);
         pack();
-        addKeyInput();
         setVisible(true);
+        setResizable(false);
     }
 
+
     private void addKeyInput() {
-
         KeyboardFocusManager keyManager;
-
         keyManager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
         keyManager.addKeyEventDispatcher(new KeyEventDispatcher() {
 
@@ -88,6 +62,9 @@ public class TruckViewer extends JFrame {
                     	m.getInfoTab().setZoom(c.getZoom());
                     if (key == 68)  // d
                         c.toggleDebug();
+
+                    if (key == 80)  // p
+                        c.toggleCoodDrawing();
                 }
                 return false;
             }
