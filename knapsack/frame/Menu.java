@@ -180,7 +180,7 @@ public class Menu extends JPanel implements ActionListener {
 		}
 		else if(e.getSource() == btnClearTruck) {
 			if(cubeDrawer != null)
-				cubeDrawer.emptyTruck();
+				cubeDrawer.emptyScene();
 		}
 		else if(e.getSource() == btnResetCamera) {
 			if(cubeDrawer != null)
