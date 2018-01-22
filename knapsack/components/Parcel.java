@@ -274,4 +274,54 @@ public class Parcel implements Cube {
         }
         return true;
     }
+    @Override
+    public boolean equals(Object obj) {
+    	final Parcel other = (Parcel) obj;
+        if(this.id.equals(other.id) && this.value == other.value) return true;  
+        else return false;
+    }
+    
+    public static Parcel[] createParcelsArrA(int value) {
+    	Parcel[] parcelsA = new Parcel[6];
+    	Parcel parcelA = new Parcel("A", value);
+    	Parcel xRotParcelA = new Parcel("A", value);
+		xRotParcelA.xRotate();
+		Parcel yRotParcelA = new Parcel("A", value);
+		yRotParcelA.yRotate();
+		Parcel zRotParcelA = new Parcel("A", value);
+		zRotParcelA.zRotate();
+		Parcel xyRotParcelA = new Parcel("A", value);
+		xyRotParcelA.xRotate();
+		xyRotParcelA.yRotate();
+		Parcel xzRotParcelA = new Parcel("A", value);
+		xzRotParcelA.xRotate();
+		xzRotParcelA.zRotate();
+		parcelsA[0] = parcelA;
+		parcelsA[1] = xRotParcelA;
+		parcelsA[2] = yRotParcelA;
+		parcelsA[3] = zRotParcelA;
+		parcelsA[4] = xyRotParcelA;
+		parcelsA[5] = xzRotParcelA;
+		return parcelsA;
+    }
+    
+    public static Parcel[] createParcelsArrB(int value) {
+    	Parcel[] parcelsB = new Parcel[3];
+    	Parcel parcelB = new Parcel("B", value);
+    	Parcel yRotParcelB = new Parcel("B", value);
+		yRotParcelB.yRotate();
+		Parcel zRotParcelB = new Parcel("B", value);
+		zRotParcelB.zRotate();
+		parcelsB[0] = parcelB;
+		parcelsB[1] = yRotParcelB;
+		parcelsB[2] = zRotParcelB;
+		return parcelsB;
+    }
+    
+    public static Parcel[] createParcelsArrC(int value) {
+    	Parcel[] parcelsC = new Parcel[1];
+    	Parcel parcelC = new Parcel("C", value);
+    	parcelsC[0] = parcelC;
+    	return parcelsC;
+    }
 }

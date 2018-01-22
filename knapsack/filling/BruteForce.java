@@ -4,10 +4,14 @@ import javafx.geometry.Point3D;
 import knapsack.components.Parcel;
 import knapsack.components.Truck;
 
+import java.util.List;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 
 public class BruteForce {
-    private static Parcel[] parcelAr;
+    private static Parcel[] parcelArr;
+    private static int[][] userInput;
 
     public static void main(String[] args){
         Truck truck = new Truck();
@@ -29,7 +33,7 @@ public class BruteForce {
 
 	    /* Create an array with the three parcels and
 	       all their rotations. */
-        parcelAr = new Parcel[10];
+        parcelArr = new Parcel[10];
 
         // Get the rotations of the parcels
         Parcel xRotParcelA = new Parcel("A",3);
@@ -50,16 +54,16 @@ public class BruteForce {
         zRotParcelB.zRotate();
 
         // Place everything into the parcel array
-        parcelAr[9]=parcelA;
-        parcelAr[1]=xRotParcelA;
-        parcelAr[2]=yRotParcelA;
-        parcelAr[3]=zRotParcelA;
-        parcelAr[4]=xyRotParcelA;
-        parcelAr[5]=xzRotParcelA;
-        parcelAr[6]=parcelB;
-        parcelAr[7]=yRotParcelB;
-        parcelAr[8]=zRotParcelB;
-        parcelAr[0]=parcelC;
+        parcelArr[9]=parcelA;
+        parcelArr[1]=xRotParcelA;
+        parcelArr[2]=yRotParcelA;
+        parcelArr[3]=zRotParcelA;
+        parcelArr[4]=xyRotParcelA;
+        parcelArr[5]=xzRotParcelA;
+        parcelArr[6]=parcelB;
+        parcelArr[7]=yRotParcelB;
+        parcelArr[8]=zRotParcelB;
+        parcelArr[0]=parcelC;
     }
     /**
      * The method fills the truck with brute force.
@@ -78,11 +82,11 @@ public class BruteForce {
         for(int i=0; i<truck.getWidth(); i++) {
             for(int j=0; j<truck.getHeight(); j++) {
                 for(int k=0; k<truck.getLength(); k++) {
-                    while(!truck.isPossible(parcelAr[index], new Point3D(i, j, k)) && index<9) {
+                    while(!truck.isPossible(parcelArr[index], new Point3D(i, j, k)) && index<9) {
                         index++;
                     }
-                    if(truck.addParcel(parcelAr[index].copy())){
-                        parcelList.add(parcelAr[index].copy());
+                    if(truck.addParcel(parcelArr[index].copy())){
+                        parcelList.add(parcelArr[index].copy());
                     }
                     index=0;
                 }
@@ -94,11 +98,73 @@ public class BruteForce {
         }
         System.out.println(totVal);
     }
-    public static void setParcelArray(Parcel[] customParcelAr) {
-    	parcelAr = customParcelAr;
+    public static void setParcelArrray(Parcel[] customParcelArr) {
+    	parcelArr = customParcelArr;
     }
-    public static Parcel[] getParcelArray() {
-    	return parcelAr;
+    public static Parcel[] getParcelArrray() {
+    	return parcelArr;
     }
-
+    public static void setUserInput(int[][] customUserInput) {
+    	userInput = customUserInput;
+    }
+    public static int[][] getUserInput() {
+    	return userInput;
+    }
+    public Parcel[] updateParcelRectangleAvailability(ArrayList<Parcel> placedParcels, int[][] parcelsArr, Parcel[] inputParcelsArr ) {
+    	Parcel[] parcelsA = Parcel.createParcelsArrA(parcelsArr[0][1]);
+    	Parcel[] parcelsB = Parcel.createParcelsArrB(parcelsArr[1][1]);
+        Parcel[] parcelsC = Parcel.createParcelsArrC(parcelsArr[2][1]);
+    	int counterA = 0;
+    	int counterB = 0;
+    	int counterC = 0;
+    	for(int i = 0; i < parcelsA.length; i++) {
+    		for(int j = 0; j < placedParcels.size(); j++) {
+    			if(parcelsA[i].equals(placedParcels.get(j))) counterA++;
+    		}
+    	}
+    	for(int i = 0; i < parcelsB.length; i++) {
+    		for(int j = 0; j < placedParcels.size(); j++) {
+    			if(parcelsB[i].equals(placedParcels.get(j))) counterB++;
+    		}
+    	}
+    	for(int i = 0; i < parcelsC.length; i++) {
+    		for(int j = 0; j < placedParcels.size(); j++) {
+    			if(parcelsC[i].equals(placedParcels.get(j))) counterC++;
+    		}
+    	}
+    	if(counterA >= parcelsArr[0][0]) {
+    		for(int i = 0; i < parcelsA.length; i++) {
+        		for(int j = 0; j < inputParcelsArr.length; j++) {
+        			if(parcelsA[i].equals(inputParcelsArr[j])) {
+        				inputParcelsArr[j] = null;
+        			}
+        		}
+        	}
+    	}
+    	if(counterB >= parcelsArr[1][0]) {
+    		for(int i = 0; i < parcelsB.length; i++) {
+        		for(int j = 0; j < inputParcelsArr.length; j++) {
+        			if(parcelsB[i].equals(inputParcelsArr[j])) {
+        				inputParcelsArr[j] = null;
+        			}
+        		}
+        	}
+    	}
+    	if(counterC >= parcelsArr[2][0]) {
+    		for(int i = 0; i < parcelsC.length; i++) {
+        		for(int j = 0; j < inputParcelsArr.length; j++) {
+        			if(parcelsC[i].equals(inputParcelsArr[j])) {
+        				inputParcelsArr[j] = null;
+        			}
+        		}
+        	}
+    	}
+    	inputParcelsArr = cleanNull(inputParcelsArr);
+    	return inputParcelsArr;
+    }
+    public static Parcel[] cleanNull(Parcel[] v) {
+        List<Parcel> parcels = new ArrayList<Parcel>(Arrays.asList(v));
+        parcels.removeAll(Collections.singleton(null));
+        return parcels.toArray(new Parcel[parcels.size()]);
+    }
 }

@@ -1,6 +1,9 @@
 package knapsack.backtracking;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 import javafx.geometry.Point3D;
 import knapsack.components.Parcel;
@@ -11,6 +14,8 @@ public class BackTrack {
 
 	private static ArrayList<Truck> truckList = new ArrayList<>();
 	private static ArrayList<Integer> truckValueList = new ArrayList<>();
+	private static Parcel[] parcelArr;
+	private static int[][] userInput;
 
 	public static void main(String[] args) {
 
@@ -164,4 +169,74 @@ public class BackTrack {
 					return backTracking(truck, parcelAr,parcelList, index, recursionCounter+1);
 		}
 	}
+	public static void setParcelArrray(Parcel[] customParcelArr) {
+    	parcelArr = customParcelArr;
+    }
+    public static Parcel[] getParcelArrray() {
+    	return parcelArr;
+    }
+    public static void setUserInput(int[][] customUserInput) {
+    	userInput = customUserInput;
+    }
+    public static int[][] getUserInput() {
+    	return userInput;
+    }
+    public Parcel[] updateParcelRectangleAvailability(ArrayList<Parcel> placedParcels, int[][] parcelsArr, Parcel[] inputParcelsArr ) {
+    	Parcel[] parcelsA = Parcel.createParcelsArrA(parcelsArr[0][1]);
+    	Parcel[] parcelsB = Parcel.createParcelsArrB(parcelsArr[1][1]);
+        Parcel[] parcelsC = Parcel.createParcelsArrC(parcelsArr[2][1]);
+    	int counterA = 0;
+    	int counterB = 0;
+    	int counterC = 0;
+    	for(int i = 0; i < parcelsA.length; i++) {
+    		for(int j = 0; j < placedParcels.size(); j++) {
+    			if(parcelsA[i].equals(placedParcels.get(j))) counterA++;
+    		}
+    	}
+    	for(int i = 0; i < parcelsB.length; i++) {
+    		for(int j = 0; j < placedParcels.size(); j++) {
+    			if(parcelsB[i].equals(placedParcels.get(j))) counterB++;
+    		}
+    	}
+    	for(int i = 0; i < parcelsC.length; i++) {
+    		for(int j = 0; j < placedParcels.size(); j++) {
+    			if(parcelsC[i].equals(placedParcels.get(j))) {
+    			}
+    		}
+    	}
+    	if(counterA >= parcelsArr[0][0]) {
+    		for(int i = 0; i < parcelsA.length; i++) {
+        		for(int j = 0; j < inputParcelsArr.length; j++) {
+        			if(parcelsA[i].equals(inputParcelsArr[j])) {
+        				inputParcelsArr[j] = null;
+        			}
+        		}
+        	}
+    	}
+    	if(counterB >= parcelsArr[1][0]) {
+    		for(int i = 0; i < parcelsB.length; i++) {
+        		for(int j = 0; j < inputParcelsArr.length; j++) {
+        			if(parcelsB[i].equals(inputParcelsArr[j])) {
+        				inputParcelsArr[j] = null;
+        			}
+        		}
+        	}
+    	}
+    	if(counterC >= parcelsArr[2][0]) {
+    		for(int i = 0; i < parcelsC.length; i++) {
+        		for(int j = 0; j < inputParcelsArr.length; j++) {
+        			if(parcelsC[i].equals(inputParcelsArr[j])) {
+        				inputParcelsArr[j] = null;
+        			}
+        		}
+        	}
+    	}
+    	inputParcelsArr = cleanNull(inputParcelsArr);
+    	return inputParcelsArr;
+    }
+    public static Parcel[] cleanNull(Parcel[] v) {
+        List<Parcel> parcels = new ArrayList<Parcel>(Arrays.asList(v));
+        parcels.removeAll(Collections.singleton(null));
+        return parcels.toArray(new Parcel[parcels.size()]);
+    }
 }

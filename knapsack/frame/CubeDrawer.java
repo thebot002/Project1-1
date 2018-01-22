@@ -23,7 +23,6 @@ public class CubeDrawer extends JPanel {
     private int W;
     private BufferedImage image;
     private int scale = 20; //scaling factor
-
     private int angle = 0;
     private int elevation = 35;
     private Scene scene;
