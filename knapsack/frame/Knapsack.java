@@ -132,6 +132,10 @@ public class Knapsack extends JFrame {
     	Parcel[] parcelArr = createInputParcelArr(info);
     	//do something interface implementation stuff idk
     }
+
+	public CubeDrawer getCubeDrawer() {
+		return c;
+	}
     
     private Parcel[] createInputParcelArr(AlgorithmInfo info) {
 		int lengthCounter = 0;

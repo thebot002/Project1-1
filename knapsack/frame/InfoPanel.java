@@ -7,6 +7,8 @@ import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.Font;
 import javax.swing.JSlider;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 public class InfoPanel extends JPanel {
 
@@ -41,9 +43,11 @@ public class InfoPanel extends JPanel {
 	private JLabel lblP;
 	private JLabel lblInvertColors;
 	private JLabel lblI;
+	private Knapsack knap;
 
 
-	public InfoPanel() {
+	public InfoPanel(Knapsack parent) {
+		this.knap = parent;
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{0, 0, 41, 0, 0, 0, 111, 0, 0};
 		gridBagLayout.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
@@ -233,8 +237,8 @@ public class InfoPanel extends JPanel {
 		gbc_lblMinus.gridx = 6;
 		gbc_lblMinus.gridy = 8;
 		add(lblMinus, gbc_lblMinus);
-		
-		slider = new JSlider();
+
+		slider = new JSlider(JSlider.HORIZONTAL, 50, 150, 50);
 		GridBagConstraints gbc_slider = new GridBagConstraints();
 		gbc_slider.fill = GridBagConstraints.HORIZONTAL;
 		gbc_slider.gridwidth = 2;
@@ -242,6 +246,14 @@ public class InfoPanel extends JPanel {
 		gbc_slider.gridx = 1;
 		gbc_slider.gridy = 9;
 		add(slider, gbc_slider);
+
+		slider.setMajorTickSpacing(25);
+		slider.setMinorTickSpacing(5);
+		slider.setPaintTicks(true);
+		slider.setPaintLabels(true);
+
+		add(slider, gbc_slider);
+		slider.addChangeListener(new SliderListener());
 		
 		lblToggleDebug = new JLabel("Toggle Debug:");
 		GridBagConstraints gbc_lblToggleDebug = new GridBagConstraints();
@@ -287,6 +299,17 @@ public class InfoPanel extends JPanel {
 		gbc_lblP.gridx = 6;
 		gbc_lblP.gridy = 11;
 		add(lblP, gbc_lblP);
+
+
+		//setZoom(knap.getCubeDrawer().getCamera());
+	}
+
+	class SliderListener implements ChangeListener {
+		public void stateChanged(ChangeEvent e) {
+			JSlider source = (JSlider)e.getSource();
+			knap.getCubeDrawer().getCamera().setZoom(source.getValue());
+			setZoom(source.getValue());
+		}
 	}
 
 	/**

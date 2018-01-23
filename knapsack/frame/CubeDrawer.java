@@ -34,7 +34,7 @@ public class CubeDrawer extends JPanel {
         setVisible(true);
         scene = s;
         image = new BufferedImage(W, H, BufferedImage.TYPE_INT_ARGB);
-        camera = new Camera(0, 35, 20);
+        camera = new Camera(0, 35, 100);
     }
 
     /**
@@ -112,8 +112,8 @@ public class CubeDrawer extends JPanel {
         x1 = x1 * 20f / (z1 + 50f);
         y1 = y1 * 20f / (z1 + 50f);
 
-        int ox = (int) (x1 * camera.scale * 2 + 0.5);
-        int oy = (int) (y1 * camera.scale * 2 + 0.5);
+        int ox = (int) (x1 * camera.scale / 2);
+        int oy = (int) (y1 * camera.scale / 2);
         return new Point(W / 2 + ox, H / 2 - oy);
     }
 
@@ -159,8 +159,13 @@ public class CubeDrawer extends JPanel {
          */
         void zoom(int i) {
             scale += i;
-            if(scale < 6) scale = 6;
-            if(scale > 40) scale = 40;
+            if(scale < 50) scale = 50;
+            if(scale > 150) scale = 150;
+            renderScene();
+        }
+
+        public void setZoom(int zoom) {
+            this.scale = zoom;
             renderScene();
         }
     }

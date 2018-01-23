@@ -73,7 +73,7 @@ public class Menu extends JPanel implements ActionListener {
 		add(btnResetCamera, gbc_btnResetCamera);
 
 		infoJPanel = new JPanel();
-		infoPanel = new InfoPanel();
+		infoPanel = new InfoPanel(parent);
 		GridBagLayout gridBagLayout_1 = (GridBagLayout) infoPanel.getLayout();
 		gridBagLayout_1.columnWidths = new int[]{0, 111, 0, 0, 0, 0, 0, 0};
 		GridBagConstraints gbc_infoJPanel = new GridBagConstraints();
