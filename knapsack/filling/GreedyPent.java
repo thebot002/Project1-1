@@ -309,14 +309,14 @@ public class GreedyPent {
 
 	/**
 	 * The method fills the truck with brute force.
-	 * @param truck The truck we fill with parcels
+	 //* @param truck The truck we fill with parcels
 	 * @param parcelAr The array that contains the parcels and their rotations
 	 * @param index Keeps truck of the parcel array elements
-	 * @param parcelList This list contains the parcels we have added to the truck
+	 //* @param parcelList This list contains the parcels we have added to the truck
 	 * @param numL numP numT The number of each kind of parcels to be used
 	 * */
 
-	public static int greedy(PentominoParcel[] parcelAr,int index, int numL, int numP, int numT) {
+	public static Truck greedy(PentominoParcel[] parcelAr,int index, int numL, int numP, int numT) {
 		int totVal=0;
 		Truck truck = new Truck();
 
@@ -365,17 +365,14 @@ public class GreedyPent {
 				break;
 		}
 
-
 		// We calculate the total value of the placed shapes, and we return this value.
 		for(int i=0; i<parcelList.size(); i++) {
 			totVal+=parcelList.get(i).getValue();
 		}
-
-
-
 		System.out.println(parcelList.size());
 		truck.printTruck();
-		return totVal;
+
+		return truck;
 	}
 
 	/* The same algorithm as before. It works if there is no restriction in the number of parcels*/
