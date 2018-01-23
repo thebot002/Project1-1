@@ -1090,6 +1090,7 @@ public class Knapsack extends JFrame {
 		if(settings[1].equals("Genetic Algorithm - Maximize Volume")) {
 			//depends on implementation of GA
 		}
+		System.out.println(inputParcelArr.length);
 		return inputParcelArr;
 	}
 	private double[] sortVolume(int[][] parcelsArr) {
