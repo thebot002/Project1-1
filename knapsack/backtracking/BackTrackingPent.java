@@ -55,7 +55,7 @@ public class BackTrackingPent {
 
 
 
-    // Get the rotations of the parcels
+    // Get all the possible rotations of the parcels and their mirror images
 
 		PentominoParcel xRotParcelP = new PentominoParcel("P",4);
 		xRotParcelP.rotX();
@@ -320,9 +320,10 @@ public class BackTrackingPent {
 
 	/* Gives the best solution the back tracking algorithm had found*/
 	public static int[] getBestValue() {
-		int bestValue=0;
-		int index=0;
-		int[] valueIndex = new int[2];
+		int bestValue=0; // Will save the best value of the already checked elements of the list
+		int index=0; // Keeps truck of the best value at each moment.
+		int[] valueIndex = new int[2]; // In order to return the best value and its place in the list, they are both saved in this array
+
 		for(int i=0; i<truckValueList.size(); i++) {
 			if(truckValueList.get(i)>bestValue)
 				bestValue=truckValueList.get(i);
@@ -347,9 +348,9 @@ public class BackTrackingPent {
 	 *  */
 	public static boolean backTracking(Truck truck, PentominoParcel[] parcelAr, ArrayList<PentominoParcel> parcelList, int index, int numL, int numP, int numT, int recursionCount) {
 
-		int totVol = 0;
-		int totVal = 0;
-		int[] position = new int[3];
+		int totVol = 0; // Is used to store the total volume of the already placed parcels
+		int totVal = 0; // Is used to store the total value of the truck once it is fulled
+		int[] position = new int[3]; // Stores the coordinates of the next empty spot in the truck
 
 
 
@@ -357,12 +358,14 @@ public class BackTrackingPent {
 			totVol+=parcelList.get(i).getVolume();
 		}
 
+	 /* If statement to stop the recursion if all the given parcels has already been used*/
 		if(parcelAr.length==0) {
 			truck.printTruck();
 			System.out.println(numL+" "+numP+" "+numT);
 			System.out.println(parcelList.size());
 			return true;
 		}
+		/* Stops the recursion when the truck is full */
 		else if(totVol==truck.getVolume()){
 
 
@@ -370,28 +373,38 @@ public class BackTrackingPent {
 			if(solutionCount%1000==0)
 				System.out.println(solutionCount);
 			truckList.add(truck);
-			int vol=0;
+
+		/* Calculates the total value of the filled truck. */
 			for(int i=0; i<parcelList.size(); i++) {
 				totVal+=parcelList.get(i).getValue();
 			}
 
+		/* The total value is added to a list, which is used in the end to find out the average total
+		 * value as well as the best of all the solutions the algorithm has found. */
 			truckValueList.add(totVal);
 			return true;
-
+		/* The main body of the recursion. */
 		}else {
-			position=truck.positionToAdd();
+			position=truck.positionToAdd(); // The coordinates of the next empty spot in the truck.
 			Point3D p = new Point3D(position[0],position[1],position[2]);
 
+			/* If the present parcel fits to the empty spot. We continue from here. */
 			if(truck.isPossible(parcelAr[index], parcelAr[index].getArray(), p	)) {
 				p = new Point3D(position[0],position[1],position[2]);
 				Truck newTruck = new Truck();
 				newTruck.setTruck(truck.copyTruck());
+
+				// The parcel is added to the truck.
 				newTruck.addParcel(parcelAr[index], parcelAr[index].getArray(), p);
 
+				// These variables are used to keep truck of the remaining parcels after one the present has been placed
 				int l=numL;
 				int nump=numP;
 				int t=numT;
+
 				PentominoParcel[] newParcelAr = parcelAr.clone();
+
+				// If one of the parcels is used, its number reduced by one.
 				if(parcelAr[index].getID().equals("L")) {
 					l--;
 					if(l==0) {
@@ -411,22 +424,29 @@ public class BackTrackingPent {
 					}
 				}
 
+
 				ArrayList<PentominoParcel> newParcelList = new ArrayList<>(parcelList);
 				newParcelList.add(parcelAr[index]);
-				if (backTracking(newTruck, newParcelAr, newParcelList, 0, l, nump, t, recursionCount) && solutionCount<1000 )
+
+				// The recursive method is called again with the new truck, and new parcel array and the new parcel list.
+				if (backTracking(newTruck, newParcelAr, newParcelList, 0, l, nump, t, recursionCount) && solutionCount<8000 )
 					return false;
-				else if(solutionCount==1000)
+				else if(solutionCount==8000)
 					return true;
 
 
 
 			}
+
+			/* If the present parcel at its present state does not fit, the next state of the parcel is beeing used.
+			   Once all the states of a parcel has been used, the algorithm moves to the next parcel.
+			*/
 					index++;
 					if(index==parcelAr.length) {
 						return false;
 					}
 
-
+				/*The final recursive call with the new state of the present parcel, or with a new parcel in it. */
 					return backTracking(truck, parcelAr,parcelList, index,numL,numP,numT, recursionCount);
 		}
 	}
@@ -450,7 +470,7 @@ public class BackTrackingPent {
 
 
 			solutionCount++;
-			if(solutionCount%1000==0)
+			if(solutionCount%10==0)
 				System.out.println(solutionCount);
 			truckList.add(truck);
 			int vol=0;
