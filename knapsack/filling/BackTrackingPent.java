@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import javafx.geometry.Point3D;
 import knapsack.components.Parcel;
 import knapsack.components.PentominoParcel;
-import knapsack.components.Simulations;
 import knapsack.components.Truck;
 
 public class BackTrackingPent {
