@@ -1,6 +1,8 @@
 package knapsack.frame;
 
 import knapsack.*;
+import knapsack.components.AlgorithmInfo;
+
 import javax.swing.JPanel;
 import javax.swing.JButton;
 import java.awt.GridBagLayout;
@@ -25,15 +27,22 @@ public class Menu extends JPanel implements ActionListener {
 	private JLabel lblCurrentValue;
 	private JLabel lblGapsFoundDisp;
 	private JLabel lblCurrentValueDisp;
+	private JLabel lblTimeTook;
+	private JLabel lblTimeTookDisp;
 	private JTabbedPane tabbedPane;
 	private SwitchTabbedPane rectangleTab;
 	private SwitchTabbedPane pentominoTab;
+
 	private InfoPanel infoTab;
-	private JLabel lblTimeTook;
-	private JLabel lblTimeTookDisp;
 	private CubeDrawer cubeDrawer;
 
-	public Menu(Knapsack parent) {
+	private InfoPanel infoPanel;
+	private JPanel infoJPanel;
+	private AlgorithmInfo rectangleInfo;
+	private AlgorithmInfo pentominoInfo;
+	private Knapsack knapsack;
+
+	public Menu(Knapsack knapsack) {
 		setBackground(SystemColor.menu);
 		setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		GridBagLayout gridBagLayout = new GridBagLayout();
@@ -157,11 +166,8 @@ public class Menu extends JPanel implements ActionListener {
 			System.out.println(String.valueOf(tabbedPane.getSelectedComponent()));
 			if(tabbedPane.getSelectedIndex() == 0) { // Used to be able to differentiate between the type of  parcels (ABC vs LPT)
 	        	try {
-					rectangleTab.collectParcels();
-					int[][] parcelsRectangle = rectangleTab.collectParcels(); //output of tabs is stored
-					String[] settings = rectangleTab.collectParcelSettings();
-																			// Depending on which algorithm and parameters some method needs to be called
-					
+	        		rectangleInfo = new AlgorithmInfo(rectangleTab.collectParcelSettings(),  rectangleTab.collectParcels(), "Rectangle");
+	        		getKnapsack().fill(rectangleInfo);
 				} catch (ParseException e1) {
 					System.out.println("The currently edited value couldn't be commited.");
 					JOptionPane.showMessageDialog(tabbedPane, "The currently edited value couldn't be commited.");
@@ -169,9 +175,8 @@ public class Menu extends JPanel implements ActionListener {
 	        }
 	        else if(tabbedPane.getSelectedIndex() == 1) {// Used to be able to differentiate between the type of  parcels (ABC vs LPT)
 	        	try {
-					int[][] parcelsPentomino = pentominoTab.collectParcels(); //output of tabs need to be converted to input of algorithms
-					String[] settings = pentominoTab.collectParcelSettings();
-																			// Depending on which algorithm and parameters some method needs to be called
+	        		pentominoInfo = new AlgorithmInfo(pentominoTab.collectParcelSettings(),  pentominoTab.collectParcels(), "Pentomino");	
+	        		getKnapsack().fill(pentominoInfo);
 				} catch (ParseException e1) {
 					System.out.println("The currently edited value couldn't be commited.");
 					JOptionPane.showMessageDialog(tabbedPane, "The currently edited value couldn't be commited.");
@@ -216,5 +221,29 @@ public class Menu extends JPanel implements ActionListener {
 	}
 	public InfoPanel getInfoTab() {
 		return infoTab;
+	}
+
+	public AlgorithmInfo getRectangleInfo() {
+		return rectangleInfo;
+	}
+
+	public void setRectangleInfo(AlgorithmInfo rectangleInfo) {
+		this.rectangleInfo = rectangleInfo;
+	}
+
+	public AlgorithmInfo getPentominoInfo() {
+		return pentominoInfo;
+	}
+
+	public void setPentominoInfo(AlgorithmInfo pentominoInfo) {
+		this.pentominoInfo = pentominoInfo;
+	}
+
+	public Knapsack getKnapsack() {
+		return knapsack;
+	}
+
+	public void setKnapsack(Knapsack knapsack) {
+		this.knapsack = knapsack;
 	}
 }
