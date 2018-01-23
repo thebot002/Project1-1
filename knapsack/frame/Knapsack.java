@@ -41,8 +41,8 @@ public class Knapsack extends JFrame {
         truck = new Truck();
         BruteForce.fill(truck);
 
-        Color scene_BACKGROUND = Color.BLACK;   //Background of scene
-        Color scene_FOREGROUND = Color.WHITE;   //Wireframe color of scene
+        Color scene_BACKGROUND = Color.cyan;   //Background of scene
+        Color scene_FOREGROUND = Color.BLACK;   //Wireframe color of scene
         Color cube_FOREGROUND = Color.YELLOW;   //Cube Wireframe color
 
 

@@ -260,8 +260,9 @@ public class CubeDrawer extends JPanel {
     private void drawText(Point p, String text) {
         Graphics2D g = (Graphics2D) image.getGraphics();
         g.setFont(new Font("Dialog", Font.BOLD, 20));
-        g.setColor(Color.BLACK);
-        int k = 1;
+
+        Color b = scene.getBackground();
+        g.setColor(new Color(255-b.getRed(), 255-b.getGreen(), 255-b.getBlue()));
         if(p.getX() < W/2) {
             g.drawString(text, (p.x - g.getFontMetrics().stringWidth(text)) - 20, p.y + 10);
         } else {
