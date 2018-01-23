@@ -309,11 +309,13 @@ public class GreedyPent {
 
 	/**
 	 * The method fills the truck with brute force.
-	 //* @param truck The truck we fill with parcels
+	 * @param truck The truck we fill with parcels
 	 * @param parcelAr The array that contains the parcels and their rotations
 	 * @param index Keeps truck of the parcel array elements
-	 //* @param parcelList This list contains the parcels we have added to the truck
-	 * @param numL numP numT The number of each kind of parcels to be used
+	 * @param parcelList This list contains the parcels we have added to the truck
+	 * @param numL The number of the L parcels to be used
+	 * @param numP  The number of the P parcels to be used
+	* @param numT  The number of the T parcels to be used
 	 * */
 
 	public static Truck greedy(PentominoParcel[] parcelAr,int index, int numL, int numP, int numT) {
@@ -336,6 +338,10 @@ public class GreedyPent {
 
 						truck.addParcel(parcelAr[index], parcelAr[index].getArray(), new Point3D(i,j,k));
 						parcelList.add(parcelAr[index]);
+
+					/* We keep truck of the remaining parcels in order to substract
+					one kind of parcels from the parcel array, if we have alredy used
+				 all the parcels of this kind. */
 						if(parcelAr[index].getID().equals("L")) {
 							numL--;
 							if(numL==0)
@@ -354,6 +360,8 @@ public class GreedyPent {
 
 					}
 
+					/* In the next empty spot we check again the parcels starting
+					from the first element of the parcel list. */
 					index=0;
 					if(parcelAr.length==0)
 						break;
