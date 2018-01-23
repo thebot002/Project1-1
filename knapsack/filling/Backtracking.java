@@ -86,26 +86,6 @@ public class Backtracking implements TruckFilling {
 
     }
 
-  /** This method finds the best result of the backTracking algorithm
-  */
-	public int[] getBestValue() {
-		int bestValue=0;
-		int index=0;
-		int[] valueIndex = new int[2];
-		for(int i=0; i<truckValueList.size(); i++) {
-			if(truckValueList.get(i)>bestValue)
-				bestValue=truckValueList.get(i);
-		}
-		for(int i=0; i<truckValueList.size(); i++) {
-			if(truckValueList.get(i)==bestValue)
-				index=i;
-		}
-
-		valueIndex[0]=bestValue;
-		valueIndex[1]=index;
-		return valueIndex;
-	}
-
   /**
   * Method to fill the truck by using the backTracking algorithm.
   * @param  truck The truck that needs to be filled with parcels.

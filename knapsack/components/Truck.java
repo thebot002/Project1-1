@@ -114,6 +114,7 @@ public class Truck implements Scene {
                     Point3D pos = new Point3D(i,j,k);
                     if(isPossible(p, pos)){
                         addParcel(p,pos);
+                        p.setPos(pos);
                         return true;
                     }
                 }
@@ -178,29 +179,6 @@ public class Truck implements Scene {
         }
 	}
 
-	/**
-	 * Method to add a parcel object to the truck.
- * Will Search from the origin to find the next possible position to place a parcel.
- * If placed the parcel will be added to the truck's parcel list.
-	 * @param p The parcel to be added to the truck.
-	 * @param pos The position of the parcel to be added to the truck.
-	 */
-
-	public void addParcel(Parcel p, Point3D pos){
-
-                    if(isPossible(p,pos)){
-                        parcelList.add(p);
-                        for(int a=0; a<p.getWidth(); a++){
-                            for(int b=0; b<p.getHeight(); b++){
-                                for(int c=0; c<p.getLength();c++){
-                                    truck[a+(int)pos.getX()][b+(int)pos.getY()][c+(int)pos.getZ()] = p.getID();
-                                }
-                            }
-                        }
-                        p.setPos(new Point3D(pos.getX(),pos.getY(),pos.getZ()));
-                    }
-
-	}
 
 	/**
 	 * Method to add a parcel object to the truck.

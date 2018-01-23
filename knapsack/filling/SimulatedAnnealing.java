@@ -20,7 +20,7 @@ public class SimulatedAnnealing implements TruckFilling{
     private static final double INITIAL_TEMPERATURE = 0.2;
     private static final int TOTAL_ROTATIONS = 6; //to be adapted if pentominoes
 
-    private static long timeToRun = 1800000; //1000 = 1sec
+    private static long timeToRun = 60000; //1000 = 1sec
 
     private static boolean value = false; //true = searches for the best value; false = searches for the best volume
 

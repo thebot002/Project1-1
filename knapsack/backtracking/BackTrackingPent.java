@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import javafx.geometry.Point3D;
 import knapsack.components.Parcel;
 import knapsack.components.PentominoParcel;
-import knapsack.components.Simulations;
 import knapsack.components.Truck;
 
 public class BackTrackingPent {
@@ -377,8 +376,7 @@ public class BackTrackingPent {
 
 			if(truck.isPossible(parcelAr[index], parcelAr[index].getArray(), p	)) {
 				p = new Point3D(position[0],position[1],position[2]);
-				Truck newTruck = new Truck();
-				newTruck.setTruck(truck.copyTruck());
+				Truck newTruck = truck.copy();
 				newTruck.addParcel(parcelAr[index], parcelAr[index].getArray(), p);
 				ArrayList<PentominoParcel> newParcelList = new ArrayList<>(parcelList);
 				newParcelList.add(parcelAr[index]);
