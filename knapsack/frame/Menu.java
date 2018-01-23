@@ -187,7 +187,7 @@ public class Menu extends JPanel implements ActionListener {
 		}
 		else if(e.getSource() == btnResetCamera) {
 			if(cubeDrawer != null)
-				cubeDrawer.resetCamera();
+				cubeDrawer.getCamera().reset();
 		}
 	}
 
