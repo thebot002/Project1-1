@@ -9,3 +9,4 @@ out/
 .classpath
 .project
 doc/
+knapsack/frame/Painter.java
