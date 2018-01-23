@@ -373,7 +373,7 @@ public class Truck implements Scene {
 		}
 		ArrayList<Cube> newList = new ArrayList<>();
 		for(Cube c: parcelList)
-			newList.add(c);
+			newList.add(c.copy());
 		return new Truck(newTruck, newList);
 	}
 
