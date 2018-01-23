@@ -7,11 +7,13 @@ import knapsack.filling.BruteForce;
 
 import java.awt.*;
 import javax.swing.*;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 import java.awt.event.KeyEvent;
 import java.util.Arrays;
 
 public class Knapsack extends JFrame {
-    private final Truck truck;
+    private Truck truck;
 
     public static void main(String[] args) {
         new Knapsack();
@@ -33,9 +35,22 @@ public class Knapsack extends JFrame {
         setTitle("Knapsack");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         addKeyInput();
+        addComponentListener(new ResizeListener());
+
 
         truck = new Truck();
         BruteForce.fill(truck);
+
+        Color scene_BACKGROUND = Color.BLACK;   //Background of scene
+        Color scene_FOREGROUND = Color.WHITE;   //Wireframe color
+
+        Color cube_FOREGROUND = Color.YELLOW;   //Cube Wireframe color
+
+
+        truck.setBackground(scene_BACKGROUND);
+        truck.setForeground(scene_FOREGROUND);
+        truck.setCubeColor(cube_FOREGROUND);
+
         c = new CubeDrawer(800, 600, truck);
 
         m = new Menu(this);
@@ -45,9 +60,27 @@ public class Knapsack extends JFrame {
         add(c, BorderLayout.CENTER);
         pack();
         setVisible(true);
-        setResizable(false);
+        //setResizable(false);
+        c.renderScene();
+        addComponentListener(new ResizeListener());
     }
-    
+
+
+    public class ResizeListener implements ComponentListener {
+
+        @Override
+        public void componentResized(ComponentEvent e) {
+            c.doResize(getWidth() - m.getWidth() - 16, c.getHeight());
+        }
+
+        @Override
+        public void componentMoved(ComponentEvent e) {}
+        @Override
+        public void componentShown(ComponentEvent e) { }
+        @Override
+        public void componentHidden(ComponentEvent e) { }
+    }
+
     private void addKeyInput() {
         KeyboardFocusManager keyManager;
         keyManager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
@@ -58,24 +91,25 @@ public class Knapsack extends JFrame {
                 if(e.getID()==KeyEvent.KEY_PRESSED ) {
                     int key = e.getKeyCode();
 
+                    CubeDrawer.Camera cam = c.getCamera();
+
                     if (key == 40)  //down arrow
-                        c.roll(-3);
-                    	m.getInfoTab().setElevation(c.getElevation());
+                        cam.roll(-3);
+
                     if (key == 38)  //up arrow
-                        c.roll(3);
-                    	m.getInfoTab().setElevation(c.getElevation());
+                        cam.roll(3);
+
                     if (key == 39)  //right arrow
-                        c.rotate(3);
-                    	m.getInfoTab().setAngle(c.getAngle());
+                        cam.rotate(3);
+
                     if (key == 37)  //left arrow
-                        c.rotate(-3);
-                    	m.getInfoTab().setAngle(c.getAngle());
+                        cam.rotate(-3);
+
                     if (key == 45 || key == 109)  //minus
-                        c.zoom(-1);
-                    	m.getInfoTab().setZoom(c.getZoom());
+                        cam.zoom(-1);
+
                     if (key == 61 || key == 107)  //plus
-                        c.zoom(1);
-                    	m.getInfoTab().setZoom(c.getZoom());
+                        cam.zoom(1);
                     if (key == 68)  // d
                         c.toggleDebug();
 
@@ -84,17 +118,23 @@ public class Knapsack extends JFrame {
 
                     if (key == 70)  // f
                         c.toggleFill();
+
+                    m.getInfoTab().setElevation(cam.elevation);
+                    m.getInfoTab().setElevation(cam.elevation);
+                    m.getInfoTab().setAngle(cam.angle);
+                    m.getInfoTab().setZoom(cam.scale);
                 }
                 return false;
             }
         });
     }
+
     public void fill(AlgorithmInfo info) {
     	Parcel[] parcelArr = createInputParcelArr(info);
     	//do something interface implementation stuff idk
     }
     
-    public Parcel[] createInputParcelArr(AlgorithmInfo info) {
+    private Parcel[] createInputParcelArr(AlgorithmInfo info) {
 		int lengthCounter = 0;
 		int indexEmpty = 0;
 		int indexTMP = 0;
@@ -540,7 +580,7 @@ public class Knapsack extends JFrame {
 		}
 		return inputParcelArr;
 	}
-	public double[] sortVolume(int[][] parcelsArr) {
+	private double[] sortVolume(int[][] parcelsArr) {
 		double[] sortVolume = {parcelA.getVolume(), parcelB.getVolume(), parcelC.getVolume()};
 		Arrays.sort(sortVolume);
 		for(int i = 0; i < sortVolume.length; i++) {
@@ -550,7 +590,7 @@ public class Knapsack extends JFrame {
 		}
 		return sortVolume;
 	}
-	public double[] sortValue(int[][] parcelsArr) {
+	private double[] sortValue(int[][] parcelsArr) {
 		double[] sortValue = {parcelsArr[0][1], parcelsArr[1][1], parcelsArr[2][1]};
 		Arrays.sort(sortValue);
 		for(int i = 0; i < sortValue.length; i++) {
@@ -560,7 +600,7 @@ public class Knapsack extends JFrame {
 		}
 		return sortValue;
 	}
-	public double[] sortValueOverVolume(int[][] parcelsArr) {
+	private double[] sortValueOverVolume(int[][] parcelsArr) {
 		double[] sortValueOverVolume = {parcelsArr[0][1], parcelsArr[1][1], parcelsArr[2][1]};
 		Arrays.sort(sortValueOverVolume);
 		for(int i = 0; i < sortValueOverVolume.length; i++) {

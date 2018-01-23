@@ -32,8 +32,11 @@ public class Menu extends JPanel implements ActionListener {
 	private JTabbedPane tabbedPane;
 	private SwitchTabbedPane rectangleTab;
 	private SwitchTabbedPane pentominoTab;
-	private InfoPanel infoPanel;
+
+	private InfoPanel infoTab;
 	private CubeDrawer cubeDrawer;
+
+	private InfoPanel infoPanel;
 	private JPanel infoJPanel;
 	private AlgorithmInfo rectangleInfo;
 	private AlgorithmInfo pentominoInfo;
@@ -44,18 +47,18 @@ public class Menu extends JPanel implements ActionListener {
 		setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{0, 0, 0, 0, 0, 0, 0, 0};
-		gridBagLayout.rowHeights = new int[]{0, 0, 0, 30, 0, 0, 0, 0, 0, 74, 0, 0, 0, 0, 0, 0, 0, 20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+		gridBagLayout.rowHeights = new int[]{0, 0, 0, 30, 0, 0, 0, 0, 0, 0, 20, 0, 0, 0, 0};
 		gridBagLayout.columnWeights = new double[]{0.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 0.0};
-		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
-		
+
 		btnFillTruck = new JButton("Fill Truck");
 		btnFillTruck.addActionListener(this);
 		GridBagConstraints gbc_btnFillTruck = new GridBagConstraints();
 		gbc_btnFillTruck.gridwidth = 2;
 		gbc_btnFillTruck.insets = new Insets(0, 0, 5, 5);
 		gbc_btnFillTruck.gridx = 1;
-		gbc_btnFillTruck.gridy = 2;
+		gbc_btnFillTruck.gridy = 1;
 		add(btnFillTruck, gbc_btnFillTruck);
 
 		btnClearTruck = new JButton("Clear Truck");
@@ -64,7 +67,7 @@ public class Menu extends JPanel implements ActionListener {
 		gbc_btnClearTruck.gridwidth = 2;
 		gbc_btnClearTruck.insets = new Insets(0, 0, 5, 5);
 		gbc_btnClearTruck.gridx = 3;
-		gbc_btnClearTruck.gridy = 2;
+		gbc_btnClearTruck.gridy = 1;
 		add(btnClearTruck, gbc_btnClearTruck);
 
 		btnResetCamera = new JButton("Reset Camera");
@@ -73,27 +76,15 @@ public class Menu extends JPanel implements ActionListener {
 		gbc_btnResetCamera.gridwidth = 2;
 		gbc_btnResetCamera.insets = new Insets(0, 0, 5, 5);
 		gbc_btnResetCamera.gridx = 5;
-		gbc_btnResetCamera.gridy = 2;
+		gbc_btnResetCamera.gridy = 1;
 		add(btnResetCamera, gbc_btnResetCamera);
-		
-		infoJPanel = new JPanel();
-		infoPanel = new InfoPanel();
-		GridBagConstraints gbc_infoJPanel = new GridBagConstraints();
-		gbc_infoJPanel.gridheight = 9;
-		gbc_infoJPanel.gridwidth = 6;
-		gbc_infoJPanel.insets = new Insets(0, 0, 5, 5);
-		gbc_infoJPanel.fill = GridBagConstraints.BOTH;
-		gbc_infoJPanel.gridx = 1;
-		gbc_infoJPanel.gridy = 18;
-		infoJPanel.add(infoPanel);
-		add(infoJPanel, gbc_infoJPanel);
 
 		lblGapsFound = new JLabel("Gaps Found");
 		GridBagConstraints gbc_lblGapsFound = new GridBagConstraints();
 		gbc_lblGapsFound.gridwidth = 2;
 		gbc_lblGapsFound.insets = new Insets(0, 0, 5, 5);
 		gbc_lblGapsFound.gridx = 1;
-		gbc_lblGapsFound.gridy = 28;
+		gbc_lblGapsFound.gridy = 11;
 		add(lblGapsFound, gbc_lblGapsFound);
 
 		lblCurrentValue = new JLabel("Current Value");
@@ -101,7 +92,7 @@ public class Menu extends JPanel implements ActionListener {
 		gbc_lblCurrentValue.gridwidth = 2;
 		gbc_lblCurrentValue.insets = new Insets(0, 0, 5, 5);
 		gbc_lblCurrentValue.gridx = 3;
-		gbc_lblCurrentValue.gridy = 28;
+		gbc_lblCurrentValue.gridy = 11;
 		add(lblCurrentValue, gbc_lblCurrentValue);
 
 		lblTimeTook = new JLabel("Time Took (in s)");
@@ -109,7 +100,7 @@ public class Menu extends JPanel implements ActionListener {
 		gbc_lblTimeTook.gridwidth = 2;
 		gbc_lblTimeTook.insets = new Insets(0, 0, 5, 5);
 		gbc_lblTimeTook.gridx = 5;
-		gbc_lblTimeTook.gridy = 28;
+		gbc_lblTimeTook.gridy = 11;
 		add(lblTimeTook, gbc_lblTimeTook);
 
 		lblGapsFoundDisp = new JLabel("---");
@@ -118,23 +109,25 @@ public class Menu extends JPanel implements ActionListener {
 		gbc_lblGapsFoundDisp.gridwidth = 2;
 		gbc_lblGapsFoundDisp.insets = new Insets(0, 0, 5, 5);
 		gbc_lblGapsFoundDisp.gridx = 1;
-		gbc_lblGapsFoundDisp.gridy = 29;
+		gbc_lblGapsFoundDisp.gridy = 12;
 		add(lblGapsFoundDisp, gbc_lblGapsFoundDisp);
 
 		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		GridBagConstraints gbc_tabbedPane = new GridBagConstraints();
-		gbc_tabbedPane.gridheight = 14;
+		gbc_tabbedPane.gridheight = 7;
 		gbc_tabbedPane.gridwidth = 6;
 		gbc_tabbedPane.insets = new Insets(0, 0, 5, 5);
-		gbc_tabbedPane.fill = GridBagConstraints.HORIZONTAL;
+		gbc_tabbedPane.fill = GridBagConstraints.BOTH;
 		gbc_tabbedPane.gridx = 1;
 		gbc_tabbedPane.gridy = 3;
 		add(tabbedPane, gbc_tabbedPane);
 
 		rectangleTab = new SwitchTabbedPane("A", "B", "C", "Dimensions", "1.0 x 1.0 x 2.0", "1.0 x 1.5 x 2.0", "1.5 x 1.5 x 1.5");
 		pentominoTab = new SwitchTabbedPane("L", "P", "T", "", "", "", "");
+		infoTab = new InfoPanel();
 		tabbedPane.addTab("Rectangle", rectangleTab);
 		tabbedPane.addTab("Pentomino", pentominoTab);
+		tabbedPane.addTab("Info", infoTab);
 
 		lblCurrentValueDisp = new JLabel("---");
 		lblCurrentValueDisp.setFont(new Font("Tahoma", Font.ITALIC, 13));
@@ -142,7 +135,7 @@ public class Menu extends JPanel implements ActionListener {
 		gbc_lblCurrentValueDisp.gridwidth = 2;
 		gbc_lblCurrentValueDisp.insets = new Insets(0, 0, 5, 5);
 		gbc_lblCurrentValueDisp.gridx = 3;
-		gbc_lblCurrentValueDisp.gridy = 29;
+		gbc_lblCurrentValueDisp.gridy = 12;
 		add(lblCurrentValueDisp, gbc_lblCurrentValueDisp);
 
 		lblTimeTookDisp = new JLabel("---");
@@ -151,8 +144,10 @@ public class Menu extends JPanel implements ActionListener {
 		gbc_lblTimeTookDisp.gridwidth = 2;
 		gbc_lblTimeTookDisp.insets = new Insets(0, 0, 5, 5);
 		gbc_lblTimeTookDisp.gridx = 5;
-		gbc_lblTimeTookDisp.gridy = 29;
+		gbc_lblTimeTookDisp.gridy = 12;
 		add(lblTimeTookDisp, gbc_lblTimeTookDisp);
+
+
         setVisible(true);
 	}
 
@@ -187,19 +182,17 @@ public class Menu extends JPanel implements ActionListener {
 					JOptionPane.showMessageDialog(tabbedPane, "The currently edited value couldn't be commited.");
 				}
 	        }
+	        else {
+	        	JOptionPane.showMessageDialog(tabbedPane, "Please switch to the tab that corresponds to the type of parcel you would want to fill the truck with (Rectangle or Pentomino).");
+	        }
 		}
 		else if(e.getSource() == btnClearTruck) {
 			if(cubeDrawer != null)
 				cubeDrawer.emptyScene();
 		}
 		else if(e.getSource() == btnResetCamera) {
-			if(cubeDrawer != null) {
-				cubeDrawer.resetCamera();
-				infoPanel.setAngle(0);
-				infoPanel.setElevation(35);
-				infoPanel.setZoom(20);
-			}
-				
+			if(cubeDrawer != null)
+				cubeDrawer.getCamera().reset();
 		}
 	}
 
@@ -227,7 +220,7 @@ public class Menu extends JPanel implements ActionListener {
 		lblTimeTookDisp.setText(String.valueOf(time));
 	}
 	public InfoPanel getInfoTab() {
-		return infoPanel;
+		return infoTab;
 	}
 
 	public AlgorithmInfo getRectangleInfo() {

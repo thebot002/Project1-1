@@ -1,6 +1,8 @@
 package knapsack.components;
 
 import javafx.geometry.Point3D;
+
+import java.awt.*;
 import java.util.*;
 
 /**
@@ -17,6 +19,11 @@ public class Truck implements Scene {
 	public static Parcel truckParcel;
 	private Point3D deltaO = new Point3D(0, 0, 0);
 	private boolean debug = false;
+
+	private Color foreground;
+	private Color fill;
+	private Color background;
+	private Color cubeColor;
 
 	/**
 	 *Create a parcel with a default position set to the origin and set its 8 vertices.
@@ -82,11 +89,13 @@ public class Truck implements Scene {
      * @return The width of the truck.
      */
 	public double getWidth()  { return (1.0*width);  }
+
 	/**
      * Method to get the height of the truck. (y axis)
      * @return The height of the truck.
      */
     public double getHeight() { return (1.0*height); }
+
 	/**
 	 * Method to get the length of the truck. (z axis)
 	 * @return The length of the truck.
@@ -130,20 +139,6 @@ public class Truck implements Scene {
         return false;
 	}
 
-    public boolean addParcel(PentominoParcel p) {
-        for(int i = 0; i <= (width-p.getWidth()) ; i++){
-            for(int j=0; j <= (height-p.getHeight()); j++){
-                for(int k=0; k <= (length-p.getLength()); k++){
-                    if(isPossible(p, new Point3D(i,j,k))) {
-
-                    }
-                }
-            }
-        }
-
-        return false;
-    }
-
 	/**
 	 * Method to check if a parcel can be added at a position.
 	 * First Checks if the Parcel can actually fit inside the truck.
@@ -152,7 +147,6 @@ public class Truck implements Scene {
 	 * @param pos The Point3D to check at
 	 * @return Boolean - true if the parcel can be added.
 	 */
-
 	public boolean isPossible(Parcel p, Point3D pos){
 
         if((p.getWidth() + pos.getX()) > (getWidth())) {
@@ -272,17 +266,11 @@ public class Truck implements Scene {
 		return gaps;
 	}
 
-    public void setSize(int i, int i1, int i2) {
-	    this.width = i;
-	    this.height = i1;
-	    this.length = i2;
-    }
-
-	public void updateDeltaOrigin() {
+	public void updateOrigin() {
 		deltaO = (truckParcel.get(0).midpoint(truckParcel.get(6))).multiply(-1);
 	}
 
-	public Point3D getDeltaO() {
+	public Point3D getOrigin() {
 		return deltaO;
 	}
 
@@ -307,5 +295,37 @@ public class Truck implements Scene {
 				}
 			}
 		}
+	}
+
+	public void setForeground(Color foreground) {
+		this.foreground = foreground;
+	}
+
+	public void setBackground(Color background) {
+		this.background = background;
+	}
+
+	public void setFill(Color fill) {
+		this.fill = fill;
+	}
+
+	public Color getBackground() {
+		return background;
+	}
+
+	public Color getFill() {
+		return fill;
+	}
+
+	public Color getForeground() {
+		return foreground;
+	}
+
+	public void setCubeColor(Color cubeColor) {
+		this.cubeColor = cubeColor;
+	}
+
+	public Color getCubeColor() {
+		return cubeColor;
 	}
 }

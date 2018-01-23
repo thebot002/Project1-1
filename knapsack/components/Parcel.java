@@ -74,6 +74,7 @@ public class Parcel implements Cube {
         newP.setPos(pos);
         newP.setID(id);
         newP.setValue(value);
+        newP.setColor(fillColor);
         return newP;
     }
 
@@ -95,6 +96,10 @@ public class Parcel implements Cube {
         points.add(new Point3D(width, 0, length));
 
         setEdges();
+    }
+
+    public void setColor(Color c) {
+        fillColor = c;
     }
 
 
