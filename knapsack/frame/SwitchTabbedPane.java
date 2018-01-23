@@ -238,7 +238,7 @@ public class SwitchTabbedPane extends JPanel {
 		int valSR = (Integer) spnnrValDispSR.getValue();
 		spnnrValDispTR.commitEdit();
 		int valTR = (Integer) spnnrValDispTR.getValue();
-		int[][] parcels = {{amountFR, amountSR, amountTR}, {valFR, valSR, valTR}};
+		int[][] parcels = {{amountFR, valFR,}, {amountSR, valSR}, {amountTR, valTR}};
 		return parcels;
 	}
 }

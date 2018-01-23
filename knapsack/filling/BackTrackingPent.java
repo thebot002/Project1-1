@@ -13,6 +13,7 @@ public class BackTrackingPent {
 	private static ArrayList<Truck> truckList = new ArrayList<>();
 	private static ArrayList<Integer> truckValueList = new ArrayList<>();
 	private static int solutionCount=0;
+	private static Truck bestTruck;
 
 	public static void main(String[] args) {
 		System.out.println("START");

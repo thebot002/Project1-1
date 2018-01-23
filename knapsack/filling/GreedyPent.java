@@ -438,6 +438,7 @@ public class GreedyPent {
 					index++;
 				}
 			}
+			index = 0;
 			return reducedAr;
 		}else {
 			PentominoParcel[] reducedAr = new PentominoParcel[parcelAr.length-12];

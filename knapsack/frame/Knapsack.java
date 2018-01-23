@@ -70,6 +70,35 @@ public class Knapsack extends JFrame {
         c.renderScene();
         addComponentListener(new ResizeListener());
     }
+    public Knapsack(Truck trckFilled) {
+    	System.out.println("Creating new knapsack with filled truck");
+		setTitle("Knapsack");
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		addKeyInput();
+		addComponentListener(new ResizeListener());
+
+		Color scene_BACKGROUND = Color.BLACK;   //Background of scene
+		Color scene_FOREGROUND = Color.WHITE;   //Wireframe color of scene
+		Color cube_FOREGROUND = Color.YELLOW;   //Cube Wireframe color
+
+
+		trckFilled.setBackground(scene_BACKGROUND);
+		trckFilled.setForeground(scene_FOREGROUND);
+		trckFilled.setCubeColor(cube_FOREGROUND);
+
+		c = new CubeDrawer(800, 600, trckFilled);
+
+		m = new Menu(this);
+		m.setCubeDrawer(c);
+
+		add(m, BorderLayout.EAST);
+		add(c, BorderLayout.CENTER);
+		pack();
+		setVisible(true);
+		//setResizable(false);
+		c.renderScene();
+		addComponentListener(new ResizeListener());
+	}
 
 
     public class ResizeListener implements ComponentListener {
@@ -144,8 +173,9 @@ public class Knapsack extends JFrame {
 
 			}
 			if(info.getType().equals("Pentomino")) {
+				System.out.println("Filling truck with greedy for pentominos");
 				Truck filledTruck = GreedyPent.greedy(createInputPentominoParcelArr(info), 0, info.getParcels()[0][0], info.getParcels()[1][0], info.getParcels()[2][0]);
-
+				Knapsack knpsckFilled = new Knapsack(filledTruck);
 			}
 		}
 		if(info.getSettings()[0].equals("Backtracking")) {
