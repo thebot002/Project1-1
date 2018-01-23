@@ -140,8 +140,8 @@ public class CubeDrawer extends JPanel {
 
         public void reset() {
             angle = 0;
-            elevation = 35;
-            scale = 20;
+            elevation = 40;
+            scale = 100;
             renderScene();
         }
 
