@@ -195,20 +195,20 @@ public class InfoPanel extends JPanel {
 		gbc_lblI.gridy = 6;
 		add(lblI, gbc_lblI);
 		
-				lblZoomIn = new JLabel("Zoom in:");
-				GridBagConstraints gbc_lblZoomIn = new GridBagConstraints();
-				gbc_lblZoomIn.insets = new Insets(0, 0, 5, 5);
-				gbc_lblZoomIn.gridx = 4;
-				gbc_lblZoomIn.gridy = 7;
-				add(lblZoomIn, gbc_lblZoomIn);
-		
-				lblPlus = new JLabel("Plus");
-				lblPlus.setFont(new Font("Verdana", Font.ITALIC,  12));
-				GridBagConstraints gbc_lblPlus = new GridBagConstraints();
-				gbc_lblPlus.insets = new Insets(0, 0, 5, 5);
-				gbc_lblPlus.gridx = 6;
-				gbc_lblPlus.gridy = 7;
-				add(lblPlus, gbc_lblPlus);
+		lblZoomIn = new JLabel("Zoom in:");
+		GridBagConstraints gbc_lblZoomIn = new GridBagConstraints();
+		gbc_lblZoomIn.insets = new Insets(0, 0, 5, 5);
+		gbc_lblZoomIn.gridx = 4;
+		gbc_lblZoomIn.gridy = 7;
+		add(lblZoomIn, gbc_lblZoomIn);
+
+		lblPlus = new JLabel("Plus");
+		lblPlus.setFont(new Font("Verdana", Font.ITALIC,  12));
+		GridBagConstraints gbc_lblPlus = new GridBagConstraints();
+		gbc_lblPlus.insets = new Insets(0, 0, 5, 5);
+		gbc_lblPlus.gridx = 6;
+		gbc_lblPlus.gridy = 7;
+		add(lblPlus, gbc_lblPlus);
 		
 		lblCameraZoom = new JLabel("Camera Zoom");
 		GridBagConstraints gbc_lblCameraZoom = new GridBagConstraints();
@@ -218,21 +218,21 @@ public class InfoPanel extends JPanel {
 		gbc_lblCameraZoom.gridy = 8;
 		add(lblCameraZoom, gbc_lblCameraZoom);
 		
-				lblZoomOut = new JLabel("Zoom out:");
-				GridBagConstraints gbc_lblZoomOut = new GridBagConstraints();
-				gbc_lblZoomOut.insets = new Insets(0, 0, 5, 5);
-				gbc_lblZoomOut.gridx = 4;
-				gbc_lblZoomOut.gridy = 8;
-				add(lblZoomOut, gbc_lblZoomOut);
-		
-				lblMinus = new JLabel("Minus");
-				lblMinus.setFont(new Font("Verdana", Font.ITALIC,  12));
-				GridBagConstraints gbc_lblMinus = new GridBagConstraints();
-				gbc_lblMinus.fill = GridBagConstraints.VERTICAL;
-				gbc_lblMinus.insets = new Insets(0, 0, 5, 5);
-				gbc_lblMinus.gridx = 6;
-				gbc_lblMinus.gridy = 8;
-				add(lblMinus, gbc_lblMinus);
+		lblZoomOut = new JLabel("Zoom out:");
+		GridBagConstraints gbc_lblZoomOut = new GridBagConstraints();
+		gbc_lblZoomOut.insets = new Insets(0, 0, 5, 5);
+		gbc_lblZoomOut.gridx = 4;
+		gbc_lblZoomOut.gridy = 8;
+		add(lblZoomOut, gbc_lblZoomOut);
+
+		lblMinus = new JLabel("Minus");
+		lblMinus.setFont(new Font("Verdana", Font.ITALIC,  12));
+		GridBagConstraints gbc_lblMinus = new GridBagConstraints();
+		gbc_lblMinus.fill = GridBagConstraints.VERTICAL;
+		gbc_lblMinus.insets = new Insets(0, 0, 5, 5);
+		gbc_lblMinus.gridx = 6;
+		gbc_lblMinus.gridy = 8;
+		add(lblMinus, gbc_lblMinus);
 		
 		slider = new JSlider();
 		GridBagConstraints gbc_slider = new GridBagConstraints();
@@ -243,50 +243,50 @@ public class InfoPanel extends JPanel {
 		gbc_slider.gridy = 9;
 		add(slider, gbc_slider);
 		
-				lblToggleDebug = new JLabel("Toggle Debug:");
-				GridBagConstraints gbc_lblToggleDebug = new GridBagConstraints();
-				gbc_lblToggleDebug.insets = new Insets(0, 0, 5, 5);
-				gbc_lblToggleDebug.gridx = 4;
-				gbc_lblToggleDebug.gridy = 9;
-				add(lblToggleDebug, gbc_lblToggleDebug);
+		lblToggleDebug = new JLabel("Toggle Debug:");
+		GridBagConstraints gbc_lblToggleDebug = new GridBagConstraints();
+		gbc_lblToggleDebug.insets = new Insets(0, 0, 5, 5);
+		gbc_lblToggleDebug.gridx = 4;
+		gbc_lblToggleDebug.gridy = 9;
+		add(lblToggleDebug, gbc_lblToggleDebug);
 				
-						lblD = new JLabel("D");
-						lblD.setFont(new Font("Verdana", Font.ITALIC,  12));
-						GridBagConstraints gbc_lblD = new GridBagConstraints();
-						gbc_lblD.insets = new Insets(0, 0, 5, 5);
-						gbc_lblD.gridx = 6;
-						gbc_lblD.gridy = 9;
-						add(lblD, gbc_lblD);
+		lblD = new JLabel("D");
+		lblD.setFont(new Font("Verdana", Font.ITALIC,  12));
+		GridBagConstraints gbc_lblD = new GridBagConstraints();
+		gbc_lblD.insets = new Insets(0, 0, 5, 5);
+		gbc_lblD.gridx = 6;
+		gbc_lblD.gridy = 9;
+		add(lblD, gbc_lblD);
 				
-				lblToggleColor = new JLabel("Toggle Color:");
-				GridBagConstraints gbc_lblToggleColor = new GridBagConstraints();
-				gbc_lblToggleColor.insets = new Insets(0, 0, 5, 5);
-				gbc_lblToggleColor.gridx = 4;
-				gbc_lblToggleColor.gridy = 10;
-				add(lblToggleColor, gbc_lblToggleColor);
-				
-				lblF = new JLabel("F");
-				lblF.setFont(new Font("Verdana", Font.ITALIC,  12));
-				GridBagConstraints gbc_lblF = new GridBagConstraints();
-				gbc_lblF.insets = new Insets(0, 0, 5, 5);
-				gbc_lblF.gridx = 6;
-				gbc_lblF.gridy = 10;
-				add(lblF, gbc_lblF);
-				
-				lblTogglePoints = new JLabel("Toggle Points:");
-				GridBagConstraints gbc_lblTogglePoints = new GridBagConstraints();
-				gbc_lblTogglePoints.insets = new Insets(0, 0, 5, 5);
-				gbc_lblTogglePoints.gridx = 4;
-				gbc_lblTogglePoints.gridy = 11;
-				add(lblTogglePoints, gbc_lblTogglePoints);
-				
-				lblP = new JLabel("P");
-				lblP.setFont(new Font("Verdana", Font.ITALIC, 12));
-				GridBagConstraints gbc_lblP = new GridBagConstraints();
-				gbc_lblP.insets = new Insets(0, 0, 5, 5);
-				gbc_lblP.gridx = 6;
-				gbc_lblP.gridy = 11;
-				add(lblP, gbc_lblP);
+		lblToggleColor = new JLabel("Toggle Color:");
+		GridBagConstraints gbc_lblToggleColor = new GridBagConstraints();
+		gbc_lblToggleColor.insets = new Insets(0, 0, 5, 5);
+		gbc_lblToggleColor.gridx = 4;
+		gbc_lblToggleColor.gridy = 10;
+		add(lblToggleColor, gbc_lblToggleColor);
+		
+		lblF = new JLabel("F");
+		lblF.setFont(new Font("Verdana", Font.ITALIC,  12));
+		GridBagConstraints gbc_lblF = new GridBagConstraints();
+		gbc_lblF.insets = new Insets(0, 0, 5, 5);
+		gbc_lblF.gridx = 6;
+		gbc_lblF.gridy = 10;
+		add(lblF, gbc_lblF);
+		
+		lblTogglePoints = new JLabel("Toggle Points:");
+		GridBagConstraints gbc_lblTogglePoints = new GridBagConstraints();
+		gbc_lblTogglePoints.insets = new Insets(0, 0, 5, 5);
+		gbc_lblTogglePoints.gridx = 4;
+		gbc_lblTogglePoints.gridy = 11;
+		add(lblTogglePoints, gbc_lblTogglePoints);
+		
+		lblP = new JLabel("P");
+		lblP.setFont(new Font("Verdana", Font.ITALIC, 12));
+		GridBagConstraints gbc_lblP = new GridBagConstraints();
+		gbc_lblP.insets = new Insets(0, 0, 5, 5);
+		gbc_lblP.gridx = 6;
+		gbc_lblP.gridy = 11;
+		add(lblP, gbc_lblP);
 	}
 
 	/**
