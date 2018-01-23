@@ -120,6 +120,13 @@ public class CubeDrawer extends JPanel {
         return new Point(W / 2 + ox, H / 2 - oy);
     }
 
+    public void toggleColor() {
+        scene.setBackground(invertColor(scene.getBackground()));
+        scene.setForeground(invertColor(scene.getForeground()));
+        scene.setCubeColor(invertColor(scene.getCubeColor()));
+        renderScene();
+    }
+
     public class Camera {
         int angle;
         int elevation;
@@ -271,12 +278,16 @@ public class CubeDrawer extends JPanel {
         g.setFont(new Font("Dialog", Font.BOLD, 20));
 
         Color b = scene.getBackground();
-        g.setColor(new Color(255-b.getRed(), 255-b.getGreen(), 255-b.getBlue()));
+        g.setColor(invertColor(scene.getBackground()));
         if(p.getX() < W/2) {
             g.drawString(text, (p.x - g.getFontMetrics().stringWidth(text)) - 20, p.y + 10);
         } else {
             g.drawString(text, p.x + 10, p.y + 10);
         }
+    }
+
+    private Color invertColor(Color b) {
+        return new Color(255-b.getRed(), 255-b.getGreen(), 255-b.getBlue());
     }
 
     /**

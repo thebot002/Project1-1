@@ -15,8 +15,11 @@ public interface Scene {
 
     void empty();
 
-    public Color getBackground();
-    public Color getFill();
-    public Color getForeground();
-    public Color getCubeColor();
+    Color getBackground();
+    Color getForeground();
+    Color getCubeColor();
+
+    void setBackground(Color c);
+    void setForeground(Color c);
+    void setCubeColor(Color c);
 }

@@ -39,8 +39,8 @@ public class Knapsack extends JFrame {
 
         truck = new Truck();
 
-        Color scene_BACKGROUND = Color.cyan;   //Background of scene
-        Color scene_FOREGROUND = Color.BLACK;   //Wireframe color of scene
+        Color scene_BACKGROUND = Color.BLACK;   //Background of scene
+        Color scene_FOREGROUND = Color.WHITE;   //Wireframe color of scene
         Color cube_FOREGROUND = Color.YELLOW;   //Cube Wireframe color
 
 
@@ -116,6 +116,9 @@ public class Knapsack extends JFrame {
                     if (key == 70)  // f
                         c.toggleFill();
 
+					if (key == 73)  // i
+						c.toggleColor();
+
                     m.getInfoTab().setElevation(cam.elevation);
                     m.getInfoTab().setElevation(cam.elevation);
                     m.getInfoTab().setAngle(cam.angle);
@@ -134,7 +137,6 @@ public class Knapsack extends JFrame {
 	public CubeDrawer getCubeDrawer() {
 		return c;
 	}
-    
     private Parcel[] createInputParcelArr(AlgorithmInfo info) {
 		int lengthCounter = 0;
 		int indexEmpty = 0;
