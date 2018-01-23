@@ -247,6 +247,8 @@ public class InfoPanel extends JPanel {
 		gbc_slider.gridy = 9;
 		add(slider, gbc_slider);
 
+		slider.setValue(knap.getCubeDrawer().getCamera().scale);
+        setZoom(knap.getCubeDrawer().getCamera().scale);
 		slider.setMajorTickSpacing(25);
 		slider.setMinorTickSpacing(5);
 		slider.setPaintTicks(true);
@@ -299,9 +301,6 @@ public class InfoPanel extends JPanel {
 		gbc_lblP.gridx = 6;
 		gbc_lblP.gridy = 11;
 		add(lblP, gbc_lblP);
-
-
-		//setZoom(knap.getCubeDrawer().getCamera());
 	}
 
 	class SliderListener implements ChangeListener {
@@ -317,7 +316,7 @@ public class InfoPanel extends JPanel {
      * @param angle of camera
      */
 	public void setAngle(int angle) {
-		lblAngleDisp.setText(String.valueOf(angle) + " ");
+		lblAngleDisp.setText(String.valueOf(angle) + "\u00b0");
 	}
 
 	/**
@@ -325,7 +324,7 @@ public class InfoPanel extends JPanel {
      * @param elevation of camera
      */
 	public void setElevation(int elevation) {
-		lblElevationDisp.setText(String.valueOf(elevation) + " ");
+		lblElevationDisp.setText(String.valueOf(elevation) + "\u00b0");
 	}
 
 	/**
@@ -333,6 +332,6 @@ public class InfoPanel extends JPanel {
      * @param zoom of camera
      */
 	public void setZoom(int zoom) {
-		lblZoomDisp.setText(String.valueOf(zoom) + " ");
+		lblZoomDisp.setText(String.valueOf(zoom) + "%");
 	}
 }
