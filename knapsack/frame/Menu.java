@@ -28,7 +28,7 @@ public class Menu extends JPanel implements ActionListener {
 	private JTabbedPane tabbedPane;
 	private SwitchTabbedPane rectangleTab;
 	private SwitchTabbedPane pentominoTab;
-	private InfoTabbedPane infoTab;
+	private InfoPanel infoTab;
 	private JLabel lblTimeTook;
 	private JLabel lblTimeTookDisp;
 	private CubeDrawer cubeDrawer;
@@ -115,7 +115,7 @@ public class Menu extends JPanel implements ActionListener {
 
 		rectangleTab = new SwitchTabbedPane("A", "B", "C", "Dimensions", "1.0 x 1.0 x 2.0", "1.0 x 1.5 x 2.0", "1.5 x 1.5 x 1.5");
 		pentominoTab = new SwitchTabbedPane("L", "P", "T", "", "", "", "");
-		infoTab = new InfoTabbedPane();
+		infoTab = new InfoPanel();
 		tabbedPane.addTab("Rectangle", rectangleTab);
 		tabbedPane.addTab("Pentomino", pentominoTab);
 		tabbedPane.addTab("Info", infoTab);
@@ -214,7 +214,7 @@ public class Menu extends JPanel implements ActionListener {
 	public void setTimeTook(double time) {
 		lblTimeTookDisp.setText(String.valueOf(time));
 	}
-	public InfoTabbedPane getInfoTab() {
+	public InfoPanel getInfoTab() {
 		return infoTab;
 	}
 }

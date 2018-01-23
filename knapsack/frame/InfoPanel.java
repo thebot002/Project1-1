@@ -7,7 +7,7 @@ import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.Font;
 
-public class InfoTabbedPane extends JPanel {
+public class InfoPanel extends JPanel {
 
 	private JLabel lblCamera;
 	private JLabel lblControls;
@@ -34,9 +34,9 @@ public class InfoTabbedPane extends JPanel {
 	private JLabel lblUpArrow;
 
 
-	public InfoTabbedPane() {
+	public InfoPanel() {
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[]{0, 0, 0, 0, 0, 0, 88, 0, 0};
+		gridBagLayout.columnWidths = new int[]{0, 0, 41, 0, 0, 0, 111, 0, 0};
 		gridBagLayout.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
