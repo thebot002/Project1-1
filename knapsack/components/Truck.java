@@ -150,6 +150,159 @@ public class Truck implements Scene {
     }
 
 	/**
+	 * Method to add a parcel object to the truck.
+ * Will Search from the origin to find the next possible position to place a parcel.
+ * If placed the parcel will be added to the truck's parcel list.
+	 * @param p The parcel to be added to the truck.
+	 * @param pAr The parcel Array of the parcel to be added to the truck.
+	 */
+
+	public void addParcel(Parcel p, String[][][] pAr){
+        for(int i = 0; i<width-pAr.length ; i++){
+            for(int j=0; j<height-pAr[0].length; j++){
+                for(int k=0; k<length-pAr[0][0].length; k++){
+                    if(isPossible(p,pAr,new Point3D(i,j,k))){
+                        parcelList.add(p);
+                        for(int a=0; a<pAr.length; a++){
+                            for(int b=0; b<pAr[0].length; b++){
+                                for(int c=0; c<pAr[0][0].length; c++){
+                                	if(truck[a+i][b+j][c+k].equals("-") && !pAr[a][b][c].equals("-"))
+                                    truck[a+i][b+j][c+k] = pAr[a][b][c];
+                                }
+                            }
+                        }
+                        p.setPos(new Point3D(i,j,k));
+                    }
+                }
+            }
+        }
+	}
+
+	/**
+	 * Method to add a parcel object to the truck.
+ * Will Search from the origin to find the next possible position to place a parcel.
+ * If placed the parcel will be added to the truck's parcel list.
+	 * @param p The parcel to be added to the truck.
+	 * @param pos The position of the parcel to be added to the truck.
+	 */
+
+	public void addParcel(Parcel p, Point3D pos){
+
+                    if(isPossible(p,pos)){
+                        parcelList.add(p);
+                        for(int a=0; a<p.getWidth(); a++){
+                            for(int b=0; b<p.getHeight(); b++){
+                                for(int c=0; c<p.getLength();c++){
+                                    truck[a+(int)pos.getX()][b+(int)pos.getY()][c+(int)pos.getZ()] = p.getID();
+                                }
+                            }
+                        }
+                        p.setPos(new Point3D(pos.getX(),pos.getY(),pos.getZ()));
+                    }
+
+	}
+
+	/**
+	 * Method to add a parcel object to the truck.
+ * Will Search from the origin to find the next possible position to place a parcel.
+ * If placed the parcel will be added to the truck's parcel list.
+	 * @param p The parcel to be added to the truck.
+	 * @param pAr The parcel Array of the parcel to be added to the truck.
+	 * @param pos The position of the parcel to be added to the truck.
+	 */
+
+	 public void addParcel(Parcel p, String[][][] pAr, Point3D pos){
+     	int check1=0;
+
+     	if (pAr[0][0].length>1 ) {
+     		check1=0;
+     		while(pAr[0][0][check1].equals("-")) {
+         		pos = new Point3D(pos.getX(),pos.getY(),pos.getZ()-1);
+         		check1++;
+
+         }
+     	} else if(pAr.length>1 && pAr[0][0].length==1) {
+     		check1=0;
+         while(pAr[check1][0][0].equals("-")) {
+         		pos = new Point3D(pos.getX()-1,pos.getY(),pos.getZ());
+         		check1++;
+         }
+     	}
+
+
+             parcelList.add(p);
+             for(int a=0; a<pAr.length; a++){
+                 for(int b=0; b<pAr[0].length; b++){
+                     for(int c=0; c<pAr[0][0].length;c++){
+                     	if(!pAr[a][b][c].equals("-"))
+                         truck[a+(int)pos.getX()][b+(int)pos.getY()][c+(int)pos.getZ()] = p.getID();
+                     }
+                 }
+             }
+             p.setPos(new Point3D(pos.getX(),pos.getY(),pos.getZ()));
+
+
+ }
+
+/**
+ * Method to check if a parcel can be added at a position.
+ * First Checks if the Parcel can actually fit inside the truck.
+ * Then Checks if anything is obstructing it.
+ * @param p The Parcel to Check
+ * @param pAr The Parcel Array to Check
+ * @param pos The Point3D to check at
+ * @return Boolean - true if the parcel can be added.
+ */
+
+ public boolean isPossible(Parcel p, String[][][] pAr, Point3D pos) {
+		int check1=0;
+
+		/* In the case that the first element in the parcel array is empty,
+		we shift the parcel array by one until it is placed correctly.  */
+		if (pAr[0][0].length>1) {
+    		while(pAr[0][0][check1].equals("-")) {
+        		pos = new Point3D(pos.getX(),pos.getY(),pos.getZ()-1);
+        		check1++;
+
+        }
+    	}
+	else if(pAr.length>1 && pAr[0][0].length==1) {
+    		check1=0;
+        while(pAr[check1][0][0].equals("-")) {
+        		pos = new Point3D(pos.getX()-1,pos.getY(),pos.getZ());
+        		check1++;
+        }
+    	}
+
+
+		if(pos.getX()<0)
+			return false;
+
+
+		if(pos.getZ()<0)
+			return false;
+
+		if(pos.getX()+pAr.length>truck.length || pos.getY()+pAr[0].length>truck[0].length ||
+				pos.getZ()+pAr[0][0].length>truck[0][0].length)
+			return false;
+
+
+		for (int i = 0; i < pAr.length; i++) {
+			for (int j = 0; j < pAr[0].length; j++) {
+				for (int k = 0; k < pAr[0][0].length; k++) {
+
+					 if (!truck[i + (int) pos.getX()][j + (int) pos.getY()][k + (int) pos.getZ()].equals("-") &&
+							 !pAr[i][j][k].equals("-"))
+						return false;
+
+				}
+			}
+		}
+
+		return true;
+	}
+
+	/**
 	 * Method to check if a parcel can be added at a position.
 	 * First Checks if the Parcel can actually fit inside the truck.
 	 * Then Checks if anything is obstructing it.
