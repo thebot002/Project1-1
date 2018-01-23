@@ -192,21 +192,38 @@ public class Truck {
 	 * @param pos The position of the parcel to be added to the truck.
 	 */
 
-	public void addParcel(Parcel p, String[][][] pAr, Point3D pos){
+	 public void addParcel(Parcel p, String[][][] pAr, Point3D pos){
+     	int check1=0;
 
-        if(isPossible(p,pAr,pos)){
-            parcelList.add(p);
-            for(int a=0; a<pAr.length; a++){
-                for(int b=0; b<pAr[0].length; b++){
-                    for(int c=0; c<pAr[0][0].length;c++){
-                        truck[a+(int)pos.getX()][b+(int)pos.getY()][c+(int)pos.getZ()] = p.getID();
-                    }
-                }
-            }
-            p.setPos(new Point3D(pos.getX(),pos.getY(),pos.getZ()));
-        }
+     	if (pAr[0][0].length>1 ) {
+     		check1=0;
+     		while(pAr[0][0][check1].equals("-")) {
+         		pos = new Point3D(pos.getX(),pos.getY(),pos.getZ()-1);
+         		check1++;
 
-}
+         }
+     	} else if(pAr.length>1 && pAr[0][0].length==1) {
+     		check1=0;
+         while(pAr[check1][0][0].equals("-")) {
+         		pos = new Point3D(pos.getX()-1,pos.getY(),pos.getZ());
+         		check1++;
+         }
+     	}
+
+
+             parcelList.add(p);
+             for(int a=0; a<pAr.length; a++){
+                 for(int b=0; b<pAr[0].length; b++){
+                     for(int c=0; c<pAr[0][0].length;c++){
+                     	if(!pAr[a][b][c].equals("-"))
+                         truck[a+(int)pos.getX()][b+(int)pos.getY()][c+(int)pos.getZ()] = p.getID();
+                     }
+                 }
+             }
+             p.setPos(new Point3D(pos.getX(),pos.getY(),pos.getZ()));
+
+
+ }
 
 /**
  * Method to check if a parcel can be added at a position.
@@ -218,27 +235,53 @@ public class Truck {
  * @return Boolean - true if the parcel can be added.
  */
 
-public boolean isPossible(Parcel p, String[][][] pAr, Point3D pos) {
+ public boolean isPossible(Parcel p, String[][][] pAr, Point3D pos) {
+		int check1=0;
 
-if(pos.getX()+p.getWidth()>truck.length || pos.getY()+p.getHeight()>truck[0].length ||
-		pos.getZ()+p.getLength()>truck[0][0].length)
-	return false;
+		/* In the case that the first element in the parcel array is empty,
+		we shift the parcel array by one until it is placed correctly.  */
+		if (pAr[0][0].length>1) {
+    		while(pAr[0][0][check1].equals("-")) {
+        		pos = new Point3D(pos.getX(),pos.getY(),pos.getZ()-1);
+        		check1++;
+
+        }
+    	}
+	else if(pAr.length>1 && pAr[0][0].length==1) {
+    		check1=0;
+        while(pAr[check1][0][0].equals("-")) {
+        		pos = new Point3D(pos.getX()-1,pos.getY(),pos.getZ());
+        		check1++;
+        }
+    	}
 
 
-for (int i = 0; i < pAr.length; i++) {
-	for (int j = 0; j < pAr[0].length; j++) {
-		for (int k = 0; k < pAr[0][0].length; k++) {
+		if(pos.getX()<0)
+			return false;
 
-			 if (!truck[i + (int) pos.getX()][j + (int) pos.getY()][k + (int) pos.getZ()].equals("-") &&
-					 !pAr[i][j][k].equals("-"))
-				return false;
 
+		if(pos.getZ()<0)
+			return false;
+
+		if(pos.getX()+pAr.length>truck.length || pos.getY()+pAr[0].length>truck[0].length ||
+				pos.getZ()+pAr[0][0].length>truck[0][0].length)
+			return false;
+
+
+		for (int i = 0; i < pAr.length; i++) {
+			for (int j = 0; j < pAr[0].length; j++) {
+				for (int k = 0; k < pAr[0][0].length; k++) {
+
+					 if (!truck[i + (int) pos.getX()][j + (int) pos.getY()][k + (int) pos.getZ()].equals("-") &&
+							 !pAr[i][j][k].equals("-"))
+						return false;
+
+				}
+			}
 		}
-	}
-}
 
-return true;
-}
+		return true;
+	}
 
 	/**
 	 * Method to check if a parcel can be added at a position.
