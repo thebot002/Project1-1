@@ -3,7 +3,6 @@ package knapsack.frame;
 import knapsack.components.AlgorithmInfo;
 import knapsack.components.Parcel;
 import knapsack.components.Truck;
-import knapsack.filling.BruteForce;
 
 import java.awt.*;
 import javax.swing.*;
@@ -39,7 +38,6 @@ public class Knapsack extends JFrame {
 
 
         truck = new Truck();
-        BruteForce.fill(truck);
 
         Color scene_BACKGROUND = Color.cyan;   //Background of scene
         Color scene_FOREGROUND = Color.BLACK;   //Wireframe color of scene

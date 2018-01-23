@@ -19,7 +19,10 @@ public class CubeDrawer extends JPanel {
     private int H;
     private int W;
     private BufferedImage image;
+    private int scale = 20; //scaling factor
 
+    private int angle = 0;
+    private int elevation = 35;
     private Scene scene;
     private Boolean debug = false;
     private Boolean drawCoordinates = false;
@@ -173,6 +176,7 @@ public class CubeDrawer extends JPanel {
     public Camera getCamera() {
         return camera;
     }
+
 
     /* Drawing Methods */
 

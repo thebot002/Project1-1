@@ -71,7 +71,7 @@ public class Parcel implements Cube {
      */
     public Parcel copy(){
         Parcel newP = new Parcel(width,height,length);
-        newP.setPos(pos);
+        newP.setPos(new Point3D(pos.getX(),pos.getY(),pos.getZ()));
         newP.setID(id);
         newP.setValue(value);
         newP.setColor(fillColor);
@@ -282,10 +282,10 @@ public class Parcel implements Cube {
     @Override
     public boolean equals(Object obj) {
     	final Parcel other = (Parcel) obj;
-        if(this.id.equals(other.id) && this.value == other.value) return true;  
+        if(this.id.equals(other.id) && this.value == other.value) return true;
         else return false;
     }
-    
+
     public static Parcel[] createParcelsArrA(int value) {
     	Parcel[] parcelsA = new Parcel[6];
     	Parcel parcelA = new Parcel("A", value);
@@ -309,7 +309,7 @@ public class Parcel implements Cube {
 		parcelsA[5] = xzRotParcelA;
 		return parcelsA;
     }
-    
+
     public static Parcel[] createParcelsArrB(int value) {
     	Parcel[] parcelsB = new Parcel[3];
     	Parcel parcelB = new Parcel("B", value);
@@ -322,11 +322,20 @@ public class Parcel implements Cube {
 		parcelsB[2] = zRotParcelB;
 		return parcelsB;
     }
-    
+
     public static Parcel[] createParcelsArrC(int value) {
     	Parcel[] parcelsC = new Parcel[1];
     	Parcel parcelC = new Parcel("C", value);
     	parcelsC[0] = parcelC;
     	return parcelsC;
+    }
+
+    public String toString(){
+        return "Parcel[ID="+id+"]";
+    }
+
+    public boolean equals(Parcel p){
+        if(edges.equals(p.getEdges()) && pos.equals(p.getPos())) return true;
+        return false;
     }
 }

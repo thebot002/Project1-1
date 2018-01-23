@@ -5,11 +5,20 @@ import knapsack.components.Truck;
 
 import java.util.ArrayList;
 
+/**
+ * Class defining a individual used in the population.
+ * It has a genome defined by a binary string representing an parcel list and a fitness calculated by filling a truck with the parcel list.
+ */
 public class Individual {
     private ArrayList<Parcel> list;
     private String genome = "";
     private int fitness;
 
+    //is this still used?
+    /**
+     * Constructor of an individual. Creates it on the basis of a given ArrayList.
+     * @param list The list to create the genome from.
+     */
     public Individual(ArrayList<Parcel> list){
         this.list = list;
         for(int i=0; i<list.size(); i++){
@@ -18,6 +27,10 @@ public class Individual {
         }
     }
 
+    /**
+     * Constructor creating an individual on the basis of a given genome.
+     * @param genome The given genome.
+     */
     public Individual(String genome){
         this.genome = genome;
     }
