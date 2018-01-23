@@ -391,6 +391,7 @@ public class BackTrackingPent {
 			/* If the present parcel fits to the empty spot. We continue from here. */
 			if(truck.isPossible(parcelAr[index], parcelAr[index].getArray(), p	)) {
 				p = new Point3D(position[0],position[1],position[2]);
+				newTruck.addParcel(parcelArr[index], parcelArr[index].getArray(), p);
 				Truck newTruck = new Truck();
 				newTruck.setTruck(truck.copyTruck());
 
