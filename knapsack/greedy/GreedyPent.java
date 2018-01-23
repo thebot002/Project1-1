@@ -3,6 +3,7 @@ package knapsack.greedy;
 import java.util.ArrayList;
 
 import javafx.geometry.Point3D;
+import knapsack.components.Parcel;
 import knapsack.components.PentominoParcel;
 import knapsack.components.Truck;
 
@@ -231,32 +232,32 @@ public class GreedyPent {
 
 
 
-//	    // Place everything into the parcel array
-			parcelAr[1]=parcelL;
-			parcelAr[25]=xMirrorL;
-			parcelAr[26]=zMirrorL;
-			parcelAr[27]=xzMirrorL;
-			parcelAr[28]=xRotParcelL;
-			parcelAr[29]=yRotParcelL;
-			parcelAr[30]=zRotParcelL;
-			parcelAr[31]=xyRotParcelL;
-			parcelAr[32]=xzRotParcelL;
-			parcelAr[33]=xRotXMirrorL;
-			parcelAr[34]=yRotXMirrorL;
-			parcelAr[35]=zRotXMirrorL;
-			parcelAr[48]=xyRotXmirrorL;
-			parcelAr[49]=xzRotXmirrorL;
-			parcelAr[50]=xRotZMirrorL;
-			parcelAr[51]=yRotZMirrorL;
-			parcelAr[52]=zRotZMirrorL;
-			parcelAr[53]=xyRotZmirrorL;
-			parcelAr[54]=xzRotZmirrorL;
-		    parcelAr[55]=xRotXZMirrorL;
-		    parcelAr[56]=yRotXZMirrorL;
-		    parcelAr[57]=zRotXZMirrorL;
-		    parcelAr[58]=xyRotXZmirrorL;
-		    parcelAr[59]=xzRotXZmirrorL;
-		    parcelAr[0]=parcelP;
+//	     // Place everything into the parcel array
+			parcelAr[48]=parcelL;
+			parcelAr[49]=xMirrorL;
+			parcelAr[50]=zMirrorL;
+			parcelAr[51]=xzMirrorL;
+			parcelAr[52]=xRotParcelL;
+			parcelAr[53]=yRotParcelL;
+			parcelAr[54]=zRotParcelL;
+			parcelAr[55]=xyRotParcelL;
+			parcelAr[56]=xzRotParcelL;
+			parcelAr[57]=xRotXMirrorL;
+			parcelAr[58]=yRotXMirrorL;
+			parcelAr[59]=zRotXMirrorL;
+			parcelAr[36]=xyRotXmirrorL;
+			parcelAr[37]=xzRotXmirrorL;
+			parcelAr[38]=xRotZMirrorL;
+			parcelAr[39]=yRotZMirrorL;
+			parcelAr[40]=zRotZMirrorL;
+			parcelAr[41]=xyRotZmirrorL;
+			parcelAr[42]=xzRotZmirrorL;
+		    parcelAr[43]=xRotXZMirrorL;
+		    parcelAr[44]=yRotXZMirrorL;
+		    parcelAr[45]=zRotXZMirrorL;
+		    parcelAr[46]=xyRotXZmirrorL;
+		    parcelAr[47]=xzRotXZmirrorL;
+		    parcelAr[12]=parcelP;
 			parcelAr[13]=xMirrorP;
 			parcelAr[14]=zMirrorP;
 			parcelAr[15]=xzMirrorP;
@@ -268,21 +269,21 @@ public class GreedyPent {
 			parcelAr[21]=xRotXMirrorP;
 			parcelAr[22]=yRotXMirrorP;
 			parcelAr[23]=zRotXMirrorP;
-			parcelAr[36]=xyRotXmirrorP;
-			parcelAr[37]=xzRotXmirrorP;
-			parcelAr[38]=xRotZMirrorP;
-			parcelAr[39]=yRotZMirrorP;
-			parcelAr[40]=zRotZMirrorP;
-			parcelAr[41]=xyRotZmirrorP;
-			parcelAr[42]=xzRotZmirrorP;
-		    parcelAr[43]=xRotXZMirrorP;
-		    parcelAr[44]=yRotXZMirrorP;
-		    parcelAr[45]=zRotXZMirrorP;
-		    parcelAr[46]=xyRotXZmirrorP;
-		    parcelAr[47]=xzRotXZmirrorP;
-		    parcelAr[2]=parcelT;
-			parcelAr[12]=xRotParcelT;
-			parcelAr[24]=yRotParcelT;
+			parcelAr[24]=xyRotXmirrorP;
+			parcelAr[25]=xzRotXmirrorP;
+			parcelAr[26]=xRotZMirrorP;
+			parcelAr[27]=yRotZMirrorP;
+			parcelAr[28]=zRotZMirrorP;
+			parcelAr[29]=xyRotZmirrorP;
+			parcelAr[30]=xzRotZmirrorP;
+		    parcelAr[31]=xRotXZMirrorP;
+		    parcelAr[32]=yRotXZMirrorP;
+		    parcelAr[33]=zRotXZMirrorP;
+		    parcelAr[34]=xyRotXZmirrorP;
+		    parcelAr[35]=xzRotXZmirrorP;
+		    parcelAr[0]=parcelT;
+			parcelAr[1]=xRotParcelT;
+			parcelAr[2]=yRotParcelT;
 			parcelAr[3]=zRotParcelT;
 			parcelAr[4]=xyRotParcelT;
 			parcelAr[5]=xzRotParcelT;
@@ -293,22 +294,11 @@ public class GreedyPent {
 		    parcelAr[10]=xyRotXmirrorT;
 		    parcelAr[11]=xzRotXmirrorT;
 
-//		// Creating the object which permute the Parcel array.
-//			Simulations simulation = new Simulations(parcelAr);
-//
-//			simulation.permute();
-//
-
-		// Creating  a list to save all the total values we get for different orders of the parcel array.
-//			ArrayList<Integer> totValueList = new ArrayList<>();
-//			int totVal=1000;
 
 
-//		    xRotParcelL.printPentomino();
-//		    xRotXMirrorL.printPentomino();
-//		    truck.addParcel(xRotParcelL, xRotParcelL.getArray(), new Point3D(0,0,0));
-//		    truck.printTruck();
-		    System.out.println(bruteForce(parcelAr, 0));
+
+
+		    System.out.println(greedy(parcelAr, 0, 10, 10, 20));
 
 	}
 
@@ -323,8 +313,73 @@ public class GreedyPent {
 	 * @param parcelAr The array that contains the parcels and their rotations
 	 * @param index Keeps truck of the parcel array elements
 	 * @param parcelList This list contains the parcels we have added to the truck
+	 * @param numL numP numT The number of each kind of parcels to be used
 	 * */
-	public static int bruteForce(PentominoParcel[] parcelAr,int index) {
+
+	public static int greedy(PentominoParcel[] parcelAr,int index, int numL, int numP, int numT) {
+		int totVal=0;
+		Truck truck = new Truck();
+
+		ArrayList<PentominoParcel> parcelList = new ArrayList<PentominoParcel>();
+
+		/* We use the nested for loops in order to check one by one all the positions of the truck
+		 * and try to each one of them to place a parcel. Whenever a parcel doesn't fit, either we try another
+		 * rotation of this parcel or another parcel. When a parcel is placed, we also add it to the parcelList */
+		for(int i=0; i<truck.getWidth(); i++) {
+			for(int j=0; j<truck.getHeight(); j++) {
+				for(int k=0; k<truck.getLength(); k++) {
+					while(!truck.isPossible(parcelAr[index], parcelAr[index].getArray(), new Point3D(i, j, k)) && index<parcelAr.length-1) {
+						index++;
+					}
+					if(truck.isPossible(parcelAr[index], parcelAr[index].getArray(),new Point3D(i, j, k))){
+
+
+						truck.addParcel(parcelAr[index], parcelAr[index].getArray(), new Point3D(i,j,k));
+						parcelList.add(parcelAr[index]);
+						if(parcelAr[index].getID().equals("L")) {
+							numL--;
+							if(numL==0)
+								parcelAr=reducedParcelAr("L", parcelAr);
+						}
+						else if(parcelAr[index].getID().equals("P")) {
+							numP--;
+							if(numP==0)
+								parcelAr=reducedParcelAr("P", parcelAr);
+						}
+						else if(parcelAr[index].getID().equals("T")) {
+							numT--;
+							if(numT==0)
+								parcelAr=reducedParcelAr("T",parcelAr);
+						}
+
+					}
+
+					index=0;
+					if(parcelAr.length==0)
+						break;
+				}
+				if(parcelAr.length==0)
+					break;
+			}
+			if(parcelAr.length==0)
+				break;
+		}
+
+
+		// We calculate the total value of the placed shapes, and we return this value.
+		for(int i=0; i<parcelList.size(); i++) {
+			totVal+=parcelList.get(i).getValue();
+		}
+
+
+
+		System.out.println(parcelList.size());
+		truck.printTruck();
+		return totVal;
+	}
+
+	/* The same algorithm as before. It works if there is no restriction in the number of parcels*/
+	public static int greedy(PentominoParcel[] parcelAr,int index) {
 		int totVal=0;
 		Truck truck = new Truck();
 		ArrayList<PentominoParcel> parcelListL = new ArrayList<PentominoParcel>();
@@ -372,5 +427,31 @@ public class GreedyPent {
 		return totVal;
 	}
 
+	/** The method to reduce the parcel array in case there is no more one of the parcel types
+	 * @param ID The id of the parcel that can't be used any more.
+	 * @param parcelAr The parcel array*/
+	public static PentominoParcel[] reducedParcelAr(String ID, Parcel[] parcelAr){
+		int index=0;
 
+		if(ID.equals("L") || ID.equals("P")) {
+			PentominoParcel[] reducedAr = new PentominoParcel[parcelAr.length-24];
+			for(int i=0; i<parcelAr.length; i++) {
+				if(!parcelAr[i].getID().equals(ID)) {
+					reducedAr[index]=(PentominoParcel) parcelAr[i];
+					index++;
+				}
+			}
+			return reducedAr;
+		}else {
+			PentominoParcel[] reducedAr = new PentominoParcel[parcelAr.length-12];
+			for(int i=0; i<parcelAr.length; i++) {
+				if(!parcelAr[i].getID().equals(ID)) {
+					reducedAr[index]=(PentominoParcel) parcelAr[i];
+					index++;
+				}
+			}
+			return reducedAr;
+		}
+
+	}
 }

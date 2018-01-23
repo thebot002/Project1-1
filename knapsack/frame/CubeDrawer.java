@@ -15,9 +15,6 @@ import java.lang.Math;
  *Will Create a scene to draw a truck, a Truck Object can be passed on creation to be drawn.
  */
 public class CubeDrawer extends JPanel {
-    public static void main(String[] args) {
-    }
-
     //swing
     private int H;
     private int W;
@@ -29,16 +26,18 @@ public class CubeDrawer extends JPanel {
     private Scene scene;
     private Boolean debug = false;
     private Boolean drawCoordinates = false;
+    private Boolean fill = false;
+    private Camera camera;
 
     public CubeDrawer(int w, int h, Scene s) {
-        this.W = w/3*2;
+        this.W = w;
         this.H = h;
         setBackground(Color.WHITE);
         setPreferredSize(new Dimension(W, H));
         setVisible(true);
-        CubeViewer tv = new CubeViewer(this);
         scene = s;
         image = new BufferedImage(W, H, BufferedImage.TYPE_INT_ARGB);
+        camera = new Camera(0, 35, 20);
     }
 
     /**
@@ -47,18 +46,19 @@ public class CubeDrawer extends JPanel {
      */
     public void renderScene() {
         Graphics2D g = (Graphics2D) image.getGraphics();
-        g.setColor(Color.WHITE);
+        g.setColor(scene.getBackground());
         g.fillRect(0, 0, W, H);
 
         //Get the center of the Scene so it can be used to draw all objects with it as a fake origin.
-        scene.updateDeltaOrigin();
+        scene.updateOrigin();
 
-        //draw a parcel to represent the truck
-        drawCubePro(scene.getCube(), Color.BLACK, false);
+        //draw a parcel to represent the scene
+            drawCubePro(scene.getCube(), scene.getForeground(), false);
+
 
         //draw Scene's Cube List
         for (Cube cube : scene.getCubeList()) {
-            drawCubePro(cube, Color.RED, false);
+            drawCubePro(cube, scene.getCubeColor(), fill);
         }
 
         //Origin and Rotation point, Indication/Axis Lines
@@ -74,9 +74,9 @@ public class CubeDrawer extends JPanel {
         Parcel I = new Parcel(1, 0, 0);
         Parcel J = new Parcel(0, 1, 0);
         Parcel K = new Parcel(0, 0, 1);
-        I.setPos(scene.getDeltaO().multiply(-1));
-        J.setPos(scene.getDeltaO().multiply(-1));
-        K.setPos(scene.getDeltaO().multiply(-1));
+        I.setPos(scene.getOrigin().multiply(-1));
+        J.setPos(scene.getOrigin().multiply(-1));
+        K.setPos(scene.getOrigin().multiply(-1));
         drawCubePro(I, Color.BLUE, false);
         drawCubePro(J, Color.GREEN, false);
         drawCubePro(K, Color.YELLOW, false);
@@ -96,10 +96,10 @@ public class CubeDrawer extends JPanel {
      * @return 2D Point Object of where the 3D Point should be drawn to emulate depth
      */
     private Point convertPointPro(Point3D point) {
-        point = point.add(scene.getDeltaO());
+        point = point.add(scene.getOrigin());
 
-        double theta = Math.PI * angle / 180.0;
-        double phi = Math.PI * elevation / 180.0;
+        double theta = Math.PI * camera.angle / 180.0;
+        double phi = Math.PI * camera.elevation / 180.0;
         float cosT = (float) Math.cos(theta), sinT = (float) Math.sin(theta);
         float cosP = (float) Math.cos(phi), sinP = (float) Math.sin(phi);
         float cosTcosP = cosT * cosP, cosTsinP = cosT * sinP, sinTcosP = sinT * cosP, sinTsinP = sinT * sinP;
@@ -115,12 +115,62 @@ public class CubeDrawer extends JPanel {
         x1 = x1 * 20f / (z1 + 50f);
         y1 = y1 * 20f / (z1 + 50f);
 
-        int ox = (int) (x1 * scale * 2 + 0.5);
-        int oy = (int) (y1 * scale * 2 + 0.5);
+        int ox = (int) (x1 * camera.scale * 2 + 0.5);
+        int oy = (int) (y1 * camera.scale * 2 + 0.5);
         return new Point(W / 2 + ox, H / 2 - oy);
     }
 
+    public class Camera {
+        int angle;
+        int elevation;
+        int scale;
 
+        Camera(int angle, int elevation, int scale) {
+            this.angle = angle;
+            this.elevation = elevation;
+            this.scale = scale;
+        }
+
+        public void reset() {
+            angle = 0;
+            elevation = 35;
+            scale = 20;
+            renderScene();
+        }
+
+        /**
+         * Rotate the scene.<br>
+         * @param i int amount to rotate - Default range: -3 ~ 3.
+         */
+        void rotate(int i) {
+            angle += i;
+            renderScene();
+        }
+
+        /**
+         * Roll the Scene.<br>
+         * @param i int amount to roll - Default range -3 ~ 3.
+         */
+        void roll(int i) {
+            elevation += i;
+            renderScene();
+        }
+
+        /**
+         * Change the scale of the Scene (Zoom). <br>
+         * @param i int amount to change the scale - Default range -1 ~ 1.
+         */
+        void zoom(int i) {
+            scale += i;
+            if(scale < 6) scale = 6;
+            if(scale > 40) scale = 40;
+            renderScene();
+        }
+    }
+
+    public Camera getCamera() {
+        return camera;
+    }
 
 
     /* Drawing Methods */
@@ -147,11 +197,13 @@ public class CubeDrawer extends JPanel {
         }
 
         if(drawCoordinates) {
-            for (Point point : newPoints) {
-                double a = point.x * 0.01;
-                double b = point.y * 0.01;
+            for (int i = 0; i < points.size(); i++) {
+                Point3D point = points.get(i);
+                double xi = point.getX()/10;
+                double yi = point.getY()/10;
+                double zi = point.getZ()/10;
                 DecimalFormat df = new DecimalFormat("#.##");
-                drawText(point, "(" + df.format(a) + ", " + df.format(b) + ")");
+                drawText(newPoints.get(i), "(" + df.format(xi) + ", " + df.format(yi) + ", " + df.format(zi) + ")");
             }
         }
 
@@ -162,10 +214,9 @@ public class CubeDrawer extends JPanel {
         } //Add convert Edge Method.
 
         if(fill)
-            fillCube(newPoints, new Color(1,0,0,0.3f));
+            fillCube(newPoints, cube.getColor());
         drawWireFrame(newEdges, c);
     }
-
 
     /**
      * Draws a Wire Frame of a Cube represented as a <code>ArrayList</code> of Edge Objects and a <code>Color</code>.<br>
@@ -181,8 +232,6 @@ public class CubeDrawer extends JPanel {
             drawLine(edge.a, edge.b, c);
         }
     }
-
-
 
     /**
      * Draws a transparent Cube represented as an <code>ArrayList</code> of (2d) <code>Point</code> Objects and a <code>Color</code>.<br>
@@ -215,8 +264,9 @@ public class CubeDrawer extends JPanel {
     private void drawText(Point p, String text) {
         Graphics2D g = (Graphics2D) image.getGraphics();
         g.setFont(new Font("Dialog", Font.BOLD, 20));
-        g.setColor(Color.BLACK);
-        int k = 1;
+
+        Color b = scene.getBackground();
+        g.setColor(new Color(255-b.getRed(), 255-b.getGreen(), 255-b.getBlue()));
         if(p.getX() < W/2) {
             g.drawString(text, (p.x - g.getFontMetrics().stringWidth(text)) - 20, p.y + 10);
         } else {
@@ -262,48 +312,12 @@ public class CubeDrawer extends JPanel {
         g.drawImage(image, 0, 0, null);
     }
 
-    public void resetCamera() {
-        angle = 0;
-        elevation = 35;
-        scale = 20;
-        renderScene();
-    }
-
     public void emptyScene() {
         scene.empty();
         renderScene();
     }
 
     //Methods Used to adjust the Camera And Debug Options
-
-    /**
-     * Rotate the Truck.<br>
-     * @param i int amount to rotate - Default range: -3 ~ 3.
-     */
-    public void rotate(int i) {
-        angle += i;
-        renderScene();
-    }
-
-    /**
-     * Roll the Truck.<br>
-     * @param i int amount to roll - Default range -3 ~ 3.
-     */
-    public void roll(int i) {
-        elevation += i;
-        renderScene();
-    }
-
-    /**
-     * Change the scale of the Truck (Zoom). <br>
-     * @param i int amount to change the scale - Default range -1 ~ 1.
-     */
-    public void zoom(int i) {
-        scale += i;
-        if(scale < 6) scale = 6;
-        if(scale > 40) scale = 40;
-        renderScene();
-    }
 
     /**
      * Toggle if Debug Graphics should be drawn.
@@ -313,20 +327,21 @@ public class CubeDrawer extends JPanel {
         renderScene();
     }
 
+    public void toggleFill() {
+        fill = !fill;
+        renderScene();
+    }
+
     public void toggleCoodDrawing() {
         drawCoordinates = !drawCoordinates;
         renderScene();
     }
 
-    public int getZoom() {
-    	return scale;
-    }
-    
-    public int getElevation() {
-    	return elevation;
-    }
-    
-    public int getAngle() {
-    	return angle;
+    public void doResize(int w, int h) {
+        setPreferredSize(new Dimension(w,h));
+        W = w;
+        H = h;
+        image = new BufferedImage(W, H, BufferedImage.TYPE_INT_ARGB);
+        renderScene();
     }
 }

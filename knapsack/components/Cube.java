@@ -2,6 +2,7 @@ package knapsack.components;
 
 import javafx.geometry.Point3D;
 
+import java.awt.*;
 import java.util.ArrayList;
 
 public interface Cube {
@@ -11,4 +12,6 @@ public interface Cube {
     ArrayList<Point3D> getPoints();
 
     ArrayList<Edge3D> getEdges();
+
+    Color getColor();
 }

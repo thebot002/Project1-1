@@ -1,6 +1,8 @@
 package knapsack.components;
 
 import javafx.geometry.Point3D;
+
+import java.awt.*;
 import java.util.*;
 
 /**
@@ -19,6 +21,7 @@ public class Parcel implements Cube {
 	private int state = 0;
     private ArrayList<ArrayList<Point3D>> rotations;
     public Point3D deltaO;
+    private Color fillColor = new Color(0.5f,0.5f,0.5f,0.3f);
 
     /**
      * Create a parcel with a default position set to the origin and set its 8 vertices.
@@ -41,9 +44,9 @@ public class Parcel implements Cube {
      */
 	public Parcel(String id){
 	    switch (id){
-            case "A": width = 2; height = 2; length = 4; setPoints(); break;
-            case "B": width = 2; height = 3; length = 4; setPoints(); break;
-            case "C": width = 3; height = 3; length = 3; setPoints(); break;
+            case "A": width = 2; height = 2; length = 4; fillColor = new Color(1,0,0,0.3f); setPoints(); break;
+            case "B": width = 2; height = 3; length = 4; fillColor = new Color(0,1,0,0.3f); setPoints(); break;
+            case "C": width = 3; height = 3; length = 3; fillColor = new Color(0,0,1,0.3f); setPoints(); break;
         }
         this.id = id;
     }
@@ -71,6 +74,7 @@ public class Parcel implements Cube {
         newP.setPos(new Point3D(pos.getX(),pos.getY(),pos.getZ()));
         newP.setID(id);
         newP.setValue(value);
+        newP.setColor(fillColor);
         return newP;
     }
 
@@ -92,21 +96,10 @@ public class Parcel implements Cube {
         points.add(new Point3D(width, 0, length));
 
         setEdges();
+    }
 
-//        edges.add(new Edge3D(points.get(0),points.get(1)));
-//        edges.add(new Edge3D(points.get(1),points.get(2)));
-//        edges.add(new Edge3D(points.get(2),points.get(3)));
-//        edges.add(new Edge3D(points.get(3),points.get(0)));
-//
-//        edges.add(new Edge3D(points.get(0),points.get(4)));
-//        edges.add(new Edge3D(points.get(1),points.get(5)));
-//        edges.add(new Edge3D(points.get(2),points.get(6)));
-//        edges.add(new Edge3D(points.get(3),points.get(7)));
-//
-//        edges.add(new Edge3D(points.get(4),points.get(5)));
-//        edges.add(new Edge3D(points.get(5),points.get(6)));
-//        edges.add(new Edge3D(points.get(6),points.get(7)));
-//        edges.add(new Edge3D(points.get(7),points.get(4)));
+    public void setColor(Color c) {
+        fillColor = c;
     }
 
 
@@ -180,6 +173,11 @@ public class Parcel implements Cube {
      * @return a HashMap<Point3D, Point3D> of the edges.
      */
 	public ArrayList<Edge3D> getEdges() {return edges;}
+
+    @Override
+    public Color getColor() {
+        return fillColor;
+    }
 
     /**
      * Method to get the width of the parcel. (x axis)
@@ -280,6 +278,56 @@ public class Parcel implements Cube {
             else rotateAroundZ();
         }
         return true;
+    }
+    @Override
+    public boolean equals(Object obj) {
+    	final Parcel other = (Parcel) obj;
+        if(this.id.equals(other.id) && this.value == other.value) return true;
+        else return false;
+    }
+
+    public static Parcel[] createParcelsArrA(int value) {
+    	Parcel[] parcelsA = new Parcel[6];
+    	Parcel parcelA = new Parcel("A", value);
+    	Parcel xRotParcelA = new Parcel("A", value);
+		xRotParcelA.xRotate();
+		Parcel yRotParcelA = new Parcel("A", value);
+		yRotParcelA.yRotate();
+		Parcel zRotParcelA = new Parcel("A", value);
+		zRotParcelA.zRotate();
+		Parcel xyRotParcelA = new Parcel("A", value);
+		xyRotParcelA.xRotate();
+		xyRotParcelA.yRotate();
+		Parcel xzRotParcelA = new Parcel("A", value);
+		xzRotParcelA.xRotate();
+		xzRotParcelA.zRotate();
+		parcelsA[0] = parcelA;
+		parcelsA[1] = xRotParcelA;
+		parcelsA[2] = yRotParcelA;
+		parcelsA[3] = zRotParcelA;
+		parcelsA[4] = xyRotParcelA;
+		parcelsA[5] = xzRotParcelA;
+		return parcelsA;
+    }
+
+    public static Parcel[] createParcelsArrB(int value) {
+    	Parcel[] parcelsB = new Parcel[3];
+    	Parcel parcelB = new Parcel("B", value);
+    	Parcel yRotParcelB = new Parcel("B", value);
+		yRotParcelB.yRotate();
+		Parcel zRotParcelB = new Parcel("B", value);
+		zRotParcelB.zRotate();
+		parcelsB[0] = parcelB;
+		parcelsB[1] = yRotParcelB;
+		parcelsB[2] = zRotParcelB;
+		return parcelsB;
+    }
+
+    public static Parcel[] createParcelsArrC(int value) {
+    	Parcel[] parcelsC = new Parcel[1];
+    	Parcel parcelC = new Parcel("C", value);
+    	parcelsC[0] = parcelC;
+    	return parcelsC;
     }
 
     public String toString(){
