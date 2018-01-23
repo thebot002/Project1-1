@@ -14,4 +14,6 @@ public interface Cube {
     ArrayList<Edge3D> getEdges();
 
     Color getColor();
+
+    Cube copy();
 }
