@@ -1,4 +1,4 @@
-package knapsack.greedy;
+package knapsack.filling;
 
 import java.util.ArrayList;
 

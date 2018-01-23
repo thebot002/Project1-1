@@ -1,4 +1,4 @@
-package knapsack.backtracking;
+package knapsack.filling;
 
 import java.util.ArrayList;
 
