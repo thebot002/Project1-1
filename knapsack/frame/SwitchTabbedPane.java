@@ -178,7 +178,7 @@ public class SwitchTabbedPane extends JPanel {
 		algorithmSwitch.add(rdbtnGreedy);
 		algorithmSwitch.add(rdbtnBacktracking);
 		
-		String[] options = {"Decreasing value/volume", "Decreasing value", "Decreasing volume", "Genetic Algorithm"};
+		String[] options = {"Decreasing value/volume", "Decreasing value", "Decreasing volume", "Genetic Algorithm - Minimize Gaps", "Genetic Algorithm - Maximize Value"};
 		
 		comboBoxGreedyOptions = new JComboBox(options);
 		GridBagConstraints gbc_comboBoxGreedyOptions = new GridBagConstraints();

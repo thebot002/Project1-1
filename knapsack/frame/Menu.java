@@ -15,6 +15,7 @@ import java.text.ParseException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.Font;
+import javax.swing.JSlider;
 
 public class Menu extends JPanel implements ActionListener {
 
@@ -39,9 +40,9 @@ public class Menu extends JPanel implements ActionListener {
 		setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{0, 0, 0, 0, 0, 0, 0, 0};
-		gridBagLayout.rowHeights = new int[]{0, 0, 0, 30, 0, 0, 0, 0, 0, 74, 0, 0, 0, 0, 0, 0, 0, 20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-		gridBagLayout.columnWeights = new double[]{0.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 0.0};
-		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gridBagLayout.rowHeights = new int[]{0, 0, 0, 30, 0, 0, 0, 0, 0, 74, 0, 0, 0, 0, 0, 0, 0, 20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 30, 0, 0, 0, 0};
+		gridBagLayout.columnWeights = new double[]{.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 0.0};
+		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
 
 		btnFillTruck = new JButton("Fill Truck");
@@ -73,6 +74,8 @@ public class Menu extends JPanel implements ActionListener {
 
 		infoJPanel = new JPanel();
 		infoPanel = new InfoPanel();
+		GridBagLayout gridBagLayout_1 = (GridBagLayout) infoPanel.getLayout();
+		gridBagLayout_1.columnWidths = new int[]{0, 111, 0, 0, 0, 0, 0, 0};
 		GridBagConstraints gbc_infoJPanel = new GridBagConstraints();
 		gbc_infoJPanel.gridheight = 9;
 		gbc_infoJPanel.gridwidth = 6;
@@ -113,7 +116,7 @@ public class Menu extends JPanel implements ActionListener {
 		gbc_lblGapsFoundDisp.gridwidth = 2;
 		gbc_lblGapsFoundDisp.insets = new Insets(0, 0, 5, 5);
 		gbc_lblGapsFoundDisp.gridx = 1;
-		gbc_lblGapsFoundDisp.gridy = 29;
+		gbc_lblGapsFoundDisp.gridy = 30;
 		add(lblGapsFoundDisp, gbc_lblGapsFoundDisp);
 
 		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
@@ -137,7 +140,7 @@ public class Menu extends JPanel implements ActionListener {
 		gbc_lblCurrentValueDisp.gridwidth = 2;
 		gbc_lblCurrentValueDisp.insets = new Insets(0, 0, 5, 5);
 		gbc_lblCurrentValueDisp.gridx = 3;
-		gbc_lblCurrentValueDisp.gridy = 29;
+		gbc_lblCurrentValueDisp.gridy = 30;
 		add(lblCurrentValueDisp, gbc_lblCurrentValueDisp);
 
 		lblTimeTookDisp = new JLabel("---");
@@ -146,7 +149,7 @@ public class Menu extends JPanel implements ActionListener {
 		gbc_lblTimeTookDisp.gridwidth = 2;
 		gbc_lblTimeTookDisp.insets = new Insets(0, 0, 5, 5);
 		gbc_lblTimeTookDisp.gridx = 5;
-		gbc_lblTimeTookDisp.gridy = 29;
+		gbc_lblTimeTookDisp.gridy = 30;
 		add(lblTimeTookDisp, gbc_lblTimeTookDisp);
 		setVisible(true);
 	}
