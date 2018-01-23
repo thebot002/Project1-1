@@ -111,7 +111,7 @@ public class Menu extends JPanel implements ActionListener {
 		add(lblTimeTook, gbc_lblTimeTook);
 
 		lblGapsFoundDisp = new JLabel("---");
-		lblGapsFoundDisp.setFont(new Font("Tahoma", Font.ITALIC, 13));
+		lblGapsFoundDisp.setFont(new Font("Verdana", Font.ITALIC, 13));
 		GridBagConstraints gbc_lblGapsFoundDisp = new GridBagConstraints();
 		gbc_lblGapsFoundDisp.gridwidth = 2;
 		gbc_lblGapsFoundDisp.insets = new Insets(0, 0, 5, 5);
@@ -135,7 +135,7 @@ public class Menu extends JPanel implements ActionListener {
 		tabbedPane.addTab("Pentomino", pentominoTab);
 
 		lblCurrentValueDisp = new JLabel("---");
-		lblCurrentValueDisp.setFont(new Font("Tahoma", Font.ITALIC, 13));
+		lblCurrentValueDisp.setFont(new Font("Verdana", Font.ITALIC, 13));
 		GridBagConstraints gbc_lblCurrentValueDisp = new GridBagConstraints();
 		gbc_lblCurrentValueDisp.gridwidth = 2;
 		gbc_lblCurrentValueDisp.insets = new Insets(0, 0, 5, 5);
@@ -144,7 +144,7 @@ public class Menu extends JPanel implements ActionListener {
 		add(lblCurrentValueDisp, gbc_lblCurrentValueDisp);
 
 		lblTimeTookDisp = new JLabel("---");
-		lblTimeTookDisp.setFont(new Font("Tahoma", Font.ITALIC, 13));
+		lblTimeTookDisp.setFont(new Font("Verdana", Font.ITALIC, 13));
 		GridBagConstraints gbc_lblTimeTookDisp = new GridBagConstraints();
 		gbc_lblTimeTookDisp.gridwidth = 2;
 		gbc_lblTimeTookDisp.insets = new Insets(0, 0, 5, 5);
