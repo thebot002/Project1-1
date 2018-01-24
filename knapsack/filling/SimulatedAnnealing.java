@@ -21,7 +21,7 @@ public class SimulatedAnnealing{
     private static final double INITIAL_TEMPERATURE = 0.2;
     private static final int TOTAL_ROTATIONS = 6; //to be adapted if pentominoes
 
-    private static long timeToRun = 1200000; //1000 = 1sec
+    private static long timeToRun = 60000; //1000 = 1sec
 
     private static boolean value = true; //true = searches for the best value; false = searches for the best volume
 

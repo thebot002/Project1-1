@@ -5,6 +5,7 @@ import knapsack.components.Parcel;
 import knapsack.components.PentominoParcel;
 import knapsack.components.Truck;
 import knapsack.filling.Backtracking;
+import knapsack.filling.Greedy;
 import knapsack.filling.GreedyPent;
 import knapsack.filling.SimulatedAnnealing;
 
@@ -46,10 +47,12 @@ public class Knapsack extends JFrame {
         addKeyInput();
         addComponentListener(new ResizeListener());
 
-        SimulatedAnnealing s = new SimulatedAnnealing();
-        truck = s.fillTruck();
+        //SimulatedAnnealing s = new SimulatedAnnealing();
+        //truck = s.fillTruck();
 
         //truck = new Truck();
+        truck = GreedyPent.greedy();
+
 
         Color scene_BACKGROUND = Color.BLACK;   //Background of scene
         Color scene_FOREGROUND = Color.WHITE;   //Wireframe color of scene
@@ -68,10 +71,10 @@ public class Knapsack extends JFrame {
         add(m, BorderLayout.EAST);
         add(c, BorderLayout.CENTER);
         pack();
-        setVisible(true);
         //setResizable(false);
         c.renderScene();
         addComponentListener(new ResizeListener());
+        setVisible(true);
     }
     public Knapsack(Truck trckFilled) {
     	System.out.println("Creating new knapsack with filled truck");
