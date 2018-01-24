@@ -6,6 +6,7 @@ import knapsack.components.PentominoParcel;
 import knapsack.components.Truck;
 import knapsack.filling.Backtracking;
 import knapsack.filling.GreedyPent;
+import knapsack.filling.SimulatedAnnealing;
 
 import java.awt.*;
 import javax.swing.*;
@@ -45,8 +46,10 @@ public class Knapsack extends JFrame {
         addKeyInput();
         addComponentListener(new ResizeListener());
 
+        SimulatedAnnealing s = new SimulatedAnnealing();
+        truck = s.fillTruck();
 
-        truck = new Truck();
+        //truck = new Truck();
 
         Color scene_BACKGROUND = Color.BLACK;   //Background of scene
         Color scene_FOREGROUND = Color.WHITE;   //Wireframe color of scene
@@ -166,6 +169,9 @@ public class Knapsack extends JFrame {
     }
     public void fill(AlgorithmInfo info) {
     	Parcel[] parcelArr = createInputParcelArr(info);
+        long startTime = System.currentTimeMillis();
+        //c.renderScene();
+    	//do something interface implementation stuff idk
     	if(info.getSettings()[0].equals("Greedy")) {
 			if(info.getType().equals("Rectangle")) {
 
@@ -178,7 +184,7 @@ public class Knapsack extends JFrame {
 		}
 		if(info.getSettings()[0].equals("Backtracking")) {
 			if(info.getType().equals("Rectangle")) {
-				
+
 			}
 			if(info.getType().equals("Pentomino")) {
 
@@ -192,7 +198,7 @@ public class Knapsack extends JFrame {
 
 			}
 		}
-
+        m.setTimeTook((startTime - System.currentTimeMillis())/1000);
     }
 
 	public CubeDrawer getCubeDrawer() {

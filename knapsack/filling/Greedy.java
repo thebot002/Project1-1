@@ -7,16 +7,7 @@ import knapsack.components.Truck;
 
 import java.util.ArrayList;
 
-public class Greedy implements TruckFilling{
-    @Override
-    public Truck fillTruck() {
-        return null;
-    }
-
-    @Override
-    public void setParcelList(ParcelList list) {
-
-    }
+public class Greedy{
 
     private static Parcel[] parcelAr;
 
