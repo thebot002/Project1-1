@@ -4,12 +4,16 @@ package knapsack.components;
 import javafx.geometry.Point3D;
 
 import java.awt.*;
-import java.util.ArrayList;
 
+/**
+ * Class defining Pentomino shaped Parcels, they extends Parcel because they are also defined by a 3D array, points and edges.
+ */
 public class PentominoParcel extends Parcel {
 
-	//private String[][][] array;
-
+    /**
+     * Constructor for a Pentomino Parcel.
+     * @param id The id of the Parcel to be constructed.
+     */
     public PentominoParcel(String id) {
         this.id = id;
         setPos(new Point3D(0,0,0));
@@ -21,35 +25,27 @@ public class PentominoParcel extends Parcel {
         setEdges();
     }
 
+    /**
+     * Constructor for a Pentomino Parcel where the value can be set.
+     * @param id The id of the Parcel to be constructed.
+     * @param value The value the parcel is going to have.
+     */
     public PentominoParcel(String id, int value){
 	    this(id);
 	    setValue(value);
     }
 
-//    public static void main(String[] args) {
-//    		PentominoParcel test = new PentominoParcel("L");
-//    		System.out.println(test.getArray().length+ " " + test.getWidth());
-//    		System.out.println(test.getArray()[0].length + " " + test.getHeight());
-//    		System.out.println(test.getArray()[0][0].length + " " + test.getLength());
-//    		test.printPentomino();
-//    		test.mirrorX();
-//    		test.printPentomino();
-//    		test.mirrorX();
-//    		test.mirrorZ();
-//    		test.printPentomino();
-//    		test.rotX();
-//    		test.printPentomino();
-//    		System.out.println(test.getArray().length);
-//    		System.out.println(test.getArray()[0].length + " " + test.getHeight());
-//    		System.out.println(test.getArray()[0][0].length);
-//
-//
-//    }
-
+    /**
+     * Method to return the volume of the actual PentominoParcel.
+     * @return An integer corresponding to the volume of the PentominoParcel
+     */
     public int getVolume() {
     		return 5;
     }
 
+    /**
+     * Method used to mirror a PentominoParcel around the X axis.
+     */
     public void mirrorX() {
     	String[][][] newPentAr = new String[array.length][array[0].length][array[0][0].length];
     	for(int i=0; i<array.length; i++) {
@@ -62,6 +58,9 @@ public class PentominoParcel extends Parcel {
     	array=newPentAr;
     }
 
+    /**
+     * Method used to mirror a PentominoParcel around the Y axis.
+     */
     public void mirrorY() {
     	String[][][] newPentAr = new String[array.length][array[0].length][array[0][0].length];
     	for(int i=0; i<array.length; i++) {
@@ -72,9 +71,11 @@ public class PentominoParcel extends Parcel {
     		}
     	}
     	array=newPentAr;
-
     }
 
+    /**
+     * Method used to mirror a PentominoParcel around the Z axis.
+     */
     public void mirrorZ() {
     	String[][][] newPentAr = new String[array.length][array[0].length][array[0][0].length];
     	for(int i=0; i<array.length; i++) {
@@ -87,22 +88,28 @@ public class PentominoParcel extends Parcel {
     	array=newPentAr;
     }
 
+    /**
+     * Method used to rotate a PentominoParcel around the X axis.
+     */
     public void rotX() {
-    		String[][][] newPentAr = new String[array.length][array[0][0].length][array[0].length];
-    		for(int i=0; i<newPentAr.length; i++) {
-    			for(int j=0; j<newPentAr[0].length; j++) {
-    				for(int k=0; k<newPentAr[0][0].length; k++) {
-    					newPentAr[i][j][k]=array[i][newPentAr[0][0].length-1-k][j];
-    				}
-    			}
-    		}
-    		array=newPentAr;
+        String[][][] newPentAr = new String[array.length][array[0][0].length][array[0].length];
+        for(int i=0; i<newPentAr.length; i++) {
+            for(int j=0; j<newPentAr[0].length; j++) {
+                for(int k=0; k<newPentAr[0][0].length; k++) {
+                    newPentAr[i][j][k]=array[i][newPentAr[0][0].length-1-k][j];
+                }
+            }
+        }
+        array=newPentAr;
 
-    		width=newPentAr.length;
-        	height=newPentAr[0].length;
-        	length=newPentAr[0][0].length;
+        width=newPentAr.length;
+        height=newPentAr[0].length;
+        length=newPentAr[0][0].length;
     }
 
+    /**
+     * Method used to rotate a PentominoParcel around the Y axis.
+     */
     public void rotY() {
 		String[][][] newPentAr = new String[array[0].length][array.length][array[0][0].length];
 		for(int i=0; i<newPentAr.length; i++) {
@@ -119,6 +126,9 @@ public class PentominoParcel extends Parcel {
     	length=newPentAr[0][0].length;
     }
 
+    /**
+     * Method used to rotate a PentominoParcel around the Z axis.
+     */
     public void rotZ() {
 		String[][][] newPentAr = new String[array[0][0].length][array[0].length][array.length];
 		for(int i=0; i<newPentAr.length; i++) {
@@ -135,37 +145,40 @@ public class PentominoParcel extends Parcel {
     	length=newPentAr[0][0].length;
     }
 
-    public void printPentomino() {
-    		for(int i=0; i<array[0].length; i++) {
-    			for(int j=0; j<array.length; j++) {
-    				for(int k=0; k<array[0][0].length; k++) {
-    					System.out.print(array[j][i][k]+" ");
-    				}
-    				System.out.println("");
-    			}
-    			System.out.println("");
-    		}
-    }
-
+    /**
+     * Method used to define the array of the PentominoParcel with id L.
+     */
     private void setArrayL() {
-    		array = new String[][][] { {{"L", "-"}},
-    								  {{"L", "-"}},
-    								  {{"L", "-"}},
-    								  {{"L", "L"}} };
+        array = new String[][][] { {{"L", "-"}},
+                                  {{"L", "-"}},
+                                  {{"L", "-"}},
+                                  {{"L", "L"}} };
     }
 
+    /**
+     * Method used to define the array of the PentominoParcel with id P.
+     */
     private void setArrayP() {
-    		array = new String[][][] {{{"P", "P"}},
-    			                      {{"P", "P"}},
-    			                      {{"P", "-"}}};
-    		}
+        array = new String[][][] {{{"P", "P"}},
+                                  {{"P", "P"}},
+                                  {{"P", "-"}}};
+        }
 
+    /**
+     * Method used to define the array of the PentominoParcel with id T.
+     */
     private void setArrayT() {
 		array = new String[][][] {{{"T", "T", "T"}},
 			                      {{"-", "T", "-"}},
 			                      {{"-", "T", "-"}}};
-		}
-	public static PentominoParcel[] createParcelsArrL(int value) {
+    }
+
+    /**
+     * Used to bulk create a Parcel array containing all variations of the L parcel with a certain (user inputted) value
+     * @param value of parcels
+     * @return Parcel array containing variations of L parcel
+     */
+    public static PentominoParcel[] createParcelsArrL(int value) {
 		PentominoParcel parcelL = new PentominoParcel("L",value);
 		PentominoParcel xMirrorL = new PentominoParcel("L",value);
 		xMirrorL.mirrorX();
@@ -245,6 +258,12 @@ public class PentominoParcel extends Parcel {
 		PentominoParcel[] parcelArr = new PentominoParcel[] {parcelL, xMirrorL, zMirrorL, xzMirrorL, xRotParcelL, yRotParcelL, zRotParcelL, xyRotParcelL, xzRotParcelL, xRotXMirrorL, yRotXMirrorL, zRotXMirrorL, xyRotXmirrorL, xzRotXmirrorL, xRotZMirrorL, yRotZMirrorL, zRotZMirrorL, xyRotZmirrorL, xzRotZmirrorL, xRotXZMirrorL, yRotXZMirrorL, zRotXZMirrorL, xyRotXZmirrorL, xzRotXZmirrorL};
 		return parcelArr;
 	}
+
+    /**
+     * Used to bulk create a Parcel array containing all variations of the P parcel with a certain (user inputted) value
+     * @param value of parcels
+     * @return Parcel array containing variations of P parcel
+     */
 	public static PentominoParcel[] createParcelsArrP(int value) {
 		PentominoParcel parcelP = new PentominoParcel("P",value);
 		PentominoParcel xMirrorP = new PentominoParcel("P",value);
@@ -326,7 +345,15 @@ public class PentominoParcel extends Parcel {
 		return parcelArr;
 	}
 
+    /**
+     * Used to bulk create a Parcel array containing all variations of the T parcel with a certain (user inputted) value
+     * @param value of parcels
+     * @return Parcel array containing variations of T parcel
+     */
 	public static PentominoParcel[] createParcelsArrT(int value) {
+        PentominoParcel parcelT = new PentominoParcel("T", value);
+        PentominoParcel xMirrorT = new PentominoParcel("T",value);
+        xMirrorT.mirrorX();
 		PentominoParcel xRotParcelT = new PentominoParcel("T", value);
 		xRotParcelT.rotX();
 		PentominoParcel yRotParcelT = new PentominoParcel("T", value);
