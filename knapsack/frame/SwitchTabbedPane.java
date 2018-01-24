@@ -33,6 +33,7 @@ public class SwitchTabbedPane extends JPanel {
 	private JSpinner spnnrValDispTR;
 	private JRadioButton rdbtnGreedy;
 	private JRadioButton rdbtnBacktracking;
+	private JRadioButton rdbtnSimulatedAnnealing;
 	private JComboBox comboBoxGreedyOptions;
 	private JComboBox comboBoxBacktrackingOptions;
 	private ButtonGroup algorithmSwitch;
@@ -173,10 +174,19 @@ public class SwitchTabbedPane extends JPanel {
 		gbc_rdbtnBacktracking.gridy = 8;
 		rdbtnBacktracking.setActionCommand("Backtracking");
 		add(rdbtnBacktracking, gbc_rdbtnBacktracking);
+
+		rdbtnSimulatedAnnealing = new JRadioButton("Simulated Annealing");
+		GridBagConstraints gbc_rdbtnSimulatedAnnealing = new GridBagConstraints();
+		gbc_rdbtnSimulatedAnnealing.insets = new Insets(0, 0, 5, 5);
+		gbc_rdbtnSimulatedAnnealing.gridx = 6;
+		gbc_rdbtnSimulatedAnnealing.gridy = 8;
+		rdbtnSimulatedAnnealing.setActionCommand("Simulated Annealing");
+		add(rdbtnSimulatedAnnealing, gbc_rdbtnSimulatedAnnealing);
 		
 		algorithmSwitch = new ButtonGroup();
 		algorithmSwitch.add(rdbtnGreedy);
 		algorithmSwitch.add(rdbtnBacktracking);
+		algorithmSwitch.add(rdbtnSimulatedAnnealing);
 		
 		String[] options = {"Decreasing value/volume", "Decreasing value", "Decreasing volume", "Genetic Algorithm - Minimize Gaps", "Genetic Algorithm - Maximize Value"};
 		
@@ -228,7 +238,7 @@ public class SwitchTabbedPane extends JPanel {
 		int valSR = (Integer) spnnrValDispSR.getValue();
 		spnnrValDispTR.commitEdit();
 		int valTR = (Integer) spnnrValDispTR.getValue();
-		int[][] parcels = {{amountFR, amountSR, amountTR}, {valFR, valSR, valTR}};
+		int[][] parcels = {{amountFR, valFR,}, {amountSR, valSR}, {amountTR, valTR}};
 		return parcels;
 	}
 }

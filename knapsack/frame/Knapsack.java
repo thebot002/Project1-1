@@ -2,7 +2,10 @@ package knapsack.frame;
 
 import knapsack.components.AlgorithmInfo;
 import knapsack.components.Parcel;
+import knapsack.components.PentominoParcel;
 import knapsack.components.Truck;
+import knapsack.filling.Backtracking;
+import knapsack.filling.GreedyPent;
 import knapsack.filling.SimulatedAnnealing;
 
 import java.awt.*;
@@ -24,12 +27,18 @@ public class Knapsack extends JFrame {
 	private Parcel[] parcelsA;
 	private Parcel[] parcelsB;
 	private Parcel[] parcelsC;
+	private PentominoParcel[] parcelsL;
+	private PentominoParcel[] parcelsP;
+	private PentominoParcel[] parcelsT;
 	private double maximum;
 	private double medium;
 	private double minimum;
 	private Parcel parcelA = new Parcel("A");
 	private Parcel parcelB = new Parcel("B");
 	private Parcel parcelC = new Parcel("C");
+	private PentominoParcel parcelL = new PentominoParcel("L");
+	private PentominoParcel parcelP = new PentominoParcel("P");
+	private PentominoParcel parcelT = new PentominoParcel("T");
 
     public Knapsack() {
         setTitle("Knapsack");
@@ -64,6 +73,35 @@ public class Knapsack extends JFrame {
         c.renderScene();
         addComponentListener(new ResizeListener());
     }
+    public Knapsack(Truck trckFilled) {
+    	System.out.println("Creating new knapsack with filled truck");
+		setTitle("Knapsack");
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		addKeyInput();
+		addComponentListener(new ResizeListener());
+
+		Color scene_BACKGROUND = Color.BLACK;   //Background of scene
+		Color scene_FOREGROUND = Color.WHITE;   //Wireframe color of scene
+		Color cube_FOREGROUND = Color.YELLOW;   //Cube Wireframe color
+
+
+		trckFilled.setBackground(scene_BACKGROUND);
+		trckFilled.setForeground(scene_FOREGROUND);
+		trckFilled.setCubeColor(cube_FOREGROUND);
+
+		c = new CubeDrawer(800, 600, trckFilled);
+
+		m = new Menu(this);
+		m.setCubeDrawer(c);
+
+		add(m, BorderLayout.EAST);
+		add(c, BorderLayout.CENTER);
+		pack();
+		setVisible(true);
+		//setResizable(false);
+		c.renderScene();
+		addComponentListener(new ResizeListener());
+	}
 
 
     public class ResizeListener implements ComponentListener {
@@ -123,7 +161,6 @@ public class Knapsack extends JFrame {
 						c.toggleColor();
 
                     m.getInfoTab().setElevation(cam.elevation);
-                    m.getInfoTab().setElevation(cam.elevation);
                     m.getInfoTab().setAngle(cam.angle);
                     m.getInfoTab().setZoom(cam.scale);
                 }
@@ -137,6 +174,32 @@ public class Knapsack extends JFrame {
         long startTime = System.currentTimeMillis();
         //c.renderScene();
     	//do something interface implementation stuff idk
+    	if(info.getSettings()[0].equals("Greedy")) {
+			if(info.getType().equals("Rectangle")) {
+
+			}
+			if(info.getType().equals("Pentomino")) {
+				System.out.println("Filling truck with greedy for pentominos");
+				Truck filledTruck = GreedyPent.greedy(createInputPentominoParcelArr(info), 0, info.getParcels()[0][0], info.getParcels()[1][0], info.getParcels()[2][0]);
+				Knapsack knpsckFilled = new Knapsack(filledTruck);
+			}
+		}
+		if(info.getSettings()[0].equals("Backtracking")) {
+			if(info.getType().equals("Rectangle")) {
+
+			}
+			if(info.getType().equals("Pentomino")) {
+
+			}
+		}
+		if(info.getSettings()[0].equals("Simulated Annealing")) {
+			if(info.getType().equals("Rectangle")) {
+
+			}
+			if(info.getType().equals("Pentomino")) {
+
+			}
+		}
         m.setTimeTook((startTime - System.currentTimeMillis())/1000);
     }
 
@@ -587,6 +650,453 @@ public class Knapsack extends JFrame {
 		if(settings[1].equals("Genetic Algorithm - Maximize Volume")) {
 			//depends on implementation of GA
 		}
+		return inputParcelArr;
+	}
+	private PentominoParcel[] createInputPentominoParcelArr(AlgorithmInfo info) {
+		int lengthCounter = 0;
+		int indexEmpty = 0;
+		int indexTMP = 0;
+		int[][] parcelsArr = info.getParcels();
+		String[] settings = info.getSettings();
+		if(parcelsArr[0][0] != 0) {
+			parcelsL = PentominoParcel.createParcelsArrL(parcelsArr[0][1]);
+			lengthCounter += parcelsL. length;
+		}
+		if(parcelsArr[1][0] != 0) {
+			parcelsP = PentominoParcel.createParcelsArrP(parcelsArr[1][1]);
+			lengthCounter += parcelsP. length;
+		}
+		if(parcelsArr[2][0] != 0) {
+			parcelsT = PentominoParcel.createParcelsArrT(parcelsArr[2][1]);
+			lengthCounter += parcelsT. length;
+		}
+		PentominoParcel[] inputParcelArr = new PentominoParcel[lengthCounter];
+		if(settings[1].equals("Decreasing value/volume")) { // {"Decreasing value/volume", "Decreasing value", "Decreasing volume", "Genetic Algorithm"}
+			sortValueOverVolume(parcelsArr);
+			if(maximum == parcelsArr[0][1]) {
+				if(parcelsArr[0][0] != 0) {
+					for(int i = indexEmpty; i < parcelsL. length + indexEmpty; i++) {
+						inputParcelArr[i] = parcelsL[i  - indexEmpty];
+						indexTMP = i + 1;
+					}
+					indexEmpty = indexTMP;
+					if(medium == parcelsArr[1][1]) {
+						if(parcelsArr[1][0] != 0) {
+							for(int i = indexEmpty; i < parcelsP. length + indexEmpty; i++) {
+								inputParcelArr[i] = parcelsP[i  - indexEmpty];
+								indexTMP = i + 1;
+							}
+							indexEmpty = indexTMP;
+							if(minimum == parcelsArr[2][1]) {
+								if(parcelsArr[2][0] != 0) {
+									for(int i = indexEmpty; i < parcelsT. length + indexEmpty; i++) {
+										inputParcelArr[i] = parcelsT[i  - indexEmpty];
+										indexTMP = i + 1;
+									}
+									indexEmpty = indexTMP;
+								}
+							}
+						}
+					}
+					if(medium == parcelsArr[2][1]) {
+						if(parcelsArr[2][0] != 0) {
+							for(int i = indexEmpty; i < parcelsT. length + indexEmpty; i++) {
+								inputParcelArr[i] = parcelsT[i  - indexEmpty];
+								indexTMP = i + 1;
+							}
+							indexEmpty = indexTMP;
+							if(minimum == parcelsArr[1][1]) {
+								if(parcelsArr[1][0] != 0) {
+									for(int i = indexEmpty; i < parcelsP. length + indexEmpty; i++) {
+										inputParcelArr[i] = parcelsP[i  - indexEmpty];
+										indexTMP = i + 1;
+									}
+									indexEmpty = indexTMP;
+								}
+							}
+						}
+					}
+				}
+			}
+
+			if(maximum == parcelsArr[1][1]) {
+				if(parcelsArr[1][0] != 0) {
+					for(int i = indexEmpty; i < parcelsP. length + indexEmpty; i++) {
+						inputParcelArr[i] = parcelsP[i  - indexEmpty];
+						indexTMP = i + 1;
+					}
+					indexEmpty = indexTMP;
+					indexEmpty = indexTMP;
+					if(medium == parcelsArr[0][1]) {
+						if(parcelsArr[0][0] != 0) {
+							for(int i = indexEmpty; i < parcelsL. length + indexEmpty; i++) {
+								inputParcelArr[i] = parcelsL[i  - indexEmpty];
+								indexTMP = i + 1;
+							}
+							indexEmpty = indexTMP;
+							if(minimum == parcelsArr[2][1]) {
+								if(parcelsArr[2][0] != 0) {
+									for(int i = indexEmpty; i < parcelsT. length + indexEmpty; i++) {
+										inputParcelArr[i] = parcelsT[i  - indexEmpty];
+										indexTMP = i + 1;
+									}
+									indexEmpty = indexTMP;
+								}
+							}
+						}
+					}
+					if(medium == parcelsArr[2][1]) {
+						if(parcelsArr[2][0] != 0) {
+							for(int i = indexEmpty; i < parcelsT. length + indexEmpty; i++) {
+								inputParcelArr[i] = parcelsT[i  - indexEmpty];
+								indexTMP = i + 1;
+							}
+							indexEmpty = indexTMP;
+							if(minimum == parcelsArr[0][1]) {
+								if(parcelsArr[0][0] != 0) {
+									for(int i = indexEmpty; i < parcelsL. length + indexEmpty; i++) {
+										inputParcelArr[i] = parcelsL[i  - indexEmpty];
+										indexTMP = i + 1;
+									}
+									indexEmpty = indexTMP;
+								}
+							}
+						}
+					}
+				}
+			}
+			if(maximum == parcelsArr[2][1]) {
+				if(parcelsArr[2][0] != 0) {
+					for(int i = indexEmpty; i < parcelsT. length + indexEmpty; i++) {
+						inputParcelArr[i] = parcelsT[i  - indexEmpty];
+						indexTMP = i + 1;
+					}
+					indexEmpty = indexTMP;
+					if(medium == parcelsArr[0][1]) {
+						if(parcelsArr[0][0] != 0) {
+							for(int i = indexEmpty; i < parcelsL. length + indexEmpty; i++) {
+								inputParcelArr[i] = parcelsL[i  - indexEmpty];
+								indexTMP = i + 1;
+							}
+							indexEmpty = indexTMP;
+							if(minimum == parcelsArr[1][1]) {
+								if(parcelsArr[1][0] != 0) {
+									for(int i = indexEmpty; i < parcelsP. length + indexEmpty; i++) {
+										inputParcelArr[i] = parcelsP[i  - indexEmpty];
+										indexTMP = i + 1;
+									}
+									indexEmpty = indexTMP;
+								}
+							}
+						}
+					}
+					if(medium == parcelsArr[1][1]) {
+						if(parcelsArr[1][0] != 0) {
+							for(int i = indexEmpty; i < parcelsP. length + indexEmpty; i++) {
+								inputParcelArr[i] = parcelsP[i  - indexEmpty];
+								indexTMP = i + 1;
+							}
+							indexEmpty = indexTMP;
+							if(minimum == parcelsArr[0][1]) {
+								if(parcelsArr[0][0] != 0) {
+									for(int i = indexEmpty; i < parcelsL. length + indexEmpty; i++) {
+										inputParcelArr[i] = parcelsL[i  - indexEmpty];
+										indexTMP = i + 1;
+									}
+									indexEmpty = indexTMP;
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		if(settings[1].equals("Decreasing value")) { // {"Decreasing value/volume", "Decreasing value", "Decreasing volume", "Genetic Algorithm"}
+			sortValue(parcelsArr);
+			if(maximum == parcelsArr[0][1]) {
+				if(parcelsArr[0][0] != 0) {
+					for(int i = indexEmpty; i < parcelsL. length + indexEmpty; i++) {
+						inputParcelArr[i] = parcelsL[i  - indexEmpty];
+						indexTMP = i + 1;
+					}
+					indexEmpty = indexTMP;
+					if(medium == parcelsArr[1][1]) {
+						if(parcelsArr[1][0] != 0) {
+							for(int i = indexEmpty; i < parcelsP. length + indexEmpty; i++) {
+								inputParcelArr[i] = parcelsP[i  - indexEmpty];
+								indexTMP = i + 1;
+							}
+							indexEmpty = indexTMP;
+							if(minimum == parcelsArr[2][1]) {
+								if(parcelsArr[2][0] != 0) {
+									for(int i = indexEmpty; i < parcelsT. length + indexEmpty; i++) {
+										inputParcelArr[i] = parcelsT[i  - indexEmpty];
+										indexTMP = i + 1;
+									}
+									indexEmpty = indexTMP;
+								}
+							}
+						}
+					}
+					if(medium == parcelsArr[2][1]) {
+						if(parcelsArr[2][0] != 0) {
+							for(int i = indexEmpty; i < parcelsT. length + indexEmpty; i++) {
+								inputParcelArr[i] = parcelsT[i  - indexEmpty];
+								indexTMP = i + 1;
+							}
+							indexEmpty = indexTMP;
+							if(minimum == parcelsArr[1][1]) {
+								if(parcelsArr[1][0] != 0) {
+									for(int i = indexEmpty; i < parcelsP. length + indexEmpty; i++) {
+										inputParcelArr[i] = parcelsP[i  - indexEmpty];
+										indexTMP = i + 1;
+									}
+									indexEmpty = indexTMP;
+								}
+							}
+						}
+					}
+				}
+			}
+
+			if(maximum == parcelsArr[1][1]) {
+				if(parcelsArr[1][0] != 0) {
+					for(int i = indexEmpty; i < parcelsP. length + indexEmpty; i++) {
+						inputParcelArr[i] = parcelsP[i  - indexEmpty];
+						indexTMP = i + 1;
+					}
+					indexEmpty = indexTMP;
+					if(medium == parcelsArr[0][1]) {
+						if(parcelsArr[0][0] != 0) {
+							for(int i = indexEmpty; i < parcelsL. length + indexEmpty; i++) {
+								inputParcelArr[i] = parcelsL[i  - indexEmpty];
+								indexTMP = i + 1;
+							}
+							indexEmpty = indexTMP;
+							if(minimum == parcelsArr[2][1]) {
+								if(parcelsArr[2][0] != 0) {
+									for(int i = indexEmpty; i < parcelsT. length + indexEmpty; i++) {
+										inputParcelArr[i] = parcelsT[i  - indexEmpty];
+										indexTMP = i + 1;
+									}
+									indexEmpty = indexTMP;
+								}
+							}
+						}
+					}
+					if(medium == parcelsArr[2][1]) {
+						if(parcelsArr[2][0] != 0) {
+							for(int i = indexEmpty; i < parcelsT. length + indexEmpty; i++) {
+								inputParcelArr[i] = parcelsT[i  - indexEmpty];
+								indexTMP = i + 1;
+							}
+							indexEmpty = indexTMP;
+							if(minimum == parcelsArr[0][1]) {
+								if(parcelsArr[0][0] != 0) {
+									for(int i = indexEmpty; i < parcelsL. length + indexEmpty; i++) {
+										inputParcelArr[i] = parcelsL[i  - indexEmpty];
+										indexTMP = i + 1;
+									}
+									indexEmpty = indexTMP;
+								}
+							}
+						}
+					}
+				}
+			}
+			if(maximum == parcelsArr[2][1]) {
+				if(parcelsArr[2][0] != 0) {
+					for(int i = indexEmpty; i < parcelsT. length + indexEmpty; i++) {
+						inputParcelArr[i] = parcelsT[i  - indexEmpty];
+						indexTMP = i + 1;
+					}
+					indexEmpty = indexTMP;
+					if(medium == parcelsArr[0][1]) {
+						if(parcelsArr[0][0] != 0) {
+							for(int i = indexEmpty; i < parcelsL. length + indexEmpty; i++) {
+								inputParcelArr[i] = parcelsL[i  - indexEmpty];
+								indexTMP = i + 1;
+							}
+							indexEmpty = indexTMP;
+							if(minimum == parcelsArr[1][1]) {
+								if(parcelsArr[1][0] != 0) {
+									for(int i = indexEmpty; i < parcelsP. length + indexEmpty; i++) {
+										inputParcelArr[i] = parcelsP[i  - indexEmpty];
+										indexTMP = i + 1;
+									}
+									indexEmpty = indexTMP;
+								}
+							}
+						}
+					}
+					if(medium == parcelsArr[1][1]) {
+						if(parcelsArr[1][0] != 0) {
+							for(int i = indexEmpty; i < parcelsP. length + indexEmpty; i++) {
+								inputParcelArr[i] = parcelsP[i  - indexEmpty];
+								indexTMP = i + 1;
+							}
+							indexEmpty = indexTMP;
+							if(minimum == parcelsArr[0][1]) {
+								if(parcelsArr[0][0] != 0) {
+									for(int i = indexEmpty; i < parcelsL. length + indexEmpty; i++) {
+										inputParcelArr[i] = parcelsL[i  - indexEmpty];
+										indexTMP = i + 1;
+									}
+									indexEmpty = indexTMP;
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		if(settings[1].equals("Decreasing volume")) { // {"Decreasing value/volume", "Decreasing value", "Decreasing volume", "Genetic Algorithm"}
+			sortVolume(parcelsArr);
+			if(maximum == parcelA.getVolume()) {
+				if(parcelsArr[0][0] != 0) {
+					for(int i = indexEmpty; i < parcelsL. length + indexEmpty; i++) {
+						inputParcelArr[i] = parcelsL[i  - indexEmpty];
+						indexTMP = i + 1;
+					}
+					indexEmpty = indexTMP;
+					if(medium == parcelB.getVolume()) {
+						if(parcelsArr[1][0] != 0) {
+							for(int i = indexEmpty; i < parcelsP. length + indexEmpty; i++) {
+								inputParcelArr[i] = parcelsP[i  - indexEmpty];
+								indexTMP = i + 1;
+							}
+							indexEmpty = indexTMP;
+							if(minimum == parcelC.getVolume()) {
+								if(parcelsArr[2][0] != 0) {
+									for(int i = indexEmpty; i < parcelsT. length + indexEmpty; i++) {
+										inputParcelArr[i] = parcelsT[i  - indexEmpty];
+										indexTMP = i + 1;
+									}
+									indexEmpty = indexTMP;
+								}
+							}
+						}
+					}
+					if(medium == parcelC.getVolume()) {
+						if(parcelsArr[2][0] != 0) {
+							for(int i = indexEmpty; i < parcelsT. length + indexEmpty; i++) {
+								inputParcelArr[i] = parcelsT[i  - indexEmpty];
+								indexTMP = i + 1;
+							}
+							indexEmpty = indexTMP;
+							if(minimum == parcelB.getVolume()) {
+								if(parcelsArr[1][0] != 0) {
+									for(int i = indexEmpty; i < parcelsP. length + indexEmpty; i++) {
+										inputParcelArr[i] = parcelsP[i  - indexEmpty];
+										indexTMP = i + 1;
+									}
+									indexEmpty = indexTMP;
+								}
+							}
+						}
+					}
+				}
+			}
+
+			if(maximum == parcelB.getVolume()) {
+				if(parcelsArr[1][0] != 0) {
+					for(int i = indexEmpty; i < parcelsP. length + indexEmpty; i++) {
+						inputParcelArr[i] = parcelsP[i  - indexEmpty];
+						indexTMP = i + 1;
+					}
+					indexEmpty = indexTMP;
+					if(medium == parcelA.getVolume()) {
+						if(parcelsArr[0][0] != 0) {
+							for(int i = indexEmpty; i < parcelsL. length + indexEmpty; i++) {
+								inputParcelArr[i] = parcelsL[i  - indexEmpty];
+								indexTMP = i + 1;
+							}
+							indexEmpty = indexTMP;
+							if(minimum == parcelC.getVolume()) {
+								if(parcelsArr[2][0] != 0) {
+									for(int i = indexEmpty; i < parcelsT. length + indexEmpty; i++) {
+										inputParcelArr[i] = parcelsT[i  - indexEmpty];
+										indexTMP = i + 1;
+									}
+									indexEmpty = indexTMP;
+								}
+							}
+						}
+					}
+					if(medium == parcelC.getVolume()) {
+						if(parcelsArr[2][0] != 0) {
+							for(int i = indexEmpty; i < parcelsT. length + indexEmpty; i++) {
+								inputParcelArr[i] = parcelsT[i  - indexEmpty];
+								indexTMP = i + 1;
+							}
+							indexEmpty = indexTMP;
+							if(minimum == parcelA.getVolume()) {
+								if(parcelsArr[0][0] != 0) {
+									for(int i = indexEmpty; i < parcelsL. length + indexEmpty; i++) {
+										inputParcelArr[i] = parcelsL[i  - indexEmpty];
+										indexTMP = i + 1;
+									}
+									indexEmpty = indexTMP;
+								}
+							}
+						}
+					}
+				}
+			}
+			if(maximum == parcelC.getVolume()) {
+				if(parcelsArr[2][0] != 0) {
+					for(int i = indexEmpty; i < parcelsT. length + indexEmpty; i++) {
+						inputParcelArr[i] = parcelsT[i  - indexEmpty];
+						indexTMP = i + 1;
+					}
+					indexEmpty = indexTMP;
+					if(medium == parcelA.getVolume()) {
+						if(parcelsArr[0][0] != 0) {
+							for(int i = indexEmpty; i < parcelsL. length + indexEmpty; i++) {
+								inputParcelArr[i] = parcelsL[i  - indexEmpty];
+								indexTMP = i + 1;
+							}
+							indexEmpty = indexTMP;
+							indexEmpty = indexTMP;
+							if(minimum == parcelB.getVolume()) {
+								if(parcelsArr[1][0] != 0) {
+									for(int i = indexEmpty; i < parcelsP. length + indexEmpty; i++) {
+										inputParcelArr[i] = parcelsP[i  - indexEmpty];
+										indexTMP = i + 1;
+									}
+									indexEmpty = indexTMP;
+								}
+							}
+						}
+					}
+					if(medium == parcelB.getVolume()) {
+						if(parcelsArr[1][0] != 0) {
+							for(int i = indexEmpty; i < parcelsP. length + indexEmpty; i++) {
+								inputParcelArr[i] = parcelsP[i  - indexEmpty];
+								indexTMP = i + 1;
+							}
+							indexEmpty = indexTMP;
+							if(minimum == parcelA.getVolume()) {
+								if(parcelsArr[0][0] != 0) {
+									for(int i = indexEmpty; i < parcelsL. length + indexEmpty; i++) {
+										inputParcelArr[i] = parcelsL[i  - indexEmpty];
+										indexTMP = i + 1;
+									}
+									indexEmpty = indexTMP;
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		if(settings[1].equals("Genetic Algorithm - Minimize Gaps")) {
+			//depends on implementation of GA
+		}
+		if(settings[1].equals("Genetic Algorithm - Maximize Volume")) {
+			//depends on implementation of GA
+		}
+		System.out.println(inputParcelArr.length);
 		return inputParcelArr;
 	}
 	private double[] sortVolume(int[][] parcelsArr) {
