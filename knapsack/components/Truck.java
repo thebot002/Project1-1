@@ -151,7 +151,8 @@ public class Truck implements Scene {
         for(int a=0; a<p.getWidth(); a++){
             for(int b=0; b<p.getHeight(); b++){
                 for(int c=0; c<p.getLength();c++){
-                    truck[a+(int)pos.getX()][b+(int)pos.getY()][c+(int)pos.getZ()] = p.getID();
+                    if(!p.getArray()[a][b][c].equals("-"))
+                        truck[a+(int)pos.getX()][b+(int)pos.getY()][c+(int)pos.getZ()] = p.getID();
                 }
             }
         }

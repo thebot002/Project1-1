@@ -21,9 +21,9 @@ public class SimulatedAnnealing{
     private static final double INITIAL_TEMPERATURE = 0.2;
     private static final int TOTAL_ROTATIONS = 6; //to be adapted if pentominoes
 
-    private static long timeToRun = 600000; //1000 = 1sec
+    private static long timeToRun = 1200000; //1000 = 1sec
 
-    private static boolean value = false; //true = searches for the best value; false = searches for the best volume
+    private static boolean value = true; //true = searches for the best value; false = searches for the best volume
 
     /**
      * Default constructor of the class. The list is set to the maximum amount of each parcels to be used.
@@ -31,13 +31,13 @@ public class SimulatedAnnealing{
     public SimulatedAnnealing() {
         ParcelList pList = new ParcelList();
 
-        pList.add(new Parcel("A"),16);
-        pList.add(new Parcel("B"),16);
-        pList.add(new Parcel("C"),16);
+        pList.add(new Parcel("A"),82);
+        pList.add(new Parcel("B"),55);
+        pList.add(new Parcel("C"),48);
 
-        //pList.add(new PentominoParcel("L"),2);
-        //pList.add(new PentominoParcel("P"),2);
-        //pList.add(new PentominoParcel("T"),2);
+        //pList.add(new PentominoParcel("L"),3);
+        //pList.add(new PentominoParcel("P"),3);
+        //pList.add(new PentominoParcel("T"),3);
 
         list = pList.getFullArray();
 
