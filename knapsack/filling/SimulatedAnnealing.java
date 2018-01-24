@@ -2,6 +2,7 @@ package knapsack.filling;
 
 import knapsack.components.Parcel;
 import knapsack.components.ParcelList;
+import knapsack.components.PentominoParcel;
 import knapsack.components.Truck;
 
 import java.util.ArrayList;
@@ -9,7 +10,7 @@ import java.util.ArrayList;
 /**
  * Class used to fill a truck with a given set of items using simulated annealing technique.
  */
-public class SimulatedAnnealing implements TruckFilling{
+public class SimulatedAnnealing{
     private double beta = 0.2; //cooling parameter
     private double alpha = 0.002; //heating parameter
 
@@ -20,9 +21,9 @@ public class SimulatedAnnealing implements TruckFilling{
     private static final double INITIAL_TEMPERATURE = 0.2;
     private static final int TOTAL_ROTATIONS = 6; //to be adapted if pentominoes
 
-    private static long timeToRun = 60000; //1000 = 1sec
+    private static long timeToRun = 1200000; //1000 = 1sec
 
-    private static boolean value = false; //true = searches for the best value; false = searches for the best volume
+    private static boolean value = true; //true = searches for the best value; false = searches for the best volume
 
     /**
      * Default constructor of the class. The list is set to the maximum amount of each parcels to be used.
@@ -33,6 +34,10 @@ public class SimulatedAnnealing implements TruckFilling{
         pList.add(new Parcel("A"),82);
         pList.add(new Parcel("B"),55);
         pList.add(new Parcel("C"),48);
+
+        //pList.add(new PentominoParcel("L"),3);
+        //pList.add(new PentominoParcel("P"),3);
+        //pList.add(new PentominoParcel("T"),3);
 
         list = pList.getFullArray();
 
@@ -49,27 +54,11 @@ public class SimulatedAnnealing implements TruckFilling{
         sequence = new int[4][pList.getTotalSize()];
     }
 
-    @Override
-    public void setParcelList(ParcelList list) {
-
-    }
-
-    @Override
     /**
      * Method used to fill a truck and return it filled.
      * @return The filled truck.
      */
     public Truck fillTruck() {
-        ParcelList pList = new ParcelList();
-
-        pList.add(new Parcel("A"),82);
-        pList.add(new Parcel("B"),55);
-        pList.add(new Parcel("C"),48);
-
-        list = pList.getFullArray();
-
-        sequence = new int[4][pList.getTotalSize()];
-
         simulate();
 
         return bestTruck;

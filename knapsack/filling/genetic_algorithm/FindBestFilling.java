@@ -3,14 +3,13 @@ package knapsack.filling.genetic_algorithm;
 import knapsack.components.Parcel;
 import knapsack.components.ParcelList;
 import knapsack.components.Truck;
-import knapsack.filling.TruckFilling;
 
 import java.util.ArrayList;
 
 /**
  * Class used to find the best filling of a truck with the combination of a genetic algorithm and another algorithm such as backtracking, simulated annealing, or greedy.
  */
-public class FindBestFilling implements TruckFilling{
+public class FindBestFilling{
     private final int MAX_VALUE_AMOUNT = 10;
 
     private int generationThreshold = 30;
@@ -18,16 +17,6 @@ public class FindBestFilling implements TruckFilling{
     private Population elite;
 
     private boolean value = false; //false = maximize volume; true = maximize value
-
-    @Override
-    public Truck fillTruck() {
-        return null;
-    }
-
-    @Override
-    public void setParcelList(ParcelList list) {
-
-    }
 
     /*
 To be worked on!!!! Adaptative mechanism!!!!!

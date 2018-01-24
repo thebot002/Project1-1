@@ -12,4 +12,7 @@ public class Edge3D {
             this.a = a;
             this.b = b;
         }
+        public Edge3D copy(){
+            return new Edge3D(new Point3D(a.getX(),a.getY(),a.getZ()),new Point3D(b.getX(),b.getY(),b.getZ()));
+        }
 }

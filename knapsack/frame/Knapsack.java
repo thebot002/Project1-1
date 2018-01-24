@@ -6,6 +6,7 @@ import knapsack.components.PentominoParcel;
 import knapsack.components.Truck;
 import knapsack.filling.Backtracking;
 import knapsack.filling.GreedyPent;
+import knapsack.filling.SimulatedAnnealing;
 
 import java.awt.*;
 import javax.swing.*;
@@ -45,8 +46,10 @@ public class Knapsack extends JFrame {
         addKeyInput();
         addComponentListener(new ResizeListener());
 
+        SimulatedAnnealing s = new SimulatedAnnealing();
+        truck = s.fillTruck();
 
-        truck = new Truck();
+        //truck = new Truck();
 
         Color scene_BACKGROUND = Color.BLACK;   //Background of scene
         Color scene_FOREGROUND = Color.WHITE;   //Wireframe color of scene
@@ -115,7 +118,6 @@ public class Knapsack extends JFrame {
         @Override
         public void componentHidden(ComponentEvent e) { }
     }
-
     private void addKeyInput() {
         KeyboardFocusManager keyManager;
         keyManager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
@@ -125,27 +127,27 @@ public class Knapsack extends JFrame {
             public boolean dispatchKeyEvent(KeyEvent e) {
                 if(e.getID()==KeyEvent.KEY_PRESSED ) {
                     int key = e.getKeyCode();
-
+					//System.out.println(key);
                     CubeDrawer.Camera cam = c.getCamera();
 
-                    if (key == 40)  //down arrow
+                    if (key == 87)  //w
                         cam.roll(-3);
 
-                    if (key == 38)  //up arrow
-                        cam.roll(3);
-
-                    if (key == 39)  //right arrow
+                    if (key == 65)  //a
                         cam.rotate(3);
 
-                    if (key == 37)  //left arrow
+                    if (key == 83)  //s
+                        cam.roll(3);
+
+                    if (key == 68)  //d
                         cam.rotate(-3);
 
                     if (key == 45 || key == 109)  //minus
-                        cam.zoom(-1);
+                        cam.zoom(-3);
 
                     if (key == 61 || key == 107)  //plus
-                        cam.zoom(1);
-                    if (key == 68)  // d
+                        cam.zoom(3);
+                    if (key == 49)  // 1
                         c.toggleDebug();
 
                     if (key == 80)  // p
@@ -165,9 +167,11 @@ public class Knapsack extends JFrame {
             }
         });
     }
-
     public void fill(AlgorithmInfo info) {
     	Parcel[] parcelArr = createInputParcelArr(info);
+        long startTime = System.currentTimeMillis();
+        //c.renderScene();
+    	//do something interface implementation stuff idk
     	if(info.getSettings()[0].equals("Greedy")) {
 			if(info.getType().equals("Rectangle")) {
 
@@ -180,7 +184,7 @@ public class Knapsack extends JFrame {
 		}
 		if(info.getSettings()[0].equals("Backtracking")) {
 			if(info.getType().equals("Rectangle")) {
-				
+
 			}
 			if(info.getType().equals("Pentomino")) {
 
@@ -194,7 +198,7 @@ public class Knapsack extends JFrame {
 
 			}
 		}
-
+        m.setTimeTook((startTime - System.currentTimeMillis())/1000);
     }
 
 	public CubeDrawer getCubeDrawer() {
