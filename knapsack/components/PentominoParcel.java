@@ -1,3 +1,4 @@
+
 package knapsack.components;
 
 import javafx.geometry.Point3D;
@@ -112,7 +113,7 @@ public class PentominoParcel extends Parcel {
 		for(int i=0; i<newPentAr.length; i++) {
 			for(int j=0; j<newPentAr[0].length; j++) {
 				for(int k=0; k<newPentAr[0][0].length; k++) {
-					newPentAr[i][j][k]=array[newPentAr[0].length-1-j][i][k];
+					newPentAr[i][j][k]=array[j][newPentAr.length-1-i][k];
 				}
 			}
 		}
