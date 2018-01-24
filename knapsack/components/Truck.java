@@ -63,7 +63,22 @@ public class Truck implements Scene {
     	this.parcelList = list;
 	}
 
-	//finds the position to add at, currently not used but am planning to - Nic
+    public Truck copy(){
+        String[][][] newTruck = new String[truck.length][truck[0].length][truck[0][0].length];
+        for(int i=0; i<width; i++) {
+            for(int j=0; j<height; j++) {
+                for(int k=0; k<length; k++) {
+                    newTruck[i][j][k]=truck[i][j][k];
+                }
+            }
+        }
+        ArrayList<Cube> newList = new ArrayList<>();
+        for(Cube c: parcelList)
+            newList.add(c.copy());
+        return new Truck(newTruck, newList);
+    }
+
+    //finds the position to add at, currently not used but am planning to - Nic
 	public int[] positionToAdd() {
 		int[] position = new int[3];
 
@@ -314,21 +329,6 @@ public class Truck implements Scene {
         }
         return total;
     }
-
-	public Truck copy(){
-		String[][][] newTruck = new String[truck.length][truck[0].length][truck[0][0].length];
-		for(int i=0; i<width; i++) {
-			for(int j=0; j<height; j++) {
-				for(int k=0; k<length; k++) {
-					newTruck[i][j][k]=truck[i][j][k];
-				}
-			}
-		}
-		ArrayList<Cube> newList = new ArrayList<>();
-		for(Cube c: parcelList)
-			newList.add(c.copy());
-		return new Truck(newTruck, newList);
-	}
 
 	public void printTruck() {
 		System.out.println("NEW TRUCK");

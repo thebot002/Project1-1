@@ -13,9 +13,9 @@ public class PentominoParcel extends Parcel {
         this.id = id;
         setPos(new Point3D(0,0,0));
         switch (id){
-            case "L": width=4; height=1; length=2; setValue(3); setPointsL(); setArrayL(); fillColor = new Color(1,0,0,0.3f); break;
-            case "P": width=3; height=1; length=2; setValue(4); setPointsP(); setArrayP(); fillColor = new Color(0,1,0,0.3f); break;
-            case "T": width=3; height=1; length=3; setValue(5); setPointsT(); setArrayT(); fillColor = new Color(0,0,1,0.3f); break;
+            case "L": width=4; height=1; length=2; setValue(3); setPoints(); setArrayL(); fillColor = new Color(1,0,0,0.3f); break;
+            case "P": width=3; height=1; length=2; setValue(4); setPoints(); setArrayP(); fillColor = new Color(0,1,0,0.3f); break;
+            case "T": width=3; height=1; length=3; setValue(5); setPoints(); setArrayT(); fillColor = new Color(0,0,1,0.3f); break;
         }
         setEdges();
     }
@@ -144,50 +144,6 @@ public class PentominoParcel extends Parcel {
     			}
     			System.out.println("");
     		}
-    }
-
-    private void setPointsT() {
-        setID("T");
-
-        points = new ArrayList<>();
-        for (int i = 0; i <= 1; i++) {
-            points.add(new Point3D(0, i, 0));
-            points.add(new Point3D(1, i, 0));
-            points.add(new Point3D(1, i, 1));
-            points.add(new Point3D(3, i, 1));
-            points.add(new Point3D(3, i, 2));
-            points.add(new Point3D(1, i, 2));
-            points.add(new Point3D(1, i, 3));
-            points.add(new Point3D(0, i, 3));
-        }
-    }
-
-    private void setPointsP() {
-        setID("P");
-
-        points = new ArrayList<>();
-        for (int i = 0; i <= 1; i++) {
-            points.add(new Point3D(0, i, 0));
-            points.add(new Point3D(3, i, 0));
-            points.add(new Point3D(3, i, 1));
-            points.add(new Point3D(2, i, 1));
-            points.add(new Point3D(2, i, 2));
-            points.add(new Point3D(0, i, 2));
-        }
-    }
-
-    private void setPointsL() {
-        setID("L");
-
-        points = new ArrayList<>();
-        for (int i = 0; i <= 1; i++) {
-            points.add(new Point3D(0, i, 0));
-            points.add(new Point3D(4, i, 0));
-            points.add(new Point3D(4, i, 2));
-            points.add(new Point3D(3, i, 2));
-            points.add(new Point3D(3, i, 1));
-            points.add(new Point3D(0, i, 1));
-        }
     }
 
     private void setArrayL() {

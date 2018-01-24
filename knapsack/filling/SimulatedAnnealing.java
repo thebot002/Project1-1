@@ -31,13 +31,13 @@ public class SimulatedAnnealing implements TruckFilling{
     public SimulatedAnnealing() {
         ParcelList pList = new ParcelList();
 
-        //pList.add(new Parcel("A"),82);
-        //pList.add(new Parcel("B"),55);
-        //pList.add(new Parcel("C"),48);
+        //pList.add(new Parcel("A"),14);
+        //pList.add(new Parcel("B"),14);
+        //pList.add(new Parcel("C"),14);
 
-        pList.add(new PentominoParcel("L"),246);
-        pList.add(new PentominoParcel("P"),246);
-        pList.add(new PentominoParcel("T"),246);
+        pList.add(new PentominoParcel("L"),2);
+        pList.add(new PentominoParcel("P"),2);
+        pList.add(new PentominoParcel("T"),2);
 
         list = pList.getFullArray();
 
@@ -59,11 +59,11 @@ public class SimulatedAnnealing implements TruckFilling{
 
     }
 
-    @Override
     /**
      * Method used to fill a truck and return it filled.
      * @return The filled truck.
      */
+    @Override
     public Truck fillTruck() {
         simulate();
 

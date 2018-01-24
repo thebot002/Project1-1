@@ -10,7 +10,7 @@ import java.util.*;
  */
 public class Parcel implements Cube {
 	protected ArrayList<Point3D> points;
-	protected ArrayList<Edge3D> edges = new ArrayList<>();
+	protected ArrayList<Edge3D> edges;
     protected int width;
     protected int height;
     protected int length;
@@ -35,7 +35,6 @@ public class Parcel implements Cube {
         length = (int)(l);
         id = "u";
         setPoints();
-        setEdges();
 	}
 
     /**
@@ -43,15 +42,14 @@ public class Parcel implements Cube {
      * @param id The ID of the parcel to be constructed.
      */
 	public Parcel(String id){
-	    switch (id){
+        this.id = id;
+        switch (id){
             case "A": width = 2; height = 2; length = 4; fillColor = new Color(1,0,0,0.3f); break;
             case "B": width = 2; height = 3; length = 4; fillColor = new Color(0,1,0,0.3f); break;
             case "C": width = 3; height = 3; length = 3; fillColor = new Color(0,0,1,0.3f); break;
         }
         setPoints();
-	    setArray();
-        setEdges();
-        this.id = id;
+        setArray();
     }
 
     /**
@@ -78,6 +76,10 @@ public class Parcel implements Cube {
      */
     public Parcel copy(){
         Parcel newP = new Parcel(width,height,length);
+        newP.setPos(new Point3D(pos.getX(),pos.getY(),pos.getZ()));
+        newP.setID(id);
+        newP.setValue(value);
+        newP.setColor(new Color(fillColor.getRGB()));
 
         String[][][] newAr = new String[width][height][length];
         for(int i=0; i<width; i++)
@@ -94,17 +96,88 @@ public class Parcel implements Cube {
         for (Edge3D e: edges) newEdges.add(e.copy());
         newP.setEdges(newEdges);
 
-        newP.setPos(new Point3D(pos.getX(),pos.getY(),pos.getZ()));
-        newP.setID(id);
-        newP.setValue(value);
-        newP.setColor(fillColor);
         return newP;
+    }
+
+    /**
+     * Method to initialize the points array by detecting the ID of the parcel.
+     * Also calls the method setEdges to build the edges array after having constructed the points.
+     */
+    protected void setPoints(){
+        switch (id) {
+            case "L":
+                setPointsL();
+                break;
+            case "P":
+                setPointsP();
+                break;
+            case "T":
+                setPointsT();
+                break;
+            default:
+                setPointsParcel();
+                break;
+        }
+        setEdges();
+    }
+
+    /**
+     * Method to set the points of each corner of a parcel with ID L (Pentomino).
+     */
+    private void setPointsL() {
+        setID("L");
+
+        points = new ArrayList<>();
+        for (int i = 0; i <= 1; i++) {
+            points.add(new Point3D(0, i, 0));
+            points.add(new Point3D(4, i, 0));
+            points.add(new Point3D(4, i, 2));
+            points.add(new Point3D(3, i, 2));
+            points.add(new Point3D(3, i, 1));
+            points.add(new Point3D(0, i, 1));
+        }
+    }
+
+    /**
+     * Method to set the points of each corner of a parcel with ID P (Pentomino).
+     */
+    private void setPointsP() {
+        setID("P");
+
+        points = new ArrayList<>();
+        for (int i = 0; i <= 1; i++) {
+            points.add(new Point3D(0, i, 0));
+            points.add(new Point3D(3, i, 0));
+            points.add(new Point3D(3, i, 1));
+            points.add(new Point3D(2, i, 1));
+            points.add(new Point3D(2, i, 2));
+            points.add(new Point3D(0, i, 2));
+        }
+    }
+
+    /**
+     * Method to set the points of each corner of a parcel with ID T (Pentomino).
+     */
+    private void setPointsT() {
+        setID("T");
+
+        points = new ArrayList<>();
+        for (int i = 0; i <= 1; i++) {
+            points.add(new Point3D(0, i, 0));
+            points.add(new Point3D(1, i, 0));
+            points.add(new Point3D(1, i, 1));
+            points.add(new Point3D(3, i, 1));
+            points.add(new Point3D(3, i, 2));
+            points.add(new Point3D(1, i, 2));
+            points.add(new Point3D(1, i, 3));
+            points.add(new Point3D(0, i, 3));
+        }
     }
 
     /**
      * Method that sets the points of each corners of the parcel.
      */
-    private void setPoints() {
+    private void setPointsParcel() {
         pos = new Point3D(0,0,0);
 
         points = new ArrayList<>();
@@ -150,6 +223,7 @@ public class Parcel implements Cube {
      * Method to set the ArrayList defining the edges of the parcel.
      */
     protected void setEdges() {
+        edges = new ArrayList<>();
         int s = (points.size()/2) - 1;
         for(int inc = 0; inc < s; inc++) {
             edges.add(new Edge3D(points.get(inc), points.get(inc+1)));
@@ -310,6 +384,7 @@ public class Parcel implements Cube {
         width=newPentAr.length;
         height=newPentAr[0].length;
         length=newPentAr[0][0].length;
+        setPoints();
     }
 
     public void rotateAroundY() {
@@ -326,6 +401,7 @@ public class Parcel implements Cube {
         width=newPentAr.length;
         height=newPentAr[0].length;
         length=newPentAr[0][0].length;
+        setPoints();
     }
 
     public void rotateAroundZ() {
@@ -342,6 +418,7 @@ public class Parcel implements Cube {
         width=newPentAr.length;
         height=newPentAr[0].length;
         length=newPentAr[0][0].length;
+        setPoints();
     }
 
     @Override
