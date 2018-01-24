@@ -141,10 +141,10 @@ public class Knapsack extends JFrame {
                         cam.rotate(-3);
 
                     if (key == 45 || key == 109)  //minus
-                        cam.zoom(-1);
+                        cam.zoom(-3);
 
                     if (key == 61 || key == 107)  //plus
-                        cam.zoom(1);
+                        cam.zoom(3);
                     if (key == 68)  // d
                         c.toggleDebug();
 
