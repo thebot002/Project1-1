@@ -2,6 +2,7 @@ package knapsack.filling;
 
 import knapsack.components.Parcel;
 import knapsack.components.ParcelList;
+import knapsack.components.PentominoParcel;
 import knapsack.components.Truck;
 
 import java.util.ArrayList;
@@ -30,9 +31,13 @@ public class SimulatedAnnealing implements TruckFilling{
     public SimulatedAnnealing() {
         ParcelList pList = new ParcelList();
 
-        pList.add(new Parcel("A"),82);
-        pList.add(new Parcel("B"),55);
-        pList.add(new Parcel("C"),48);
+        //pList.add(new Parcel("A"),82);
+        //pList.add(new Parcel("B"),55);
+        //pList.add(new Parcel("C"),48);
+
+        pList.add(new PentominoParcel("L"),246);
+        pList.add(new PentominoParcel("P"),246);
+        pList.add(new PentominoParcel("T"),246);
 
         list = pList.getFullArray();
 
@@ -60,16 +65,6 @@ public class SimulatedAnnealing implements TruckFilling{
      * @return The filled truck.
      */
     public Truck fillTruck() {
-        ParcelList pList = new ParcelList();
-
-        pList.add(new Parcel("A"),82);
-        pList.add(new Parcel("B"),55);
-        pList.add(new Parcel("C"),48);
-
-        list = pList.getFullArray();
-
-        sequence = new int[4][pList.getTotalSize()];
-
         simulate();
 
         return bestTruck;

@@ -11,21 +11,20 @@ import java.util.*;
 public class Parcel implements Cube {
 	protected ArrayList<Point3D> points;
 	protected ArrayList<Edge3D> edges = new ArrayList<>();
-	protected int length;
-	protected int height;
-	protected int width;
-	private Point3D pos;
+    protected int width;
+    protected int height;
+    protected int length;
+    private Point3D pos;
 	private int value = 1;
-	private String id;
+	protected String id;
 
-	private int state = 0;
-    private ArrayList<ArrayList<Point3D>> rotations;
-    public Point3D deltaO;
-    private Color fillColor = new Color(0.5f,0.5f,0.5f,0.3f);
+	protected String[][][] array;
+
+    protected Color fillColor = new Color(0.5f,0.5f,0.5f,0.3f);
 
     /**
-     * Create a parcel with a default position set to the origin and set its 8 vertices.
      * Constructor of a parcel object with given dimensions.
+     * Mainly used for copy.
      * @param w The width of the parcel. (x axis)
      * @param h The height of the parcel. (y axis)
      * @param l The length of the parcel. (z axis)
@@ -36,6 +35,7 @@ public class Parcel implements Cube {
         length = (int)(l);
         id = "u";
         setPoints();
+        setEdges();
 	}
 
     /**
@@ -44,10 +44,13 @@ public class Parcel implements Cube {
      */
 	public Parcel(String id){
 	    switch (id){
-            case "A": width = 2; height = 2; length = 4; fillColor = new Color(1,0,0,0.3f); setPoints(); break;
-            case "B": width = 2; height = 3; length = 4; fillColor = new Color(0,1,0,0.3f); setPoints(); break;
-            case "C": width = 3; height = 3; length = 3; fillColor = new Color(0,0,1,0.3f); setPoints(); break;
+            case "A": width = 2; height = 2; length = 4; fillColor = new Color(1,0,0,0.3f); break;
+            case "B": width = 2; height = 3; length = 4; fillColor = new Color(0,1,0,0.3f); break;
+            case "C": width = 3; height = 3; length = 3; fillColor = new Color(0,0,1,0.3f); break;
         }
+        setPoints();
+	    setArray();
+        setEdges();
         this.id = id;
     }
 
@@ -61,9 +64,13 @@ public class Parcel implements Cube {
 	    setValue(value);
     }
 
+    /**
+     * Default constructor. Constructs a unit cube.
+     */
     public Parcel() {
         this(1,1,1);
     }
+
 
     /**
      * Method to create a copy of this parcel.
@@ -71,6 +78,22 @@ public class Parcel implements Cube {
      */
     public Parcel copy(){
         Parcel newP = new Parcel(width,height,length);
+
+        String[][][] newAr = new String[width][height][length];
+        for(int i=0; i<width; i++)
+            for(int j=0; j<height; j++)
+                for (int k=0; k<length; k++)
+                    newAr[i][j][k] = array[i][j][k];
+        newP.setArray(newAr);
+
+        ArrayList<Point3D> newPoints = new ArrayList<>();
+        for (Point3D pos: points) newPoints.add(new Point3D(pos.getX(),pos.getY(),pos.getZ()));
+        newP.setPoints(newPoints);
+
+        ArrayList<Edge3D> newEdges = new ArrayList<>();
+        for (Edge3D e: edges) newEdges.add(e.copy());
+        newP.setEdges(newEdges);
+
         newP.setPos(new Point3D(pos.getX(),pos.getY(),pos.getZ()));
         newP.setID(id);
         newP.setValue(value);
@@ -94,15 +117,38 @@ public class Parcel implements Cube {
         points.add(new Point3D(0, height, length));
         points.add(new Point3D(width, height, length));
         points.add(new Point3D(width, 0, length));
-
-        setEdges();
     }
 
-    public void setColor(Color c) {
-        fillColor = c;
+    /**
+     * Method to set the ArrayList of points defining the corners of the parcel. Mainly used to copy a Parcel object.
+     * @param points The ArrayList to define the points of the corners of the parcel.
+     */
+    private void setPoints(ArrayList<Point3D> points) {
+        this.points = points;
     }
 
+    /**
+     * Method to define the parcel as a 3D array filled with the ID.
+     */
+    private void setArray(){
+        array = new String[width][height][length];
+        for(int i=0; i<width; i++)
+            for(int j=0; j<height; j++)
+                for (int k=0; k<length; k++)
+                    array[i][j][k] = id;
+    }
 
+    /**
+     * Method used to set the array defining the parcel.
+     * @param array The array that is going to define the Parcel.
+     */
+    private void setArray(String[][][] array) {
+        this.array = array;
+    }
+
+    /**
+     * Method to set the ArrayList defining the edges of the parcel.
+     */
     protected void setEdges() {
         int s = (points.size()/2) - 1;
         for(int inc = 0; inc < s; inc++) {
@@ -113,6 +159,22 @@ public class Parcel implements Cube {
         edges.add(new Edge3D(points.get(s),points.get(0)));
         edges.add(new Edge3D(points.get(s),points.get(s*2+1)));
         edges.add(new Edge3D(points.get(s*2+1),points.get(s+1)));
+    }
+
+    /**
+     * Method to set the ArrayList defining the edges of the parcel. Mainly used for copying a Parcel object.
+     * @param edges The ArrayList that is going to define the points.
+     */
+    private void setEdges(ArrayList<Edge3D> edges) {
+        this.edges = edges;
+    }
+
+    /**
+     * Method used to set the color of the Parcel filling.
+     * @param c The color with which the parcel is going to get filled.
+     */
+    public void setColor(Color c) {
+        fillColor = c;
     }
 
     /**
@@ -127,12 +189,6 @@ public class Parcel implements Cube {
      */
 	public void setPos(Point3D pos) { this.pos = pos; }
 
-    /**
-     * Method to translate the parcel along a given vector.
-     * @param vector The vector along which to move the parcel.
-     */
-	public void translate(Point3D vector) { pos = pos.add(vector); }
-
 	/**
 	 * Method to rotate the parcel along the x Axis
 	 */
@@ -141,7 +197,7 @@ public class Parcel implements Cube {
 		height=width;
 		width=newWidth;
 	}
-	
+
 	/**
 	 * Method to rotate the parcel along the y Axis
 	 */
@@ -150,7 +206,7 @@ public class Parcel implements Cube {
 		length=width;
 		width=newWidth;
 	}
-	
+
 	/**
 	 * Method to rotate the parcel along the y Axis
 	 */
@@ -159,7 +215,7 @@ public class Parcel implements Cube {
 		length=height;
 		height=newHeight;
 	}
-	
+
     /**
      * Method to get a list of the coordinates of the corners of this parcel.
      * @return An ArrayList containing 3D points.
@@ -240,50 +296,63 @@ public class Parcel implements Cube {
         return value;
     }
 
-    public void rotateAroundX(){
-        int temp = length;
-        length = height;
-        height = temp;
-        setPoints();
-    }
-
-    public void rotateAroundY(){
-        int temp = length;
-        length = width;
-        width = temp;
-        setPoints();
-    }
-
-    public void rotateAroundZ(){
-        int temp = width;
-        width = height;
-        height = temp;
-        setPoints();
-    }
-
-    protected void setSize(int w, int h, int l) {
-        width = w;
-        height = h;
-        length = l;
-    }
-
-    public boolean nextState(){
-        state ++;
-        if(state == 1){
-
-            return false;
+    public void rotateAroundX() {
+        String[][][] newPentAr = new String[array.length][array[0][0].length][array[0].length];
+        for(int i=0; i<newPentAr.length; i++) {
+            for(int j=0; j<newPentAr[0].length; j++) {
+                for(int k=0; k<newPentAr[0][0].length; k++) {
+                    newPentAr[i][j][k]=array[i][newPentAr[0][0].length-1-k][j];
+                }
+            }
         }
-        else{
-            if(state%2 != 0) rotateAroundX();
-            else rotateAroundZ();
-        }
-        return true;
+        array=newPentAr;
+
+        width=newPentAr.length;
+        height=newPentAr[0].length;
+        length=newPentAr[0][0].length;
     }
+
+    public void rotateAroundY() {
+        String[][][] newPentAr = new String[array[0].length][array.length][array[0][0].length];
+        for(int i=0; i<newPentAr.length; i++) {
+            for(int j=0; j<newPentAr[0].length; j++) {
+                for(int k=0; k<newPentAr[0][0].length; k++) {
+                    newPentAr[i][j][k]=array[newPentAr[0].length-1-j][i][k];
+                }
+            }
+        }
+        array = newPentAr;
+
+        width=newPentAr.length;
+        height=newPentAr[0].length;
+        length=newPentAr[0][0].length;
+    }
+
+    public void rotateAroundZ() {
+        String[][][] newPentAr = new String[array[0][0].length][array[0].length][array.length];
+        for(int i=0; i<newPentAr.length; i++) {
+            for(int j=0; j<newPentAr[0].length; j++) {
+                for(int k=0; k<newPentAr[0][0].length; k++) {
+                    newPentAr[i][j][k]=array[k][j][newPentAr.length-1-i];
+                }
+            }
+        }
+        array = newPentAr;
+
+        width=newPentAr.length;
+        height=newPentAr[0].length;
+        length=newPentAr[0][0].length;
+    }
+
     @Override
     public boolean equals(Object obj) {
     	final Parcel other = (Parcel) obj;
         if(this.id.equals(other.id) && this.value == other.value) return true;
         else return false;
+    }
+
+    public String[][][] getArray() {
+        return array;
     }
 
     public static Parcel[] createParcelsArrA(int value) {
@@ -330,12 +399,11 @@ public class Parcel implements Cube {
     	return parcelsC;
     }
 
+    /**
+     * Method to output a representation of this object.
+     */
+    @Override
     public String toString(){
         return "Parcel[ID="+id+"]";
-    }
-
-    public boolean equals(Parcel p){
-        if(edges.equals(p.getEdges()) && pos.equals(p.getPos())) return true;
-        return false;
     }
 }

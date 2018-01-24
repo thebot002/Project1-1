@@ -107,7 +107,6 @@ public class Truck implements Scene {
      */
     public int getVolume() {return height*width*length;}
 
-
     /**
      * Method to add a parcel object to the truck.
 	 * Will Search from the origin to find the next possible position to place a parcel.
@@ -142,50 +141,6 @@ public class Truck implements Scene {
             }
         }
     }
-
-    public boolean addParcel(PentominoParcel p) {
-        for(int i = 0; i <= (width-p.getWidth()) ; i++){
-            for(int j=0; j <= (height-p.getHeight()); j++){
-                for(int k=0; k <= (length-p.getLength()); k++){
-                    if(isPossible(p, new Point3D(i,j,k))) {
-
-                    }
-                }
-            }
-        }
-
-        return false;
-    }
-
-	/**
-	 * Method to add a parcel object to the truck.
- * Will Search from the origin to find the next possible position to place a parcel.
- * If placed the parcel will be added to the truck's parcel list.
-	 * @param p The parcel to be added to the truck.
-	 * @param pAr The parcel Array of the parcel to be added to the truck.
-	 */
-
-	public void addParcel(Parcel p, String[][][] pAr){
-        for(int i = 0; i<width-pAr.length ; i++){
-            for(int j=0; j<height-pAr[0].length; j++){
-                for(int k=0; k<length-pAr[0][0].length; k++){
-                    if(isPossible(p,pAr,new Point3D(i,j,k))){
-                        parcelList.add(p);
-                        for(int a=0; a<pAr.length; a++){
-                            for(int b=0; b<pAr[0].length; b++){
-                                for(int c=0; c<pAr[0][0].length; c++){
-                                	if(truck[a+i][b+j][c+k].equals("-") && !pAr[a][b][c].equals("-"))
-                                    truck[a+i][b+j][c+k] = pAr[a][b][c];
-                                }
-                            }
-                        }
-                        p.setPos(new Point3D(i,j,k));
-                    }
-                }
-            }
-        }
-	}
-
 
 	/**
 	 * Method to add a parcel object to the truck.
@@ -229,17 +184,16 @@ public class Truck implements Scene {
 
  }
 
-/**
- * Method to check if a parcel can be added at a position.
- * First Checks if the Parcel can actually fit inside the truck.
- * Then Checks if anything is obstructing it.
- * @param p The Parcel to Check
- * @param pAr The Parcel Array to Check
- * @param pos The Point3D to check at
- * @return Boolean - true if the parcel can be added.
- */
-
- public boolean isPossible(Parcel p, String[][][] pAr, Point3D pos) {
+    /**
+     * Method to check if a parcel can be added at a position.
+     * First Checks if the Parcel can actually fit inside the truck.
+     * Then Checks if anything is obstructing it.
+     * @param p The Parcel to Check
+     * @param pAr The Parcel Array to Check
+     * @param pos The Point3D to check at
+     * @return Boolean - true if the parcel can be added.
+     */
+    public boolean isPossible(Parcel p, String[][][] pAr, Point3D pos) {
 		int check1=0;
 
 		/* In the case that the first element in the parcel array is empty,
@@ -296,7 +250,6 @@ public class Truck implements Scene {
 	 * @return Boolean - true if the parcel can be added.
 	 */
 	public boolean isPossible(Parcel p, Point3D pos){
-
         if((p.getWidth() + pos.getX()) > (getWidth())) {
             if(debug) System.out.println("Outside Truck - X");
             return false;
@@ -309,11 +262,11 @@ public class Truck implements Scene {
             if(debug) System.out.println("Outside Truck - Z " + pos.getZ());
             return false;
         }
-        if(debug) System.out.println("Par fits, ckng collision");
+        String[][][] array = p.getArray();
         for(int i=0; i<p.getWidth(); i++){
             for(int j=0; j<p.getHeight(); j++){
                 for(int k=0; k<p.getLength();k++){
-                    if(!truck[i+(int)pos.getX()][j+(int)pos.getY()][k+(int)pos.getZ()].equals("-")) return false;
+                    if(!truck[i+(int)pos.getX()][j+(int)pos.getY()][k+(int)pos.getZ()].equals("-") && !array[i][j][k].equals("-")) return false;
                 }
             }
         }
@@ -409,12 +362,6 @@ public class Truck implements Scene {
 		return truckString;
 	}
 
-    public void setSize(int i, int i1, int i2) {
-	    this.width = i;
-	    this.height = i1;
-	    this.length = i2;
-    }
-
 	public void updateOrigin() {
 		deltaO = (truckParcel.get(0).midpoint(truckParcel.get(6))).multiply(-1);
 	}
@@ -483,13 +430,18 @@ public class Truck implements Scene {
     }
 
     /**
-     * Method to get the amounts of gap left in the truck. (debug purpose)
+     * Method to get the amounts of gap left in the truck as a whole. (debug purpose)
      * @return The amounts of gaps in truck.
      */
     public int getGapAmount(){
         return getGapAmount(new Point3D(width,height,length));
     }
 
+    /**
+     * Method to get the amounts of gaps in the truck from the origin position until the specified point. Useful to get the amount of gaps of a smaller version of the truck.
+     * @param pos The point up to which it is going to return the gaps.
+     * @return The amounts of gaps between the origin and the specified point.
+     */
 	public int getGapAmount(Point3D pos){
         int gaps =0;
         for(int i=0; i<pos.getX(); i++){

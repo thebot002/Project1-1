@@ -2,20 +2,20 @@ package knapsack.components;
 
 import javafx.geometry.Point3D;
 
+import java.awt.*;
 import java.util.ArrayList;
 
 public class PentominoParcel extends Parcel {
 
-	private String[][][] array;
-
+	//private String[][][] array;
 
     public PentominoParcel(String id) {
-        super(id, 0);
+        this.id = id;
         setPos(new Point3D(0,0,0));
         switch (id){
-            case "L": width=4; height=1; length=2; setPointsL(); setArrayL(); break;
-            case "P": width=3; height=1; length=3; setPointsP(); setArrayP(); break;
-            case "T": width=3; height=1; length=3; setPointsT(); setArrayT(); break;
+            case "L": width=4; height=1; length=2; setValue(3); setPointsL(); setArrayL(); fillColor = new Color(1,0,0,0.3f); break;
+            case "P": width=3; height=1; length=2; setValue(4); setPointsP(); setArrayP(); fillColor = new Color(0,1,0,0.3f); break;
+            case "T": width=3; height=1; length=3; setValue(5); setPointsT(); setArrayT(); fillColor = new Color(0,0,1,0.3f); break;
         }
         setEdges();
     }
@@ -43,11 +43,6 @@ public class PentominoParcel extends Parcel {
     		System.out.println(test.getArray()[0][0].length);
 
 
-    }
-
-
-    public String[][][] getArray() {
-    		return array;
     }
 
     public int getVolume() {
@@ -196,8 +191,6 @@ public class PentominoParcel extends Parcel {
     }
 
     private void setArrayL() {
-    		setID("L");
-
     		array = new String[][][] { {{"L", "-"}},
     								  {{"L", "-"}},
     								  {{"L", "-"}},
@@ -205,16 +198,12 @@ public class PentominoParcel extends Parcel {
     }
 
     private void setArrayP() {
-    		setID("P");
-
     		array = new String[][][] {{{"P", "P"}},
     			                      {{"P", "P"}},
     			                      {{"P", "-"}}};
     		}
 
     private void setArrayT() {
-		setID("T");
-
 		array = new String[][][] {{{"T", "T", "T"}},
 			                      {{"-", "T", "-"}},
 			                      {{"-", "T", "-"}}};
