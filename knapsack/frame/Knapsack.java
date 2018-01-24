@@ -48,8 +48,8 @@ public class Knapsack extends JFrame {
 		addKeyInput();
 		addComponentListener(new ResizeListener());
 
-
-		truck = new Truck();
+        SimulatedAnnealing s = new SimulatedAnnealing();
+		truck = s.fillTruck();
 
 		Color scene_BACKGROUND = Color.BLACK;   //Background of scene
 		Color scene_FOREGROUND = Color.WHITE;   //Wireframe color of scene

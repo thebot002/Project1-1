@@ -179,7 +179,7 @@ public class InfoPanel extends JPanel {
 		gbc_lblDownwardRoll.gridy = 12;
 		add(lblDownwardRoll, gbc_lblDownwardRoll);
 
-		lblDownArrow = new JLabel("S");
+		lblDownArrow = new JLabel("Arrow down");
 		lblDownArrow.setFont(new Font("Verdana", Font.ITALIC,  12));
 		GridBagConstraints gbc_lblDownArrow = new GridBagConstraints();
 		gbc_lblDownArrow.insets = new Insets(0, 0, 5, 5);
@@ -194,7 +194,7 @@ public class InfoPanel extends JPanel {
 		gbc_lblUpwardsRoll.gridy = 13;
 		add(lblUpwardsRoll, gbc_lblUpwardsRoll);
 
-		lblUpArrow = new JLabel("W");
+		lblUpArrow = new JLabel("Arrow up");
 		lblUpArrow.setFont(new Font("Verdana", Font.ITALIC,  12));
 		GridBagConstraints gbc_lblUpArrow = new GridBagConstraints();
 		gbc_lblUpArrow.insets = new Insets(0, 0, 5, 5);
@@ -210,7 +210,7 @@ public class InfoPanel extends JPanel {
 		gbc_lblRotateRight.gridy = 14;
 		add(lblRotateRight, gbc_lblRotateRight);
 
-		lblRightArrow = new JLabel("D");
+		lblRightArrow = new JLabel("Array right");
 		lblRightArrow.setFont(new Font("Verdana", Font.ITALIC,  12));
 		GridBagConstraints gbc_lblRightArrow = new GridBagConstraints();
 		gbc_lblRightArrow.insets = new Insets(0, 0, 5, 5);
@@ -225,7 +225,7 @@ public class InfoPanel extends JPanel {
 		gbc_lblRotateLeft.gridy = 15;
 		add(lblRotateLeft, gbc_lblRotateLeft);
 
-		lblLeftArrow = new JLabel("A");
+		lblLeftArrow = new JLabel("Array left");
 		lblLeftArrow.setFont(new Font("Verdana", Font.ITALIC,  12));
 		GridBagConstraints gbc_lblLeftArrow = new GridBagConstraints();
 		gbc_lblLeftArrow.insets = new Insets(0, 0, 5, 5);
