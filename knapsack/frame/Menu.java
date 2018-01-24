@@ -170,28 +170,12 @@ public class Menu extends JPanel implements ActionListener {
 	 */
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == btnFillTruck) {
-			System.out.println(String.valueOf(tabbedPane.getSelectedComponent()));
-			System.out.println(tabbedPane.getSelectedIndex());
-			if(tabbedPane.getSelectedIndex() == 0) { // Used to be able to differentiate between the type of  parcels (ABC vs LPT)
-				System.out.println("Filling truck with greedy for pentominos");
-				try {
-					AlgorithmInfo infoAndSettings = new AlgorithmInfo(rectangleTab.collectParcelSettings(), rectangleTab.collectParcels(), "Rectangle");
-					knapsack.fill(infoAndSettings);
-
-				} catch (ParseException e1) {
-					System.out.println("The currently edited value couldn't be commited.");
-					JOptionPane.showMessageDialog(tabbedPane, "The currently edited value couldn't be commited.");
-				}
-			}
-			else if(tabbedPane.getSelectedIndex() == 1) {// Used to be able to differentiate between the type of  parcels (ABC vs LPT)
-				try {
-					AlgorithmInfo infoAndSettings = new AlgorithmInfo(pentominoTab.collectParcelSettings(), pentominoTab.collectParcels(), "Pentomino");
-					knapsack.fill(infoAndSettings);
-				} catch (ParseException e1) {
-					System.out.println("The currently edited value couldn't be commited.");
-					JOptionPane.showMessageDialog(tabbedPane, "The currently edited value couldn't be commited.");
-				}
-			}
+			System.out.println(tabbedPane.getSelectedIndex()); //rect or pent
+            SwitchTabbedPane pane = (SwitchTabbedPane)tabbedPane.getSelectedComponent();
+            try {
+                AlgorithmInfo infoAndSettings = new AlgorithmInfo(pane.collectParcelSettings(), pane.collectParcels(), "Rectangle");
+                knapsack.fill(infoAndSettings);
+            } catch(ParseException ex) {}
 		}
 		else if(e.getSource() == btnClearTruck) {
 			if(cubeDrawer != null)

@@ -9,16 +9,16 @@ import java.util.*;
  * Class defining the parcels to be placed in a truck object.
  */
 public class Parcel implements Cube {
-	protected ArrayList<Point3D> points;
-	protected ArrayList<Edge3D> edges = new ArrayList<>();
-	protected int length;
-	protected int height;
-	protected int width;
-	private Point3D pos;
-	private int value = 1;
-	private String id;
+    protected ArrayList<Point3D> points;
+    protected ArrayList<Edge3D> edges = new ArrayList<>();
+    protected int length;
+    protected int height;
+    protected int width;
+    private Point3D pos;
+    private int value = 1;
+    private String id;
 
-	private int state = 0;
+    private int state = 0;
     private ArrayList<ArrayList<Point3D>> rotations;
     public Point3D deltaO;
     private Color fillColor = new Color(0.5f,0.5f,0.5f,0.3f);
@@ -30,20 +30,20 @@ public class Parcel implements Cube {
      * @param h The height of the parcel. (y axis)
      * @param l The length of the parcel. (z axis)
      */
-	public Parcel(double w, double h, double l) {
+    public Parcel(double w, double h, double l) {
         width = (int)(w);
         height = (int)(h);
         length = (int)(l);
         id = "u";
         setPoints();
-	}
+    }
 
     /**
      * Creates a parcel with an ID. Parcel size are set in the project definition.
      * @param id The ID of the parcel to be constructed.
      */
-	public Parcel(String id){
-	    switch (id){
+    public Parcel(String id){
+        switch (id){
             case "A": width = 2; height = 2; length = 4; fillColor = new Color(1,0,0,0.3f); setPoints(); break;
             case "B": width = 2; height = 3; length = 4; fillColor = new Color(0,1,0,0.3f); setPoints(); break;
             case "C": width = 3; height = 3; length = 3; fillColor = new Color(0,0,1,0.3f); setPoints(); break;
@@ -57,8 +57,8 @@ public class Parcel implements Cube {
      * @param value The value to be given to the parcel.
      */
     public Parcel(String id, int value){
-	    this(id);
-	    setValue(value);
+        this(id);
+        setValue(value);
     }
 
     public Parcel() {
@@ -119,60 +119,60 @@ public class Parcel implements Cube {
      * Method to set the value of this parcel.
      * @param value The value to be given.
      */
-	public void setValue(int value) { this.value = value; }
+    public void setValue(int value) { this.value = value; }
 
     /**
      * Method to set the position of the parcel in the 3D space.
      * @param pos A point in the 3D space where to place the parcel.
      */
-	public void setPos(Point3D pos) { this.pos = pos; }
+    public void setPos(Point3D pos) { this.pos = pos; }
 
     /**
      * Method to translate the parcel along a given vector.
      * @param vector The vector along which to move the parcel.
      */
-	public void translate(Point3D vector) { pos = pos.add(vector); }
+    public void translate(Point3D vector) { pos = pos.add(vector); }
 
-	/**
-	 * Method to rotate the parcel along the x Axis
-	 */
-	public void xRotate() {
-		int newWidth=height;
-		height=width;
-		width=newWidth;
-	}
-	
-	/**
-	 * Method to rotate the parcel along the y Axis
-	 */
-	public void yRotate() {
-		int newWidth=length;
-		length=width;
-		width=newWidth;
-	}
-	
-	/**
-	 * Method to rotate the parcel along the y Axis
-	 */
-	public void zRotate() {
-		int newHeight=length;
-		length=height;
-		height=newHeight;
-	}
-	
+    /**
+     * Method to rotate the parcel along the x Axis
+     */
+    public void xRotate() {
+        int newWidth=height;
+        height=width;
+        width=newWidth;
+    }
+
+    /**
+     * Method to rotate the parcel along the y Axis
+     */
+    public void yRotate() {
+        int newWidth=length;
+        length=width;
+        width=newWidth;
+    }
+
+    /**
+     * Method to rotate the parcel along the y Axis
+     */
+    public void zRotate() {
+        int newHeight=length;
+        length=height;
+        height=newHeight;
+    }
+
     /**
      * Method to get a list of the coordinates of the corners of this parcel.
      * @return An ArrayList containing 3D points.
      */
-	public ArrayList<Point3D> getPoints() {
-		return points;
-	}
+    public ArrayList<Point3D> getPoints() {
+        return points;
+    }
 
     /**
      * Returns a HashMap of connected points of a Parcel
      * @return a HashMap<Point3D, Point3D> of the edges.
      */
-	public ArrayList<Edge3D> getEdges() {return edges;}
+    public ArrayList<Edge3D> getEdges() {return edges;}
 
     @Override
     public Color getColor() {
@@ -213,15 +213,15 @@ public class Parcel implements Cube {
      * Return a vertex of the Parcel relative to its position
      */
     public Point3D get(int index) {
-		return (points.get(index)).add(pos);
-	}
+        return (points.get(index)).add(pos);
+    }
 
     /**
      * Method to get the ID of the parcel.
      * @return A string ID of this parcel.
      */
-	public String getID(){
-	    return id;
+    public String getID(){
+        return id;
     }
 
     /**
@@ -229,7 +229,7 @@ public class Parcel implements Cube {
      * @param id The parcel ID.
      */
     protected void setID(String id){
-	    this.id = id;
+        this.id = id;
     }
 
     /**
@@ -281,53 +281,68 @@ public class Parcel implements Cube {
     }
     @Override
     public boolean equals(Object obj) {
-    	final Parcel other = (Parcel) obj;
+        final Parcel other = (Parcel) obj;
         if(this.id.equals(other.id) && this.value == other.value) return true;
         else return false;
     }
 
+    /**
+     * Used to bulk create a Parcel array containing all variations of the A parcel with a certain (user inputted) value
+     * @param value of parcels
+     * @return Parcel array containing variations of A parcel
+     */
     public static Parcel[] createParcelsArrA(int value) {
-    	Parcel[] parcelsA = new Parcel[6];
-    	Parcel parcelA = new Parcel("A", value);
-    	Parcel xRotParcelA = new Parcel("A", value);
-		xRotParcelA.xRotate();
-		Parcel yRotParcelA = new Parcel("A", value);
-		yRotParcelA.yRotate();
-		Parcel zRotParcelA = new Parcel("A", value);
-		zRotParcelA.zRotate();
-		Parcel xyRotParcelA = new Parcel("A", value);
-		xyRotParcelA.xRotate();
-		xyRotParcelA.yRotate();
-		Parcel xzRotParcelA = new Parcel("A", value);
-		xzRotParcelA.xRotate();
-		xzRotParcelA.zRotate();
-		parcelsA[0] = parcelA;
-		parcelsA[1] = xRotParcelA;
-		parcelsA[2] = yRotParcelA;
-		parcelsA[3] = zRotParcelA;
-		parcelsA[4] = xyRotParcelA;
-		parcelsA[5] = xzRotParcelA;
-		return parcelsA;
+        Parcel[] parcelsA = new Parcel[6];
+        Parcel parcelA = new Parcel("A", value);
+        Parcel xRotParcelA = new Parcel("A", value);
+        xRotParcelA.xRotate();
+        Parcel yRotParcelA = new Parcel("A", value);
+        yRotParcelA.yRotate();
+        Parcel zRotParcelA = new Parcel("A", value);
+        zRotParcelA.zRotate();
+        Parcel xyRotParcelA = new Parcel("A", value);
+        xyRotParcelA.xRotate();
+        xyRotParcelA.yRotate();
+        Parcel xzRotParcelA = new Parcel("A", value);
+        xzRotParcelA.xRotate();
+        xzRotParcelA.zRotate();
+        parcelsA[0] = parcelA;
+        parcelsA[1] = xRotParcelA;
+        parcelsA[2] = yRotParcelA;
+        parcelsA[3] = zRotParcelA;
+        parcelsA[4] = xyRotParcelA;
+        parcelsA[5] = xzRotParcelA;
+        return parcelsA;
     }
 
+    /**
+     * Used to bulk create a Parcel array containing all variations of the B parcel with a certain (user inputted) value
+     * @param value of parcels
+     * @return Parcel array containing variations of B parcel
+     */
     public static Parcel[] createParcelsArrB(int value) {
-    	Parcel[] parcelsB = new Parcel[3];
-    	Parcel parcelB = new Parcel("B", value);
-    	Parcel yRotParcelB = new Parcel("B", value);
-		yRotParcelB.yRotate();
-		Parcel zRotParcelB = new Parcel("B", value);
-		zRotParcelB.zRotate();
-		parcelsB[0] = parcelB;
-		parcelsB[1] = yRotParcelB;
-		parcelsB[2] = zRotParcelB;
-		return parcelsB;
+        Parcel[] parcelsB = new Parcel[3];
+        Parcel parcelB = new Parcel("B", value);
+        Parcel yRotParcelB = new Parcel("B", value);
+        yRotParcelB.yRotate();
+        Parcel zRotParcelB = new Parcel("B", value);
+        zRotParcelB.zRotate();
+        parcelsB[0] = parcelB;
+        parcelsB[1] = yRotParcelB;
+        parcelsB[2] = zRotParcelB;
+        return parcelsB;
     }
 
+    /**
+     * Used to bulk create a Parcel array containing all variations of the C parcel with a certain (user inputted) value
+     * @param value of parcels
+     * @return Parcel array containing variations of C parcel
+     */
     public static Parcel[] createParcelsArrC(int value) {
-    	Parcel[] parcelsC = new Parcel[1];
-    	Parcel parcelC = new Parcel("C", value);
-    	parcelsC[0] = parcelC;
-    	return parcelsC;
+        Parcel[] parcelsC = new Parcel[1];
+        Parcel parcelC = new Parcel("C", value);
+        parcelsC[0] = parcelC;
+        return parcelsC;
     }
 
     public String toString(){

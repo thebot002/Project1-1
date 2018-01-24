@@ -115,7 +115,6 @@ public class Knapsack extends JFrame {
         @Override
         public void componentHidden(ComponentEvent e) { }
     }
-
     private void addKeyInput() {
         KeyboardFocusManager keyManager;
         keyManager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
@@ -125,19 +124,19 @@ public class Knapsack extends JFrame {
             public boolean dispatchKeyEvent(KeyEvent e) {
                 if(e.getID()==KeyEvent.KEY_PRESSED ) {
                     int key = e.getKeyCode();
-
+					//System.out.println(key);
                     CubeDrawer.Camera cam = c.getCamera();
 
-                    if (key == 40)  //down arrow
+                    if (key == 87)  //w
                         cam.roll(-3);
 
-                    if (key == 38)  //up arrow
-                        cam.roll(3);
-
-                    if (key == 39)  //right arrow
+                    if (key == 65)  //a
                         cam.rotate(3);
 
-                    if (key == 37)  //left arrow
+                    if (key == 83)  //s
+                        cam.roll(3);
+
+                    if (key == 68)  //d
                         cam.rotate(-3);
 
                     if (key == 45 || key == 109)  //minus
@@ -145,7 +144,7 @@ public class Knapsack extends JFrame {
 
                     if (key == 61 || key == 107)  //plus
                         cam.zoom(3);
-                    if (key == 68)  // d
+                    if (key == 49)  // 1
                         c.toggleDebug();
 
                     if (key == 80)  // p
@@ -165,7 +164,6 @@ public class Knapsack extends JFrame {
             }
         });
     }
-
     public void fill(AlgorithmInfo info) {
     	Parcel[] parcelArr = createInputParcelArr(info);
     	if(info.getSettings()[0].equals("Greedy")) {

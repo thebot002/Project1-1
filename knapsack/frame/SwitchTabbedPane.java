@@ -16,6 +16,9 @@ import javax.swing.JToggleButton;
 
 public class SwitchTabbedPane extends JPanel {
 
+	private JLabel optionlabel;
+	private JLabel algoLabel;
+	private JComboBox comboBoxAlgo;
 	private JLabel lblAmnt;
 	private JLabel lblVal;
 	private JLabel lblDim;
@@ -34,8 +37,7 @@ public class SwitchTabbedPane extends JPanel {
 	private JRadioButton rdbtnGreedy;
 	private JRadioButton rdbtnBacktracking;
 	private JRadioButton rdbtnSimulatedAnnealing;
-	private JComboBox comboBoxGreedyOptions;
-	private JComboBox comboBoxBacktrackingOptions;
+	private JComboBox comboBoxOptions;
 	private ButtonGroup algorithmSwitch;
 	private String listOrder;
 	
@@ -66,7 +68,7 @@ public class SwitchTabbedPane extends JPanel {
 		gbc_lblDim.insets = new Insets(0, 0, 5, 5);
 		gbc_lblDim.gridx = 6;
 		gbc_lblDim.gridy = 1;
-		add(lblDim, gbc_lblDim);
+		//add(lblDim, gbc_lblDim);
 
 		lblFR = new JLabel(firstRow);
 		GridBagConstraints gbc_lblFR = new GridBagConstraints();
@@ -84,6 +86,7 @@ public class SwitchTabbedPane extends JPanel {
 		add(spnnrAmntDispFR, gbc_spnnrAmntDispFR);
 
 		spnnrValDispFR = new JSpinner();
+		spnnrValDispFR.setFocusable(false);
 		GridBagConstraints gbc_spnnrValDispFR = new GridBagConstraints();
 		gbc_spnnrValDispFR.fill = GridBagConstraints.HORIZONTAL;
 		gbc_spnnrValDispFR.insets = new Insets(0, 0, 5, 5);
@@ -96,7 +99,7 @@ public class SwitchTabbedPane extends JPanel {
 		gbc_lblDimFR.insets = new Insets(0, 0, 5, 5);
 		gbc_lblDimFR.gridx = 6;
 		gbc_lblDimFR.gridy = 2;
-		add(lblDimFR, gbc_lblDimFR);
+		//add(lblDimFR, gbc_lblDimFR);
 
 		lblSR = new JLabel(secondRow);
 		GridBagConstraints gbc_lblSR = new GridBagConstraints();
@@ -106,6 +109,7 @@ public class SwitchTabbedPane extends JPanel {
 		add(lblSR, gbc_lblSR);
 
 		spnnrAmntDispSR = new JSpinner();
+		spnnrAmntDispSR.setFocusable(false);
 		GridBagConstraints gbc_spnnrAmntDispSR = new GridBagConstraints();
 		gbc_spnnrAmntDispSR.fill = GridBagConstraints.HORIZONTAL;
 		gbc_spnnrAmntDispSR.insets = new Insets(0, 0, 5, 5);
@@ -114,6 +118,7 @@ public class SwitchTabbedPane extends JPanel {
 		add(spnnrAmntDispSR, gbc_spnnrAmntDispSR);
 
 		spnnrValDispSR = new JSpinner();
+		spnnrValDispSR.setFocusable(false);
 		GridBagConstraints gbc_spnnrValDispSR = new GridBagConstraints();
 		gbc_spnnrValDispSR.fill = GridBagConstraints.HORIZONTAL;
 		gbc_spnnrValDispSR.insets = new Insets(0, 0, 5, 5);
@@ -126,7 +131,7 @@ public class SwitchTabbedPane extends JPanel {
 		gbc_lblDimSR.insets = new Insets(0, 0, 5, 5);
 		gbc_lblDimSR.gridx = 6;
 		gbc_lblDimSR.gridy = 4;
-		add(lblDimSR, gbc_lblDimSR);
+		//add(lblDimSR, gbc_lblDimSR);
 
 		lblTR = new JLabel(thirdRow);
 		GridBagConstraints gbc_lblTR = new GridBagConstraints();
@@ -136,6 +141,7 @@ public class SwitchTabbedPane extends JPanel {
 		add(lblTR, gbc_lblTR);
 
 		spnnrAmntDispTR = new JSpinner();
+		spnnrAmntDispTR.setFocusable(false);
 		GridBagConstraints gbc_spnnrAmntDispTR = new GridBagConstraints();
 		gbc_spnnrAmntDispTR.fill = GridBagConstraints.HORIZONTAL;
 		gbc_spnnrAmntDispTR.insets = new Insets(0, 0, 5, 5);
@@ -144,6 +150,7 @@ public class SwitchTabbedPane extends JPanel {
 		add(spnnrAmntDispTR, gbc_spnnrAmntDispTR);
 
 		spnnrValDispTR = new JSpinner();
+		spnnrValDispTR.setFocusable(false);
 		GridBagConstraints gbc_spnnrValDispTR = new GridBagConstraints();
 		gbc_spnnrValDispTR.fill = GridBagConstraints.HORIZONTAL;
 		gbc_spnnrValDispTR.insets = new Insets(0, 0, 5, 5);
@@ -156,68 +163,81 @@ public class SwitchTabbedPane extends JPanel {
 		gbc_lblDimTR.insets = new Insets(0, 0, 5, 5);
 		gbc_lblDimTR.gridx = 6;
 		gbc_lblDimTR.gridy = 6;
-		add(lblDimTR, gbc_lblDimTR);
+		//add(lblDimTR, gbc_lblDimTR);
 		
-		rdbtnGreedy = new JRadioButton("Greedy");
-		GridBagConstraints gbc_rdbtnGreedy = new GridBagConstraints();
-		gbc_rdbtnGreedy.insets = new Insets(0, 0, 5, 5);
-		gbc_rdbtnGreedy.gridx = 2;
-		gbc_rdbtnGreedy.gridy = 8;
-		rdbtnGreedy.setSelected(true);
-		rdbtnGreedy.setActionCommand("Greedy");
-		add(rdbtnGreedy, gbc_rdbtnGreedy);
+//		rdbtnGreedy = new JRadioButton("Greedy");
+//		GridBagConstraints gbc_rdbtnGreedy = new GridBagConstraints();
+//		gbc_rdbtnGreedy.insets = new Insets(0, 0, 5, 5);
+//		gbc_rdbtnGreedy.gridx = 1;
+//		gbc_rdbtnGreedy.gridy = 8;
+//		rdbtnGreedy.setSelected(true);
+//		rdbtnGreedy.setActionCommand("Greedy");
+//		add(rdbtnGreedy, gbc_rdbtnGreedy);
+//
+//		rdbtnBacktracking = new JRadioButton("Backtracking");
+//		GridBagConstraints gbc_rdbtnBacktracking = new GridBagConstraints();
+//		gbc_rdbtnBacktracking.insets = new Insets(0, 0, 5, 5);
+//		gbc_rdbtnBacktracking.gridx = 2;
+//		gbc_rdbtnBacktracking.gridy = 8;
+//		rdbtnBacktracking.setActionCommand("Backtracking");
+//		add(rdbtnBacktracking, gbc_rdbtnBacktracking);
+//
+//		rdbtnSimulatedAnnealing = new JRadioButton("Simulated Annealing");
+//		GridBagConstraints gbc_rdbtnSimulatedAnnealing = new GridBagConstraints();
+//		gbc_rdbtnSimulatedAnnealing.insets = new Insets(0, 0, 5, 5);
+//		gbc_rdbtnSimulatedAnnealing.gridx = 3;
+//		gbc_rdbtnSimulatedAnnealing.gridy = 8;
+//		rdbtnSimulatedAnnealing.setActionCommand("Simulated Annealing");
+//		//add(rdbtnSimulatedAnnealing, gbc_rdbtnSimulatedAnnealing);
+//
+//		algorithmSwitch = new ButtonGroup();
+//		algorithmSwitch.add(rdbtnGreedy);
+//		algorithmSwitch.add(rdbtnBacktracking);
+//		algorithmSwitch.add(rdbtnSimulatedAnnealing);
 		
-		rdbtnBacktracking = new JRadioButton("Backtracking");
-		GridBagConstraints gbc_rdbtnBacktracking = new GridBagConstraints();
-		gbc_rdbtnBacktracking.insets = new Insets(0, 0, 5, 5);
-		gbc_rdbtnBacktracking.gridx = 4;
-		gbc_rdbtnBacktracking.gridy = 8;
-		rdbtnBacktracking.setActionCommand("Backtracking");
-		add(rdbtnBacktracking, gbc_rdbtnBacktracking);
+		//String[] options = {"Decreasing value/volume", "Decreasing value", "Decreasing volume", "Genetic Algorithm - Minimize Gaps", "Genetic Algorithm - Maximize Value"};
+		String[] options = {"Decreasing value/volume", "Decreasing value", "Decreasing volume"};
 
-		rdbtnSimulatedAnnealing = new JRadioButton("Simulated Annealing");
-		GridBagConstraints gbc_rdbtnSimulatedAnnealing = new GridBagConstraints();
-		gbc_rdbtnSimulatedAnnealing.insets = new Insets(0, 0, 5, 5);
-		gbc_rdbtnSimulatedAnnealing.gridx = 6;
-		gbc_rdbtnSimulatedAnnealing.gridy = 8;
-		rdbtnSimulatedAnnealing.setActionCommand("Simulated Annealing");
-		add(rdbtnSimulatedAnnealing, gbc_rdbtnSimulatedAnnealing);
+
+		optionlabel = new JLabel("Fill Type: ");
+		GridBagConstraints gbc_optionlabel = new GridBagConstraints();
+		gbc_optionlabel.insets = new Insets(0, 0, 5, 5);
+		gbc_optionlabel.gridx = 2;
+		gbc_optionlabel.gridy = 9;
+		add(optionlabel, gbc_optionlabel);
 		
-		algorithmSwitch = new ButtonGroup();
-		algorithmSwitch.add(rdbtnGreedy);
-		algorithmSwitch.add(rdbtnBacktracking);
-		algorithmSwitch.add(rdbtnSimulatedAnnealing);
-		
-		String[] options = {"Decreasing value/volume", "Decreasing value", "Decreasing volume", "Genetic Algorithm - Minimize Gaps", "Genetic Algorithm - Maximize Value"};
-		
-		comboBoxGreedyOptions = new JComboBox(options);
-		GridBagConstraints gbc_comboBoxGreedyOptions = new GridBagConstraints();
-		gbc_comboBoxGreedyOptions.insets = new Insets(0, 0, 5, 5);
-		gbc_comboBoxGreedyOptions.fill = GridBagConstraints.HORIZONTAL;
-		gbc_comboBoxGreedyOptions.gridx = 2;
-		gbc_comboBoxGreedyOptions.gridy = 9;
-		add(comboBoxGreedyOptions, gbc_comboBoxGreedyOptions);
-		
-		comboBoxBacktrackingOptions = new JComboBox(options);
+		comboBoxOptions = new JComboBox(options);
 		GridBagConstraints gbc_comboBoxBacktrackingOptions = new GridBagConstraints();
 		gbc_comboBoxBacktrackingOptions.insets = new Insets(0, 0, 5, 5);
 		gbc_comboBoxBacktrackingOptions.fill = GridBagConstraints.HORIZONTAL;
 		gbc_comboBoxBacktrackingOptions.gridx = 4;
 		gbc_comboBoxBacktrackingOptions.gridy = 9;
-		add(comboBoxBacktrackingOptions, gbc_comboBoxBacktrackingOptions);
+		add(comboBoxOptions, gbc_comboBoxBacktrackingOptions);
+
+		String[] algos = {"Backtracking", "Greedy", "Simulated Annealing"};
+
+		algoLabel = new JLabel("Filling Algorithm: ");
+		GridBagConstraints gbc_algoLabel = new GridBagConstraints();
+		gbc_algoLabel.insets = new Insets(0, 0, 5, 5);
+		gbc_algoLabel.gridx = 2;
+		gbc_algoLabel.gridy = 10;
+		add(algoLabel, gbc_algoLabel);
+
+		comboBoxAlgo = new JComboBox(algos);
+		GridBagConstraints gbc_comboBoxAlgo = new GridBagConstraints();
+		gbc_comboBoxAlgo.insets = new Insets(0, 0, 5, 5);
+		gbc_comboBoxAlgo.fill = GridBagConstraints.HORIZONTAL;
+		gbc_comboBoxAlgo.gridx = 4;
+		gbc_comboBoxAlgo.gridy = 10;
+		add(comboBoxAlgo, gbc_comboBoxAlgo);
 	}
 	/**
      * Method to get truck filling settings. First row represents algorithm (Greedy/Backtracking) and second how the list from which the algorithm picks shapes is determined
      * @return String array containing settings for how to fill the truck.
      */
 	public String[] collectParcelSettings() {
-		if(algorithmSwitch.getSelection().getActionCommand().equals("Greedy")) {
-			listOrder = (String)comboBoxGreedyOptions.getSelectedItem();
-		}
-		if(algorithmSwitch.getSelection().getActionCommand().equals("Backtracking")) {
-			listOrder = (String)comboBoxBacktrackingOptions.getSelectedItem();
-		}
-		String[] settings = {algorithmSwitch.getSelection().getActionCommand(), listOrder};
+		listOrder = (String)comboBoxOptions.getSelectedItem();
+		String[] settings = {comboBoxAlgo.getSelectedItem().toString(), listOrder};
 		return settings;
 	}
 
