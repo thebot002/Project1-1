@@ -164,20 +164,17 @@ public class Menu extends JPanel implements ActionListener {
 
 	/**
 	 * Implementation of action listeners of buttons
-	 * If "Fill Truck" is clicked the values of the JSpinners are put into an arraylist
-	 * If "Clear Truck" is clicked -- has to be defined --
-	 * If "Reset  Camera" is clicked -- has to be defined --
+	 * If "Fill Truck" is clicked an AlgorithmInfo object is created and passed too the fill method in knapsack
+	 * If "Clear Truck" is clicked a new empty Truck is rendered in cubedrawer
+	 * If "Reset Camera" is clicked the camera resets
 	 */
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == btnFillTruck) {
-			System.out.println(String.valueOf(tabbedPane.getSelectedComponent()));
-			System.out.println(tabbedPane.getSelectedIndex());
 			if(tabbedPane.getSelectedIndex() == 0) { // Used to be able to differentiate between the type of  parcels (ABC vs LPT)
 				System.out.println("Filling truck with greedy for pentominos");
 				try {
 					AlgorithmInfo infoAndSettings = new AlgorithmInfo(rectangleTab.collectParcelSettings(), rectangleTab.collectParcels(), "Rectangle");
 					knapsack.fill(infoAndSettings);
-
 				} catch (ParseException e1) {
 					System.out.println("The currently edited value couldn't be commited.");
 					JOptionPane.showMessageDialog(tabbedPane, "The currently edited value couldn't be commited.");
@@ -231,6 +228,10 @@ public class Menu extends JPanel implements ActionListener {
 	public void setTimeTook(double time) {
 		lblTimeTookDisp.setText(String.valueOf(time));
 	}
+	/**
+	 * Gets infoTab
+	 * @return Menu's infoTab
+	 */
 	public InfoPanel getInfoTab() {
 		return infoPanel;
 	}

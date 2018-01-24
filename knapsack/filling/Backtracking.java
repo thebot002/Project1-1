@@ -30,7 +30,6 @@ public class Backtracking implements TruckFilling {
         list.add(new Parcel("C"),48);
     }
 
-
     @Override
     public Truck fillTruck() {
         backTracking(new Truck(),null,parcelList,0,0);
@@ -40,50 +39,6 @@ public class Backtracking implements TruckFilling {
     @Override
     public void setParcelList(ParcelList list) {
         this.list = list;
-    }
-
-    private void createArray(){
-        Parcel parcelA = new Parcel("A");
-        Parcel parcelB = new Parcel("B");
-        Parcel parcelC = new Parcel("C");
-
-        // Create a list to keep track of the parcels we have already placed
-        parcelList = new ArrayList<>();
-
-    /* Create an array with the three parcels and
-       all their rotations. */
-        Parcel[] parcelAr = new Parcel[10];
-
-        // Get the rotations of the parcels
-        Parcel xRotParcelA = new Parcel("A");
-        xRotParcelA.xRotate();
-        Parcel yRotParcelA = new Parcel("A");
-        yRotParcelA.yRotate();
-        Parcel zRotParcelA = new Parcel("A");
-        zRotParcelA.zRotate();
-        Parcel xyRotParcelA = new Parcel("A");
-        xyRotParcelA.xRotate();
-        xyRotParcelA.yRotate();
-        Parcel xzRotParcelA = new Parcel("A");
-        xzRotParcelA.xRotate();
-        xzRotParcelA.zRotate();
-        Parcel yRotParcelB = new Parcel("B");
-        yRotParcelB.yRotate();
-        Parcel zRotParcelB = new Parcel("B");
-        zRotParcelB.zRotate();
-
-        // Place everything into the parcel array
-        parcelAr[9]=parcelA;
-        parcelAr[1]=xRotParcelA;
-        parcelAr[2]=yRotParcelA;
-        parcelAr[3]=zRotParcelA;
-        parcelAr[4]=xyRotParcelA;
-        parcelAr[5]=xzRotParcelA;
-        parcelAr[6]=parcelB;
-        parcelAr[7]=yRotParcelB;
-        parcelAr[8]=zRotParcelB;
-        parcelAr[0]=parcelC;
-
     }
 
   /**

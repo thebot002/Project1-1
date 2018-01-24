@@ -286,6 +286,11 @@ public class Parcel implements Cube {
         else return false;
     }
 
+    /**
+     * Used to bulk create a Parcel array containing all variations of the A parcel with a certain (user inputted) value
+     * @param value of parcels
+     * @return Parcel array containing variations of A parcel
+     */
     public static Parcel[] createParcelsArrA(int value) {
     	Parcel[] parcelsA = new Parcel[6];
     	Parcel parcelA = new Parcel("A", value);
@@ -310,6 +315,11 @@ public class Parcel implements Cube {
 		return parcelsA;
     }
 
+    /**
+     * Used to bulk create a Parcel array containing all variations of the B parcel with a certain (user inputted) value
+     * @param value of parcels
+     * @return Parcel array containing variations of B parcel
+     */
     public static Parcel[] createParcelsArrB(int value) {
     	Parcel[] parcelsB = new Parcel[3];
     	Parcel parcelB = new Parcel("B", value);
@@ -323,6 +333,11 @@ public class Parcel implements Cube {
 		return parcelsB;
     }
 
+    /**
+     * Used to bulk create a Parcel array containing all variations of the C parcel with a certain (user inputted) value
+     * @param value of parcels
+     * @return Parcel array containing variations of C parcel
+     */
     public static Parcel[] createParcelsArrC(int value) {
     	Parcel[] parcelsC = new Parcel[1];
     	Parcel parcelC = new Parcel("C", value);

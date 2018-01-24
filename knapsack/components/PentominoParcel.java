@@ -25,27 +25,6 @@ public class PentominoParcel extends Parcel {
 	    setValue(value);
     }
 
-//    public static void main(String[] args) {
-//    		PentominoParcel test = new PentominoParcel("L");
-//    		System.out.println(test.getArray().length+ " " + test.getWidth());
-//    		System.out.println(test.getArray()[0].length + " " + test.getHeight());
-//    		System.out.println(test.getArray()[0][0].length + " " + test.getLength());
-//    		test.printPentomino();
-//    		test.mirrorX();
-//    		test.printPentomino();
-//    		test.mirrorX();
-//    		test.mirrorZ();
-//    		test.printPentomino();
-//    		test.rotX();
-//    		test.printPentomino();
-//    		System.out.println(test.getArray().length);
-//    		System.out.println(test.getArray()[0].length + " " + test.getHeight());
-//    		System.out.println(test.getArray()[0][0].length);
-//
-//
-//    }
-
-
     public String[][][] getArray() {
     		return array;
     }
@@ -219,6 +198,11 @@ public class PentominoParcel extends Parcel {
 			                      {{"-", "T", "-"}},
 			                      {{"-", "T", "-"}}};
 		}
+	/**
+	 * Used to bulk create a Parcel array containing all variations of the L parcel with a certain (user inputted) value
+	 * @param value of parcels
+	 * @return Parcel array containing variations of L parcel
+	 */
 	public static PentominoParcel[] createParcelsArrL(int value) {
 		PentominoParcel parcelL = new PentominoParcel("L",value);
 		PentominoParcel xMirrorL = new PentominoParcel("L",value);
@@ -299,6 +283,12 @@ public class PentominoParcel extends Parcel {
 		PentominoParcel[] parcelArr = new PentominoParcel[] {parcelL, xMirrorL, zMirrorL, xzMirrorL, xRotParcelL, yRotParcelL, zRotParcelL, xyRotParcelL, xzRotParcelL, xRotXMirrorL, yRotXMirrorL, zRotXMirrorL, xyRotXmirrorL, xzRotXmirrorL, xRotZMirrorL, yRotZMirrorL, zRotZMirrorL, xyRotZmirrorL, xzRotZmirrorL, xRotXZMirrorL, yRotXZMirrorL, zRotXZMirrorL, xyRotXZmirrorL, xzRotXZmirrorL};
 		return parcelArr;
 	}
+
+	/**
+	 * Used to bulk create a Parcel array containing all variations of the P parcel with a certain (user inputted) value
+	 * @param value of parcels
+	 * @return Parcel array containing variations of P parcel
+	 */
 	public static PentominoParcel[] createParcelsArrP(int value) {
 		PentominoParcel parcelP = new PentominoParcel("P",value);
 		PentominoParcel xMirrorP = new PentominoParcel("P",value);
@@ -380,7 +370,15 @@ public class PentominoParcel extends Parcel {
 		return parcelArr;
 	}
 
+	/**
+	 * Used to bulk create a Parcel array containing all variations of the T parcel with a certain (user inputted) value
+	 * @param value of parcels
+	 * @return Parcel array containing variations of T parcel
+	 */
 	public static PentominoParcel[] createParcelsArrT(int value) {
+    	PentominoParcel parcelT = new PentominoParcel("T", value);
+		PentominoParcel xMirrorT = new PentominoParcel("T",value);
+		xMirrorT.mirrorX();
 		PentominoParcel xRotParcelT = new PentominoParcel("T", value);
 		xRotParcelT.rotX();
 		PentominoParcel yRotParcelT = new PentominoParcel("T", value);
@@ -410,7 +408,7 @@ public class PentominoParcel extends Parcel {
 		xzRotXmirrorT.mirrorX();
 		xzRotXmirrorT.rotX();
 		xzRotXmirrorT.rotZ();
-		PentominoParcel[] parcelArr = new PentominoParcel[]{xRotParcelT, yRotParcelT, zRotParcelT, xyRotParcelT, xzRotParcelT, xRotXMirrorT, yRotXMirrorT, zRotXMirrorT, xyRotXmirrorT, xzRotXmirrorT};
+		PentominoParcel[] parcelArr = new PentominoParcel[]{parcelT, xMirrorT, xRotParcelT, yRotParcelT, zRotParcelT, xyRotParcelT, xzRotParcelT, xRotXMirrorT, yRotXMirrorT, zRotXMirrorT, xyRotXmirrorT, xzRotXmirrorT};
 		return parcelArr;
 	}
 }

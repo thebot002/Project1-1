@@ -51,7 +51,7 @@ public class SimulatedAnnealing implements TruckFilling{
 
     @Override
     public void setParcelList(ParcelList list) {
-
+        this.list = list;
     }
 
     @Override
@@ -226,5 +226,8 @@ public class SimulatedAnnealing implements TruckFilling{
             t.addParcel(toPlace);
         }
         return t;
+    }
+    public Truck getBestTruck() {
+        return bestTruck;
     }
 }

@@ -501,4 +501,4 @@ public class Truck implements Scene {
         }
         return gaps;
     }
-}
+}/

@@ -302,7 +302,9 @@ public class InfoPanel extends JPanel {
 		gbc_lblP.gridy = 11;
 		add(lblP, gbc_lblP);
 	}
-
+	/**
+	 * Creates a slider listener so that the zoom of the camera can also be set with it
+	 */
 	class SliderListener implements ChangeListener {
 		public void stateChanged(ChangeEvent e) {
 			JSlider source = (JSlider)e.getSource();
@@ -316,7 +318,7 @@ public class InfoPanel extends JPanel {
      * @param angle of camera
      */
 	public void setAngle(int angle) {
-		lblAngleDisp.setText(String.valueOf(angle) + "\u00b0");
+		lblAngleDisp.setText(String.valueOf(angle%360) + "\u00b0");
 	}
 
 	/**
@@ -324,6 +326,12 @@ public class InfoPanel extends JPanel {
      * @param elevation of camera
      */
 	public void setElevation(int elevation) {
+		if(elevation > 90) {
+			elevation = 90 - (elevation % 90);
+		}
+		if(elevation < 90) {
+			elevation = -90 + (elevation % 90);
+		}
 		lblElevationDisp.setText(String.valueOf(elevation) + "\u00b0");
 	}
 

@@ -1,5 +1,8 @@
 package knapsack.components;
 
+/**
+ * Class for defining objects that carry information the user inputted to the actual algorithms.
+ */
 public class AlgorithmInfo {
 	private String[] settings;
 	private int[][] parcels;
