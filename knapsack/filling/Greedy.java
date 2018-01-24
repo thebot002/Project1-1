@@ -1,78 +1,31 @@
 package knapsack.filling;
 
-import javafx.geometry.Point3D;
-import knapsack.components.Parcel;
-import knapsack.components.ParcelList;
-import knapsack.components.Truck;
-
 import java.util.ArrayList;
 
-public class Greedy{
+import javafx.geometry.Point3D;
+import knapsack.components.Parcel;
+import knapsack.components.Parcel;
+import knapsack.components.Truck;
 
-    private static Parcel[] parcelAr;
+public class Greedy {
 
-    public static void main(String[] args){
-        Truck truck = new Truck();
-        fill(truck);
-        System.out.print(truck);
-    }
+    private static ArrayList<Truck> truckList = new ArrayList<>();
+    private static ArrayList<Integer> truckValueList = new ArrayList<>();
 
-    static{
-        // Build the truck.
-        Truck truck = new Truck();
-
-        // Build the three parcels
-        Parcel parcelA = new Parcel("A",3);
-        Parcel parcelB = new Parcel("B",4);
-        Parcel parcelC = new Parcel("C",5);
-
-        // Crete a list to keep truck of the parcels we have already placed
-        ArrayList<Parcel> parcelList = new ArrayList<Parcel>();
-
-	    /* Create an array with the three parcels and
-	       all their rotations. */
-        parcelAr = new Parcel[10];
-
-        // Get the rotations of the parcels
-        Parcel xRotParcelA = new Parcel("A",3);
-        xRotParcelA.xRotate();
-        Parcel yRotParcelA = new Parcel("A",3);
-        yRotParcelA.yRotate();
-        Parcel zRotParcelA = new Parcel("A",3);
-        zRotParcelA.zRotate();
-        Parcel xyRotParcelA = new Parcel("A",3);
-        xyRotParcelA.xRotate();
-        xyRotParcelA.yRotate();
-        Parcel xzRotParcelA = new Parcel("A",3);
-        xzRotParcelA.xRotate();
-        xzRotParcelA.zRotate();
-        Parcel yRotParcelB = new Parcel("B",3);
-        yRotParcelB.yRotate();
-        Parcel zRotParcelB = new Parcel("B",3);
-        zRotParcelB.zRotate();
-
-        // Place everything into the parcel array
-        parcelAr[9]=parcelA;
-        parcelAr[1]=xRotParcelA;
-        parcelAr[2]=yRotParcelA;
-        parcelAr[3]=zRotParcelA;
-        parcelAr[4]=xyRotParcelA;
-        parcelAr[5]=xzRotParcelA;
-        parcelAr[6]=parcelB;
-        parcelAr[7]=yRotParcelB;
-        parcelAr[8]=zRotParcelB;
-        parcelAr[0]=parcelC;
-    }
     /**
      * The method fills the truck with brute force.
-     * @param truck The truck we fill with parcels
+     //* @param truck The truck we fill with parcels
+     * @param parcelAr The array that contains the parcels and their rotations
+     * @param index Keeps truck of the parcel array elements
+    //* @param parcelList This list contains the parcels we have added to the truck
+     * @param numL numP numT The number of each kind of parcels to be used
      * */
-    public static void fill(Truck truck) {
-        int totVal=0;
-        int index =0;
 
-        //might be used as an output?
-        ArrayList<Parcel> parcelList = new ArrayList<>();
+    public static Truck greedy(Parcel[] parcelAr,int index, int numL, int numP, int numT) {
+        int totVal=0;
+        Truck truck = new Truck();
+
+        ArrayList<Parcel> parcelList = new ArrayList<Parcel>();
 
         /* We use the nested for loops in order to check one by one all the positions of the truck
          * and try to each one of them to place a parcel. Whenever a parcel doesn't fit, either we try another
@@ -80,27 +33,126 @@ public class Greedy{
         for(int i=0; i<truck.getWidth(); i++) {
             for(int j=0; j<truck.getHeight(); j++) {
                 for(int k=0; k<truck.getLength(); k++) {
-                    while(!truck.isPossible(parcelAr[index], new Point3D(i, j, k)) && index<9) {
+                    while(!truck.isPossible(parcelAr[index], parcelAr[index].getArray(), new Point3D(i, j, k)) && index<parcelAr.length-1) {
                         index++;
                     }
-                    if(truck.addParcel(parcelAr[index].copy())){
-                        parcelList.add(parcelAr[index].copy());
+                    if(truck.isPossible(parcelAr[index], parcelAr[index].getArray(),new Point3D(i, j, k))){
+                        truck.addParcel(parcelAr[index], parcelAr[index].getArray(), new Point3D(i,j,k));
+                        parcelList.add(parcelAr[index]);
+                        if(parcelAr[index].getID().equals("L")) {
+                            numL--;
+                            if(numL==0)
+                                parcelAr=reducedParcelAr("L", parcelAr);
+                        }
+                        else if(parcelAr[index].getID().equals("P")) {
+                            numP--;
+                            if(numP==0)
+                                parcelAr=reducedParcelAr("P", parcelAr);
+                        }
+                        else if(parcelAr[index].getID().equals("T")) {
+                            numT--;
+                            if(numT==0)
+                                parcelAr=reducedParcelAr("T",parcelAr);
+                        }
+
+                    }
+
+                    index=0;
+                    if(parcelAr.length==0)
+                        break;
+                }
+                if(parcelAr.length==0)
+                    break;
+            }
+            if(parcelAr.length==0)
+                break;
+        }
+
+        // We calculate the total value of the placed shapes, and we return this value.
+        for(int i=0; i<parcelList.size(); i++) {
+            totVal+=parcelList.get(i).getValue();
+        }
+        System.out.println(parcelList.size());
+        truck.printTruck();
+
+        return truck;
+    }
+
+    /* The same algorithm as before. It works if there is no restriction in the number of parcels*/
+    public static int greedy(Parcel[] parcelAr,int index) {
+        int totVal=0;
+        Truck truck = new Truck();
+        ArrayList<Parcel> parcelListL = new ArrayList<Parcel>();
+        ArrayList<Parcel> parcelListP = new ArrayList<Parcel>();
+        ArrayList<Parcel> parcelListT = new ArrayList<Parcel>();
+        ArrayList<Parcel> parcelList = new ArrayList<Parcel>();
+
+        /* We use the nested for loops in order to check one by one all the positions of the truck
+         * and try to each one of them to place a parcel. Whenever a parcel doesn't fit, either we try another
+         * rotation of this parcel or another parcel. When a parcel is placed, we also add it to the parcelList */
+        for(int i=0; i<truck.getWidth(); i++) {
+            for(int j=0; j<truck.getHeight(); j++) {
+                for(int k=0; k<truck.getLength(); k++) {
+                    while(!truck.isPossible(parcelAr[index], parcelAr[index].getArray(), new Point3D(i, j, k)) && index<59) {
+                        index++;
+                    }
+                    if(truck.isPossible(parcelAr[index], parcelAr[index].getArray(),new Point3D(i, j, k))){
+                        truck.addParcel(parcelAr[index], parcelAr[index].getArray(), new Point3D(i,j,k));
+                        if(parcelAr[index].getID().equals("L"))
+                            parcelListL.add(parcelAr[index]);
+                        else if(parcelAr[index].getID().equals("P"))
+                            parcelListP.add(parcelAr[index]);
+                        else if(parcelAr[index].getID().equals("T"))
+                            parcelListT.add(parcelAr[index]);
+                        parcelList.add(parcelAr[index]);
                     }
                     index=0;
                 }
             }
         }
 
+
+        // We calculate the total value of the placed shapes, and we return this value.
         for(int i=0; i<parcelList.size(); i++) {
             totVal+=parcelList.get(i).getValue();
         }
-        System.out.println(totVal);
-    }
-    public static void setParcelArray(Parcel[] customParcelAr) {
-    	parcelAr = customParcelAr;
-    }
-    public static Parcel[] getParcelArray() {
-    	return parcelAr;
+
+//		truck.printTruck();
+        System.out.println(parcelListL.size());
+        System.out.println(parcelListP.size());
+        System.out.println(parcelListT.size());
+
+        System.out.println(parcelList.size());
+        truck.printTruck();
+        return totVal;
     }
 
+    /** The method to reduce the parcel array in case there is no more one of the parcel types
+     * @param ID The id of the parcel that can't be used any more.
+     * @param parcelAr The parcel array*/
+    public static Parcel[] reducedParcelAr(String ID, Parcel[] parcelAr){
+        int index=0;
+
+        if(ID.equals("L") || ID.equals("P")) {
+            Parcel[] reducedAr = new Parcel[parcelAr.length-24];
+            for(int i=0; i<parcelAr.length; i++) {
+                if(!parcelAr[i].getID().equals(ID)) {
+                    reducedAr[index]=(Parcel) parcelAr[i];
+                    index++;
+                }
+            }
+            index = 0;
+            return reducedAr;
+        }else {
+            Parcel[] reducedAr = new Parcel[parcelAr.length-12];
+            for(int i=0; i<parcelAr.length; i++) {
+                if(!parcelAr[i].getID().equals(ID)) {
+                    reducedAr[index]=(Parcel) parcelAr[i];
+                    index++;
+                }
+            }
+            return reducedAr;
+        }
+
+    }
 }
