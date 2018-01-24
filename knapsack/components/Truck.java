@@ -13,7 +13,6 @@ public class Truck implements Scene {
 	private int length;
 	private int height;
 	private int width;
-	private int gaps;
 	private String[][][] truck;
 
 	public static Parcel truckParcel;
@@ -57,12 +56,21 @@ public class Truck implements Scene {
         this(33,8,5);
     }
 
-    public Truck(String[][][] truck, ArrayList<Cube> list){
+    /**
+     * Constructor a a truck object. Used mainly by copy method.
+     * @param truck The truck array that defines the truck.
+     * @param list The list of all parcels stored in the truck.
+     */
+    private Truck(String[][][] truck, ArrayList<Cube> list){
     	this();
     	this.truck = truck;
     	this.parcelList = list;
 	}
 
+    /**
+     * Method used to create an identical truck to the actual truck.
+     * @return A new, identical truck.
+     */
     public Truck copy(){
         String[][][] newTruck = new String[truck.length][truck[0].length][truck[0][0].length];
         for(int i=0; i<width; i++) {
@@ -135,7 +143,6 @@ public class Truck implements Scene {
                     Point3D pos = new Point3D(i,j,k);
                     if(isPossible(p, pos)){
                         addParcel(p,pos);
-                        p.setPos(pos);
                         return true;
                     }
                 }
@@ -144,10 +151,15 @@ public class Truck implements Scene {
         return false;
     }
 
+    /**
+     * Method that adds a parcel to the truck at the specified position.
+     * @param p
+     * @param pos
+     */
 	public void addParcel(Parcel p, Point3D pos){
         if(debug) System.out.println("Par Added " + pos);
         parcelList.add(p);
-        p.setPos(pos.multiply(1));
+        p.setPos(pos);
         for(int a=0; a<p.getWidth(); a++){
             for(int b=0; b<p.getHeight(); b++){
                 for(int c=0; c<p.getLength();c++){
@@ -160,14 +172,13 @@ public class Truck implements Scene {
 
 	/**
 	 * Method to add a parcel object to the truck.
- * Will Search from the origin to find the next possible position to place a parcel.
- * If placed the parcel will be added to the truck's parcel list.
+     * Will Search from the origin to find the next possible position to place a parcel.
+     * If placed the parcel will be added to the truck's parcel list.
 	 * @param p The parcel to be added to the truck.
 	 * @param pAr The parcel Array of the parcel to be added to the truck.
 	 * @param pos The position of the parcel to be added to the truck.
 	 */
-
-	 public void addParcel(Parcel p, String[][][] pAr, Point3D pos){
+	public void addParcel(Parcel p, String[][][] pAr, Point3D pos){
      	int check1=0;
 
      	if (pAr[0][0].length>1 ) {
@@ -176,29 +187,26 @@ public class Truck implements Scene {
          		pos = new Point3D(pos.getX(),pos.getY(),pos.getZ()-1);
          		check1++;
 
-         }
+            }
      	} else if(pAr.length>1 && pAr[0][0].length==1) {
      		check1=0;
-         while(pAr[check1][0][0].equals("-")) {
+            while(pAr[check1][0][0].equals("-")) {
          		pos = new Point3D(pos.getX()-1,pos.getY(),pos.getZ());
          		check1++;
-         }
+            }
      	}
 
-
-             parcelList.add(p);
-             for(int a=0; a<pAr.length; a++){
-                 for(int b=0; b<pAr[0].length; b++){
-                     for(int c=0; c<pAr[0][0].length;c++){
-                     	if(!pAr[a][b][c].equals("-"))
-                         truck[a+(int)pos.getX()][b+(int)pos.getY()][c+(int)pos.getZ()] = p.getID();
-                     }
-                 }
-             }
-             p.setPos(new Point3D(pos.getX(),pos.getY(),pos.getZ()));
-
-
- }
+        parcelList.add(p);
+        for(int a=0; a<pAr.length; a++){
+            for(int b=0; b<pAr[0].length; b++){
+                for(int c=0; c<pAr[0][0].length;c++){
+                   if(!pAr[a][b][c].equals("-"))
+                    truck[a+(int)pos.getX()][b+(int)pos.getY()][c+(int)pos.getZ()] = p.getID();
+                }
+            }
+        }
+        p.setPos(new Point3D(pos.getX(),pos.getY(),pos.getZ()));
+    }
 
     /**
      * Method to check if a parcel can be added at a position.
@@ -219,28 +227,23 @@ public class Truck implements Scene {
         		pos = new Point3D(pos.getX(),pos.getY(),pos.getZ()-1);
         		check1++;
 
-        }
+            }
     	}
-	else if(pAr.length>1 && pAr[0][0].length==1) {
-    		check1=0;
-        while(pAr[check1][0][0].equals("-")) {
-        		pos = new Point3D(pos.getX()-1,pos.getY(),pos.getZ());
-        		check1++;
-        }
+        else if(pAr.length>1 && pAr[0][0].length==1) {
+		    check1=0;
+            while(pAr[check1][0][0].equals("-")) {
+                    pos = new Point3D(pos.getX()-1,pos.getY(),pos.getZ());
+                    check1++;
+            }
     	}
 
+		if(pos.getX()<0) return false;
 
-		if(pos.getX()<0)
-			return false;
-
-
-		if(pos.getZ()<0)
-			return false;
+		if(pos.getZ()<0) return false;
 
 		if(pos.getX()+pAr.length>truck.length || pos.getY()+pAr[0].length>truck[0].length ||
 				pos.getZ()+pAr[0][0].length>truck[0][0].length)
 			return false;
-
 
 		for (int i = 0; i < pAr.length; i++) {
 			for (int j = 0; j < pAr[0].length; j++) {
@@ -253,7 +256,6 @@ public class Truck implements Scene {
 				}
 			}
 		}
-
 		return true;
 	}
 
@@ -289,17 +291,6 @@ public class Truck implements Scene {
         return true;
     }
 
-    public Point3D isPossible(Parcel p){
-        for(int i = 0; i <= (width-p.getWidth()) ; i++){
-            for(int j=0; j <= (height-p.getHeight()); j++){
-                for(int k=0; k <= (length-p.getLength()); k++){
-                    if(isPossible(p,new Point3D(i,j,k))) return new Point3D(i,j,k);
-                }
-            }
-        }
-        return null;
-    }
-
     /**
      * Method used to return the total value of the truck.
      * @return The sum of the values of the parcels contained in the truck.
@@ -312,7 +303,10 @@ public class Truck implements Scene {
         return total;
     }
 
-	public void printTruck() {
+    /**
+     * Method to print the actual truck in the command prompt.
+     */
+    public void printTruck() {
 		System.out.println("NEW TRUCK");
 		for(int i=0; i<truck[0][0].length; i++) {
 			for(int j=0; j<truck.length; j++) {
