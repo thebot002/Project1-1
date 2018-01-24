@@ -7,7 +7,7 @@ import knapsack.components.Parcel;
 import knapsack.components.ParcelList;
 import knapsack.components.Truck;
 
-public class Backtracking implements TruckFilling {
+public class Backtracking {
 
 
 	private ArrayList<Truck> truckList;
@@ -31,13 +31,11 @@ public class Backtracking implements TruckFilling {
     }
 
 
-    @Override
     public Truck fillTruck() {
         backTracking(new Truck(),null,parcelList,0,0);
         return null;
     }
 
-    @Override
     public void setParcelList(ParcelList list) {
         this.list = list;
     }

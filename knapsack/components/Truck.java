@@ -300,25 +300,6 @@ public class Truck implements Scene {
     }
 
     /**
-     * Method to remove a parcel from the truck.
-     * @param p The parcel to be removed.
-     */
-	public void removeParcel(Parcel p){
-	    parcelList.remove(p);
-        Point3D pos = p.getPos();
-        int x = (int) (pos.getX()/0.5);
-        int y = (int) (pos.getY()/0.5);
-        int z = (int) (pos.getZ()/0.5);
-        for(int i=0; i<p.getWidth(); i++){
-            for(int j=0; j<p.getHeight(); j++){
-                for(int k=0; k<p.getLength();k++){
-                    truck[x+i][y+j][z+k] = "-";
-                }
-            }
-        }
-    }
-
-    /**
      * Method used to return the total value of the truck.
      * @return The sum of the values of the parcels contained in the truck.
      */
