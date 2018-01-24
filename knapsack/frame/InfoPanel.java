@@ -333,5 +333,6 @@ public class InfoPanel extends JPanel {
      */
 	public void setZoom(int zoom) {
 		lblZoomDisp.setText(String.valueOf(zoom) + "%");
+		slider.setValue(zoom);
 	}
 }
